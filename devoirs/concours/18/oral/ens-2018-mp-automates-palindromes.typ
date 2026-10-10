@@ -14,7 +14,7 @@
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
   contenu: (
     [
-      On fixe un alphabet fini $Σ$ avec $abs(Σ)>1$. Un mot $w=a_1 ⋯ a_n$ est un palindrome si $a_i=a_(n-i+1)$ pour tout $1≤i≤n$.
+      On fixe un alphabet fini $Σ$ avec $abs(Σ)>1$. Un mot $w=a_1 … a_n$ est un palindrome si $a_i=a_(n-i+1)$ pour tout $1≤i≤n$.
       On note $Π$ le langage des palindromes et $L(A)$ le langage reconnu par un automate fini $A$ sur $Σ$.
       Les automates sont sans transitions $ε$.
     ],
@@ -37,7 +37,7 @@
       Non en général : pour $L(A)=Σ^*$, ce langage serait $Π$, qui n'est pas régulier.
     ]),
     question([
-      Pour $u=b_1 ⋯ b_m$, on note $overline(u)=b_m ⋯ b_1$ son miroir.
+      Pour $u=b_1 … b_m$, on note $overline(u)=b_m … b_1$ son miroir.
       Étant donné $A$, peut-on calculer un automate $A'_Π$ reconnaissant ${u∈Σ^* | u overline(u)∈L(A)}$ ?
     ], solution: [
       Oui. Écrivons $A=(Q,I,F,δ)$ et renversons ses transitions pour obtenir l'automate miroir $overline(A)$.

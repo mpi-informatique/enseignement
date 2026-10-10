@@ -30,7 +30,7 @@
 ]
 #pause
 #definition[
-  Un mot $m$ sur un alphabet $Σ$ est une suite finie $m_1, …, m_n$ de lettres de $Σ$, et on note $m = m_1 ⋯ m_n$.
+  Un mot $m$ sur un alphabet $Σ$ est une suite finie $m_1, …, m_n$ de lettres de $Σ$, et on note $m = m_1 … m_n$.
   L'entier $n$ est la longueur de $m$, notée $abs(m)$.
   Le mot vide, ne contenant aucune lettre, est noté $ε$.
 ]
@@ -52,7 +52,7 @@
 ]
 
 #definition[
-  Deux mots $u = u_1 ⋯ u_n$ et $v = v_1 ⋯ v_p$ sur le même alphabet $Σ$ sont égaux s'ils ont la même longueur ($n = p$) et si, pour tout $i ∈ {1, …, n}$, $u_i = v_i$.
+  Deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ sur le même alphabet $Σ$ sont égaux s'ils ont la même longueur ($n = p$) et si, pour tout $i ∈ {1, …, n}$, $u_i = v_i$.
 ]
 
 #presentation-seulement[
@@ -60,11 +60,11 @@
 ]
 
 #definition[
-  La concaténation de deux mots $u = u_1 ⋯ u_n$ et $v = v_1 ⋯ v_p$ est :
-  $ u v = u_1 ⋯ u_n v_1 ⋯ v_p. $
+  La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est :
+  $ u v = u_1 … u_n v_1 … v_p. $
   Elle est aussi parfois notée $u ⋅ v$.
 
-  Si $u$ est un mot, on définit $u^0 = ε$ et $u^k = underbrace(u ⋯ u, k " facteurs")$.
+  Si $u$ est un mot, on définit $u^0 = ε$ et $u^k = underbrace(u … u, k " facteurs")$.
 ]
 
 #presentation-seulement[
@@ -229,7 +229,7 @@ $ L_1 (L_2 ∪ L_3) = L_1 L_2 ∪ L_1 L_3. $
     L^n &= L^(n - 1) L " pour " n ≥ 1. $
 ]
 Dit autrement :
-$ L^n = underbrace(L ⋯ L, n " facteurs") = {m_1 ⋯ m_n ∣ m_1 ∈ L, …, m_n ∈ L}. $
+$ L^n = underbrace(L … L, n " facteurs") = {m_1 … m_n ∣ m_1 ∈ L, …, m_n ∈ L}. $
 
 #exemple[$Σ^n$ est l'ensemble des mots de longueur $n$ sur l'alphabet $Σ$.]
 
@@ -284,7 +284,7 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
 ]
 
 #property[
-  Par récurrence immédiate, si $L_1, …, L_n$ sont réguliers, alors $L_1 ∪ ⋯ ∪ L_n$ et $L_1 L_2 ⋯ L_n$ sont réguliers.
+  Par récurrence immédiate, si $L_1, …, L_n$ sont réguliers, alors $L_1 ∪ … ∪ L_n$ et $L_1 L_2 … L_n$ sont réguliers.
 ]
 
 #attention[
@@ -302,7 +302,7 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
 #pause
 + L'ensemble des mots ayant $m$ comme facteur est égal à $Σ^* m Σ^*$, donc régulier.
 #pause
-+ Si $m = m_1 ⋯ m_n$, l'ensemble des mots ayant $m$ comme sous-mot est égal à $Σ^* m_1 Σ^* m_2 ⋯ Σ^* m_n Σ^*$, donc régulier.
++ Si $m = m_1 … m_n$, l'ensemble des mots ayant $m$ comme sous-mot est égal à $Σ^* m_1 Σ^* m_2 … Σ^* m_n Σ^*$, donc régulier.
 
 #presentation-seulement[
   == Construction de langages réguliers
@@ -479,7 +479,7 @@ Sur $Σ = {a, b}$ :
 ]
 
 #exercise[
-  Si $m = m_1 ⋯ m_n$ est un mot, son miroir est $tilde(m) = m_n ⋯ m_1$.
+  Si $m = m_1 … m_n$ est un mot, son miroir est $tilde(m) = m_n … m_1$.
   Si $L$ est un langage, son miroir est $tilde(L) = {tilde(m) ∣ m ∈ L}$.
   + Donner une expression régulière du miroir de $a (a | b)^* b$.
   + Soit $e$ une expression régulière de langage $L$. Montrer que $tilde(L)$ est régulier.

@@ -10,7 +10,7 @@
   corrections: [- Question 4 : corriger les formules pour la concaténation avec un second langage vide et pour l'étoile d'un langage vide.],
   contenu: (
 
-    [Si $m=m_1 ⋯ m_n$ est un mot, son miroir est $tilde(m)=m_n ⋯ m_1$.
+    [Si $m=m_1 … m_n$ est un mot, son miroir est $tilde(m)=m_n … m_1$.
       Le miroir d'un langage $L$ est $tilde(L)={tilde(m) | m∈L}$.],
     question([Montrer que le miroir d'un langage reconnaissable est reconnaissable.], solution: [
       Si $A=(Σ,Q,I,F,E)$ reconnaît $L$, l'automate $tilde(A)=(Σ,Q,F,I,tilde(E))$, où $tilde(E)={(p,a,q) | (q,a,p)∈E}$, reconnaît $tilde(L)$.

@@ -82,7 +82,7 @@
       b) Une chaîne de $n+1$ états, chaque étape portant deux transitions étiquetées $a$ et $b$, reconnaît ${a,b}^n$, qui contient $2^n$ mots.
     ]),
     [
-      Pour $u=a_1 ⋯ a_n∈A^*$, on note $↑u=A^* a_1 A^* ⋯ a_n A^*$ (et $↑ε=A^*$).
+      Pour $u=a_1 … a_n∈A^*$, on note $↑u=A^* a_1 A^* … a_n A^*$ (et $↑ε=A^*$).
       Un langage est clos par sur-mots si $u∈L$ implique $↑u⊂L$.
       On veut prouver qu'un tel langage est régulier et reconnu par un automate déterministe partiellement ordonné.
       On admet le lemme de Higman : pour toute suite infinie $(w_i)_(i∈NN)$ sur un alphabet fini, il existe $i<j$ tels que $w_j∈↑w_i$.
@@ -94,7 +94,7 @@
     ], solution: [
       a) Un sur-mot d'un mot de l'intersection appartient à chacun des deux langages.
 
-      b) Pour $u=a_1⋯a_n$, prendre les états $0,…,n$, initial $0$, seul final $n$.
+      b) Pour $u=a_1…a_n$, prendre les états $0,…,n$, initial $0$, seul final $n$.
       Depuis $k<n$, avancer à $k+1$ sur $a_(k+1)$ et boucler sur toute autre lettre ; depuis $n$, boucler sur toutes les lettres.
       Après chaque préfixe lu, l'état est la longueur du plus long préfixe de $u$ déjà rencontré comme sous-mot, par récurrence.
       Cet automate reconnaît $↑u$ et ses états ne peuvent que croître. Appliquer la stabilité par union finie de la question 2, y compris pour $F=∅$.
@@ -105,7 +105,7 @@
       La construction de b) conclut.
     ]),
     [
-      Un monôme est un langage de la forme $B_0^* a_0 B_1^* a_1 ⋯ a_(n-1) B_n^*$, avec $B_i⊂A$ et $a_i∈A$. On autorise $n=0$ et on pose $∅^*={ε}$.
+      Un monôme est un langage de la forme $B_0^* a_0 B_1^* a_1 … a_(n-1) B_n^*$, avec $B_i⊂A$ et $a_i∈A$. On autorise $n=0$ et on pose $∅^*={ε}$.
     ],
     question([
       #enum(numbering: "a)", [Montrer qu'un langage est reconnu par un automate non déterministe partiellement ordonné si et seulement s'il est une union finie de monômes.],

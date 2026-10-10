@@ -16,8 +16,8 @@
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
   contenu: (
     [
-      On donne un alphabet $Σ$, un automate fini déterministe complet $A$ et un mot $w=a_0 ⋯ a_(n-1)$.
-      Pour $0≤i<j≤n$, on note $w[i,j]=a_i ⋯ a_(j-1)$.
+      On donne un alphabet $Σ$, un automate fini déterministe complet $A$ et un mot $w=a_0 … a_(n-1)$.
+      Pour $0≤i<j≤n$, on note $w[i,j]=a_i … a_(j-1)$.
       L'objectif est de répondre efficacement aux requêtes : « $w[i,j]$ est-il accepté par $A$ ? ».
       Les transitions, le mot et l'appartenance aux états finaux sont accessibles par tableaux en temps constant.
     ],
