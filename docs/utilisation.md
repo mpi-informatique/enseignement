@@ -85,7 +85,7 @@ Le contrat détaillé est dans le commentaire de `exercice`. Les champs `algorit
 - Pour déterminiser, dessiner l'automate plutôt que donner seulement une table.
 - Justifier les complexités, sauf mention contraire ou évidence ; poser les récurrences et séparer visuellement les implications et inclusions.
 - Essayer d'obtenir un nombre pair de pages sans altérer le contenu.
-- Privilégier des noms courts pour les variables et fonctions, en les commentant brièvement si leur utilité n'est pas évidente ou non introduites dans l'énoncé. Par exemple, `let c = ... (* c.(i) est la couleur du sommet i, -1 si non coloré *) au lieu de `let couleur = ...`. 
+- Privilégier des noms courts pour les variables et fonctions, en les commentant brièvement si leur utilité n'est pas évidente ou non introduites dans l'énoncé. Par exemple, `let c = ... (* c.(i) est la couleur du sommet i, -1 si non coloré *) au lieu de `let couleur = ...`.
 
 ## Présentation du code
 

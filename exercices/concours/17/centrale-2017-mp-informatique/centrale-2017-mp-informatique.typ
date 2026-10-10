@@ -121,10 +121,10 @@
       Par exemple, on peut créer une machine ```ocaml m0``` à trois états sur un alphabet à deux lettres ayant comme fonction de transition la fonction ```ocaml f0``` donnée ci-après :
       ```ocaml
       let f0 etat lettre =
-        let matrice = [| 
+        let matrice = [|
           [|1; 1|];
           [|0; 2|];
-          [|0; 2|] 
+          [|0; 2|]
         |] in
         matrice.(etat).(lettre)
 
@@ -199,22 +199,22 @@
 
         Avec l'alphabet $Σ={a,b}$, la lettre $a$ est codée $0$ et la lettre $b$ est codée $1$. L'ensemble des arcs de $G_0$, dont chaque sommet est codé par son numéro, admet pour représentation OCaml :
         ```ocaml
-        let v0 : (etat * lettre) list array = [| 
+        let v0 : (etat * lettre) list array = [|
           [(0,1);(3,0);(2,1);(1,0)];
           [(1,0);(2,0)];
           [(1,1);(3,1);(4,1)];
           [(2,0)];
           [(1,0);(5,1)];
-          [(1,0)] 
+          [(1,0)]
         |]
         ```
         On veut implémenter une file d'attente à l'aide d'un tableau circulaire, dans lequel les indices sont considérés modulo la longueur du tableau. On définit pour cela un type :
         ```ocaml
-        type 'a file = { 
+        type 'a file = {
           tab : 'a array;
           mutable deb : int;
           mutable fin : int;
-          mutable vide : bool 
+          mutable vide : bool
         }
         ```
         - ```ocaml deb``` indique l'indice du premier (plus ancien) élément de la file.

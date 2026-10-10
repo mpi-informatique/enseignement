@@ -133,4 +133,3 @@ let existe_synchronisant m =
   let c, _, _ = accessibles (retourne_machine m) (singletons m.n_etats) in
   c = 0
 (* END Q33 *)
-
