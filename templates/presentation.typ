@@ -1,5 +1,5 @@
 #import "/lib/presentation.typ": presentation, pause
-#import "/lib/theoremes.typ": definition-box, theorem-box, algorithm-box
+#import "/lib/theoremes.typ": definition, theorem, algorithm
 
 #show: presentation.with(titre: "Titre de la présentation", niveau: "MPI")
 
@@ -7,16 +7,16 @@
 
 == Notion
 
-#definition-box(full-title: [Définition])[
+#definition[
   Définir la notion et ses notations.
 ]
 #pause
-#theorem-box(full-title: [Théorème])[
+#theorem[
   Énoncer le résultat et ses hypothèses.
 ]
 
 == Algorithme
 
-#algorithm-box[
+#algorithm[
   Présenter les entrées, la sortie et les étapes de l'algorithme.
 ]

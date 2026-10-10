@@ -43,8 +43,8 @@ Sans champ `type`, `feuille.with(...)` produit un TD. Les noms de fichiers utili
 Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [templates/presentation.typ](../templates/presentation.typ) pour des diapositives, ou de [templates/cours-presentation.typ](../templates/cours-presentation.typ) pour produire les deux à partir du même contenu.
 
 ```typst
-#import "/lib/presentation.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement, espace-reponse
-#import "/lib/theoremes.typ": definition-box, theorem-box, algorithm-box, exercise-box
+#import "/lib/presentation.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
+#import "/lib/theoremes.typ": definition, theorem, algorithm, exercise
 
 #show: cours-et-presentation.with(titre: "Titre du cours", niveau: "MPI")
 
@@ -52,29 +52,36 @@ Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [te
 
 == Notion
 
-#definition-box(full-title: [Définition])[
+#definition[
   Définition commune aux deux sorties.
 ]
 #pause
-#theorem-box(full-title: [Théorème])[
+#theorem[
   Énoncé commun aux deux sorties.
 ]
 
 == Application
 
-#exercise-box(full-title: [Exercice])[
+#exercise[
   Appliquer le théorème.
 ]
-#cours-seulement[#espace-reponse(4)]
 #presentation-seulement[
   #pause
   Indication à révéler pendant la présentation.
 ]
 ```
 
-Les titres `=` structurent les sections, les titres `==` ouvrent les diapositives et deviennent des sous-sections du cours.
+Les titres `=` structurent les grandes parties. Les titres `==` ouvrent les diapositives et deviennent des sous-sections du cours. Limiter les sous-sections du polycopié aux regroupements utiles, sans reprendre chaque titre de diapositive. Pour un titre utile uniquement à la projection, écrire :
+
+```typst
+#presentation-seulement[
+  == Titre
+]
+Contenu commun aux deux formats.
+```
+
 Touying 0.8.0 transforme la source en article continu pour la sortie A4 et résout les animations à leur état final.
-Utiliser `cours-seulement[...]` pour les espaces de réponse et les détails destinés au polycopié, et `presentation-seulement[...]` pour les compléments projetés.
+Utiliser `cours-seulement[...]` pour les détails destinés au polycopié, et `presentation-seulement[...]` pour les compléments projetés.
 Ces commandes peuvent aussi entourer une section entière.
 Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
 
@@ -187,7 +194,7 @@ let f x = (* f x renvoie ... *)
 ## Présentation
 
 Les feuilles et les cours utilisent la même base A4, `lib/document.typ` : en-tête, marges, pied de page, titres, code et théorèmes. L'auteur vaut `Q. Fortier` par défaut et apparaît en haut à droite avec un lien vers <https://mpi-informatique.github.io> ; `auteur: none` le masque. La durée éventuelle figure sous l'auteur.
-Les sections ordinaires sont numérotées `I`, `I.A`, `I.A.1`. Les titres d'exercices et de parties conservent leurs numéros explicites ; les titres internes aux exercices restent ceux de leur source. Pour un autre titre déjà numéroté, utiliser `heading(numbering: none, ...)`.
+Les sections ordinaires sont numérotées `I`, `I.1`, `I.1.1`. Les titres d'exercices et de parties conservent leurs numéros explicites ; les titres internes aux exercices restent ceux de leur source. Pour un autre titre déjà numéroté, utiliser `heading(numbering: none, ...)`.
 
 - Dans chaque exercice ou sujet comportant plusieurs questions, la numérotation commence à 1 ; ce départ ne se paramètre pas. Une question unique s'affiche sans numéro.
 - Titres des exercices en gras ; corps, numéros des questions et solutions sans gras. Titres au format « I - Titre », questions au format « 1. », sans préfixe Q.
@@ -208,7 +215,7 @@ Utiliser les environnements de `lib/theoremes.typ`, qui importe Theorion 0.6.0 a
 ]
 ```
 
-Les environnements numérotés (`theorem`, `lemma`, `definition`, etc.) et leurs variantes sans numéro (`theorem-box`, `lemma-box`, `definition-box`, etc.) sont disponibles dans ce module. Pour un document utilisant le package local, importer `theoremes` depuis `@mpi-informatique/enseignement:0.1.0`. Hors de `feuille`, appliquer `#show: theoremes.configurer-theoremes`.
+Utiliser les environnements numérotés (`theorem`, `lemma`, `definition`, `algorithm`, etc.) dans les cours : leur compteur commun avance automatiquement et repart à chaque grande partie du cours (`Définition 1.1`, `Théorème 1.2`, etc.), sans dépendre des sous-sections. Donner le titre complémentaire avec `title: [...]` pour conserver le type et le numéro automatiques. Les variantes `*-box` sont réservées aux cadres volontairement sans numéro ; `full-title` remplace tout le titre, numéro compris. Pour un document utilisant le package local, importer `theoremes` depuis `@mpi-informatique/enseignement:0.1.0`. Hors de `feuille`, appliquer `#show: theoremes.configurer-theoremes`.
 
 ### Barème
 

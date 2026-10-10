@@ -27,7 +27,7 @@
   show: configurer-code
   set text(font: "New Computer Modern", size: taille, lang: "fr")
   set par(justify: true, leading: 0.55em, spacing: 0.8em)
-  set heading(numbering: "I.A.1 –")
+  set heading(numbering: "I.1.1 –")
   show heading: set block(above: 1em, below: 0.5em)
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)

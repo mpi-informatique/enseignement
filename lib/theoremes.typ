@@ -58,6 +58,7 @@
 #let algorithm-box = titre-blanc.with(algorithm-box)
 
 #let configurer-theoremes(body) = {
+  set-inherited-levels(1)
   set-primary-border-color(black)
   set-primary-body-color(white)
   set-secondary-border-color(black)

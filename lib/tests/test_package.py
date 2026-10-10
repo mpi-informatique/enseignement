@@ -41,14 +41,14 @@ with TemporaryDirectory() as dossier:
         subprocess.run(['typst', 'compile', '--root', str(racine), '--ignore-system-fonts',
                         '--package-path', str(racine / 'packages'), '--input', 'corrige=' + variante,
                         str(source), str(racine / (variante + '.pdf'))], check=True)
-    source.write_text('''#import "@mpi-informatique/enseignement:0.1.0": cours-et-presentation, pause, cours-seulement, presentation-seulement, espace-reponse, theoremes
+    source.write_text('''#import "@mpi-informatique/enseignement:0.1.0": cours-et-presentation, pause, cours-seulement, presentation-seulement, theoremes
 #show: cours-et-presentation.with(titre: "Cours externe", niveau: "MPI")
 = Section
 == Notion
-#theoremes.definition-box(full-title: [Définition])[Un contenu commun.]
+#theoremes.definition[Un contenu commun.]
 #pause
-#theoremes.algorithm-box[Un algorithme commun.]
-#cours-seulement[#espace-reponse(2)]
+#theoremes.algorithm[Un algorithme commun.]
+#cours-seulement[Un détail du polycopié.]
 #presentation-seulement[Un complément projeté.]
 ''', encoding='utf-8')
     for variante in ('cours', 'presentation'):

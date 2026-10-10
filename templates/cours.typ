@@ -1,23 +1,22 @@
-#import "/lib/cours.typ": cours, espace-reponse
-#import "/lib/theoremes.typ": definition-box, theorem-box, algorithm-box, exercise-box
+#import "/lib/cours.typ": cours
+#import "/lib/theoremes.typ": definition, theorem, algorithm, exercise
 
 #show: cours.with(titre: "Titre du cours", niveau: "MPI")
 
 = Première section
 
-#definition-box(full-title: [Définition : notion])[
+#definition(title: [notion])[
   Définir la notion et ses notations.
 ]
 
-#theorem-box(full-title: [Théorème])[
+#theorem[
   Énoncer le résultat et ses hypothèses.
 ]
 
-#algorithm-box[
+#algorithm[
   Présenter les entrées, la sortie et les étapes de l'algorithme.
 ]
 
-#exercise-box(full-title: [Exercice])[
+#exercise[
   Appliquer le résultat précédent.
 ]
-#espace-reponse(3)
