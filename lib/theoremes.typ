@@ -96,7 +96,7 @@
 }
 
 // Chaque type possède un compteur indépendant, sans héritage des sections.
-#let creer-environnement(nom, symbole: get-secondary-symbol) = {
+#let creer-environnement(nom) = {
   let annotation = (remark: "remarque", note: "remarque", example: "exemple").at(nom, default: none)
   let (compteur, sans-numero, numerote, afficher) = theorion.make-frame(
     nom,
@@ -104,8 +104,8 @@
     counter: compteur-cadres(nom),
     numbering: "1",
     render: if annotation != none { rendre-annotation.with(annotation) }
-      else if nom in ("exercise", "problem") { rendre-exercice.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white) }
-      else { fancy-box.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white) },
+      else if nom in ("exercise", "problem") { rendre-exercice.with(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white) }
+      else { fancy-box.with(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white) },
   )
   if annotation != none { (compteur, numerote, sans-numero, afficher) }
   else { (compteur, titre-blanc.with(numerote), titre-blanc.with(sans-numero), afficher) }
@@ -116,16 +116,16 @@
 #let (corollary-counter, corollary, corollary-box, show-corollary) = creer-environnement("corollary")
 #let (axiom-counter, axiom, axiom-box, show-axiom) = creer-environnement("axiom")
 #let (postulate-counter, postulate, postulate-box, show-postulate) = creer-environnement("postulate")
-#let (definition-counter, definition, definition-box, show-definition) = creer-environnement("definition", symbole: get-primary-symbol)
-#let (proposition-counter, proposition, proposition-box, show-proposition) = creer-environnement("proposition", symbole: get-tertiary-symbol)
+#let (definition-counter, definition, definition-box, show-definition) = creer-environnement("definition")
+#let (proposition-counter, proposition, proposition-box, show-proposition) = creer-environnement("proposition")
 #let (assumption-counter, assumption, assumption-box, show-assumption) = creer-environnement("assumption")
-#let (property-counter, property, property-box, show-property) = creer-environnement("property", symbole: get-tertiary-symbol)
+#let (property-counter, property, property-box, show-property) = creer-environnement("property")
 #let (conjecture-counter, conjecture, conjecture-box, show-conjecture) = creer-environnement("conjecture")
-#let (remark-counter, remark, remark-box, show-remark) = creer-environnement("remark", symbole: get-quaternary-symbol)
-#let (note-counter, note, note-box, show-note) = creer-environnement("note", symbole: get-quaternary-symbol)
-#let (example-counter, example, example-box, show-example) = creer-environnement("example", symbole: get-quaternary-symbol)
-#let (exercise-counter, exercise, exercise-box, show-exercise) = creer-environnement("exercise", symbole: get-quaternary-symbol)
-#let (problem-counter, problem, problem-box, show-problem) = creer-environnement("problem", symbole: get-quaternary-symbol)
+#let (remark-counter, remark, remark-box, show-remark) = creer-environnement("remark")
+#let (note-counter, note, note-box, show-note) = creer-environnement("note")
+#let (example-counter, example, example-box, show-example) = creer-environnement("example")
+#let (exercise-counter, exercise, exercise-box, show-exercise) = creer-environnement("exercise")
+#let (problem-counter, problem, problem-box, show-problem) = creer-environnement("problem")
 #let (algorithm-counter, algorithm, algorithm-box, show-algorithm) = creer-environnement("algorithm")
 
 #let configurer-theoremes(espacement: none, body) = {
@@ -138,7 +138,6 @@
   set-tertiary-body-color(white)
   set-quaternary-border-color(black)
   set-quaternary-body-color(white)
-  set-secondary-symbol(none)
   show: show-theorem
   show: show-lemma
   show: show-corollary
