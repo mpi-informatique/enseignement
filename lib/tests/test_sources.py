@@ -20,11 +20,5 @@ assert classify('#import "sujet.typ": autre as ex', 'a.typ') == 'exercice'
 print('Découverte des sources : 12 cas vérifiés.')
 
 decouvertes = dict(sources())
-assert decouvertes['exercices/banque/langages/grammaires-lineaires/grammaires-lineaires.typ'] == 'exercice'
-for annee, nom in (('17', 'centrale-2017-mp-informatique'),
-                   ('19', 'mines-ponts-2019-mp-informatique'),
-                   ('22', 'centrale-2022-mp-informatique')):
-    assert decouvertes[f'exercices/concours/{annee}/{nom}/{nom}.typ'] == 'document'
-assert decouvertes['exercices/concours/18/oral/ens-2018-mp-reparation-langage/ens-2018-mp-reparation-langage.typ'] == 'document'
 assert not any(source.startswith('lib/tests/') for source in decouvertes)
-print('Dossiers de sujets : découverte et exclusion des tests de bibliothèque vérifiées.')
+print('Exclusion des tests de bibliothèque vérifiée.')

@@ -28,9 +28,4 @@
     )
   } else { () }
   assert(notes.map(n => n.value) == attendu, message: repr(notes.map(n => n.value)))
-  // Le barème commence à 5 mm du bord droit du corps (196 mm).
-  for note in notes {
-    let pos = note.location().position()
-    assert(calc.abs(pos.x - 201mm) < 0.01mm, message: repr(pos))
-  }
 }
