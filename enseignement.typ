@@ -1,0 +1,14 @@
+/// API et contenus du package mpi-informatique/enseignement.
+#import "lib/exercice.typ": *
+#import "lib/meta.typ" as meta
+#import "lib/automate.typ" as automate
+#import "lib/code.typ" as code
+#import "lib/theoremes.typ" as theoremes
+
+/// Importe un exercice ou un sujet depuis le package.
+/// - chemin (str): Chemin relatif à la banque, par exemple "exercices/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ".
+/// -> module
+#let charger(chemin) = {
+  import chemin as source
+  source
+}

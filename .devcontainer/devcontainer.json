@@ -1,0 +1,20 @@
+{
+  "name": "enseignement",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/nix:1": {
+      "multiUser": false
+    }
+  },
+  "containerEnv": {
+    "NIX_CONFIG": "experimental-features = nix-command flakes"
+  },
+  "postCreateCommand": "nix develop path:. -c true",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "myriad-dreamin.tinymist"
+      ]
+    }
+  }
+}

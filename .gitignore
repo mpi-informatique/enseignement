@@ -1,0 +1,8 @@
+/build/
+/.direnv/
+__pycache__/
+.DS_Store
+*.log
+*.pdf
+tmp/
+/result

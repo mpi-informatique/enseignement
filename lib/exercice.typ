@@ -1,0 +1,383 @@
+/// API commune des exercices, feuilles et sujets de concours.
+/// Guide de rédaction : docs/utilisation.md. Documentation générée : just docs.
+
+#import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
+#import "theoremes.typ": configurer-theoremes
+
+/// Espace horizontal de 0,5 em, utilisable dans une formule avec `#sep`.
+/// -> content
+#let sep = h(0.5em)
+
+// Les exercices sont des données Typst ordinaires.
+/// Construit une question ; son énoncé reste visible dans le corrigé.
+/// - enonce (content): Énoncé, éventuellement avec sous-questions.
+/// - solution (content, none): Solution ; `none` affiche « Corrigé à compléter ».
+/// - commentaire (content, none): Observation du jury, en italique avant la solution uniquement dans le corrigé.
+/// - points (float, int, none): Barème de la question, affiché en marge du corrigé ; `none` masque les points.
+/// -> dictionary
+#let question(enonce, solution: none, commentaire: none, points: none) = {
+  assert(commentaire == none or type(commentaire) == content,
+    message: "commentaire doit être un contenu Typst ou none")
+  assert(points == none or points in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+    message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none")
+  (type: "question", enonce: enonce, solution: solution, commentaire: commentaire, points: points)
+}
+
+#let texte-duree(duree) = {
+  let (heures, minutes) = duree
+  if heures == 0 { str(minutes) + " min" }
+  else if minutes == 0 { str(heures) + " h" }
+  else { str(heures) + " h " + str(minutes) + " min" }
+}
+
+#let texte-concours(concours) = (
+  concours.at("nom", default: none),
+  concours.at("annee", default: none),
+  concours.at("filiere", default: none),
+  if concours.at("oral", default: false) { "oral" } else { none },
+).filter(valeur => valeur != none).map(valeur => str(valeur)).join(" ")
+
+// Conserver à la fois l'attribution et le titre du contenu.
+#let titre-concours(titre, concours) = {
+  if concours == none { titre }
+  else { texte-concours(concours) + " : " + titre }
+}
+
+// Titres communs aux exercices et aux parties des sujets.
+#let titre-exercice(titre, prefixe, duree: none, concours: none, niveau: 1) = {
+  block(above: 16pt, below: 16pt, breakable: false)[
+    #heading(level: niveau)[
+      #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
+        [#prefixe -- #titre],
+        [#if concours != none {
+          text(fill: luma(35%).transparentize(30%))[
+            #texte-concours(concours)
+          ]
+        } else if duree != none {
+          text(fill: luma(35%).transparentize(30%))[
+            #texte-duree(duree)
+          ]
+        }],
+      )
+    ]
+  ]
+}
+
+// Le contexte contient les rappels à ajouter dans un exercice autonome.
+/// Regroupe des textes, questions et sous-parties sans réinitialiser la numérotation.
+/// - numero (str): Numéro explicite, par exemple `"I.A"`.
+/// - titre (str): Titre non vide.
+/// - contenu (array): Textes Typst, questions et parties dans l'ordre.
+/// - contexte (array): Textes de rappel à reprendre explicitement dans un extrait autonome ; non insérés automatiquement.
+/// - meta (dictionary): Métadonnées de réutilisation de la partie ; non validées ici.
+/// - commentaire (content, none): Observation du jury affichée dans le corrigé après le titre.
+/// -> dictionary
+#let partie(numero, titre, contenu: (), contexte: (), meta: (:), commentaire: none) = {
+  assert(type(numero) == str and numero != "", message: "Numéro de partie vide")
+  assert(type(titre) == str and titre != "", message: "Titre de partie vide")
+  assert(type(contenu) == array and type(contexte) == array)
+  assert(contexte.all(bloc => type(bloc) == content), message: "Le contexte contient uniquement du texte Typst")
+  assert(commentaire == none or type(commentaire) == content)
+  (commentaire: commentaire, type: "partie", numero: numero, titre: titre, contenu: contenu, contexte: contexte, meta: meta)
+}
+
+#let est-partie(bloc) = type(bloc) == dictionary and bloc.at("type", default: none) == "partie"
+
+#let aplatir(contenu, niveau: 1, textes: true, commentaires: false) = {
+  let resultat = ()
+  for bloc in contenu {
+    if est-partie(bloc) {
+      resultat.push(titre-exercice(bloc.titre, bloc.numero, niveau: niveau))
+      if commentaires and bloc.commentaire != none {
+        resultat.push(text(style: "italic", bloc.commentaire))
+      }
+      resultat += aplatir(bloc.contenu, niveau: niveau + 1, textes: textes, commentaires: commentaires)
+    } else if textes or type(bloc) != content {
+      resultat.push(bloc)
+    }
+  }
+  resultat
+}
+
+#let nombre-questions(contenu) = aplatir(contenu).filter(bloc => type(bloc) == dictionary).len()
+
+// Un barème suit les questions dans l'ordre, y compris dans les parties imbriquées.
+#let verifier-bareme(bareme, nombre) = {
+  if bareme != none {
+    assert(type(bareme) == array, message: "bareme doit être un tableau ou none")
+    assert(bareme.len() == nombre, message: "bareme doit contenir une valeur par question")
+    for points in bareme {
+      assert(points == none or points in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+        message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none")
+    }
+  }
+}
+
+/// Construit et valide un exercice ou un sujet, exporté sous le nom `ex`.
+/// L'identifiant est le nom du fichier, jamais un champ de `meta`.
+/// Les vocabulaires autorisés sont exportés par `lib/meta.typ` ; `chapitres` couvre informatique et mathématiques.
+/// - meta (dictionary): Champs obligatoires : `titre` (chaîne non vide), `chapitres` (tableau de chaînes), `difficulte` (entier de 1 à 5). Champs facultatifs : `algorithmes`, `structures`, `langages`, `niveaux` (tableaux, défaut `()`), `duree` (couple heures/minutes positif, minutes < 60, ou `none`), `concours` (dictionnaire ou `none`). Concours : `nom`, `annee` (entier positif), `filiere`, `oral` (booléen), tous facultatifs ; aucune filière ajoutée implicitement. Champs supplémentaires libres ; `id` et `reference` interdits.
+/// - contenu (array): Textes libres `[...]`, `question(...)` et `partie(...)` ; au moins une question.
+/// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
+/// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
+/// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `points` dans chaque `question`.
+/// - sujet-ecrit (bool): Masque les textes libres du contexte dans le corrigé d'un sujet écrit seulement. Les questions et figures qu'elles contiennent sont conservées.
+/// -> dictionary
+#let exercice(meta: (:), contenu: (), remarques: none, corrections: none, sujet-ecrit: false, bareme: none) = {
+  assert(type(sujet-ecrit) == bool, message: "sujet-ecrit doit être un booléen")
+  let champs = ("titre", "chapitres", "difficulte")
+  for champ in champs {
+    assert(champ in meta, message: "Métadonnée manquante : " + champ)
+  }
+  assert(not ("id" in meta), message: "id est déduit du nom du fichier .typ")
+  assert(type(meta.titre) == str and meta.titre != "", message: "titre doit être une chaîne non vide")
+  let meta = (algorithmes: (), structures: (), langages: (), ..meta)
+  for champ in ("chapitres", "algorithmes", "structures", "langages") {
+    assert(type(meta.at(champ)) == array, message: champ + " doit être un tableau")
+    for valeur in meta.at(champ) {
+      assert(type(valeur) == str, message: champ + " doit contenir des chaînes")
+    }
+  }
+  for (champ, valeurs) in (("chapitres", chapitres-programme), ("algorithmes", algorithmes-programme), ("structures", structures-programme)) {
+    for valeur in meta.at(champ) {
+      assert(valeur in valeurs, message: champ + " : étiquette absente du programme : " + valeur)
+    }
+  }
+  assert(type(meta.difficulte) == int and meta.difficulte >= 1 and meta.difficulte <= 5,
+    message: "difficulte doit être un entier de 1 à 5")
+  let niveaux = meta.at("niveaux", default: ())
+  assert(type(niveaux) == array, message: "niveaux doit être un tableau")
+  for niveau in niveaux {
+    assert(type(niveau) == str, message: "niveaux doit contenir des chaînes")
+  }
+  for chapitre in meta.chapitres {
+    for niveau in niveaux {
+      assert(niveau in niveaux-par-chapitre.at(chapitre),
+        message: "chapitres : " + chapitre + " n'est pas au programme du niveau " + niveau)
+    }
+  }
+  // Convention de la banque pour la programmation en MP2I–MPI.
+  if "MP2I" in niveaux or "MPI" in niveaux {
+    for langage in meta.langages {
+      assert(langage in langages-possibles,
+        message: "langages : en MP2I–MPI, utiliser C, OCaml, Python ou SQL : " + langage)
+    }
+  }
+  let duree = meta.at("duree", default: none)
+  if duree != none {
+    assert(type(duree) == array and duree.len() == 2,
+      message: "duree doit être un couple (heures, minutes) ou none")
+    let (heures, minutes) = duree
+    assert(type(heures) == int and type(minutes) == int,
+      message: "heures et minutes doivent être des entiers")
+    assert(heures >= 0 and minutes >= 0 and minutes < 60 and heures + minutes > 0,
+      message: "duree doit être positive, avec 0 ≤ minutes < 60")
+  }
+  assert(not ("reference" in meta), message: "Utiliser concours au lieu de reference")
+  let concours = meta.at("concours", default: none)
+  let concours-normalise = if concours != none {
+    assert(type(concours) == dictionary, message: "concours doit être un dictionnaire ou none")
+    if "nom" in concours {
+      assert(type(concours.nom) == str and concours.nom in concours-possibles,
+        message: "nom doit être un concours connu")
+    }
+    if "annee" in concours {
+      assert(type(concours.annee) == int and concours.annee > 0,
+        message: "L'année du concours doit être un entier strictement positif")
+    }
+    if "filiere" in concours {
+      assert(type(concours.filiere) == str and concours.filiere in filieres-possibles,
+        message: "filiere doit être une filière connue")
+    }
+    if "oral" in concours {
+      assert(type(concours.oral) == bool, message: "oral doit être un booléen")
+    }
+    concours
+  } else {
+    none
+  }
+  let verifier(blocs) = {
+    assert(type(blocs) == array, message: "contenu doit être un tableau de textes, questions et parties")
+    for bloc in blocs {
+      if est-partie(bloc) {
+        verifier(bloc.contenu)
+      } else if type(bloc) != content {
+        assert(type(bloc) == dictionary, message: "Utiliser [texte libre], question(…) ou partie(…) dans contenu")
+        assert(bloc.at("type", default: none) == "question", message: "Bloc inconnu dans contenu")
+        assert("enonce" in bloc and "solution" in bloc, message: "Construire les questions avec question(…)")
+      }
+    }
+  }
+  verifier(contenu)
+  verifier-bareme(bareme, nombre-questions(contenu))
+  assert(corrections == none or type(corrections) == content, message: "corrections doit être un contenu Typst ou none")
+  assert(remarques == none or type(remarques) == content, message: "remarques doit être un contenu Typst ou none")
+  assert(nombre-questions(contenu) > 0, message: "Un exercice doit contenir au moins une question")
+  (
+    meta: (niveaux: (), duree: none, ..meta, concours: concours-normalise),
+    contenu: contenu,
+    remarques: remarques,
+    corrections: corrections,
+    sujet-ecrit: sujet-ecrit,
+    bareme: bareme,
+  )
+}
+
+/// Présentation commune aux solutions et aux commentaires des copies corrigées.
+/// - body (content): Solution ou commentaire.
+/// - above (length): Espacement avant le bloc.
+/// - below (length): Espacement après le bloc.
+/// -> content
+#let bloc-solution(body, above: 8pt, below: 10pt) = block(
+  width: 100%, stroke: (left: 0.4pt + luma(60%)),
+  inset: (left: 10pt, y: 3pt), above: above, below: below, body,
+)
+
+#let marge-droite(body) = place(top + left, dx: 100% + 5mm,
+  block(width: 15mm, {
+    set align(left)
+    body
+  }),
+)
+
+/// Affiche un objet construit avec `exercice` et publie ses métadonnées pour le catalogue.
+/// - ex (dictionary): Exercice à afficher.
+/// - numero (int, none): Numéro romain du titre ; `none` utilise I.
+/// - corrige (bool): Afficher solutions et commentaires.
+/// - bareme (array, none): Barème remplaçant celui de l'exercice ; `none` utilise `ex.bareme`.
+/// - afficher-titre (bool): Afficher le titre de l'exercice.
+///   Pour un exercice de concours, l'attribution s'affiche à droite à la place de la durée.
+/// - espacement (length): Espacement vertical des textes et questions, défaut 12pt.
+/// -> content
+#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, bareme: none, espacement: 12pt) = {
+  let bareme = if bareme == none { ex.bareme } else { bareme }
+  let nombre = nombre-questions(ex.contenu)
+  verifier-bareme(bareme, nombre)
+  show strong: it => it.body
+  show heading: set text(weight: "bold")
+  [#metadata(ex.meta) <exercice-meta>]
+  if afficher-titre {
+    let prefixe = if numero == none { "I" } else { numbering("I", numero) }
+    titre-exercice(ex.meta.titre, prefixe,
+      duree: ex.meta.duree, concours: ex.meta.concours)
+  }
+  if corrige and ex.remarques != none {
+    block(width: 100%, above: espacement, below: espacement)[
+      #text(style: "italic")[
+        #ex.remarques
+      ]
+    ]
+  }
+  let i = 1
+  // Seuls les sujets de concours écrits masquent le contexte dans leur corrigé.
+  for q in aplatir(ex.contenu, textes: not (corrige and ex.sujet-ecrit), commentaires: corrige) {
+    if type(q) == content {
+      block(width: 100%, above: espacement, below: espacement, q)
+      continue
+    }
+    // Chaque énoncé est un paragraphe distinct ; les longues questions restent sécables.
+    block(width: 100%, above: espacement, below: 5pt, {
+      let points = if bareme == none { q.at("points", default: none) } else { bareme.at(i - 1) }
+      if corrige and points != none {
+        // Placement hors du corps : la note suit le début de la question sans réserver de hauteur.
+        marge-droite[
+          #metadata((question: i, points: points)) <bareme-question>
+          #text(size: 9pt, weight: "regular", fill: black.transparentize(50%), str(points))
+        ]
+      }
+      if nombre == 1 { q.enonce }
+      else {
+        enum(start: i, numbering: "1.",
+          indent: 0pt, body-indent: 0.5em, q.enonce)
+      }
+    })
+    if corrige {
+      if q.commentaire != none {
+        block(width: 100%, above: 5pt, below: 5pt, text(style: "italic", q.commentaire))
+      }
+      bloc-solution(
+        if q.solution == none { emph[Corrigé à compléter.] } else { q.solution },
+      )
+    }
+    i += 1
+  }
+}
+
+/// Compose tout type de document dans l'ordre du tableau `exercices`.
+/// À utiliser avec `#show: feuille.with(...)` ; le type ne dépend pas du dossier.
+/// - type (str): Type libre : `"td"`, `"devoir"`, `"concours"` ou un type personnalisé.
+/// - titre (str): Titre de la feuille.
+/// - niveau (str, none): Niveau affiché dans l'en-tête.
+/// - auteur (str, none): Auteur affiché dans l'en-tête.
+/// - duree (array, none): Durée (heures, minutes) affichée à droite ; `none` reprend celle d'un sujet de concours unique.
+/// - concours (dictionary, none): Attribution affichée avant le titre ; mêmes champs que `exercice.meta.concours`.
+/// - exercices (array): Objets `ex` importés, dans l'ordre ; `()` crée une feuille vide.
+/// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
+/// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
+/// - nouvelle-page (bool): Commencer chaque exercice après le premier sur une nouvelle page.
+/// - espacement (length): Espacement vertical des textes et questions, défaut 12pt.
+/// - afficher-exercices (bool): Composer automatiquement le tableau d'exercices ; false permet une composition personnalisée dans body.
+/// - body (content): Contenu placé avant les exercices, fourni par la règle show.
+/// -> content
+#let feuille(
+  type: "td",
+  titre: "Feuille d'exercices",
+  niveau: none,
+  auteur: none,
+  duree: none,
+  concours: none,
+  exercices: (),
+  corrige: false,
+  nouvelle-page: false,
+  afficher-exercices: true,
+  espacement: 12pt,
+  bareme: none,
+  body,
+) = {
+  assert(type == str(type) and type != "", message: "Le type de document doit être une chaîne non vide")
+  verifier-bareme(bareme, exercices.map(ex => nombre-questions(ex.contenu)).sum(default: 0))
+  let titre-principal = titre-concours(titre, concours)
+  let titre-affiche = titre-principal + if corrige { " (corrigé)" } else { "" }
+  let duree = if duree != none { duree }
+    else if concours == none or exercices.len() != 1 { none }
+    else { exercices.first().meta.duree }
+  set document(title: titre-affiche)
+  show: configurer-theoremes
+  [#metadata((type: type, titre: titre, niveau: niveau, concours: concours)) <document-meta>]
+  set text(font: "New Computer Modern", size: 10pt, lang: "fr")
+  set par(justify: true, leading: 0.55em, spacing: 0.8em)
+  set page(
+    paper: "a4", margin: (x: 14mm, top: 25mm, bottom: 18mm),
+    header-ascent: 5mm,
+    header: context if counter(page).get().first() == 1 [
+      #set text(size: 10pt)
+      #grid(
+        columns: (24mm, 1fr, 24mm), align: (left, center, right),
+        if niveau != none { niveau } else { [] },
+        text(size: 12pt, weight: "bold", titre-affiche),
+        if duree != none { texte-duree(duree) } else if auteur != none { auteur },
+      )
+      #v(4pt)
+      #line(length: 100%, stroke: 0.4pt)
+    ],
+    footer: context align(center, text(size: 9pt, counter(page).display("1 / 1", both: true))),
+  )
+  set heading(numbering: none)
+  show heading.where(level: 1): set text(size: 11pt)
+  show heading.where(level: 2): set text(size: 10.5pt)
+  show heading.where(level: 3): set text(size: 10pt)
+  // Comme l'environnement code : fond blanc et deux filets horizontaux.
+  show raw.where(block: true): it => block(
+    width: 100%, inset: (x: 8pt, y: 7pt),
+    stroke: (top: 0.4pt, bottom: 0.4pt),
+    text(size: 9pt, it),
+  )
+  body
+  let debut-bareme = 0
+  for (i, ex) in if afficher-exercices { exercices.enumerate(start: 1) } else { () } {
+    if nouvelle-page and i > 1 { pagebreak() }
+    let fin-bareme = debut-bareme + nombre-questions(ex.contenu)
+    afficher-exercice(ex, bareme: if bareme == none { none } else { bareme.slice(debut-bareme, fin-bareme) }, numero: if exercices.len() > 1 { i } else { none }, corrige: corrige, afficher-titre: exercices.len() > 1 or titre != ex.meta.titre, espacement: espacement)
+    debut-bareme = fin-bareme
+  }
+}

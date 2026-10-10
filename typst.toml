@@ -1,0 +1,8 @@
+[package]
+name = "enseignement"
+version = "0.1.0"
+entrypoint = "enseignement.typ"
+authors = ["Quentin Fortier"]
+description = "Ressources pédagogiques et API Typst pour les classes préparatoires"
+repository = "https://github.com/mpi-informatique/enseignement"
+exclude = ["build", ".git", ".direnv", "__pycache__", "lib/tests", "tmp"]

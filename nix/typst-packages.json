@@ -1,0 +1,52 @@
+[
+  {
+    "name": "cetz",
+    "version": "0.4.2",
+    "hash": "sha256-fbYS5HNKNKF7JYAdG0xFMLryFoLAv4Kd3kV3rqiKWVo="
+  },
+  {
+    "name": "diagraph-layout",
+    "version": "0.0.1",
+    "hash": "sha256-AnBILoe4D9xCfFFJZ2+Hf3XIDnHYZH7OK4WAzAfme+I="
+  },
+  {
+    "name": "finite",
+    "version": "0.5.1",
+    "hash": "sha256-sAmboiWn6MNQjeZ8u3n8QBVaEwB56wFo2zTCh3VFyM8="
+  },
+  {
+    "name": "octique",
+    "version": "0.1.1",
+    "hash": "sha256-dH2yqqRFc4i+kYwSef/yEl5LKt2zXQ43eG3o+aDhoQI="
+  },
+  {
+    "name": "oxifmt",
+    "version": "1.0.0",
+    "hash": "sha256-RtGKdyiX2kJbUjChPohSGNeYOKVlI2VM0k1uFaEqDC8="
+  },
+  {
+    "name": "showybox",
+    "version": "2.0.4",
+    "hash": "sha256-3sAFQByCBAhIAjrkZI6PSU3kDMenfNQx9AgIDwmSePo="
+  },
+  {
+    "name": "t4t",
+    "version": "0.4.3",
+    "hash": "sha256-vIbBcXk+kynrOVEmpBhFIpYASiQUVBu5TraVhfuY7ro="
+  },
+  {
+    "name": "theorion",
+    "version": "0.6.0",
+    "hash": "sha256-lss2hve/k1X6OTZHLSMS+WiZVy4EIhl77hfeYFj9UwY="
+  },
+  {
+    "name": "tidy",
+    "version": "0.4.3",
+    "hash": "sha256-3F4nBSvietpAevp+EgZIFoLfv4GRMLjSyGD+7RCYjjg="
+  },
+  {
+    "name": "valkyrie",
+    "version": "0.2.1",
+    "hash": "sha256-jUkFhI7PXqPzKNhlfu5AjNVv9r1OFGj7fuqPoZ+8OmA="
+  }
+]
