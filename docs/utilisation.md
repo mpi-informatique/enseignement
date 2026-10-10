@@ -88,7 +88,7 @@ Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/th
 `cours` et `presentation` s'utilisent aussi séparément avec leurs règles `#show: ...with(...)`.
 Les paramètres communs sont `titre`, `niveau` et `auteur`. `presentation` propose aussi `aspect-ratio`, `taille`, `couleur` et `animations: false` pour produire uniquement l'état final de chaque diapositive.
 Les blocs de code utilisent `code.configurer-code`, partagé avec les feuilles d'exercices.
-Les algorithmes utilisent `theoremes.algorithm` ou `algorithm-box`, avec le même cadre noir et blanc et le même compteur que les théorèmes.
+Les algorithmes utilisent `theoremes.algorithm` ou `algorithm-box`, avec le même cadre noir et blanc et leur propre compteur.
 
 ```sh
 nix develop path:. -c just c chapitres/langages/langages-reguliers.typ
@@ -216,7 +216,7 @@ Utiliser les environnements de `lib/theoremes.typ`, qui importe Theorion 0.6.0 a
 ]
 ```
 
-Utiliser les environnements numérotés (`theorem`, `lemma`, `definition`, `algorithm`, etc.) dans les cours : leur compteur commun avance automatiquement et repart à chaque grande partie du cours (`Définition 1.1`, `Théorème 1.2`, etc.), sans dépendre des sous-sections. Dans les cours, conserver uniquement le type et le numéro dans le titre du cadre, sans précision entre parenthèses. Ajouter `coeur: true` aux résultats à connaître par cœur : le cœur apparaît dans la marge gauche, centré verticalement sur le cadre. Les variantes `*-box` sont réservées aux cadres volontairement sans numéro ; `full-title` remplace tout le titre, numéro compris. Pour un document utilisant le package local, importer `theoremes` depuis `@mpi-informatique/enseignement:0.1.0`. Hors de `feuille`, appliquer `#show: theoremes.configurer-theoremes`.
+Utiliser les environnements numérotés (`theorem`, `lemma`, `definition`, `algorithm`, etc.) dans les cours : chaque type possède son compteur indépendant, continu sur tout le document et sans sous-numérotation (`Définition 1`, `Définition 2`, `Théorème 1`, `Exercice 1`, etc.). Les variantes sans numéro ne font pas avancer ces compteurs. Dans les cours, conserver uniquement le type et le numéro dans le titre du cadre, sans précision entre parenthèses. Ajouter `coeur: true` aux résultats à connaître par cœur : le cœur apparaît dans la marge gauche, centré verticalement sur le cadre. Les variantes `*-box` sont réservées aux cadres volontairement sans numéro ; `full-title` remplace tout le titre, numéro compris. Pour un document utilisant le package local, importer `theoremes` depuis `@mpi-informatique/enseignement:0.1.0`. Hors de `feuille`, appliquer `#show: theoremes.configurer-theoremes`.
 
 ### Barème
 

@@ -3,7 +3,7 @@
 #import touying: pause, uncover, only, slide, article-only as cours-seulement, slides-only as presentation-seulement
 #import "cours.typ": cours, espace-reponse
 #import "document.typ": auteur-par-defaut
-#import "theoremes.typ": configurer-theoremes, theorem-counter
+#import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
 
 /// Compose une présentation Touying, ou sa version article avec le thème du dépôt.
@@ -30,7 +30,6 @@
     touying.config-common(
       export-mode: if article { "article" } else if animations { "presentation" } else { "handout" },
       article-theme: cours.with(titre: titre, niveau: niveau, auteur: auteur),
-      frozen-counters: (theorem-counter,),
       breakable: false,
       detect-overflow: true,
     ),

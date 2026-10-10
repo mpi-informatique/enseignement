@@ -48,7 +48,21 @@ with TemporaryDirectory() as dossier:
 #theoremes.definition[Un contenu commun.]
 #pause
 #theoremes.algorithm[Un algorithme commun.]
-#cours-seulement[Un détail du polycopié.]
+== Application
+#theoremes.exercise[Un exercice.]
+#theoremes.theorem[Un théorème.]
+#cours-seulement[#theoremes.definition-box[Une définition sans numéro.]]
+== Autre notion
+#theoremes.definition[Une deuxième définition.]
+#theoremes.theorem[Un deuxième théorème.]
+#cours-seulement[
+  #context {
+    let cadres = query(<theorion-frame-metadata>).filter(it => it.value.numbering != none)
+    assert(cadres.map(it => it.value.identifier) == ("definition", "algorithm", "exercise", "theorem", "definition", "theorem"))
+    assert(cadres.map(it => (it.value.counter.at)(it.location())) == ((1,), (1,), (1,), (1,), (2,), (2,)))
+  }
+  Un détail du polycopié.
+]
 #presentation-seulement[Un complément projeté.]
 ''', encoding='utf-8')
     for variante in ('cours', 'presentation'):
