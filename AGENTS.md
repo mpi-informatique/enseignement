@@ -16,7 +16,7 @@ Lire et appliquer le [guide utilisateur](docs/utilisation.md) : il fait autorit�
 - Lancer `nix develop path:. -c just check` et annoncer les vérifications réellement effectuées.
 - N'inspecter les PDF générés que si c'est vraiment utile.
 - Communiquer les fichiers modifiés et les corrections, avec des liens cliquables vers les PDF d'énoncé et de corrigé générés.
-- Pour chaque modification, faire un commit directement sur la branche principale.
+- Pour chaque modification, faire un commit directement sur la branche principale, puis synchroniser avec le dépôt distant : récupérer et intégrer les éventuels commits distants, puis pousser les commits locaux, sans push forcé.
 
 ## Syntaxe
 
