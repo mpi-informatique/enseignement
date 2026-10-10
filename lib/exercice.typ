@@ -38,7 +38,7 @@
 
 // Titres communs aux exercices et aux parties des sujets.
 #let titre-exercice(titre, prefixe, duree: none, concours: none, niveau: 1) = {
-  block(above: 16pt, below: 16pt, breakable: false)[
+  block(above: espacement-blocs, below: espacement-blocs, breakable: false)[
     #heading(level: niveau, numbering: none)[
       #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
         [#prefixe -- #titre],

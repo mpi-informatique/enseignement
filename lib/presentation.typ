@@ -2,7 +2,7 @@
 #import "@preview/touying:0.8.0" as touying
 #import touying: pause, uncover, only, slide, article-only as cours-seulement, slides-only as presentation-seulement
 #import "cours.typ": cours, espace-reponse
-#import "document.typ": auteur-par-defaut
+#import "document.typ": auteur-par-defaut, espacement-blocs
 #import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
 
@@ -25,6 +25,7 @@
     aspect-ratio: aspect-ratio,
     primary: couleur,
     footer: [#titre #if niveau != none { [· #niveau] }],
+    footer-right: none,
     subslide-preamble: block(below: 0.7em, text(size: 1.15em, weight: "bold", touying.utils.display-current-heading(level: 2))),
     touying.config-info(title: titre, author: auteur, date: none),
     touying.config-common(
@@ -32,7 +33,8 @@
       article-theme: body => {
         // Touying encadre les paragraphes vides entre titres : leurs marges s'ajouteraient à celles des titres.
         show block.where(body: parbreak()): it => []
-        cours(titre: titre, niveau: niveau, auteur: auteur, body)
+        // Compenser la marge du bloc racine ajouté par Touying après l'en-tête.
+        cours(titre: titre, niveau: niveau, auteur: auteur, [#v(-espacement-blocs) #body])
       },
       breakable: false,
       detect-overflow: true,

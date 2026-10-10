@@ -41,11 +41,13 @@
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
-  set page(
-    paper: "a4", margin: (x: 14mm, top: 25mm, bottom: 18mm),
-    header-ascent: 5mm,
-    header: context if counter(page).get().first() == 1 [
-      #grid(columns: (24mm, 1fr, 24mm), align: (left, center, right),
+  set page(paper: "a4", margin: 14mm, header: none, footer: none, numbering: none)
+  // L'en-tête fait partie du flux : sa hauteur ne réduit que la première page.
+  // Le premier bloc du contenu fournit lui-même l'espacement sous la ligne.
+  block(above: 0pt, below: 0pt, sticky: true, {
+    set block(above: 0pt, below: 0pt)
+    stack(dir: ttb, spacing: 4pt,
+      grid(columns: (24mm, 1fr, 24mm), align: (left, center, right),
         if niveau != none { niveau },
         text(size: 1.2em, weight: "bold", titre),
         [#if auteur != none { link("https://mpi-informatique.github.io", auteur) }
@@ -53,11 +55,9 @@
            if auteur != none { linebreak() }
            texte-duree(duree)
          }],
-      )
-      #v(4pt)
-      #line(length: 100%, stroke: 0.4pt)
-    ],
-    footer: context align(center, text(size: 0.9em, counter(page).display("1 / 1", both: true))),
-  )
+      ),
+      line(length: 100%, stroke: 0.4pt),
+    )
+  })
   body
 }
