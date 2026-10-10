@@ -29,7 +29,11 @@
     touying.config-info(title: titre, author: auteur, date: none),
     touying.config-common(
       export-mode: if article { "article" } else if animations { "presentation" } else { "handout" },
-      article-theme: cours.with(titre: titre, niveau: niveau, auteur: auteur),
+      article-theme: body => {
+        // Touying encadre les paragraphes vides entre titres : leurs marges s'ajouteraient à celles des titres.
+        show block.where(body: parbreak()): it => []
+        cours(titre: titre, niveau: niveau, auteur: auteur, body)
+      },
       breakable: false,
       detect-overflow: true,
     ),
