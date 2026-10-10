@@ -88,6 +88,7 @@
   fancy-box(..args, full-title: "", {
     if full-title != "" {
       place(top + left, dx: 1em - inset.x, dy: -inset.top - hauteur / 2, titre)
+      v(0.5em)
     }
     body
   })
