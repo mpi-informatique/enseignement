@@ -2,6 +2,8 @@
 
 Lire et appliquer le [guide utilisateur](docs/utilisation.md) : il fait autorité pour la structure, les métadonnées, la rédaction, les concours et les vérifications. Ne pas recopier ces règles ici.
 
+Les consignes doivent porter uniquement sur les choix et procédures que le code ne contraint pas déjà. Ne pas recopier les validations, valeurs par défaut, styles ou comportements automatiques : renvoyer aux sources, aux commentaires de l'API ou aux modèles. Appliquer ce principe à toute mise à jour des instructions.
+
 ## Travail avec l'utilisateur
 
 - Poser les questions nécessaires ; ne pas choisir silencieusement en cas d'ambiguïté.
@@ -15,12 +17,5 @@ Lire et appliquer le [guide utilisateur](docs/utilisation.md) : il fait autorit�
 
 - Lancer `nix develop path:. -c just check` et annoncer les vérifications réellement effectuées.
 - N'inspecter les PDF générés que si c'est vraiment utile.
-- Communiquer les fichiers modifiés et les corrections, avec des liens cliquables vers les PDF d'énoncé et de corrigé générés.
+- Communiquer les fichiers modifiés et les corrections, avec des liens cliquables vers les PDF d'énoncé et de corrigé lorsqu'ils ont été générés.
 - Pour chaque modification, faire un commit directement sur la branche principale, puis synchroniser avec le dépôt distant : récupérer et intégrer les éventuels commits distants, puis pousser les commits locaux, sans push forcé.
-
-## Syntaxe
-
-- Préférer les deux-points aux points-virgules dans la prose et utiliser l'apostrophe droite (`'`).
-- Préférer l’infinitif plutôt que l’impératif dans les consignes et les commentaires : "Donner ..." plutôt que "Donnez ...".
-- Préférer "On considère ..." à "Considérer ...".
-- Préférer "Pour ... : $ blabla $" à "Pour ..., $ blabla. $".

@@ -17,11 +17,11 @@ Sans ouvrir l'environnement : `nix develop path:. -c python3 scripts/build.py c 
 | Script | Rôle |
 | --- | --- |
 | [build.py](build.py) | Point d'entrée : compiler, générer le catalogue et la documentation, lancer les tests, nettoyer les sorties. |
-| [sources.py](sources.py) | Repérer les sources d'après leur code : export `ex`, `feuille.with(...)`, `cours.with(...)`, `presentation.with(...)` ou `cours-et-presentation.with(...)`. Fournir les variantes, la compilation et la surveillance d'une source. |
-| [catalogue.py](catalogue.py) | Faire évaluer les métadonnées par Typst, vérifier l'unicité des identifiants et exporter le catalogue JSON, éventuellement filtré. |
+| [sources.py](sources.py) | Découverte, compilation et surveillance des sources. |
+| [catalogue.py](catalogue.py) | Évaluation des métadonnées et export du catalogue JSON. |
 | [package.py](package.py) | Copier l'API, les modèles et les contenus dans le répertoire des packages Typst. Utilisé aussi par Nix pour construire le package. |
 
-`build.py` utilise `sources.py` pour sélectionner les fichiers, lance Typst pour les PDF et appelle `catalogue.py` pour le JSON. Les tests Python de l'outillage sont dans `lib/tests/`, les tests des corrigés restent à côté des sujets.
+Placer les tests Python de l'outillage dans `lib/tests/` et les tests des corrigés à côté des sujets. Consulter les scripts pour leur fonctionnement et `--help` pour les options disponibles.
 
 ## Commandes utiles
 
@@ -30,15 +30,13 @@ Préfixer les commandes suivantes par `python3 scripts/build.py` :
 | Arguments | Résultat |
 | --- | --- |
 | `c chemin.typ` | Variantes dans `build/<chemin-sans-extension>/` : énoncé/corrigé, cours/présentation, ou format unique. |
-| `w chemin.typ --variant enonce` | Aperçu actualisé en continu dans `apercu.pdf`. Variantes : `enonce`, `corrige`, `cours`, `presentation`. Défaut : `cours` pour une source commune, `corrige` pour une feuille. |
+| `w chemin.typ --variant enonce` | Aperçu actualisé en continu dans `apercu.pdf`. Choisir explicitement `enonce`, `corrige`, `cours` ou `presentation` selon le document à relire. |
 | `all` | Tous les exercices et documents, puis le catalogue. |
 | `exercices` / `documents` | Seulement les exercices autonomes / les documents composés. |
 | `catalogue` / `docs` | `build/catalogue.json` / `build/docs/api.pdf`. |
 | `test` | Tests de l'API, du package, de la découverte et des programmes. |
 | `check` | Tous les contenus, catalogue, documentation, tests et modèles. |
 | `clean` | Supprimer `build/`. |
-
-Les PDF à jour sont réutilisés grâce aux fichiers `.sha256` : une modification des sources, de la version de Typst ou du chemin des packages invalide le cache.
 
 Pour les outils spécialisés :
 
