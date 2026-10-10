@@ -32,6 +32,21 @@
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
+  // Repérer le contenu entre deux titres pour ne rapprocher que les titres consécutifs.
+  let contenu = selector(par).or(raw.where(block: true)).or(figure).or(list).or(enum).or(math.equation.where(block: true)).or(table).or(image)
+  show contenu: it => [#metadata(none)<document-contenu>#it]
+  show heading: it => context {
+    let structures = selector(heading).or(<document-contenu>)
+    let avant = query(structures.before(it.location(), inclusive: false))
+    let apres = query(structures.after(it.location(), inclusive: false))
+    let suit-titre = avant.len() > 0 and avant.last().func() == heading and avant.last().level < it.level
+    let precede-titre = apres.len() > 0 and apres.first().func() == heading and apres.first().level > it.level
+    set block(above: 0.3em) if suit-titre
+    set block(below: 0.3em) if precede-titre
+    // Le texte du titre ne constitue pas un paragraphe intermédiaire.
+    show contenu: it => it
+    it
+  }
   set page(
     paper: "a4", margin: (x: 14mm, top: 25mm, bottom: 18mm),
     header-ascent: 5mm,
