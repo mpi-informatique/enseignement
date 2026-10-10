@@ -12,7 +12,7 @@
     frame: (
       thickness: epaisseur-trait,
       radius: get-fancy-radius(here()),
-      inset: (x: 1.2em, top: if args.named().at("full-title", default: auto) != "" { .7em } else { 1.2em }, bottom: 1.2em),
+      inset: (x: 0.8em, top: if args.named().at("full-title", default: auto) != "" { 0.5em } else { 0.7em }, bottom: 0.7em),
       border-color: black,
       title-color: white,
       body-color: white,
