@@ -81,9 +81,10 @@
 
 // Superposer le titre à la bordure, avec un fond blanc mais sans cartouche.
 #let rendre-exercice(body, full-title: auto, ..args) = context {
-  let titre = box(fill: white, inset: (x: 0.35em), text(weight: "semibold", full-title))
+  let frame = args.named().frame
+  let titre = box(fill: white, inset: (x: frame.title-inset.x), text(weight: "semibold", full-title))
   let hauteur = measure(titre).height
-  let inset = args.named().frame.inset
+  let inset = frame.inset
   if full-title != "" { v(hauteur / 2) }
   fancy-box(..args, full-title: "", {
     if full-title != "" {
