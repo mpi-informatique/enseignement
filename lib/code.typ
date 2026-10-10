@@ -17,7 +17,7 @@
           ),
         )
       }
-      text(size: 0.9em, it)
+      text(size: 1em, it)
     },
   )
   body

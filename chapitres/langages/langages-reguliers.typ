@@ -26,28 +26,16 @@
 ]
 
 #definition[
-  - Un alphabet est un ensemble $Σ$ fini, dont les éléments sont des lettres.
+  - Un alphabet est un ensemble $Σ$ fini de lettres.
   - Un mot $m$ sur un alphabet $Σ$ est une suite finie $m_1, …, m_n$ de lettres de $Σ$, et on note $m = m_1 … m_n$.
   L'entier $n$ est la taille de $m$, notée $abs(m)$.
   - Le mot vide, ne contenant aucune lettre, est noté $ε$.
+  - Deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ sur $Σ$ sont égaux si $n = p$ et : $forall i ∈ [|1, n|]$, $u_i = v_i$.
 
-  - $Σ^*$ est l'ensemble des mots sur $Σ$.
-  - $Σ^+ = Σ^* ∖ {ε}$.
+  - $Σ^*$ est l'ensemble des mots sur $Σ$ et $Σ^+ = Σ^* ∖ {ε}$.
 ]
 
-#attention[$ε$ est un mot, pas une lettre.]
-
-#presentation-seulement[
-  == Ensembles de mots
-]
-
-#presentation-seulement[
-  == Égalité de mots
-]
-
-#definition[
-  Deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ sur le même alphabet $Σ$ sont égaux s'ils ont la même taille ($n = p$) et si, pour tout $i ∈ {1, …, n}$, $u_i = v_i$.
-]
+#underline[Attention] : $ε$ est un mot, pas une lettre.
 
 #presentation-seulement[
   == Concaténation et puissance
@@ -64,8 +52,8 @@
 ]
 
 #exercise[
-  Soient $Σ$ un alphabet, $a, b ∈ Σ$ et $u ∈ Σ^*$. On suppose $a u = u b$.
-  Montrer que $a = b$ et qu'il existe $k ∈ ℕ$ tel que $u = a^k$.
+  Soient $Σ$ un alphabet, $a, b ∈ Σ$ et $u ∈ Σ^*$ tels que $a u = u b$.
+  Montrer que $a = b$ et : $exists k ∈ ℕ, u = a^k$.
 ]
 
 #presentation-seulement[
@@ -100,7 +88,7 @@
   - $u$ est un sous-mot (_subsequence_ en anglais) de $m$ si $u$ est une sous-suite, ou suite extraite, de $m$.
 ]
 
-#exemple[$a b c$ est un sous-mot de $a a b a c b$, mais pas un facteur.]
+#underline[Exemple] : $a b c$ est un sous-mot de $a a b a c b$, mais pas un facteur.
 
 #presentation-seulement[
   == Dénombrement des préfixes et des sous-mots
@@ -126,7 +114,7 @@ String.length s (* donne 3 *)
 "abc" ^ "def" (* concaténation *)
 ```
 
-#remarque[contrairement à ```ocaml array```, le type ```ocaml string``` est immuable : on ne peut pas modifier un caractère d'une chaîne.]
+Contrairement à ```ocaml array```, le type ```ocaml string``` est immuable : on ne peut pas modifier un caractère d'une chaîne.
 
 #presentation-seulement[
   == Reconnaissance d'un sous-mot
@@ -241,9 +229,8 @@ $ L^n = underbrace(L … L, n " facteurs") = {m_1 … m_n ∣ m_1 ∈ L, …, m_
   On définit l'étoile de Kleene $L^*$ d'un langage $L$ par :
   $ L^* = union.big_(k ∈ ℕ) L^k. $
 ]
-$L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque de mots de $L$.
-
-#remarque[$L^*$ contient toujours $ε$, car $L^0 = {ε}$.]
+$L^*$ est donc l'ensemble des mots obtenus par concaténation d'un nombre quelconque de mots de $L$. \
+$L^*$ contient toujours $ε$, car $L^0 = {ε}$.
 
 #pause
 #exercise[
@@ -418,7 +405,7 @@ Sur $Σ = {a, b}$ :
   Deux expressions régulières $e_1$ et $e_2$ sont dites équivalentes, ce que l'on note $e_1 ≡ e_2$, si elles définissent le même langage, c'est-à-dire si $L(e_1) = L(e_2)$.
 ]
 
-#exemple[$(a b)^* a ≡ a (b a)^*$.]
+#underline[Exemple] : $(a b)^* a ≡ a (b a)^*$.
 
 #presentation-seulement[
   == Propriétés à compléter
