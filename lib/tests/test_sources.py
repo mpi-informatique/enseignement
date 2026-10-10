@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
-from sources import classify, sources
+from sources import classify, sources, variants
 
 assert classify('#let ex = exercice()', '2026/graphes/un.typ') == 'exercice'
 assert classify('#show: feuille.with(type: "devoir", exercices: ())', 'ds.typ') == 'document'
@@ -17,8 +17,17 @@ assert classify('#let texte = "#show: feuille.with()"', 'a.typ') is None
 assert classify('#import "autre.typ": partie', 'a.typ') is None
 assert classify('#import "sujet.typ": ex', 'a.typ') == 'exercice'
 assert classify('#import "sujet.typ": autre as ex', 'a.typ') == 'exercice'
-print('Découverte des sources : 12 cas vérifiés.')
+assert classify('#show: cours.with(titre: "Cours")', 'libre/a.typ') == 'cours'
+assert classify('#show: presentation.with(titre: "Présentation")', 'libre/b.typ') == 'presentation'
+assert classify('#show: cours-et-presentation.with(titre: "Cours")', 'libre/c.typ') == 'cours-presentation'
+assert classify('// #show: cours-et-presentation.with()\n`#show: presentation.with()`', 'a.typ') is None
+assert variants('cours-presentation') == {'cours': ('format=cours',), 'presentation': ('format=presentation',)}
+assert variants('cours') == {'cours': ()}
+assert variants('presentation') == {'presentation': ()}
+assert variants('exercice') == variants('document') == {'enonce': ('corrige=false',), 'corrige': ('corrige=true',)}
+print('Découverte des sources et variantes : exercices, documents, cours et présentations vérifiés.')
 
 decouvertes = dict(sources())
 assert not any(source.startswith('lib/tests/') for source in decouvertes)
+assert decouvertes['chapitres/langages/langages-reguliers.typ'] == 'cours-presentation'
 print('Exclusion des tests de bibliothèque vérifiée.')

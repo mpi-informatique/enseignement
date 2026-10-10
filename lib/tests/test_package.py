@@ -41,4 +41,20 @@ with TemporaryDirectory() as dossier:
         subprocess.run(['typst', 'compile', '--root', str(racine), '--ignore-system-fonts',
                         '--package-path', str(racine / 'packages'), '--input', 'corrige=' + variante,
                         str(source), str(racine / (variante + '.pdf'))], check=True)
-print('Package local : imports, ressources, énoncé et corrigé vérifiés.')
+    source.write_text('''#import "@mpi-informatique/enseignement:0.1.0": cours-et-presentation, pause, cours-seulement, presentation-seulement, espace-reponse, theoremes
+#show: cours-et-presentation.with(titre: "Cours externe", niveau: "MPI")
+= Section
+== Notion
+#theoremes.definition-box(full-title: [Définition])[Un contenu commun.]
+#pause
+#theoremes.algorithm-box[Un algorithme commun.]
+#cours-seulement[#espace-reponse(2)]
+#presentation-seulement[Un complément projeté.]
+''', encoding='utf-8')
+    for variante in ('cours', 'presentation'):
+        output = racine / (variante + '.pdf')
+        subprocess.run(['typst', 'compile', '--root', str(racine), '--ignore-system-fonts',
+                        '--package-path', str(racine / 'packages'), '--input', 'format=' + variante,
+                        str(source), str(output)], check=True)
+        assert output.stat().st_size > 0
+print('Package local : imports, ressources, énoncé, corrigé, cours et présentation vérifiés.')

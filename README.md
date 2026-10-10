@@ -1,12 +1,12 @@
 # Enseignement
 
-Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-informatique) pour les classes préparatoires : exercices, sujets, feuilles et devoirs en Typst. Le dépôt pourra aussi accueillir les cours, TP et algorithmes avec leurs preuves. Le site et l'adaptation de l'extension VS Code seront ajoutés ultérieurement.
+Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-informatique) pour les classes préparatoires : exercices, sujets, feuilles, devoirs, cours et présentations en Typst. Le site et l'adaptation de l'extension VS Code seront ajoutés ultérieurement.
 
 ## Organisation
 
 ```text
 chapitres/               Contenus regroupés par chapitre
-  langages/              TD et colles, avec les exercices dans exercices/
+  langages/              Cours, TD et colles, avec les exercices dans exercices/
   graphes/               Exercices dans exercices/
   structures-de-donnees/ Exercices dans exercices/
   maths/                 Exercices dans determinants/ et reduction/, feuilles à côté
@@ -42,6 +42,20 @@ Hors de Nix, installer Typst, Just, Python 3.11 ou ultérieur et OCaml : `just c
 
 Just est facultatif pour compiler : `nix develop path:. -c python3 scripts/build.py c chemin.typ` équivaut à `nix develop path:. -c just c chemin.typ`. Voir la [vue d'ensemble des scripts Python](scripts/README.md) pour leurs rôles et les commandes directes.
 
+## Cours et présentations
+
+Les modèles [cours A4](templates/cours.typ), [présentation Touying](templates/presentation.typ) et [source commune](templates/cours-presentation.typ) utilisent les mêmes définitions, théorèmes, algorithmes et styles de code que les exercices.
+Le cours sur les [langages réguliers](chapitres/langages/langages-reguliers.typ) génère les deux formats sans recopier les énoncés :
+
+```sh
+nix develop path:. -c just c chapitres/langages/langages-reguliers.typ
+nix develop path:. -c just w chapitres/langages/langages-reguliers.typ presentation
+```
+
+La compilation produit `build/chapitres/langages/langages-reguliers/cours.pdf` et `presentation.pdf`.
+Le paramètre Typst `--input format=cours` ou `--input format=presentation` choisit la sortie pour une compilation directe.
+Voir le [guide de rédaction](docs/utilisation.md#cours-et-présentations) pour les pauses, les espaces de réponse et les contenus propres à un format.
+
 ## Package Typst
 
 Ce dépôt fournit `@mpi-informatique/enseignement:0.1.0` :
@@ -52,7 +66,7 @@ Ce dépôt fournit `@mpi-informatique/enseignement:0.1.0` :
 #show: feuille.with(titre: sujet.titre, exercices: sujet.exercices)
 ```
 
-`charger` importe un module par son chemin relatif au dépôt. Ses exports `ex`, `sujet` et les parties réutilisables restent accessibles. Les modules `meta`, `automate`, `code` et `theoremes` sont également exportés.
+`charger` importe un module par son chemin relatif au dépôt. Ses exports `ex`, `sujet` et les parties réutilisables restent accessibles. Les modules `meta`, `automate`, `code` et `theoremes` sont également exportés, ainsi que `cours`, `presentation`, `cours-et-presentation` et leurs commandes de composition.
 
 Le namespace `mpi-informatique` est local : Typst ne télécharge pas ce package depuis GitHub. Nix fournit automatiquement son chemin dans l'environnement. Les dépôts consommateurs doivent verrouiller ce dépôt comme entrée Nix et utiliser sa sortie `packages.<system>.typst-packages`. Ils n'ont pas besoin d'un clone voisin. `nix build path:.#typst-package` produit le package seul.
 

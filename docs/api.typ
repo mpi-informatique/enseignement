@@ -4,12 +4,20 @@
 #set text(font: "New Computer Modern", lang: "fr", size: 10pt)
 #set page(paper: "a4", margin: 18mm)
 #set heading(numbering: "1.1")
-= API de la banque d'exercices
+= API des ressources pédagogiques
 Guide utilisateur : `docs/utilisation.md`. Cette référence est générée depuis les commentaires du code.
 
 == Fonctions publiques
 #let api = tidy.parse-module(read("/lib/exercice.typ"), old-syntax: true)
 #tidy.show-module(api, style: tidy.styles.default)
+
+== Cours A4
+#let cours = tidy.parse-module(read("/lib/cours.typ"), old-syntax: true)
+#tidy.show-module(cours, style: tidy.styles.default)
+
+== Présentations et source commune
+#let presentation = tidy.parse-module(read("/lib/presentation.typ"), old-syntax: true)
+#tidy.show-module(presentation, style: tidy.styles.default)
 
 == Chargement depuis le package local
 #let paquet = tidy.parse-module(read("/enseignement.typ"), old-syntax: true)

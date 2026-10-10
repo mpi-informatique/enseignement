@@ -3,6 +3,7 @@
 
 #import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
 #import "theoremes.typ": configurer-theoremes
+#import "code.typ": configurer-code
 
 /// Espace horizontal de 0,5 em, utilisable dans une formule avec `#sep`.
 /// -> content
@@ -366,12 +367,7 @@
   show heading.where(level: 1): set text(size: 11pt)
   show heading.where(level: 2): set text(size: 10.5pt)
   show heading.where(level: 3): set text(size: 10pt)
-  // Comme l'environnement code : fond blanc et deux filets horizontaux.
-  show raw.where(block: true): it => block(
-    width: 100%, inset: (x: 8pt, y: 7pt),
-    stroke: (top: 0.4pt, bottom: 0.4pt),
-    text(size: 9pt, it),
-  )
+  show: configurer-code
   body
   let debut-bareme = 0
   for (i, ex) in if afficher-exercices { exercices.enumerate(start: 1) } else { () } {

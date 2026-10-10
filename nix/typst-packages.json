@@ -15,6 +15,16 @@
     "hash": "sha256-sAmboiWn6MNQjeZ8u3n8QBVaEwB56wFo2zTCh3VFyM8="
   },
   {
+    "name": "hy-dro-gen",
+    "version": "0.1.1",
+    "hash": "sha256-qm+YWpliV3QICQCwvCssTZlFBQeuqGXU+ptc8iLH2qU="
+  },
+  {
+    "name": "meander",
+    "version": "0.4.4",
+    "hash": "sha256-AhHfssbVmLbX/74YwMRCJaIiJtjOtiaQVxg11czUDYo="
+  },
+  {
     "name": "octique",
     "version": "0.1.1",
     "hash": "sha256-dH2yqqRFc4i+kYwSef/yEl5LKt2zXQ43eG3o+aDhoQI="
@@ -43,6 +53,16 @@
     "name": "tidy",
     "version": "0.4.3",
     "hash": "sha256-3F4nBSvietpAevp+EgZIFoLfv4GRMLjSyGD+7RCYjjg="
+  },
+  {
+    "name": "touying",
+    "version": "0.8.0",
+    "hash": "sha256-wZ6D8oJkXXDK39MInc2VNAiMf2nQxg7I6EinKxTyoaU="
+  },
+  {
+    "name": "uniwarn",
+    "version": "0.1.1",
+    "hash": "sha256-sTGerNf9eBuuvl20yytfvQulfWiU5gtPZOB6GK0M0ho="
   },
   {
     "name": "valkyrie",

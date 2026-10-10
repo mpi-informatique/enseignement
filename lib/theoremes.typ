@@ -50,6 +50,13 @@
 #let problem = titre-blanc.with(problem)
 #let problem-box = titre-blanc.with(problem-box)
 
+/// Algorithmes présentés avec le même cadre et le même compteur que les théorèmes.
+#let (_, algorithm-box, algorithm, show-algorithm) = theorion.make-frame(
+  "algorithm", [Algorithme], counter: theorem-counter, render: fancy-box,
+)
+#let algorithm = titre-blanc.with(algorithm)
+#let algorithm-box = titre-blanc.with(algorithm-box)
+
 #let configurer-theoremes(body) = {
   set-primary-border-color(black)
   set-primary-body-color(white)
@@ -61,5 +68,6 @@
   set-quaternary-body-color(white)
   set-secondary-symbol(none)
   show: show-theorion
+  show: show-algorithm
   body
 }

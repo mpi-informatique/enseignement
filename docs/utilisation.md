@@ -18,14 +18,14 @@ Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple 
 
 Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD, colles et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
 Les mathématiques conservent leurs sous-dossiers dans `chapitres/maths/`, notamment `determinants/` et `reduction/`. Leurs feuilles sont directement dans `chapitres/maths/`.
-Les sujets de concours sont dans `devoirs/concours/`, avec leur classement par année. Les cours, TP et algorithmes pourront rejoindre les chapitres correspondants.
+Les sujets de concours sont dans `devoirs/concours/`, avec leur classement par année. Les cours et présentations sont dans leur chapitre, avec leurs ressources dans un sous-dossier voisin.
 
 Partir des modèles [exercice](../templates/exercice.typ), [TD](../templates/feuille.typ), [devoir](../templates/devoir.typ) ou [sujet de concours](../templates/sujet-concours.typ).
 Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
 
 - Les dossiers sont libres, y compris la racine : le type est déclaré dans le code, pas déduit du chemin. Les dossiers actuels peuvent être conservés ou réorganisés. Les répertoires techniques `lib`, `templates`, `docs`, `scripts`, `build`, `tmp`, `node_modules` et les dossiers cachés ne sont pas des entrées du catalogue.
 - Un exercice exporte `ex` ; le nom du fichier sans extension est son identifiant, unique dans la banque.
-- Tous les documents utilisent `#show: feuille.with(type: "td", ...)`. Types fournis : `"td"`, `"devoir"`, `"concours"`. Un TD ou devoir importe les objets `ex` sous des alias distincts dans `exercices: (alias1, alias2,)`. L'ordre du tableau est l'ordre d'affichage ; `()` crée un document vide.
+- Les feuilles d'exercices utilisent `#show: feuille.with(type: "td", ...)`. Types fournis : `"td"`, `"devoir"`, `"concours"`. Un TD ou devoir importe les objets `ex` sous des alias distincts dans `exercices: (alias1, alias2,)`. L'ordre du tableau est l'ordre d'affichage ; `()` crée un document vide.
 - Un sujet complet conserve son contenu dans un seul fichier, exporte `ex` et utilise le même appel `feuille.with(type: "concours", exercices: (ex,), ...)`.
 - Réutiliser une partie en exportant une variable puis en l'important, sans copier le sujet ni rechercher une partie par numéro.
 - Introductions et définitions vont dans `contenu`. Reprendre explicitement les rappels de `contexte` dans un exercice autonome.
@@ -37,6 +37,63 @@ Un devoir est simplement un document avec un barème, sans paramètre `evaluatio
 Pour ajouter un type, copier un modèle dans `templates/`, remplacer son champ littéral `type` (par exemple `type: "colle"`) et adapter son contenu. La découverte et la compilation reconnaissent le nouveau type sans modifier le justfile. Garder `feuille.with` et un `titre` littéral (ou `ex.meta.titre` pour un sujet monolithique) ; les champs calculés ne sont pas évalués par la recherche.
 
 Sans champ `type`, `feuille.with(...)` produit un TD. Les noms de fichiers utilisent lettres, chiffres, tirets et traits de soulignement ; les chemins sont relatifs à la banque.
+
+## Cours et présentations
+
+Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [templates/presentation.typ](../templates/presentation.typ) pour des diapositives, ou de [templates/cours-presentation.typ](../templates/cours-presentation.typ) pour produire les deux à partir du même contenu.
+
+```typst
+#import "/lib/presentation.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement, espace-reponse
+#import "/lib/theoremes.typ": definition-box, theorem-box, algorithm-box, exercise-box
+
+#show: cours-et-presentation.with(titre: "Titre du cours", niveau: "MPI")
+
+= Section
+
+== Notion
+
+#definition-box(full-title: [Définition])[
+  Définition commune aux deux sorties.
+]
+#pause
+#theorem-box(full-title: [Théorème])[
+  Énoncé commun aux deux sorties.
+]
+
+== Application
+
+#exercise-box(full-title: [Exercice])[
+  Appliquer le théorème.
+]
+#cours-seulement[#espace-reponse(4)]
+#presentation-seulement[
+  #pause
+  Indication à révéler pendant la présentation.
+]
+```
+
+Les titres `=` structurent les sections, les titres `==` ouvrent les diapositives et deviennent des sous-sections du cours.
+Touying 0.8.0 transforme la source en article continu pour la sortie A4 et résout les animations à leur état final.
+Utiliser `cours-seulement[...]` pour les espaces de réponse et les détails destinés au polycopié, et `presentation-seulement[...]` pour les compléments projetés.
+Ces commandes peuvent aussi entourer une section entière.
+Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
+
+`cours` et `presentation` s'utilisent aussi séparément avec leurs règles `#show: ...with(...)`.
+Les paramètres communs sont `titre`, `niveau` et `auteur`. `presentation` propose aussi `aspect-ratio`, `taille`, `couleur` et `animations: false` pour produire uniquement l'état final de chaque diapositive.
+Les blocs de code utilisent `code.configurer-code`, partagé avec les feuilles d'exercices.
+Les algorithmes utilisent `theoremes.algorithm` ou `algorithm-box`, avec le même cadre noir et blanc et le même compteur que les théorèmes.
+
+```sh
+nix develop path:. -c just c chapitres/langages/langages-reguliers.typ
+nix develop path:. -c just w chapitres/langages/langages-reguliers.typ cours
+nix develop path:. -c just w chapitres/langages/langages-reguliers.typ presentation
+```
+
+`just c` produit `cours.pdf` et `presentation.pdf` dans `build/<chemin-sans-extension>/` pour une source commune.
+Un cours seul ou une présentation seule produit uniquement sa variante.
+Sans variante explicite, `just w` surveille le cours d'une source commune, ou le corrigé d'une feuille d'exercices.
+Pour compiler directement, utiliser `typst compile --root . --input format=cours source.typ cours.pdf` ou `--input format=presentation`.
+Les trois modèles et les deux variantes de chaque source commune sont compilés par `just check`.
 
 ## Aide de l'API
 
@@ -70,7 +127,7 @@ Le contrat détaillé est dans le commentaire de `exercice`. Les champs `algorit
 
 ### Création de devoirs et d'exercices
 
-- Consulter les cours correspondants dans `le dépôt de cours existant, puis `cours/` après leur intégration` pour reprendre leurs notations, définitions et termes. Introduire explicitement les notions nouvelles et les résultats admis.
+- Consulter les cours correspondants dans `chapitres/`, ou dans le dépôt de cours existant pour les chapitres non encore intégrés, pour reprendre leurs notations, définitions et termes. Introduire explicitement les notions nouvelles et les résultats admis.
 - Énoncer dès l'introduction les hypothèses et conventions communes à tout le sujet. Éviter « sauf mention contraire » lorsqu'aucune exception n'est prévue. Pour une généralisation ponctuelle, préciser sa portée et utiliser une notation distincte si nécessaire.
 - Construire une progression : exemples, résultats intermédiaires, caractérisation, applications. Vérifier que chaque question dispose des résultats nécessaires et que les transitions entre parties sont explicites.
 - Dans les devoirs, privilégier les questions qui demandent de trouver une méthode ou un résultat, puis de le démontrer ou d'en justifier la correction, plutôt que de donner la solution et de demander seulement sa preuve. Doser les indications selon la difficulté et la progression du sujet.

@@ -57,6 +57,9 @@ def mask(text):
 def classify(text, source):
     code = mask(text)
     # Le contenu détermine le type, quel que soit le dossier.
+    for template, kind in (("cours-et-presentation", "cours-presentation"), ("cours", "cours"), ("presentation", "presentation")):
+        if re.search(r'#show\s*:\s*' + template + r'\.with\s*\(', code):
+            return kind
     if re.search(r'#show\s*:\s*feuille\.with\s*\(', code):
         return "document"
     reexports = any(re.fullmatch(r'(?:ex|[\w-]+\s+as\s+ex)', member.strip())
@@ -65,6 +68,15 @@ def classify(text, source):
     if re.search(r'#let\s+ex\s*=', code) or reexports:
         return "exercice"
     return None
+
+
+def variants(kind):
+    """Les sorties d'une source et les paramètres de compilation correspondants."""
+    if kind == 'cours-presentation':
+        return {'cours': ('format=cours',), 'presentation': ('format=presentation',)}
+    if kind in ('cours', 'presentation'):
+        return {kind: ()}
+    return {'enonce': ('corrige=false',), 'corrige': ('corrige=true',)}
 
 
 def sources():
@@ -84,7 +96,7 @@ def main():
     parser.add_argument('--list', choices=['exercices', 'documents', 'all'])
     parser.add_argument('--source')
     parser.add_argument('--output')
-    parser.add_argument('--variant', choices=['enonce', 'corrige'], default='enonce')
+    parser.add_argument('--variant', choices=['enonce', 'corrige', 'cours', 'presentation'])
     parser.add_argument('--typst', default='typst')
     parser.add_argument('--watch', action='store_true')
     args = parser.parse_args()
@@ -98,11 +110,17 @@ def main():
         parser.error('La source doit rester dans la banque.')
     kind = classify(source.read_text(), source.relative_to(ROOT).as_posix())
     if not kind:
-        parser.error('Source non reconnue : exporter ex ou utiliser feuille.with(...).')
+        parser.error('Source non reconnue : exporter ex ou utiliser un modèle de document.')
+    available = variants(kind)
+    variant = args.variant or next(iter(available))
+    if variant not in available:
+        parser.error('Variantes disponibles : ' + ', '.join(available))
     output = ROOT / args.output
     output.parent.mkdir(parents=True, exist_ok=True)
-    command = [args.typst, 'watch' if args.watch else 'compile', '--root', str(ROOT), '--ignore-system-fonts', '--input', f'corrige={str(args.variant == "corrige").lower()}']
-    if kind == 'document':
+    command = [args.typst, 'watch' if args.watch else 'compile', '--root', str(ROOT), '--ignore-system-fonts']
+    for value in available[variant]:
+        command += ['--input', value]
+    if kind != 'exercice':
         command.append(str(source))
     else:
         command += ['--input', 'exercice=/' + source.relative_to(ROOT).as_posix(), str(ROOT / 'templates/fiche.typ')]

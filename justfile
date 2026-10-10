@@ -23,13 +23,13 @@ documents:
 catalogue:
     {{python}} scripts/build.py catalogue
 
-# Compiler l'énoncé et le corrigé d'une source.
+# Compiler les variantes d'une source : énoncé/corrigé ou cours/présentation.
 c source:
     {{python}} scripts/build.py c "$1"
 
-# Surveiller une source, avec la variante enonce ou corrige.
-w source variante="corrige":
-    {{python}} scripts/build.py w "$1" --variant "$2"
+# Surveiller une source, éventuellement avec une variante explicite.
+w source variante="":
+    {{python}} scripts/build.py w "$1" ${2:+--variant "$2"}
 
 # Générer la documentation de l'API.
 docs:

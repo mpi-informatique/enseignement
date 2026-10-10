@@ -1,3 +1,15 @@
+/// Style des blocs de code, commun aux exercices, cours et présentations.
+/// - body (content): Document à mettre en forme.
+/// -> content
+#let configurer-code(body) = {
+  show raw.where(block: true): it => block(
+    width: 100%, inset: (x: 0.8em, y: 0.7em),
+    stroke: (top: 0.04em, bottom: 0.04em),
+    text(size: 0.9em, it),
+  )
+  body
+}
+
 /// Extrait une région OCaml du fichier utilisé par les tests.
 /// - source (str): Texte lu depuis le fichier de ressources.
 /// - nom (str): Région entre `(* BEGIN nom *)` et `(* END nom *)`, uniques et dans cet ordre.
