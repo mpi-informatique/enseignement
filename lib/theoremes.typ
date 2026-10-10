@@ -2,8 +2,6 @@
 #import "@preview/theorion:0.6.0" as theorion
 #import theorion.cosmos.fancy: *
 
-#let espacement-cadres = state("enseignement-espacement-cadres", none)
-
 // Fancy lie par défaut le fond du titre à la couleur de la bordure.
 #let titre-blanc(environnement, coeur: false, ..args) = context {
   let cadre = environnement(
@@ -19,8 +17,6 @@
     ),
     title-style: (boxed-style: (anchor: (x: start, y: horizon), radius: 0em), color: black, weight: "semibold"),
   )
-  let espacement = espacement-cadres.get()
-  if espacement != none { v(espacement, weak: true) }
   if coeur {
     grid(
       columns: (0pt, 1fr), column-gutter: 0pt,
@@ -32,7 +28,6 @@
   } else {
     cadre
   }
-  if espacement != none { v(espacement, weak: true) }
 }
 
 // Compter une seule fois les cadres répétés par les animations de Touying.
@@ -105,8 +100,7 @@
 #let (problem-counter, problem, problem-box, show-problem) = creer-environnement("problem", symbole: get-quaternary-symbol)
 #let (algorithm-counter, algorithm, algorithm-box, show-algorithm) = creer-environnement("algorithm")
 
-#let configurer-theoremes(espacement: none, body) = {
-  espacement-cadres.update(espacement)
+#let configurer-theoremes(body) = {
   set-primary-border-color(black)
   set-primary-body-color(white)
   set-secondary-border-color(black)

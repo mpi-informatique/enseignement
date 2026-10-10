@@ -20,7 +20,6 @@
 #let presentation(titre: "Présentation", niveau: none, auteur: auteur-par-defaut, aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), animations: true, article: false, body) = {
   show: configurer-theoremes
   set text(font: "New Computer Modern", lang: "fr")
-  set par(leading: 0.65em, spacing: 0.65em)
   show: touying.themes.simple.simple-theme.with(
     aspect-ratio: aspect-ratio,
     primary: couleur,
@@ -41,6 +40,7 @@
     touying.config-methods(init: (self: none, body) => {
       show: configurer-code
       set text(size: taille)
+      set par(leading: 0.65em, spacing: 0.65em)
       body
     }),
   )
