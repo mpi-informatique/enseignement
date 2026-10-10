@@ -28,23 +28,23 @@
     ], solution: [Vrai comme démontré dans le cours sur les automates.]),
     question([
       Une union finie de langages réguliers est régulière
-      ($L_1, …, L_n$ réguliers $⇒ ⋃_(k=1)^n L_k$ régulier).
+      ($L_1, …, L_n$ réguliers $==> ⋃_(k=1)^n L_k$ régulier).
     ], solution: [
       Vrai par récurrence sur $n$ et la stabilité des langages réguliers par union de deux langages réguliers.
     ]),
     question([
       Une union dénombrable de langages réguliers est régulière
-      ($L_1, …, L_n, …$ réguliers $⇒ ⋃_(k=1)^∞ L_k$ régulier).
+      ($L_1, …, L_n, …$ réguliers $==> ⋃_(k=1)^∞ L_k$ régulier).
     ], solution: [Faux avec $L_n = {a^n b^n}$ pour $n ≥ 1$.]),
     question([
       Une intersection finie de langages réguliers est régulière
-      ($L_1, …, L_n$ réguliers $⇒ ⋂_(k=1)^n L_k$ régulier).
+      ($L_1, …, L_n$ réguliers $==> ⋂_(k=1)^n L_k$ régulier).
     ], solution: [
       Vrai par récurrence sur $n$, en utilisant la stabilité des langages réguliers par intersection de deux langages réguliers, vue dans le cours sur les automates.
     ]),
     question([
       Une intersection dénombrable de langages réguliers est régulière
-      ($L_1, …, L_n, …$ réguliers $⇒ ⋂_(k=1)^∞ L_k$ régulier).
+      ($L_1, …, L_n, …$ réguliers $==> ⋂_(k=1)^∞ L_k$ régulier).
     ], solution: [
       Faux avec $L_n = Σ^* ∖ {a^n b^n}$ pour $n ≥ 1$, sur $Σ = {a,b}$ : si
       $ ⋂_(n=1)^∞ L_n = Σ^* ∖ {a^n b^n | n ≥ 1} $

@@ -20,7 +20,7 @@
     ]),
     question([Soit $A$ un automate à $n$ états et de langage $L(A)$.
       Montrer que $L(A)=∅$ si et seulement si $L(A)$ ne contient aucun mot de longueur strictement inférieure à $n$.], solution: [
-      $⇒$ : immédiat.
+      $==>$ : immédiat.
 
       $⇐$ : supposons $L(A)≠∅$ et choisissons un mot accepté $u$ de longueur minimale.
       Si $abs(u)≥n$, son chemin acceptant passe par au moins $n+1$ occurrences d'états.

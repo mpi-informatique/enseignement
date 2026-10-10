@@ -2,7 +2,7 @@
 
 #let ex = exercice(
   meta: (
-    titre: "Reconnaissable ⇒ régulier par programmation dynamique",
+    titre: "Reconnaissable ⟹ régulier par programmation dynamique",
     chapitres: ("langages-reguliers", "automates-finis", "algorithmique"),
     algorithmes: ("programmation-dynamique",),
     difficulte: 3,

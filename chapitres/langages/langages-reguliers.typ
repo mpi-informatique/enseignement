@@ -442,9 +442,9 @@ Sur $Σ = {a, b}$ :
 #theorem(coeur: true)[
   Soit $cal(P)(L)$ une propriété sur les langages réguliers telle que :
   - $cal(P)(L)$ est vraie pour les langages $L$ finis : cas de base.
-  - $cal(P)(L_1) ∧ cal(P)(L_2) ⇒ cal(P)(L_1 L_2)$.
-  - $cal(P)(L_1) ∧ cal(P)(L_2) ⇒ cal(P)(L_1 ∪ L_2)$.
-  - $cal(P)(L) ⇒ cal(P)(L^*)$.
+  - $cal(P)(L_1) ∧ cal(P)(L_2) ==> cal(P)(L_1 L_2)$.
+  - $cal(P)(L_1) ∧ cal(P)(L_2) ==> cal(P)(L_1 ∪ L_2)$.
+  - $cal(P)(L) ==> cal(P)(L^*)$.
 
   Alors $cal(P)(L)$ est vraie pour tout langage régulier $L$.
 ]
@@ -460,9 +460,9 @@ Sur $Σ = {a, b}$ :
   Soit $cal(P)(e)$ une propriété sur les expressions régulières telle que :
   - $cal(P)(∅)$ et $cal(P)(ε)$ sont vraies : cas de base.
   - $cal(P)(a)$ est vraie pour $a ∈ Σ$ : cas de base.
-  - $cal(P)(e_1) ∧ cal(P)(e_2) ⇒ cal(P)(e_1 e_2)$.
-  - $cal(P)(e_1) ∧ cal(P)(e_2) ⇒ cal(P)(e_1 | e_2)$.
-  - $cal(P)(e) ⇒ cal(P)(e^*)$.
+  - $cal(P)(e_1) ∧ cal(P)(e_2) ==> cal(P)(e_1 e_2)$.
+  - $cal(P)(e_1) ∧ cal(P)(e_2) ==> cal(P)(e_1 | e_2)$.
+  - $cal(P)(e) ==> cal(P)(e^*)$.
 
   Alors $cal(P)(e)$ est vraie pour toute expression régulière $e$.
 ]
