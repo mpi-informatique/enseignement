@@ -413,13 +413,20 @@ Sur $Σ = {a, b}$ :
 
 #property[
   Pour des expressions régulières $e$, $e_1$, $e_2$ et $e_3$, compléter :
-  + $e ∅ ≡ …$
-  + $e ε ≡ …$
-  + $e | ∅ ≡ …$
-  + $∅^* ≡ …$
-  + $ε^* ≡ …$
-  + $(e_1 | e_2) e_3 ≡ …$
-  + $e_1 (e_2 e_3) ≡ …$
+  #grid(columns: (1fr, 1fr), column-gutter: 2em, align: top,
+    [
+      + $e ∅ ≡$
+      + $e ε ≡$
+      + $e | ∅ ≡$
+      + $∅^* ≡$
+    ],
+    [
+      #set enum(start: 5)
+      + $ε^* ≡$
+      + $(e_1 | e_2) e_3 ≡$
+      + $e_1 (e_2 e_3) ≡$
+    ],
+  )
 ]
 
 = Induction structurelle
