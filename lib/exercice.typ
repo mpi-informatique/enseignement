@@ -1,6 +1,7 @@
 /// API commune des exercices, feuilles et sujets de concours.
 /// Guide de rédaction : docs/utilisation.md. Documentation générée : just docs.
 
+#import "blocs.typ": bloc-solution
 #import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
 #import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree, espacement-blocs
 
@@ -215,16 +216,6 @@
     bareme: bareme,
   )
 }
-
-/// Présentation commune aux solutions et aux commentaires des copies corrigées.
-/// - body (content): Solution ou commentaire.
-/// - above (length): Espacement avant le bloc.
-/// - below (length): Espacement après le bloc.
-/// -> content
-#let bloc-solution(body, above: espacement-blocs, below: espacement-blocs) = block(
-  width: 100%, stroke: (left: 0.4pt + luma(60%)),
-  inset: (left: 10pt, y: 3pt), above: above, below: below, body,
-)
 
 #let marge-droite(body) = place(top + left, dx: 100% + 5mm,
   block(width: 15mm, {

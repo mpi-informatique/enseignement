@@ -1,12 +1,10 @@
 /// Mise en page A4 commune aux feuilles et aux cours.
 #import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
+#import "blocs.typ": espacement-blocs
 
 /// Auteur utilisé par défaut dans les documents pédagogiques.
 #let auteur-par-defaut = "Q. Fortier"
-
-/// Espacement vertical commun aux blocs des feuilles et des cours.
-#let espacement-blocs = 8pt
 
 #let texte-duree(duree) = {
   let (heures, minutes) = duree

@@ -1,6 +1,7 @@
 /// Environnements Theorion avec le thème Fancy en noir et blanc.
 #import "@preview/theorion:0.6.0" as theorion
 #import theorion.cosmos.fancy: *
+#import "blocs.typ": bloc-annotation, attention, remarque, exemple
 
 #let espacement-cadres = state("enseignement-espacement-cadres", none)
 
@@ -76,16 +77,20 @@
   )
 }
 
+#let rendre-annotation(genre, body, ..args) = bloc-annotation(genre: genre, body)
+
 // Chaque type possède un compteur indépendant, sans héritage des sections.
 #let creer-environnement(nom, symbole: get-secondary-symbol) = {
+  let annotation = (remark: "remarque", note: "remarque", example: "exemple").at(nom, default: none)
   let (compteur, sans-numero, numerote, afficher) = theorion.make-frame(
     nom,
     if nom == "algorithm" { [Algorithme] } else { theorion.theorion-i18n-map.at(nom) },
     counter: compteur-cadres(nom),
     numbering: "1",
-    render: fancy-box.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white),
+    render: if annotation != none { rendre-annotation.with(annotation) } else { fancy-box.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white) },
   )
-  (compteur, titre-blanc.with(numerote), titre-blanc.with(sans-numero), afficher)
+  if annotation != none { (compteur, numerote, sans-numero, afficher) }
+  else { (compteur, titre-blanc.with(numerote), titre-blanc.with(sans-numero), afficher) }
 }
 
 #let (theorem-counter, theorem, theorem-box, show-theorem) = creer-environnement("theorem")

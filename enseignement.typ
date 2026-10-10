@@ -1,5 +1,6 @@
 /// API et contenus du package mpi-informatique/enseignement.
 #import "lib/exercice.typ": *
+#import "lib/blocs.typ": attention, remarque, exemple
 #import "lib/meta.typ" as meta
 #import "lib/automate.typ" as automate
 #import "lib/code.typ" as code

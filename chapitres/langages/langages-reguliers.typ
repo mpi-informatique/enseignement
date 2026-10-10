@@ -1,6 +1,7 @@
 #import "/lib/presentation.typ": cours-et-presentation, pause, only, cours-seulement, presentation-seulement
 #import "/lib/theoremes.typ": definition, theorem, lemma, property, exercise, problem, corollary
 #import "/lib/exercice.typ": sep
+#import "/lib/blocs.typ": attention, remarque, exemple
 
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
 
@@ -34,7 +35,7 @@
   Le mot vide, ne contenant aucune lettre, est noté $ε$.
 ]
 
-*Attention* : $ε$ est un mot, pas une lettre.
+#attention[$ε$ est un mot, pas une lettre.]
 
 #presentation-seulement[
   == Ensembles de mots
@@ -44,7 +45,7 @@
 - $Σ^+ = Σ^* ∖ {ε}$.
 - $Σ^n$ est l'ensemble des mots de longueur $n$ sur $Σ$.
 
-*Remarque* : on confond parfois la lettre $a$ et le mot $a$, de longueur $1$.
+#remarque[on confond parfois la lettre $a$ et le mot $a$, de longueur $1$.]
 
 #presentation-seulement[
   == Égalité de mots
@@ -107,7 +108,7 @@
   - $u$ est un sous-mot (_subsequence_ en anglais) de $m$ si $u$ est une sous-suite, ou suite extraite, de $m$.
 ]
 
-*Exemple* : $a b c$ est un sous-mot de $a a b a c b$, mais pas un facteur.
+#exemple[$a b c$ est un sous-mot de $a a b a c b$, mais pas un facteur.]
 
 #presentation-seulement[
   == Dénombrement des préfixes et des sous-mots
@@ -133,7 +134,7 @@ String.length s (* donne 3 *)
 "abc" ^ "def" (* concaténation *)
 ```
 
-*Remarque* : contrairement à ```ocaml array```, le type ```ocaml string``` est immuable : on ne peut pas modifier un caractère d'une chaîne.
+#remarque[contrairement à ```ocaml array```, le type ```ocaml string``` est immuable : on ne peut pas modifier un caractère d'une chaîne.]
 
 #presentation-seulement[
   == Reconnaissance d'un sous-mot
@@ -230,7 +231,7 @@ $ L_1 (L_2 ∪ L_3) = L_1 L_2 ∪ L_1 L_3. $
 Dit autrement :
 $ L^n = underbrace(L ⋯ L, n " facteurs") = {m_1 ⋯ m_n ∣ m_1 ∈ L, …, m_n ∈ L}. $
 
-*Exemple* : $Σ^n$ est l'ensemble des mots de longueur $n$ sur l'alphabet $Σ$.
+#exemple[$Σ^n$ est l'ensemble des mots de longueur $n$ sur l'alphabet $Σ$.]
 
 #presentation-seulement[
   == Puissance et inclusion
@@ -250,7 +251,7 @@ $ L^n = underbrace(L ⋯ L, n " facteurs") = {m_1 ⋯ m_n ∣ m_1 ∈ L, …, m_
 ]
 $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque de mots de $L$.
 
-*Remarque* : $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
+#remarque[$L^*$ contient toujours $ε$, car $L^0 = {ε}$.]
 
 #pause
 #exercise[
@@ -286,9 +287,10 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
   Par récurrence immédiate, si $L_1, …, L_n$ sont réguliers, alors $L_1 ∪ ⋯ ∪ L_n$ et $L_1 L_2 ⋯ L_n$ sont réguliers.
 ]
 
-*Attention* :
-- Une union infinie de langages réguliers n'est pas forcément régulière.
-- Un langage particulier n'est pas forcément stable par concaténation.
+#attention[
+  - Une union infinie de langages réguliers n'est pas forcément régulière.
+  - Un langage particulier n'est pas forcément stable par concaténation.
+]
 
 #presentation-seulement[
   == Exemples de langages réguliers
@@ -423,7 +425,7 @@ Sur $Σ = {a, b}$ :
   Deux expressions régulières $e_1$ et $e_2$ sont dites équivalentes, ce que l'on note $e_1 ≡ e_2$, si elles définissent le même langage, c'est-à-dire si $L(e_1) = L(e_2)$.
 ]
 
-*Exemple* : $(a b)^* a ≡ a (b a)^*$.
+#exemple[$(a b)^* a ≡ a (b a)^*$.]
 
 #presentation-seulement[
   == Propriétés à compléter
