@@ -79,6 +79,14 @@
 
 #let rendre-annotation(genre, body, ..args) = bloc-annotation(genre: genre, body)
 
+// Le titre d'un exercice reste hors du cadre qui délimite son énoncé.
+#let rendre-exercice(body, full-title: auto, ..args) = {
+  if full-title != "" {
+    block(above: 0pt, below: 0.5em, sticky: true, text(weight: "semibold", full-title))
+  }
+  fancy-box(..args, full-title: "", body)
+}
+
 // Chaque type possède un compteur indépendant, sans héritage des sections.
 #let creer-environnement(nom, symbole: get-secondary-symbol) = {
   let annotation = (remark: "remarque", note: "remarque", example: "exemple").at(nom, default: none)
@@ -87,7 +95,9 @@
     if nom == "algorithm" { [Algorithme] } else { theorion.theorion-i18n-map.at(nom) },
     counter: compteur-cadres(nom),
     numbering: "1",
-    render: if annotation != none { rendre-annotation.with(annotation) } else { fancy-box.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white) },
+    render: if annotation != none { rendre-annotation.with(annotation) }
+      else if nom in ("exercise", "problem") { rendre-exercice.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white) }
+      else { fancy-box.with(get-symbol: symbole, get-border-color: loc => black, get-body-color: loc => white) },
   )
   if annotation != none { (compteur, numerote, sans-numero, afficher) }
   else { (compteur, titre-blanc.with(numerote), titre-blanc.with(sans-numero), afficher) }
