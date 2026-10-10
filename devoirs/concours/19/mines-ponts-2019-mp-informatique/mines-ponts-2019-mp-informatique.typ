@@ -1,6 +1,7 @@
 #import "/lib/code.typ": code-region
 #import "/lib/automate.typ": dessiner-automate, rayon-etat, rayon-grand-etat
-#import "/lib/exercice.typ": exercice, question, partie, sep
+#import "/lib/exercice.typ": exercice, question, partie
+#import "/lib/document.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
 #let source = read("corrige.ml")

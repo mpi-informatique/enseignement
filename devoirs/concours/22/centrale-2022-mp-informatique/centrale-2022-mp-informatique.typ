@@ -1,6 +1,7 @@
 #import "/lib/code.typ": code-region
 #import "/lib/automate.typ": unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/lib/exercice.typ": exercice, question, partie, sep, widetilde
+#import "/lib/exercice.typ": exercice, question, partie
+#import "/lib/document.typ": sep, widetilde
 #import "@preview/cetz:0.4.2" as cetz
 #import "@preview/finite:0.5.1" as finite
 

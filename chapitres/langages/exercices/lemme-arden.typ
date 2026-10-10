@@ -1,5 +1,6 @@
 #import "/lib/automate.typ": unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/lib/exercice.typ": exercice, question, sep
+#import "/lib/exercice.typ": exercice, question
+#import "/lib/document.typ": sep
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 

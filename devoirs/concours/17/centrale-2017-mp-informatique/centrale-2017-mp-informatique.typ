@@ -1,4 +1,5 @@
-#import "/lib/exercice.typ": exercice, question, partie, feuille, sep, widetilde
+#import "/lib/exercice.typ": exercice, question, partie, feuille
+#import "/lib/document.typ": sep, widetilde
 #import "/lib/code.typ": code-region
 #import "/lib/automate.typ": dessiner-automate, rayon-etat, rayon-grand-etat
 

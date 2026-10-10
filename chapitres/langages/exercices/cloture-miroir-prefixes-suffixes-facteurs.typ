@@ -1,4 +1,5 @@
-#import "/lib/exercice.typ": exercice, question, sep, widetilde
+#import "/lib/exercice.typ": exercice, question
+#import "/lib/document.typ": sep, widetilde
 
 #let ex = exercice(
   meta: (

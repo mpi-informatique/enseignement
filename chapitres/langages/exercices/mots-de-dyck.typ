@@ -1,4 +1,5 @@
-#import "/lib/exercice.typ": exercice, question, sep
+#import "/lib/exercice.typ": exercice, question
+#import "/lib/document.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
 #let ex = exercice(

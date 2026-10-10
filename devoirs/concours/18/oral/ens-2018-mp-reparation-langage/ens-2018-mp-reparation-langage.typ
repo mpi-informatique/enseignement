@@ -1,4 +1,5 @@
-#import "/lib/exercice.typ": exercice, question, partie, sep
+#import "/lib/exercice.typ": exercice, question, partie
+#import "/lib/document.typ": sep
 #let ex = exercice(
   sujet-ecrit: false,
   meta: (

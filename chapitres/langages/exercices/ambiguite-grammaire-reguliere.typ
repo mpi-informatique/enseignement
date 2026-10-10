@@ -1,4 +1,5 @@
-#import "/lib/exercice.typ": exercice, question, sep
+#import "/lib/exercice.typ": exercice, question
+#import "/lib/document.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
 // Deux parenthésages de b a b a b, avec tous les terminaux des arbres d'analyse.

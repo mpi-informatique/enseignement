@@ -3,6 +3,15 @@
 #import "code.typ": configurer-code
 #import "blocs.typ": espacement-blocs, epaisseur-trait
 
+/// Espace horizontal de 0,5 em, utilisable dans une formule avec `#sep`.
+/// -> content
+#let sep = h(0.5em)
+
+/// Accent tilde ajusté à la largeur du contenu.
+/// - body (content): Expression à surmonter d'un tilde.
+/// -> content
+#let widetilde(body) = math.accent(body, sym.tilde)
+
 /// Auteur utilisé par défaut dans les documents pédagogiques.
 #let auteur-par-defaut = "Q. Fortier"
 
