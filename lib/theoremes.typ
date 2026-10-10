@@ -79,12 +79,18 @@
 
 #let rendre-annotation(genre, body, ..args) = bloc-annotation(genre: genre, body)
 
-// Le titre d'un exercice reste hors du cadre qui délimite son énoncé.
-#let rendre-exercice(body, full-title: auto, ..args) = {
-  if full-title != "" {
-    block(above: 0pt, below: 0.5em, sticky: true, text(weight: "semibold", full-title))
-  }
-  fancy-box(..args, full-title: "", body)
+// Superposer le titre à la bordure, avec un fond blanc mais sans cartouche.
+#let rendre-exercice(body, full-title: auto, ..args) = context {
+  let titre = box(fill: white, inset: (x: 0.35em), text(weight: "semibold", full-title))
+  let hauteur = measure(titre).height
+  let inset = args.named().frame.inset
+  if full-title != "" { v(hauteur / 2) }
+  fancy-box(..args, full-title: "", {
+    if full-title != "" {
+      place(top + left, dx: 1em - inset.x, dy: -inset.top - hauteur / 2, titre)
+    }
+    body
+  })
 }
 
 // Chaque type possède un compteur indépendant, sans héritage des sections.
