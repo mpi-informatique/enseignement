@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": exercice, question, partie, feuille, sep
+#import "/lib/exercice.typ": exercice, question, partie, feuille, sep, widetilde
 #import "/lib/code.typ": code-region
 #import "/lib/automate.typ": dessiner-automate, rayon-etat, rayon-grand-etat
 
@@ -79,7 +79,7 @@
   ],
   // corrections: [
   //   - Partie II : ajouter le mot-clé `let` à la définition de `v0`, noter $A_0$ l'ensemble des arcs et $D[s_r]-D[s_1]$ dans l'invariant de la question 17.
-  //   - Partie IV : préciser les deux arguments de $tilde(δ)(E,x)$.
+  //   - Partie IV : préciser les deux arguments de $widetilde(δ)(E,x)$.
   // ],
   contenu: (
     [== Notations
@@ -336,29 +336,29 @@
         solution: [Si $u$ est synchronisant, prendre $u_(q,q')=u$ pour tous les couples.
 
           Réciproquement, partir de $v=ε$. Tant que $Q.v$ contient deux états distincts $q,q'$, remplacer $v$ par $v u_(q,q')$. Deux éléments de $Q.v$ ont alors la même image : son cardinal diminue strictement. En au plus $abs(Q)-1$ étapes, il vaut $1$, donc le mot construit est synchronisant.]),
-      [On veut se servir du critère établi ci-dessus pour déterminer s'il existe un mot synchronisant. On associe à $M$ la machine $tilde(M)=(tilde(Q),Σ,tilde(δ))$ définie par :
-        - $tilde(Q)$ est formé des parties à un ou deux éléments de $Q$.
-        - $∀(E,x) ∈ tilde(Q) × Σ$, $tilde(δ)(E,x)={δ(q,x) | q ∈ E}$.],
-      question([Si $n=abs(Q)$, que vaut $tilde(n)=abs(tilde(Q))$ ?],
-        solution: [Il y a $n$ singletons et $binom(n,2)$ paires : $tilde(n)=n+binom(n,2)=n(n+1)/2$.]),
-      [Pour la modélisation informatique, $tilde(Q)$ doit être modélisé par l'intervalle $⟦0,tilde(n)-1⟧$. Soit $φ_n$ une bijection de $tilde(Q)$ sur cet intervalle. On définit un type pour représenter les parties à un ou deux éléments :
+      [On veut se servir du critère établi ci-dessus pour déterminer s'il existe un mot synchronisant. On associe à $M$ la machine $widetilde(M)=(widetilde(Q),Σ,widetilde(δ))$ définie par :
+        - $widetilde(Q)$ est formé des parties à un ou deux éléments de $Q$.
+        - $∀(E,x) ∈ widetilde(Q) × Σ$, $widetilde(δ)(E,x)={δ(q,x) | q ∈ E}$.],
+      question([Si $n=abs(Q)$, que vaut $widetilde(n)=abs(widetilde(Q))$ ?],
+        solution: [Il y a $n$ singletons et $binom(n,2)$ paires : $widetilde(n)=n+binom(n,2)=n(n+1)/2$.]),
+      [Pour la modélisation informatique, $widetilde(Q)$ doit être modélisé par l'intervalle $⟦0,widetilde(n)-1⟧$. Soit $φ_n$ une bijection de $widetilde(Q)$ sur cet intervalle. On définit un type pour représenter les parties à un ou deux éléments :
         ```ocaml
         type un_ou_deux = Un of int | Deux of int * int
         ```
         On suppose qu'on dispose d'une fonction ```ocaml set_to_nb``` de signature ```ocaml int -> un_ou_deux -> etat``` telle que ```ocaml set_to_nb n l``` renvoie :
         $ cases(φ_n({i}) & "si" #raw("l = Un i", lang: "ocaml")", " 0 ≤ i ≤ n-1,
           φ_n({i,j}) & "si" #raw("l = Deux (i, j)", lang: "ocaml")", " 0 ≤ i < j ≤ n-1). $
-        On dispose aussi d'une fonction réciproque ```ocaml nb_to_set``` de type ```ocaml int -> etat -> un_ou_deux``` telle que ```ocaml nb_to_set n q```, pour $n ∈ ℕ^*$ et $q ∈ ⟦0,tilde(n)-1⟧$, renvoie une valeur ```ocaml Un i``` ou ```ocaml Deux (i, j)``` (avec $i < j$) correspondant à $φ_n^(-1)(q)$. Ces deux fonctions sont supposées agir en temps constant.
-        Pour ne pas confondre un état de $tilde(Q)$ avec sa représentation informatique par un entier, on notera $overline(q)$ l'entier associé à l'état $q$.],
-      question([Écrire une fonction ```ocaml delta2``` de signature ```ocaml machine -> etat -> lettre -> etat``` qui, prenant en entrée une machine $M$, un état $overline(q)$ de $tilde(Q)$ et une lettre $x$, renvoie l'état de $tilde(Q)$ atteint en lisant la lettre $x$ depuis l'état $q$ dans $tilde(M)$.],
+        On dispose aussi d'une fonction réciproque ```ocaml nb_to_set``` de type ```ocaml int -> etat -> un_ou_deux``` telle que ```ocaml nb_to_set n q```, pour $n ∈ ℕ^*$ et $q ∈ ⟦0,widetilde(n)-1⟧$, renvoie une valeur ```ocaml Un i``` ou ```ocaml Deux (i, j)``` (avec $i < j$) correspondant à $φ_n^(-1)(q)$. Ces deux fonctions sont supposées agir en temps constant.
+        Pour ne pas confondre un état de $widetilde(Q)$ avec sa représentation informatique par un entier, on notera $overline(q)$ l'entier associé à l'état $q$.],
+      question([Écrire une fonction ```ocaml delta2``` de signature ```ocaml machine -> etat -> lettre -> etat``` qui, prenant en entrée une machine $M$, un état $overline(q)$ de $widetilde(Q)$ et une lettre $x$, renvoie l'état de $widetilde(Q)$ atteint en lisant la lettre $x$ depuis l'état $q$ dans $widetilde(M)$.],
         solution: [Un singleton reste un singleton. Les images d'une paire peuvent coïncider : sinon, les ranger par ordre croissant pour respecter le contrat de ```ocaml set_to_nb```.
           #code("Q30")]),
-      question([À la machine $tilde(M)$, on associe un graphe d'automate $tilde(G)$ dont l'ensemble des sommets est $tilde(Q)$ et dont l'ensemble des arcs est ${ (q,x,tilde(δ)(q,x)) | (q,x) ∈ tilde(Q) × Σ }$. On associe à $tilde(G)$ le graphe retourné $tilde(G)_R$ qui a les mêmes sommets mais dont les arcs sont retournés : $(q,x,q')$ est un arc de $tilde(G)_R$ si et seulement si $(q',x,q)$ est un arc de $tilde(G)$.
-        Écrire une fonction ```ocaml retourne_machine``` de signature ```ocaml machine -> (etat * lettre) list array``` qui, à partir d'une machine $M$, calcule le tableau ```ocaml v``` des listes d'adjacence du graphe $tilde(G)_R$.],
+      question([À la machine $widetilde(M)$, on associe un graphe d'automate $widetilde(G)$ dont l'ensemble des sommets est $widetilde(Q)$ et dont l'ensemble des arcs est ${ (q,x,widetilde(δ)(q,x)) | (q,x) ∈ widetilde(Q) × Σ }$. On associe à $widetilde(G)$ le graphe retourné $widetilde(G)_R$ qui a les mêmes sommets mais dont les arcs sont retournés : $(q,x,q')$ est un arc de $widetilde(G)_R$ si et seulement si $(q',x,q)$ est un arc de $widetilde(G)$.
+        Écrire une fonction ```ocaml retourne_machine``` de signature ```ocaml machine -> (etat * lettre) list array``` qui, à partir d'une machine $M$, calcule le tableau ```ocaml v``` des listes d'adjacence du graphe $widetilde(G)_R$.],
         solution: [Pour chaque arc $q → q'$ étiqueté par $x$, ajouter $(q,x)$ à la liste d'adjacence de $q'$.
           #code("Q31")]),
-      question([Justifier qu'il suffit d'appliquer la fonction ```ocaml accessibles``` de la partie II au graphe $tilde(G)_R$ et à l'ensemble des sommets correspondant à des singletons pour déterminer si la machine $M$ possède un mot synchronisant.],
-        solution: [D'après la question 28, il suffit que toute paire ${q,q'}$ puisse atteindre un singleton dans $tilde(G)$. En retournant les arcs, cela équivaut à ce que toute paire soit accessible depuis au moins un singleton dans $tilde(G)_R$.
+      question([Justifier qu'il suffit d'appliquer la fonction ```ocaml accessibles``` de la partie II au graphe $widetilde(G)_R$ et à l'ensemble des sommets correspondant à des singletons pour déterminer si la machine $M$ possède un mot synchronisant.],
+        solution: [D'après la question 28, il suffit que toute paire ${q,q'}$ puisse atteindre un singleton dans $widetilde(G)$. En retournant les arcs, cela équivaut à ce que toute paire soit accessible depuis au moins un singleton dans $widetilde(G)_R$.
           Les singletons sont eux-mêmes dans l'ensemble de départ. Ainsi la condition est satisfaite si et seulement si le parcours atteint tous les sommets, c'est-à-dire si le compteur $c$ renvoyé vaut $0$.]),
       question([Écrire une fonction ```ocaml existe_synchronisant``` de signature ```ocaml machine -> bool``` qui dit si une machine possède un mot synchronisant.],
         solution: [#code("Q33")]),

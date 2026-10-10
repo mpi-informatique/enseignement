@@ -1,6 +1,6 @@
 #import "/lib/presentation.typ": cours-et-presentation, pause, only, cours-seulement, presentation-seulement
 #import "/lib/theoremes.typ": definition, theorem, lemma, property, exercise, problem, corollary
-#import "/lib/exercice.typ": sep
+#import "/lib/exercice.typ": sep, widetilde
 #import "/lib/blocs.typ": attention, remarque, exemple
 
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
@@ -472,10 +472,10 @@ Sur $Σ = {a, b}$ :
 ]
 
 #exercise[
-  Si $m = m_1 … m_n$ est un mot, son miroir est $tilde(m) = m_n … m_1$.
-  Si $L$ est un langage, son miroir est $tilde(L) = {tilde(m) ∣ m ∈ L}$.
+  Si $m = m_1 … m_n$ est un mot, son miroir est $widetilde(m) = m_n … m_1$.
+  Si $L$ est un langage, son miroir est $widetilde(L) = {widetilde(m) ∣ m ∈ L}$.
   + Donner une expression régulière du miroir de $a (a | b)^* b$.
-  + Soit $e$ une expression régulière de langage $L$. Montrer que $tilde(L)$ est régulier.
+  + Soit $e$ une expression régulière de langage $L$. Montrer que $widetilde(L)$ est régulier.
   + Écrire une fonction OCaml ```ocaml miroir : 'a regexp -> 'a regexp``` renvoyant le miroir d'une expression régulière.
 ]
 

@@ -9,6 +9,11 @@
 /// -> content
 #let sep = h(0.5em)
 
+/// Accent tilde ajusté à la largeur du contenu.
+/// - body (content): Expression à surmonter d'un tilde.
+/// -> content
+#let widetilde(body) = math.accent(body, sym.tilde)
+
 // Les exercices sont des données Typst ordinaires.
 /// Construit une question ; son énoncé reste visible dans le corrigé.
 /// - enonce (content): Énoncé, éventuellement avec sous-questions.

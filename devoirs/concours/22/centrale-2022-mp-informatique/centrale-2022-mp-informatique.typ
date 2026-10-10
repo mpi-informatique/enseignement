@@ -1,6 +1,6 @@
 #import "/lib/code.typ": code-region
 #import "/lib/automate.typ": unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/lib/exercice.typ": exercice, question, partie, sep
+#import "/lib/exercice.typ": exercice, question, partie, sep, widetilde
 #import "@preview/cetz:0.4.2" as cetz
 #import "@preview/finite:0.5.1" as finite
 
@@ -119,7 +119,7 @@
 
 // Partie partagée avec l'exercice autonome sur les palindromes.
 #let palindromes = partie("I.B", "Palindromes et régularité",
-  contexte: ([Sur un alphabet fini $Σ$, on note $tilde(w)$ le miroir du mot $w$, obtenu en inversant l'ordre de ses lettres ; $tilde(ε)=ε$.],),
+  contexte: ([Sur un alphabet fini $Σ$, on note $widetilde(w)$ le miroir du mot $w$, obtenu en inversant l'ordre de ses lettres ; $widetilde(ε)=ε$.],),
   meta: (
     concours: concours,
     chapitres: ("langages-reguliers", "automates-finis"),
@@ -127,7 +127,7 @@
   ),
   contenu: (
     [Soit $w ∈ Σ^*$.
-      Le mot $w$ est un palindrome si $tilde(w)=w$.],
+      Le mot $w$ est un palindrome si $widetilde(w)=w$.],
     question([Écrire une fonction ```ocaml palindrome``` de signature ```ocaml string -> bool``` qui teste, en temps linéaire, si un mot est un palindrome.], solution: [
       #code("Q6")
       On compare les lettres symétriques jusqu'au milieu du mot.
@@ -161,22 +161,22 @@
       Un chemin est acceptant s'il part d'un état initial et arrive à un état final, d'où
       $ L_A=union_(i ∈ I) union_(f ∈ F) L_(i,f). $
     ]),
-    question([Montrer que $"Pal"(Σ) ∩ (Σ^2)^*={u tilde(u) | u ∈ Σ^*}$.],
+    question([Montrer que $"Pal"(Σ) ∩ (Σ^2)^*={u widetilde(u) | u ∈ Σ^*}$.],
       solution: [
         Le langage $(Σ^2)^*$ contient exactement les mots de longueur paire.
-        Tout $u tilde(u)$ est un palindrome de longueur $2 abs(u)$.
+        Tout $u widetilde(u)$ est un palindrome de longueur $2 abs(u)$.
         Réciproquement, si un palindrome a longueur $2n$, sa seconde moitié est le miroir de sa première moitié $u$.
-        Il vaut donc $u tilde(u)$.
+        Il vaut donc $u widetilde(u)$.
         L'égalité reste vraie pour $u=ε$.
       ]),
     [Soit $L$ un langage régulier reconnu par $A=(Q,I,F,T)$.
-      On définit $D(L)={w tilde(w) | w ∈ L}$ et $R(L)={w ∈ Σ^* | w tilde(w) ∈ L}$.],
+      On définit $D(L)={w widetilde(w) | w ∈ L}$ et $R(L)={w ∈ Σ^* | w widetilde(w) ∈ L}$.],
     question([Décrire simplement $D(a^* b)$ et $R(a^* b^* a^*)$.], solution: [
       On a
       $ D(a^* b)={a^n b b a^n | n ∈ NN}, #sep R(a^* b^* a^*)=a^* b^*. $
-      Pour la seconde égalité, si $w tilde(w) ∈ a^* b^* a^*$, son préfixe $w$ appartient à ce même langage et n'utilise que $a,b$.
-      Un tel mot $w$ comportant un $b$ puis un $a$ fait apparaître un facteur $b a^+ b$ dans $w tilde(w)$, impossible dans $a^* b^* a^*$.
-      Ainsi $w ∈ a^* b^*$ ; réciproquement $w=a^i b^j$ donne $w tilde(w)=a^i b^(2j) a^i$.
+      Pour la seconde égalité, si $w widetilde(w) ∈ a^* b^* a^*$, son préfixe $w$ appartient à ce même langage et n'utilise que $a,b$.
+      Un tel mot $w$ comportant un $b$ puis un $a$ fait apparaître un facteur $b a^+ b$ dans $w widetilde(w)$, impossible dans $a^* b^* a^*$.
+      Ainsi $w ∈ a^* b^*$ ; réciproquement $w=a^i b^j$ donne $w widetilde(w)=a^i b^(2j) a^i$.
     ]),
     question([Les langages $D(L)$ et $R(L)$ sont-ils reconnaissables ?
       On pourra faire intervenir les langages $L_(q,q')$ définis ci-dessus.],
@@ -185,10 +185,10 @@
         Le même argument de répétition d'une boucle dans le premier bloc de $a$ que pour les palindromes donne une contradiction.
 
         En revanche, $R(L)$ est toujours reconnaissable.
-        Un chemin acceptant étiqueté $w tilde(w)$ passe, après $w$, par un état $q ∈ Q$.
+        Un chemin acceptant étiqueté $w widetilde(w)$ passe, après $w$, par un état $q ∈ Q$.
         On a donc
         $ R(L)=union_(i ∈ I) union_(q ∈ Q) union_(f ∈ F)
-          (L_(i,q) ∩ tilde(L_(q,f))). $
+          (L_(i,q) ∩ widetilde(L_(q,f))). $
         Chaque langage de chemins est reconnaissable.
         Le miroir est reconnaissable en inversant les transitions et en échangeant états initiaux et finaux.
         Les stabilités par intersection et union finies concluent.
@@ -281,24 +281,24 @@
     ],
     partie("I", "Mots et automates", contenu: (
       partie("I.A", "Miroir d'un mot et automate transposé", contenu: (
-        [Pour tout mot $w=a_0 a_1 … a_(n-1)$ de longueur $n ∈ NN^*$, son miroir est $tilde(w)=a_(n-1) … a_1 a_0$.
+        [Pour tout mot $w=a_0 a_1 … a_(n-1)$ de longueur $n ∈ NN^*$, son miroir est $widetilde(w)=a_(n-1) … a_1 a_0$.
           Le mot vide $ε$ est son propre miroir.
-          Pour tout langage $L ⊂ Σ^*$, on pose $tilde(L)={tilde(w) | w ∈ L}$.],
-        question([Décrire le langage $L_1$ de l'automate $cal(A)_1$ de la figure 1 et décrire son langage miroir $tilde(L)_1$.],
+          Pour tout langage $L ⊂ Σ^*$, on pose $widetilde(L)={widetilde(w) | w ∈ L}$.],
+        question([Décrire le langage $L_1$ de l'automate $cal(A)_1$ de la figure 1 et décrire son langage miroir $widetilde(L)_1$.],
           commentaire: [Distinguer un langage d'un ensemble de langages.],
           solution: [
           Les chemins acceptants bouclent d'abord sur $0$, lisent $a b$ pour atteindre $2$, puis lisent uniquement des $a$.
           Ainsi
-          $ L_1=(a | b)^* a b a^*, #sep tilde(L)_1=a^* b a (a | b)^*. $
+          $ L_1=(a | b)^* a b a^*, #sep widetilde(L)_1=a^* b a (a | b)^*. $
         ]),
-        question([Dessiner un automate $tilde(cal(A))_1$ reconnaissant $tilde(L)_1$.],
+        question([Dessiner un automate $widetilde(cal(A))_1$ reconnaissant $widetilde(L)_1$.],
           solution: [On inverse toutes les transitions et on échange états initiaux et finaux.
             #automate-a1(miroir: true)
           ]),
         [Soit $A=(Q,I,F,T)$ un automate non déterministe et $L=L_A$ son langage.],
-        question([Donner, en justifiant, la construction de l'automate miroir $tilde(A)=(Q,I',F',T')$ reconnaissant $tilde(L)$.], solution: [
+        question([Donner, en justifiant, la construction de l'automate miroir $widetilde(A)=(Q,I',F',T')$ reconnaissant $widetilde(L)$.], solution: [
           On prend $I'=F$, $F'=I$ et $T'={(q',c,q) | (q,c,q') ∈ T}$.
-          Un chemin de $i ∈ I$ à $f ∈ F$ étiqueté $w$ devient un chemin de $f$ à $i$ étiqueté $tilde(w)$, et réciproquement.
+          Un chemin de $i ∈ I$ à $f ∈ F$ étiqueté $w$ devient un chemin de $f$ à $i$ étiqueté $widetilde(w)$, et réciproquement.
           Cela inclut $ε$ : il est accepté dans les deux automates exactement lorsque $I ∩ F ≠ ∅$.
         ]),
         question([Écrire une fonction ```ocaml transpose``` de signature ```ocaml automate -> automate``` qui renvoie un automate reconnaissant le miroir du langage de l'automate d'entrée.], solution: [#code("Q4")]),
@@ -318,7 +318,7 @@
           Depuis $0$, on peut lire les blocs $b$ ou $a b$ pour revenir à $0$.
           On termine par le chemin $0$ vers $2$ vers $3$, étiqueté $b a$.
         ]),
-        question([Déterminiser l'automate miroir $tilde(cal(A))_2$ pour obtenir $cal(A)_3=(tilde(cal(A))_2)_"det"$.
+        question([Déterminiser l'automate miroir $widetilde(cal(A))_2$ pour obtenir $cal(A)_3=(widetilde(cal(A))_2)_"det"$.
           Renommer ses états $e_0,e_1,…$.],
           commentaire: [Vérifier le déterminisme et les états finaux.],
           solution: [
@@ -327,7 +327,7 @@
             $e_0$ est initial ; $e_3,e_4$ sont finaux.
             #automate-a3()
           ]),
-        question([Déterminiser l'automate miroir $tilde(cal(A))_3$ pour obtenir $cal(A)_4=(tilde(cal(A))_3)_"det"$.
+        question([Déterminiser l'automate miroir $widetilde(cal(A))_3$ pour obtenir $cal(A)_4=(widetilde(cal(A))_3)_"det"$.
           Renommer ses états $q_0,q_1,…$.],
           commentaire: [Vérifier le déterminisme et les états finaux.],
           solution: [
@@ -413,13 +413,13 @@
         commentaire: [Raisonner sur les chemins ; distinguer accessibilité et coaccessibilité.],
         contenu: (
         [L'algorithme de Brzozowski donne un automate déterministe complet ayant un nombre minimal d'états parmi les automates déterministes complets reconnaissant le même langage.
-          On se donne $A=(Q,I,{f},T)$ reconnaissant $L$, dont le miroir $tilde(A)$ est déterministe et accessible.
+          On se donne $A=(Q,I,{f},T)$ reconnaissant $L$, dont le miroir $widetilde(A)$ est déterministe et accessible.
           On note $A_"det"=(Y,{I},F',δ)$ son déterminisé accessible.
           Pour $u ∈ Σ^*$, on pose $u^(-1)L={w ∈ Σ^* | u w ∈ L}$.],
         question([Soient $q ∈ Q$ et $u ∈ Σ^*$.
           Montrer que si $q ∈ δ^*(I,u)$, alors il existe $w ∈ Σ^*$ tel que $u w ∈ L$.],
           solution: [
-          L'accessibilité de $tilde(A)$ fournit un chemin de $f$ à $q$.
+          L'accessibilité de $widetilde(A)$ fournit un chemin de $f$ à $q$.
           En le renversant, on obtient dans $A$ un chemin de $q$ à $f$, étiqueté par un mot $w$.
           Comme $q ∈ δ^*(I,u)$, un chemin étiqueté $u$ joint un état initial à $q$ ; leur concaténation accepte $u w$.
         ]),
@@ -428,14 +428,14 @@
           Prenons $q ∈ δ^*(I,u)$ et un chemin de $q$ à $f$ étiqueté $w$.
           Alors $u w ∈ L$, donc $v w ∈ L$.
           Un chemin acceptant pour $v w$ passe, après $v$, par un état $q' ∈ δ^*(I,v)$, puis lit $w$ jusqu'à $f$.
-          Dans $tilde(A)$, les deux chemins de $f$ étiquetés $tilde(w)$ aboutissent à $q$ et $q'$.
+          Dans $widetilde(A)$, les deux chemins de $f$ étiquetés $widetilde(w)$ aboutissent à $q$ et $q'$.
           Le déterminisme impose $q=q'$.
           Cela prouve une inclusion ; l'autre s'obtient en échangeant $u,v$.
         ]),
-        question([Pour un automate quelconque $A$ reconnaissant $L$, on pose $B=(tilde(A))_"det"$.
-          En déduire que $(tilde(B))_"det"$ reconnaît $L$ et vérifie $(*)$.], solution: [
-          $B$ est déterministe, complet et accessible, et reconnaît $tilde(L)$.
-          L'automate $tilde(B)$ a un unique état final et son miroir $B$ est déterministe accessible : le résultat précédent s'applique.
+        question([Pour un automate quelconque $A$ reconnaissant $L$, on pose $B=(widetilde(A))_"det"$.
+          En déduire que $(widetilde(B))_"det"$ reconnaît $L$ et vérifie $(*)$.], solution: [
+          $B$ est déterministe, complet et accessible, et reconnaît $widetilde(L)$.
+          L'automate $widetilde(B)$ a un unique état final et son miroir $B$ est déterministe accessible : le résultat précédent s'applique.
           Son déterminisé $C$ reconnaît $L$ et vérifie $(*)$.
 
           Il est minimal parmi les déterministes complets : si deux mots conduisent au même état d'un autre déterministe complet reconnaissant $L$, ils ont les mêmes continuations acceptantes, donc le même quotient $u^(-1)L$.

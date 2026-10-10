@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": exercice, question, sep
+#import "/lib/exercice.typ": exercice, question, sep, widetilde
 
 #let ex = exercice(
   meta: (
@@ -21,7 +21,7 @@
     ]),
     question([
       Pour $n>=2$, on note $g_n$ le préfixe de $f_n$ obtenu en supprimant ses deux dernières lettres.
-      Montrer que $g_n$ est un palindrome, c'est-à-dire que $g_n=tilde(g_n)$, où $tilde(g_n)$ est le mot obtenu en inversant ses lettres.
+      Montrer que $g_n$ est un palindrome, c'est-à-dire que $g_n=widetilde(g_n)$, où $widetilde(g_n)$ est le mot obtenu en inversant ses lettres.
     ], solution: [
       On procède par récurrence forte.
       Les mots $g_2=epsilon$, $g_3=b$ et $g_4=b a b$ sont des palindromes.

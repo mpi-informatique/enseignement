@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": exercice, question, sep
+#import "/lib/exercice.typ": exercice, question, sep, widetilde
 
 #let ex = exercice(
   meta: (
@@ -10,11 +10,11 @@
   corrections: [- Question 4 : corriger les formules pour la concaténation avec un second langage vide et pour l'étoile d'un langage vide.],
   contenu: (
 
-    [Si $m=m_1 … m_n$ est un mot, son miroir est $tilde(m)=m_n … m_1$.
-      Le miroir d'un langage $L$ est $tilde(L)={tilde(m) | m∈L}$.],
+    [Si $m=m_1 … m_n$ est un mot, son miroir est $widetilde(m)=m_n … m_1$.
+      Le miroir d'un langage $L$ est $widetilde(L)={widetilde(m) | m∈L}$.],
     question([Montrer que le miroir d'un langage reconnaissable est reconnaissable.], solution: [
-      Si $A=(Σ,Q,I,F,E)$ reconnaît $L$, l'automate $tilde(A)=(Σ,Q,F,I,tilde(E))$, où $tilde(E)={(p,a,q) | (q,a,p)∈E}$, reconnaît $tilde(L)$.
-      En effet, inverser un chemin acceptant étiqueté $m$ donne un chemin acceptant étiqueté $tilde(m)$ dans $tilde(A)$, et réciproquement.
+      Si $A=(Σ,Q,I,F,E)$ reconnaît $L$, l'automate $widetilde(A)=(Σ,Q,F,I,widetilde(E))$, où $widetilde(E)={(p,a,q) | (q,a,p)∈E}$, reconnaît $widetilde(L)$.
+      En effet, inverser un chemin acceptant étiqueté $m$ donne un chemin acceptant étiqueté $widetilde(m)$ dans $widetilde(A)$, et réciproquement.
     ]),
     [Pour un langage $L$ sur $Σ$, on définit :
       - $"Pref"(L)={u∈Σ^* | ∃v∈Σ^*, u v∈L}$, l'ensemble des préfixes ;
@@ -30,9 +30,9 @@
       De même, $(Σ,Q,Q'',F,E)$ reconnaît $"Suff"(L)$ et $(Σ,Q,Q'',Q',E)$ reconnaît $"Fact"(L)$ :
       le chemin étiqueté par le suffixe ou le facteur se prolonge en un chemin acceptant de $A$.
 
-      Autre solution : $"Suff"(L)=tilde("Pref"(tilde(L)))$ puisque $tilde(x y)=tilde(y)tilde(x)$.
+      Autre solution : $"Suff"(L)=widetilde("Pref"(widetilde(L)))$ puisque $widetilde(x y)=widetilde(y)widetilde(x)$.
       En effet,
-      $ m∈tilde("Pref"(tilde(L))) ⇔ ∃v, tilde(m)v∈tilde(L) ⇔ ∃v, tilde(v)m∈L ⇔ m∈"Suff"(L). $
+      $ m∈widetilde("Pref"(widetilde(L))) ⇔ ∃v, widetilde(m)v∈widetilde(L) ⇔ ∃v, widetilde(v)m∈L ⇔ m∈"Suff"(L). $
       Enfin $"Fact"(L)="Suff"("Pref"(L))="Pref"("Suff"(L))$ :
       $ m∈"Suff"("Pref"(L)) ⇔ ∃u, u m∈"Pref"(L) ⇔ ∃u,v, u m v∈L ⇔ m∈"Fact"(L). $
     ]),
@@ -50,7 +50,7 @@
       Pour l'étoile, un préfixe est vide, ou constitué de mots complets suivis du préfixe d'un mot.
       La vacuité se décide elle-même par induction : $∅$ est vide, $ε$ et les lettres ne le sont pas, une union est vide si ses deux termes le sont, une concaténation si l'un l'est, et une étoile ne l'est jamais.
 
-      La stabilité des langages réguliers par miroir et les identités de la question 3 donnent alors la régularité de $"Suff"(L)=tilde("Pref"(tilde(L)))$ puis de $"Fact"(L)="Suff"("Pref"(L))$.
+      La stabilité des langages réguliers par miroir et les identités de la question 3 donnent alors la régularité de $"Suff"(L)=widetilde("Pref"(widetilde(L)))$ puis de $"Fact"(L)="Suff"("Pref"(L))$.
     ]),
   ),
 )
