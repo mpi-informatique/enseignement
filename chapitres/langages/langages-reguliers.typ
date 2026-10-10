@@ -24,11 +24,11 @@
   == Alphabet, mot et longueur
 ]
 
-#definition(title: [alphabet])[
+#definition[
   Un alphabet est un ensemble $Σ$ fini, dont les éléments sont des lettres.
 ]
 #pause
-#definition(title: [mot])[
+#definition[
   Un mot $m$ sur un alphabet $Σ$ est une suite finie $m_1, …, m_n$ de lettres de $Σ$, et on note $m = m_1 ⋯ m_n$.
   L'entier $n$ est la longueur de $m$, notée $abs(m)$.
   Le mot vide, ne contenant aucune lettre, est noté $ε$.
@@ -50,7 +50,7 @@
   == Égalité de mots
 ]
 
-#definition(title: [égalité de mots])[
+#definition[
   Deux mots $u = u_1 ⋯ u_n$ et $v = v_1 ⋯ v_p$ sur le même alphabet $Σ$ sont égaux s'ils ont la même longueur ($n = p$) et si, pour tout $i ∈ {1, …, n}$, $u_i = v_i$.
 ]
 
@@ -58,7 +58,7 @@
   == Concaténation et puissance
 ]
 
-#definition(title: [concaténation et puissance])[
+#definition[
   La concaténation de deux mots $u = u_1 ⋯ u_n$ et $v = v_1 ⋯ v_p$ est :
   $ u v = u_1 ⋯ u_n v_1 ⋯ v_p. $
   Elle est aussi parfois notée $u ⋅ v$.
@@ -99,7 +99,7 @@
   == Préfixe, suffixe, facteur, sous-mot
 ]
 
-#definition(title: [préfixe, suffixe, facteur et sous-mot])[
+#definition[
   Soient $u$ et $m$ deux mots sur $Σ$.
   - $u$ est un préfixe de $m$ s'il existe un mot $v$ tel que $m = u v$.
   - $u$ est un suffixe de $m$ s'il existe un mot $v$ tel que $m = v u$.
@@ -149,7 +149,7 @@ String.length s (* donne 3 *)
   == Langage sur un alphabet
 ]
 
-#definition(title: [langage])[
+#definition[
   Un langage $L$ sur un alphabet $Σ$ est un ensemble de mots sur $Σ$.
 ]
 De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal(P)(Σ^*)$.
@@ -175,13 +175,13 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
 
   == Problèmes algorithmiques
 
-  #problem(title: [d'appartenance])[
+  #problem[
     Étant donné un langage $L$ et un mot $m$, est-ce que $m ∈ L$ ?
   ]
   *Applications* : correcteur orthographique, coloration syntaxique.
 
   #pause
-  #problem(title: [de recherche de motif])[
+  #problem[
     Étant donné un texte $s$ et un langage $L$, $s$ contient-il un mot de $L$ ?
     Cas particulier $L = {m}$ : le mot $m$ apparaît-il dans le texte $s$ ?
   ]
@@ -192,7 +192,7 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
 
 == Concaténation de langages
 
-#definition(title: [concaténation])[
+#definition[
   Soient $L_1$ et $L_2$ deux langages sur le même alphabet.
   Leur concaténation est :
   $ L_1 L_2 = {m_1 m_2 ∣ m_1 ∈ L_1, #sep m_2 ∈ L_2}. $
@@ -222,7 +222,7 @@ $ L_1 (L_2 ∪ L_3) = L_1 L_2 ∪ L_1 L_3. $
 
 == Puissance d'un langage
 
-#definition(title: [puissance])[
+#definition[
   On définit la puissance $L^n$ du langage $L$ par récurrence :
   $ L^0 &= {ε}, \
     L^n &= L^(n - 1) L " pour " n ≥ 1. $
@@ -244,7 +244,7 @@ $ L^n = underbrace(L ⋯ L, n " facteurs") = {m_1 ⋯ m_n ∣ m_1 ∈ L, …, m_
 
 == Étoile de Kleene
 
-#definition(title: [étoile de Kleene])[
+#definition[
   On définit l'étoile de Kleene $L^*$ d'un langage $L$ par :
   $ L^* = union.big_(k ∈ ℕ) L^k. $
 ]
@@ -263,7 +263,7 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
   == Définition des langages réguliers
 ]
 
-#definition(title: [langage régulier ♡])[
+#definition(coeur: true)[
   L'ensemble des langages réguliers sur $Σ$ est le plus petit ensemble, pour l'inclusion, contenant les langages finis sur $Σ$ et stable par union, concaténation et étoile de Kleene.
 ]
 
@@ -271,7 +271,7 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
   == Définition inductive équivalente
 ]
 
-#definition(title: [inductive équivalente ♡])[
+#definition(coeur: true)[
   - Tout langage fini est régulier.
   - Si $L_1$ et $L_2$ sont réguliers, alors $L_1 ∪ L_2$ est régulier.
   - Si $L_1$ et $L_2$ sont réguliers, alors $L_1 L_2$ est régulier.
@@ -320,7 +320,7 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
 
 Les expressions régulières sont une notation plus concise pour représenter un langage régulier.
 
-#definition(title: [expression régulière])[
+#definition[
   L'ensemble $cal(R)(Σ)$ des expressions régulières sur $Σ$ est le plus petit ensemble vérifiant :
   - $∀ a ∈ Σ, #sep a ∈ cal(R)(Σ)$.
   - $∅ ∈ cal(R)(Σ)$ et $ε ∈ cal(R)(Σ)$.
@@ -360,7 +360,7 @@ type 'a regexp = (* 'a est le type des lettres de l'alphabet *)
 
   #type-regexp
 
-  #exercise(title: [Question])[
+  #exercise[
     Écrire une fonction ```ocaml lettres : 'a regexp -> 'a list``` qui renvoie la liste des lettres utilisées dans une expression régulière.
   ]
 ]
@@ -419,7 +419,7 @@ Sur $Σ = {a, b}$ :
   == Définition de l'équivalence
 ]
 
-#definition(title: [équivalence d'expressions régulières])[
+#definition[
   Deux expressions régulières $e_1$ et $e_2$ sont dites équivalentes, ce que l'on note $e_1 ≡ e_2$, si elles définissent le même langage, c'est-à-dire si $L(e_1) = L(e_2)$.
 ]
 
@@ -429,7 +429,7 @@ Sur $Σ = {a, b}$ :
   == Propriétés à compléter
 ]
 
-#property(title: [expressions régulières])[
+#property[
   Pour des expressions régulières $e$, $e_1$, $e_2$ et $e_3$, compléter :
   + $e ∅ ≡ …$
   + $e ε ≡ …$
@@ -444,7 +444,7 @@ Sur $Σ = {a, b}$ :
 
 == Induction sur les langages réguliers
 
-#theorem(title: [induction structurelle ♡])[
+#theorem(coeur: true)[
   Soit $cal(P)(L)$ une propriété sur les langages réguliers telle que :
   - $cal(P)(L)$ est vraie pour les langages $L$ finis : cas de base.
   - $cal(P)(L_1) ∧ cal(P)(L_2) ⇒ cal(P)(L_1 L_2)$.
@@ -461,7 +461,7 @@ Sur $Σ = {a, b}$ :
 
 == Induction sur les expressions régulières
 
-#theorem(title: [induction structurelle ♡])[
+#theorem(coeur: true)[
   Soit $cal(P)(e)$ une propriété sur les expressions régulières telle que :
   - $cal(P)(∅)$ et $cal(P)(ε)$ sont vraies : cas de base.
   - $cal(P)(a)$ est vraie pour $a ∈ Σ$ : cas de base.
@@ -476,7 +476,7 @@ Sur $Σ = {a, b}$ :
   == Miroir d'un langage
 ]
 
-#exercise(title: [miroir])[
+#exercise[
   Si $m = m_1 ⋯ m_n$ est un mot, son miroir est $tilde(m) = m_n ⋯ m_1$.
   Si $L$ est un langage, son miroir est $tilde(L) = {tilde(m) ∣ m ∈ L}$.
   + Donner une expression régulière du miroir de $a (a | b)^* b$.
@@ -490,7 +490,7 @@ Sur $Σ = {a, b}$ :
   - Pour montrer une égalité de deux mots, on peut faire une récurrence sur la longueur du mot.
   - Pour montrer une égalité de deux langages, on peut montrer une double inclusion.
 
-  #exercise(title: [Question])[
+  #exercise[
     Soient $e_1$ et $e_2$ deux expressions régulières.
     Montrer que $(e_1^* e_2)^* e_1^* ≡ (e_1 | e_2)^*$.
   ]
@@ -532,7 +532,7 @@ Sur $Σ = {a, b}$ :
 
   == Théorème de Cantor
 
-  #theorem(title: [de Cantor])[
+  #theorem[
     Un ensemble $E$ ne peut pas être en bijection avec $cal(P)(E)$.
   ]
   #pause

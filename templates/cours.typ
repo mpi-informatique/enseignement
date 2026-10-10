@@ -5,7 +5,7 @@
 
 = Première section
 
-#definition(title: [notion])[
+#definition[
   Définir la notion et ses notations.
 ]
 

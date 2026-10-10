@@ -3,8 +3,8 @@
 #import theorion.cosmos.fancy: *
 
 // Fancy lie par défaut le fond du titre à la couleur de la bordure.
-#let titre-blanc(environnement, ..args) = context {
-  environnement(
+#let titre-blanc(environnement, coeur: false, ..args) = context {
+  let cadre = environnement(
     ..args,
     frame: (
       thickness: .05em,
@@ -17,6 +17,17 @@
     ),
     title-style: (boxed-style: (anchor: (x: start, y: horizon), radius: 0em), color: black, weight: "semibold"),
   )
+  if coeur {
+    grid(
+      columns: (0pt, 1fr), column-gutter: 0pt,
+      align: (left + horizon, left + top),
+      // Compenser le titre qui dépasse au-dessus de la bordure du cadre.
+      box(width: 0pt, move(dx: -1.5em, dy: 0.4em, box[♡])),
+      cadre,
+    )
+  } else {
+    cadre
+  }
 }
 
 #let theorem = titre-blanc.with(theorem)

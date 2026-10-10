@@ -201,7 +201,7 @@ Les sections ordinaires sont numérotées `I`, `I.1`, `I.1.1`. Les titres d'exer
 - Dans le corrigé d'un exercice, conserver tout l'énoncé, y compris les blocs libres de `contenu` (préliminaires, définitions, notations et textes de contexte). Uniquement pour un sujet de concours écrit, utiliser `sujet-ecrit: true` dans `exercice` pour masquer ces blocs dans le corrigé. Conserver les titres des parties, les questions, leurs commentaires et leurs solutions. Les figures incluses dans les questions et solutions restent affichées. Les exercices oraux et les extraits autonomes conservent leur contexte, même s'ils portent une attribution de concours.
 
 Pour un exercice attribué à un concours, afficher le titre seul à gauche et l'attribution du concours à droite, à la place de la durée. Les en-têtes des documents conservent le nom du concours suivi du titre du document, avec la mention « (corrigé) » pour cette variante ; la durée reste affichée à droite.
-Le texte courant est composé en New Computer Modern, en 10 pt. Les titres de niveau 1, 2 et 3 sont respectivement en 11 pt, 10,5 pt et 10 pt ; les titres de section restent ainsi plus petits que le titre du document.
+Le texte courant est composé en New Computer Modern, en 10 pt, avec un interligne supplémentaire de `0.8em`. Les titres de niveau 1, 2 et 3 sont respectivement en 11 pt, 10,5 pt et 10 pt ; les titres de section restent ainsi plus petits que le titre du document.
 Le paramètre `espacement` de `feuille` règle l'espacement vertical des textes et questions (12pt par défaut).
 
 ### Théorèmes, lemmes et définitions
@@ -215,7 +215,7 @@ Utiliser les environnements de `lib/theoremes.typ`, qui importe Theorion 0.6.0 a
 ]
 ```
 
-Utiliser les environnements numérotés (`theorem`, `lemma`, `definition`, `algorithm`, etc.) dans les cours : leur compteur commun avance automatiquement et repart à chaque grande partie du cours (`Définition 1.1`, `Théorème 1.2`, etc.), sans dépendre des sous-sections. Donner le titre complémentaire avec `title: [...]` pour conserver le type et le numéro automatiques. Les variantes `*-box` sont réservées aux cadres volontairement sans numéro ; `full-title` remplace tout le titre, numéro compris. Pour un document utilisant le package local, importer `theoremes` depuis `@mpi-informatique/enseignement:0.1.0`. Hors de `feuille`, appliquer `#show: theoremes.configurer-theoremes`.
+Utiliser les environnements numérotés (`theorem`, `lemma`, `definition`, `algorithm`, etc.) dans les cours : leur compteur commun avance automatiquement et repart à chaque grande partie du cours (`Définition 1.1`, `Théorème 1.2`, etc.), sans dépendre des sous-sections. Dans les cours, conserver uniquement le type et le numéro dans le titre du cadre, sans précision entre parenthèses. Ajouter `coeur: true` aux résultats à connaître par cœur : le cœur apparaît dans la marge gauche, centré verticalement sur le cadre. Les variantes `*-box` sont réservées aux cadres volontairement sans numéro ; `full-title` remplace tout le titre, numéro compris. Pour un document utilisant le package local, importer `theoremes` depuis `@mpi-informatique/enseignement:0.1.0`. Hors de `feuille`, appliquer `#show: theoremes.configurer-theoremes`.
 
 ### Barème
 
