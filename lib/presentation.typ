@@ -2,13 +2,14 @@
 #import "@preview/touying:0.8.0" as touying
 #import touying: pause, uncover, only, slide, article-only as cours-seulement, slides-only as presentation-seulement
 #import "cours.typ": cours, espace-reponse
+#import "document.typ": auteur-par-defaut
 #import "theoremes.typ": configurer-theoremes, theorem-counter
 #import "code.typ": configurer-code
 
 /// Compose une présentation Touying, ou sa version article avec le thème du dépôt.
 /// - titre (str): Titre du document.
 /// - niveau (str, none): Classe.
-/// - auteur (str, none): Auteur.
+/// - auteur (str, none): Auteur, défaut « Q. Fortier » ; `none` le masque.
 /// - aspect-ratio (str): Format Touying, défaut "16-9".
 /// - taille (length): Taille du texte des diapositives, défaut 22pt.
 /// - couleur (color): Couleur des titres, défaut bleu foncé.
@@ -16,7 +17,7 @@
 /// - article (bool): Utiliser le thème A4, défaut false.
 /// - body (content): Titres de section `=`, titres de diapositive `==` et contenu partagé.
 /// -> content
-#let presentation(titre: "Présentation", niveau: none, auteur: none, aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), animations: true, article: false, body) = {
+#let presentation(titre: "Présentation", niveau: none, auteur: auteur-par-defaut, aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), animations: true, article: false, body) = {
   show: configurer-theoremes
   set text(font: "New Computer Modern", lang: "fr")
   set par(leading: 0.55em, spacing: 0.7em)

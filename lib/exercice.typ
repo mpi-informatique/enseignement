@@ -2,8 +2,7 @@
 /// Guide de rédaction : docs/utilisation.md. Documentation générée : just docs.
 
 #import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
-#import "theoremes.typ": configurer-theoremes
-#import "code.typ": configurer-code
+#import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree
 
 /// Espace horizontal de 0,5 em, utilisable dans une formule avec `#sep`.
 /// -> content
@@ -24,13 +23,6 @@
   (type: "question", enonce: enonce, solution: solution, commentaire: commentaire, points: points)
 }
 
-#let texte-duree(duree) = {
-  let (heures, minutes) = duree
-  if heures == 0 { str(minutes) + " min" }
-  else if minutes == 0 { str(heures) + " h" }
-  else { str(heures) + " h " + str(minutes) + " min" }
-}
-
 #let texte-concours(concours) = (
   concours.at("nom", default: none),
   concours.at("annee", default: none),
@@ -47,7 +39,7 @@
 // Titres communs aux exercices et aux parties des sujets.
 #let titre-exercice(titre, prefixe, duree: none, concours: none, niveau: 1) = {
   block(above: 16pt, below: 16pt, breakable: false)[
-    #heading(level: niveau)[
+    #heading(level: niveau, numbering: none)[
       #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
         [#prefixe -- #titre],
         [#if concours != none {
@@ -254,6 +246,8 @@
   let bareme = if bareme == none { ex.bareme } else { bareme }
   let nombre = nombre-questions(ex.contenu)
   verifier-bareme(bareme, nombre)
+  // Conserver les titres et numéros explicites du contenu des exercices.
+  set heading(numbering: none)
   show strong: it => it.body
   show heading: set text(weight: "bold")
   [#metadata(ex.meta) <exercice-meta>]
@@ -309,7 +303,7 @@
 /// - type (str): Type libre : `"td"`, `"devoir"`, `"concours"` ou un type personnalisé.
 /// - titre (str): Titre de la feuille.
 /// - niveau (str, none): Niveau affiché dans l'en-tête.
-/// - auteur (str, none): Auteur affiché dans l'en-tête.
+/// - auteur (str, none): Auteur lié au site dans l'en-tête, défaut « Q. Fortier » ; `none` le masque.
 /// - duree (array, none): Durée (heures, minutes) affichée à droite ; `none` reprend celle d'un sujet de concours unique.
 /// - concours (dictionary, none): Attribution affichée avant le titre ; mêmes champs que `exercice.meta.concours`.
 /// - exercices (array): Objets `ex` importés, dans l'ordre ; `()` crée une feuille vide.
@@ -324,7 +318,7 @@
   type: "td",
   titre: "Feuille d'exercices",
   niveau: none,
-  auteur: none,
+  auteur: auteur-par-defaut,
   duree: none,
   concours: none,
   exercices: (),
@@ -342,32 +336,8 @@
   let duree = if duree != none { duree }
     else if concours == none or exercices.len() != 1 { none }
     else { exercices.first().meta.duree }
-  set document(title: titre-affiche)
-  show: configurer-theoremes
+  show: document-pedagogique.with(titre: titre-affiche, niveau: niveau, auteur: auteur, duree: duree)
   [#metadata((type: type, titre: titre, niveau: niveau, concours: concours)) <document-meta>]
-  set text(font: "New Computer Modern", size: 10pt, lang: "fr")
-  set par(justify: true, leading: 0.55em, spacing: 0.8em)
-  set page(
-    paper: "a4", margin: (x: 14mm, top: 25mm, bottom: 18mm),
-    header-ascent: 5mm,
-    header: context if counter(page).get().first() == 1 [
-      #set text(size: 10pt)
-      #grid(
-        columns: (24mm, 1fr, 24mm), align: (left, center, right),
-        if niveau != none { niveau } else { [] },
-        text(size: 12pt, weight: "bold", titre-affiche),
-        if duree != none { texte-duree(duree) } else if auteur != none { auteur },
-      )
-      #v(4pt)
-      #line(length: 100%, stroke: 0.4pt)
-    ],
-    footer: context align(center, text(size: 9pt, counter(page).display("1 / 1", both: true))),
-  )
-  set heading(numbering: none)
-  show heading.where(level: 1): set text(size: 11pt)
-  show heading.where(level: 2): set text(size: 10.5pt)
-  show heading.where(level: 3): set text(size: 10pt)
-  show: configurer-code
   body
   let debut-bareme = 0
   for (i, ex) in if afficher-exercices { exercices.enumerate(start: 1) } else { () } {

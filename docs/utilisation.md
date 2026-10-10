@@ -186,6 +186,9 @@ let f x = (* f x renvoie ... *)
 
 ## Présentation
 
+Les feuilles et les cours utilisent la même base A4, `lib/document.typ` : en-tête, marges, pied de page, titres, code et théorèmes. L'auteur vaut `Q. Fortier` par défaut et apparaît en haut à droite avec un lien vers <https://mpi-informatique.github.io> ; `auteur: none` le masque. La durée éventuelle figure sous l'auteur.
+Les sections ordinaires sont numérotées `I`, `I.A`, `I.A.1`. Les titres d'exercices et de parties conservent leurs numéros explicites ; les titres internes aux exercices restent ceux de leur source. Pour un autre titre déjà numéroté, utiliser `heading(numbering: none, ...)`.
+
 - Dans chaque exercice ou sujet comportant plusieurs questions, la numérotation commence à 1 ; ce départ ne se paramètre pas. Une question unique s'affiche sans numéro.
 - Titres des exercices en gras ; corps, numéros des questions et solutions sans gras. Titres au format « I - Titre », questions au format « 1. », sans préfixe Q.
 - Dans le corrigé d'un exercice, conserver tout l'énoncé, y compris les blocs libres de `contenu` (préliminaires, définitions, notations et textes de contexte). Uniquement pour un sujet de concours écrit, utiliser `sujet-ecrit: true` dans `exercice` pour masquer ces blocs dans le corrigé. Conserver les titres des parties, les questions, leurs commentaires et leurs solutions. Les figures incluses dans les questions et solutions restent affichées. Les exercices oraux et les extraits autonomes conservent leur contexte, même s'ils portent une attribution de concours.

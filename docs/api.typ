@@ -11,6 +11,10 @@ Guide utilisateur : `docs/utilisation.md`. Cette référence est générée depu
 #let api = tidy.parse-module(read("/lib/exercice.typ"), old-syntax: true)
 #tidy.show-module(api, style: tidy.styles.default)
 
+== Base A4 commune
+#let document = tidy.parse-module(read("/lib/document.typ"), old-syntax: true)
+#tidy.show-module(document, style: tidy.styles.default)
+
 == Cours A4
 #let cours = tidy.parse-module(read("/lib/cours.typ"), old-syntax: true)
 #tidy.show-module(cours, style: tidy.styles.default)

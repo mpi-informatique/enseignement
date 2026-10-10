@@ -101,7 +101,7 @@
 
 MP - Maths · Lycée Lalande · 2026/2027 · Semaine 5
 
-== V - Réduction (partie 1)
+#heading(level: 2, numbering: none)[V - Réduction (partie 1)]
 
 - Valeurs propres, vecteurs propres, sous-espaces propres, spectre d'un endomorphisme ou d'une matrice. Différentes caractérisations des valeurs propres.
 - Les sous-espaces propres sont toujours en somme directe. Toute famille de vecteurs propres associés à des valeurs propres distinctes est libre. Majoration du nombre de valeurs propres.
