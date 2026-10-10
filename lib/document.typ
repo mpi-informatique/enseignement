@@ -39,7 +39,7 @@
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
-  set page(paper: "a4", margin: 14mm, header: none, footer: none, numbering: none)
+  set page(paper: "a4", margin: 12mm, header: none, footer: none, numbering: none)
   // L'en-tête fait partie du flux : sa hauteur ne réduit que la première page.
   // Le premier bloc du contenu fournit lui-même l'espacement sous la ligne.
   block(above: 0pt, below: 0pt, sticky: true, {

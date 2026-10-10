@@ -22,17 +22,17 @@
 = Alphabet et mot
 
 #presentation-seulement[
-  == Alphabet, mot et longueur
+  == Alphabet, mot
 ]
 
 #definition[
-  Un alphabet est un ensemble $Σ$ fini, dont les éléments sont des lettres.
-]
-#pause
-#definition[
-  Un mot $m$ sur un alphabet $Σ$ est une suite finie $m_1, …, m_n$ de lettres de $Σ$, et on note $m = m_1 … m_n$.
-  L'entier $n$ est la longueur de $m$, notée $abs(m)$.
-  Le mot vide, ne contenant aucune lettre, est noté $ε$.
+  - Un alphabet est un ensemble $Σ$ fini, dont les éléments sont des lettres.
+  - Un mot $m$ sur un alphabet $Σ$ est une suite finie $m_1, …, m_n$ de lettres de $Σ$, et on note $m = m_1 … m_n$.
+  L'entier $n$ est la taille de $m$, notée $abs(m)$.
+  - Le mot vide, ne contenant aucune lettre, est noté $ε$.
+
+  - $Σ^*$ est l'ensemble des mots sur $Σ$.
+  - $Σ^+ = Σ^* ∖ {ε}$.
 ]
 
 #attention[$ε$ est un mot, pas une lettre.]
@@ -41,18 +41,12 @@
   == Ensembles de mots
 ]
 
-- $Σ^*$ est l'ensemble des mots sur $Σ$.
-- $Σ^+ = Σ^* ∖ {ε}$.
-- $Σ^n$ est l'ensemble des mots de longueur $n$ sur $Σ$.
-
-#remarque[on confond parfois la lettre $a$ et le mot $a$, de longueur $1$.]
-
 #presentation-seulement[
   == Égalité de mots
 ]
 
 #definition[
-  Deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ sur le même alphabet $Σ$ sont égaux s'ils ont la même longueur ($n = p$) et si, pour tout $i ∈ {1, …, n}$, $u_i = v_i$.
+  Deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ sur le même alphabet $Σ$ sont égaux s'ils ont la même taille ($n = p$) et si, pour tout $i ∈ {1, …, n}$, $u_i = v_i$.
 ]
 
 #presentation-seulement[
@@ -60,11 +54,9 @@
 ]
 
 #definition[
-  La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est :
-  $ u v = u_1 … u_n v_1 … v_p. $
-  Elle est aussi parfois notée $u ⋅ v$.
+  La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est $u v = u_1 … u_n v_1 … v_p$.
 
-  Si $u$ est un mot, on définit $u^0 = ε$ et $u^k = underbrace(u … u, k " facteurs")$.
+  Si $u$ est un mot, on définit $u^0 = ε$ et $u^k = underbrace(u … u, k)$.
 ]
 
 #presentation-seulement[
@@ -77,7 +69,7 @@
 ]
 
 #presentation-seulement[
-  == Concaténation et longueur (hors programme)
+  == Concaténation et taille (hors programme)
 
   Un monoïde est un ensemble muni d'une opération associative et d'un élément neutre.
 
@@ -87,10 +79,10 @@
     - $(m ⋅ n) ⋅ p = m ⋅ (n ⋅ p)$ : associativité.
   ]
 
-  == La longueur comme morphisme (hors programme)
+  == La taille comme morphisme (hors programme)
 
   #lemma[
-    La longueur est un morphisme de monoïdes de $(Σ^*, ⋅)$ vers $(ℕ, +)$ :
+    La taille est un morphisme de monoïdes de $(Σ^*, ⋅)$ vers $(ℕ, +)$ :
     - $abs(ε) = 0$.
     - $abs(m ⋅ n) = abs(m) + abs(n)$.
   ]
@@ -114,7 +106,7 @@
   == Dénombrement des préfixes et des sous-mots
 
   #exercise[
-    Soit $m$ un mot de longueur $n$ dont toutes les lettres sont différentes.
+    Soit $m$ un mot de taille $n$ dont toutes les lettres sont différentes.
     Quel est son nombre de préfixes, de suffixes, de facteurs et de sous-mots ?
 
     Et si des lettres peuvent être répétées ?
@@ -169,7 +161,7 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
 
   *Exercice* : soit $Σ = {a, b}$.
   + $Σ$ est #only("2-")[un alphabet.]
-  + $a$ est #only("2-")[une lettre et aussi un mot de longueur $1$.]
+  + $a$ est #only("2-")[une lettre et aussi un mot de taille $1$.]
   + $ε$ est #only("2-")[le mot vide.]
   + $a b a a a b b$ est #only("2-")[un mot.]
   + ${a, b, a b a a a b b}$ est #only("2-")[un langage.]
@@ -231,7 +223,7 @@ $ L_1 (L_2 ∪ L_3) = L_1 L_2 ∪ L_1 L_3. $
 Dit autrement :
 $ L^n = underbrace(L … L, n " facteurs") = {m_1 … m_n ∣ m_1 ∈ L, …, m_n ∈ L}. $
 
-#exemple[$Σ^n$ est l'ensemble des mots de longueur $n$ sur l'alphabet $Σ$.]
+#exemple[$Σ^n$ est l'ensemble des mots de taille $n$ sur l'alphabet $Σ$.]
 
 #presentation-seulement[
   == Puissance et inclusion
@@ -312,8 +304,8 @@ $L^*$ est l'ensemble des mots obtenus par concaténation d'un nombre quelconque 
   Montrer que les langages suivants sont réguliers sur $Σ = {a, b}$ :
   + Mots commençant par $a$.
   + Mots commençant par $a$ et finissant par $b$.
-  + Mots de longueur paire.
-  + Mots de longueur impaire.
+  + Mots de taille paire.
+  + Mots de taille impaire.
 ]
 
 = Expressions régulières
@@ -383,6 +375,7 @@ type 'a regexp = (* 'a est le type des lettres de l'alphabet *)
 ]
 
 Par abus de langage, on confond souvent $e$ et $L(e)$.
+Ainsi, suivant le contexte, $a$ peut désigner une lettre, un mot de taille $1$ ou un langage singleton.\
 Une expression régulière décrit de façon compacte la construction d'un langage régulier à l'aide de l'union, de la concaténation et de l'étoile de Kleene.
 Cette notation est à la base des moteurs d'expressions régulières utilisés dans les éditeurs de texte.
 
@@ -407,7 +400,7 @@ Sur $Σ = {a, b}$ :
 #exercise[
   Donner une expression régulière pour les langages suivants sur $Σ = {a, b}$ :
   + Mots contenant au plus un $a$.
-  + Mots dont la longueur est congrue à $1$ modulo $3$.
+  + Mots dont la taille est congrue à $1$ modulo $3$.
   + Mots contenant un nombre pair de $a$.
   + Mots contenant un nombre impair de $a$.
 
@@ -489,7 +482,7 @@ Sur $Σ = {a, b}$ :
 #presentation-seulement[
   == Méthodes de démonstration
 
-  - Pour montrer une égalité de deux mots, on peut faire une récurrence sur la longueur du mot.
+  - Pour montrer une égalité de deux mots, on peut faire une récurrence sur la taille du mot.
   - Pour montrer une égalité de deux langages, on peut montrer une double inclusion.
 
   #exercise[
