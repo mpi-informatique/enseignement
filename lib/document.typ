@@ -5,6 +5,9 @@
 /// Auteur utilisé par défaut dans les documents pédagogiques.
 #let auteur-par-defaut = "Q. Fortier"
 
+/// Espacement vertical commun aux blocs des feuilles et des cours.
+#let espacement-blocs = 8pt
+
 #let texte-duree(duree) = {
   let (heures, minutes) = duree
   if heures == 0 { str(minutes) + " min" }
@@ -23,30 +26,21 @@
 #let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, taille: 10pt, body) = {
   set document(title: titre)
   set document(author: auteur) if auteur != none
-  show: configurer-theoremes.with(espacement: 1.2em)
+  show: configurer-theoremes.with(espacement: espacement-blocs)
   show: configurer-code
   set text(font: "New Computer Modern", size: taille, lang: "fr")
-  set par(justify: true, leading: 0.55em, spacing: 0.55em)
+  set par(justify: true, leading: 0.55em, spacing: espacement-blocs)
+  set block(above: espacement-blocs, below: espacement-blocs)
   set heading(numbering: "I.1.1 –")
-  show heading: set block(above: 1.4em, below: 1em)
+  show heading: set block(above: espacement-blocs, below: espacement-blocs)
+  show raw.where(block: true): set block(above: espacement-blocs, below: espacement-blocs)
+  show figure: set block(above: espacement-blocs, below: espacement-blocs)
+  show math.equation.where(block: true): set block(above: espacement-blocs, below: espacement-blocs)
+  show list: set block(above: espacement-blocs, below: espacement-blocs)
+  show enum: set block(above: espacement-blocs, below: espacement-blocs)
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
-  // Repérer le contenu entre deux titres pour ne rapprocher que les titres consécutifs.
-  let contenu = selector(par).or(raw.where(block: true)).or(figure).or(list).or(enum).or(math.equation.where(block: true)).or(table).or(image)
-  show contenu: it => [#metadata(none)<document-contenu>#it]
-  show heading: it => context {
-    let structures = selector(heading).or(<document-contenu>)
-    let avant = query(structures.before(it.location(), inclusive: false))
-    let apres = query(structures.after(it.location(), inclusive: false))
-    let suit-titre = avant.len() > 0 and avant.last().func() == heading and avant.last().level < it.level
-    let precede-titre = apres.len() > 0 and apres.first().func() == heading and apres.first().level > it.level
-    set block(above: 0.3em) if suit-titre
-    set block(below: 0.3em) if precede-titre
-    // Le texte du titre ne constitue pas un paragraphe intermédiaire.
-    show contenu: it => it
-    it
-  }
   set page(
     paper: "a4", margin: (x: 14mm, top: 25mm, bottom: 18mm),
     header-ascent: 5mm,
