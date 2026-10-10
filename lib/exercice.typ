@@ -2,7 +2,7 @@
 /// Guide de rédaction : docs/utilisation.md. Documentation générée : just docs.
 
 #import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
-#import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree
+#import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree, espacement-blocs
 
 /// Espace horizontal de 0,5 em, utilisable dans une formule avec `#sep`.
 /// -> content
@@ -38,7 +38,7 @@
 
 // Titres communs aux exercices et aux parties des sujets.
 #let titre-exercice(titre, prefixe, duree: none, concours: none, niveau: 1) = {
-  block(breakable: false)[
+  block(above: 16pt, below: 16pt, breakable: false)[
     #heading(level: niveau, numbering: none)[
       #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
         [#prefixe -- #titre],
@@ -218,10 +218,10 @@
 
 /// Présentation commune aux solutions et aux commentaires des copies corrigées.
 /// - body (content): Solution ou commentaire.
-/// - above (auto, length): Espacement avant le bloc ; `auto` conserve celui de Typst.
-/// - below (auto, length): Espacement après le bloc ; `auto` conserve celui de Typst.
+/// - above (length): Espacement avant le bloc.
+/// - below (length): Espacement après le bloc.
 /// -> content
-#let bloc-solution(body, above: auto, below: auto) = block(
+#let bloc-solution(body, above: espacement-blocs, below: espacement-blocs) = block(
   width: 100%, stroke: (left: 0.4pt + luma(60%)),
   inset: (left: 10pt, y: 3pt), above: above, below: below, body,
 )
@@ -240,9 +240,9 @@
 /// - bareme (array, none): Barème remplaçant celui de l'exercice ; `none` utilise `ex.bareme`.
 /// - afficher-titre (bool): Afficher le titre de l'exercice.
 ///   Pour un exercice de concours, l'attribution s'affiche à droite à la place de la durée.
-/// - espacement (auto, length): Espacement vertical des textes et questions ; `auto` conserve celui de Typst.
+/// - espacement (length): Espacement vertical des textes et questions, défaut `espacement-blocs` de la base commune.
 /// -> content
-#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, bareme: none, espacement: auto) = {
+#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, bareme: none, espacement: espacement-blocs) = {
   let bareme = if bareme == none { ex.bareme } else { bareme }
   let nombre = nombre-questions(ex.contenu)
   verifier-bareme(bareme, nombre)
@@ -311,7 +311,7 @@
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
 /// - nouvelle-page (bool): Commencer chaque exercice après le premier sur une nouvelle page.
-/// - espacement (auto, length): Espacement vertical des textes et questions ; `auto` conserve celui de Typst.
+/// - espacement (length): Espacement vertical des textes et questions, défaut `espacement-blocs` de la base commune.
 /// - afficher-exercices (bool): Composer automatiquement le tableau d'exercices ; false permet une composition personnalisée dans body.
 /// - body (content): Contenu placé avant les exercices, fourni par la règle show.
 /// -> content
@@ -326,7 +326,7 @@
   corrige: false,
   nouvelle-page: false,
   afficher-exercices: true,
-  espacement: auto,
+  espacement: espacement-blocs,
   bareme: none,
   body,
 ) = {
