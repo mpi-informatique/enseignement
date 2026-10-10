@@ -7,10 +7,10 @@
 /// -> content
 #let sep = h(0.5em)
 
-/// Accent tilde ajusté à la largeur du contenu.
+/// Tilde élargi, y compris au-dessus d'une seule lettre.
 /// - body (content): Expression à surmonter d'un tilde.
 /// -> content
-#let widetilde(body) = math.accent(body, sym.tilde)
+#let widetilde(body) = math.accent(body, sym.tilde, size: 150%)
 
 /// Auteur utilisé par défaut dans les documents pédagogiques.
 #let auteur-par-defaut = "Q. Fortier"
