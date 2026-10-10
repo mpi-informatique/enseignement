@@ -46,7 +46,7 @@
   // Le premier bloc du contenu fournit lui-même l'espacement sous la ligne.
   block(above: 0pt, below: 0pt, sticky: true, {
     set block(above: 0pt, below: 0pt)
-    stack(dir: ttb, spacing: 4pt,
+    stack(dir: ttb, spacing: espacement-blocs,
       grid(columns: (24mm, 1fr, 24mm), align: (left, center, right),
         if niveau != none { niveau },
         text(size: 1.2em, weight: "bold", titre),
