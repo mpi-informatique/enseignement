@@ -1,13 +1,13 @@
 #import "/lib/exercice.typ": feuille, afficher-exercice, bloc-solution
-#import "/exercices/banque/maths/determinants/structure-complexe.typ": ex as structure-complexe
-#import "/exercices/banque/maths/determinants/derivee-exponentielle.typ": ex as derivee-exponentielle
-#import "/exercices/banque/maths/determinants/dominance-diagonale.typ": ex as dominance-diagonale
-#import "/exercices/banque/maths/determinants/sommes-partielles.typ": ex as sommes-partielles
-#import "/exercices/banque/maths/determinants/antisymetrique.typ": ex as antisymetrique
-#import "/exercices/banque/maths/determinants/hors-diagonale-un.typ": ex as hors-diagonale-un
-#import "/exercices/banque/maths/determinants/binomiaux.typ": ex as binomiaux
-#import "/exercices/banque/maths/determinants/tridiagonal-ab.typ": ex as tridiagonal-ab
-#import "/exercices/banque/maths/determinants/tridiagonal-a.typ": ex as tridiagonal-a
+#import "/chapitres/maths/determinants/structure-complexe.typ": ex as structure-complexe
+#import "/chapitres/maths/determinants/derivee-exponentielle.typ": ex as derivee-exponentielle
+#import "/chapitres/maths/determinants/dominance-diagonale.typ": ex as dominance-diagonale
+#import "/chapitres/maths/determinants/sommes-partielles.typ": ex as sommes-partielles
+#import "/chapitres/maths/determinants/antisymetrique.typ": ex as antisymetrique
+#import "/chapitres/maths/determinants/hors-diagonale-un.typ": ex as hors-diagonale-un
+#import "/chapitres/maths/determinants/binomiaux.typ": ex as binomiaux
+#import "/chapitres/maths/determinants/tridiagonal-ab.typ": ex as tridiagonal-ab
+#import "/chapitres/maths/determinants/tridiagonal-a.typ": ex as tridiagonal-a
 
 #let corrige = sys.inputs.at("corrige", default: "false") == "true"
 

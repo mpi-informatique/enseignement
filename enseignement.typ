@@ -6,7 +6,7 @@
 #import "lib/theoremes.typ" as theoremes
 
 /// Importe un exercice ou un sujet depuis le package.
-/// - chemin (str): Chemin relatif à la banque, par exemple "exercices/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ".
+/// - chemin (str): Chemin relatif à la banque, par exemple "devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ".
 /// -> module
 #let charger(chemin) = {
   import chemin as source

@@ -28,7 +28,7 @@ def installer(destination):
     with TemporaryDirectory(prefix='.installation-', dir=cible.parent) as dossier:
         copie = Path(dossier) / 'package'
         copie.mkdir()
-        for nom in ('typst.toml', manifeste['entrypoint'], 'lib', 'exercices', 'cours', 'tp', 'algorithmes', 'templates'):
+        for nom in ('typst.toml', manifeste['entrypoint'], 'lib', 'chapitres', 'devoirs', 'templates'):
             source = ROOT / nom
             if source.is_dir():
                 shutil.copytree(source, copie / nom, ignore=ignorer)

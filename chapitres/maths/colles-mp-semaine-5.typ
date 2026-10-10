@@ -1,13 +1,13 @@
 #import "/lib/exercice.typ": feuille, afficher-exercice, bloc-solution, sep
-#import "/exercices/banque/maths/reduction/diagonalisation-matrice-deux.typ": ex as matrice-deux
-#import "/exercices/banque/maths/reduction/diagonalisabilite-triangulaire-parametres.typ": ex as triangulaire
-#import "/exercices/banque/maths/reduction/reduction-endomorphisme-rang-un.typ": ex as rang-un
-#import "/exercices/banque/maths/reduction/spectre-rotation-plan.typ": ex as rotation
-#import "/exercices/banque/maths/reduction/reduction-derivation-polynomes-decalee.typ": ex as polynomes
-#import "/exercices/banque/maths/reduction/commutant-spectre-simple.typ": ex as commutant
-#import "/exercices/banque/maths/reduction/nilpotence-decalage-trois.typ": ex as decalage
-#import "/exercices/banque/maths/reduction/diagonalisabilite-parametre-reel-complexe.typ": ex as parametre
-#import "/exercices/banque/maths/reduction/nilpotence-traces-puissances-trois.typ": ex as traces
+#import "/chapitres/maths/reduction/diagonalisation-matrice-deux.typ": ex as matrice-deux
+#import "/chapitres/maths/reduction/diagonalisabilite-triangulaire-parametres.typ": ex as triangulaire
+#import "/chapitres/maths/reduction/reduction-endomorphisme-rang-un.typ": ex as rang-un
+#import "/chapitres/maths/reduction/spectre-rotation-plan.typ": ex as rotation
+#import "/chapitres/maths/reduction/reduction-derivation-polynomes-decalee.typ": ex as polynomes
+#import "/chapitres/maths/reduction/commutant-spectre-simple.typ": ex as commutant
+#import "/chapitres/maths/reduction/nilpotence-decalage-trois.typ": ex as decalage
+#import "/chapitres/maths/reduction/diagonalisabilite-parametre-reel-complexe.typ": ex as parametre
+#import "/chapitres/maths/reduction/nilpotence-traces-puissances-trois.typ": ex as traces
 
 #let corrige = sys.inputs.at("corrige", default: "false") == "true"
 

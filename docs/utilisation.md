@@ -13,11 +13,12 @@ Nix fournit automatiquement le package et ses dépendances Typst dans l'environn
 `nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
 Les dépôts consommateurs fixent une révision de ce dépôt dans leur `flake.lock` : ils utilisent le package du store Nix, sans dépendre de la copie utilisateur.
 Importer l'API depuis le package, puis `charger("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
-Les imports `/lib/...` et `/exercices/...` internes restent relatifs à la racine du package.
+Les imports `/lib/...`, `/chapitres/...` et `/devoirs/...` internes restent relatifs à la racine du package.
 Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple `read("corrige.ml")`.
 
-Les exercices autonomes sont dans `exercices/banque/`, les concours dans `exercices/concours/`, les devoirs dans `exercices/devoirs/` et les compositions dans `exercices/feuilles/`.
-Les autres familles de contenus pourront être ajoutées à la racine : `cours/`, `tp/` et `algorithmes/`.
+Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD, colles et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
+Les mathématiques conservent leurs sous-dossiers dans `chapitres/maths/`, notamment `determinants/` et `reduction/`. Leurs feuilles sont directement dans `chapitres/maths/`.
+Les sujets de concours sont dans `devoirs/concours/`, avec leur classement par année. Les cours, TP et algorithmes pourront rejoindre les chapitres correspondants.
 
 Partir des modèles [exercice](../templates/exercice.typ), [TD](../templates/feuille.typ), [devoir](../templates/devoir.typ) ou [sujet de concours](../templates/sujet-concours.typ).
 Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
@@ -62,7 +63,7 @@ Le contrat détaillé est dans le commentaire de `exercice`. Les champs `algorit
 - Renseigner `corrections` de `exercice` avec une simple liste des parties/questions corrigées, chacune accompagnée d'une brève explication du problème ou du changement. Conserver cette liste dans le `.typ`, sans jamais l'afficher dans les documents générés, y compris les corrigés. Placer les commentaires généraux du jury dans `remarques`, sous forme de liste, sans titre ni référence affichés.
 - Associer les observations relatives à une partie ou sous-partie au paramètre `commentaire` de `partie` ; les afficher dans le corrigé immédiatement après son titre. Tous les commentaires du jury (généraux, de partie et de question) sont en italique.
 - Associer chaque observation pertinente du jury à la question concernée via `commentaire` de `question`. Elle apparaît uniquement dans le corrigé, en italique, immédiatement après l'énoncé de la question et avant sa solution.
-- Regrouper le sujet `<identifiant>.typ`, le code du corrigé et ses tests dans un même dossier `<identifiant>/` sous `exercices/concours/`. Afficher le code depuis ces mêmes fichiers pour tester exactement le code publié.
+- Regrouper le sujet `<identifiant>.typ`, le code du corrigé et ses tests dans un même dossier `<identifiant>/` sous `devoirs/concours/`. Afficher le code depuis ces mêmes fichiers pour tester exactement le code publié.
 
 
 ## Contenu et rédaction
@@ -182,18 +183,18 @@ composition dans `feuille.with`. Les copies importent ce sujet depuis le package
 
 ```sh
 nix develop path:. -c just check
-nix develop path:. -c just c exercices/banque/langages/residuels-minimisation.typ
+nix develop path:. -c just c chapitres/langages/exercices/residuels-minimisation.typ
 nix develop path:. -c just docs
 ```
 
 `just check` compile les énoncés, corrigés et modèles, valide le catalogue et lance les tests. Pour `dossier/nom.typ`, les sorties sont `build/dossier/nom/enonce.pdf` et `corrige.pdf` ; cela fonctionne aussi à la racine. `just w <chemin> corrige` surveille un corrigé sans ouvrir de lecteur ; utiliser `enonce` pour l'énoncé.
 
-Conserver les exercices simples dans un fichier `.typ`. Pour un exercice ou sujet avec des fichiers associés, créer un dossier `<identifiant>/` dans `exercices/banque/` ou `exercices/concours/`, en conservant le nom `<identifiant>.typ` : son nom reste l'identifiant de l'exercice. Placer le code et ses tests à côté, afficher ce même code dans le corrigé et brancher les tests sur `just check`. Une dizaine de tests ciblés suffit.
+Conserver les exercices simples dans un fichier `.typ`. Pour un exercice ou sujet avec des fichiers associés, créer un dossier `<identifiant>/` dans `chapitres/<chapitre>/exercices/` ou `devoirs/concours/`, en conservant le nom `<identifiant>.typ` : son nom reste l'identifiant de l'exercice. Placer le code et ses tests à côté, afficher ce même code dans le corrigé et brancher les tests sur `just check`. Une dizaine de tests ciblés suffit.
 La référence Tidy et les tests de l'API font aussi partie des vérifications.
 
 Lorsqu'un sujet sert aussi à corriger des copies, placer les oracles réutilisables dans `tests.ml` et faire appeler ces groupes par `test.ml`. Un lanceur de copies peut alors extraire chaque région de code élève et exécuter le même groupe de test, sans recopier les oracles dans le dépôt des corrections.
 
-Les tests `test.ml` et `test.py` sous `exercices/` sont découverts automatiquement par `just test`.
+Les tests `test.ml` et `test.py` sous `chapitres/` ou `devoirs/` sont découverts automatiquement par `just test`.
 Les tests généraux de l'API, de la découverte et de l'installation restent dans
 `lib/tests/`, exclu du package installé. Ne pas ajouter de `test.typ` aux sujets de
 concours : conserver les tests OCaml ou Python qui vérifient le code publié dans

@@ -9,7 +9,7 @@ assert classify('#let ex = exercice()', '2026/graphes/un.typ') == 'exercice'
 assert classify('#show: feuille.with(type: "devoir", exercices: ())', 'ds.typ') == 'document'
 assert classify('#show: feuille.with(type: "colle", exercices: ())', 'libre/colle.typ') == 'document'
 assert classify('#show: feuille.with(exercices: ())', 'ancien.typ') == 'document'
-assert classify('#let ex = exercice()', 'exercices/concours/19/sujet.typ') == 'exercice'
+assert classify('#let ex = exercice()', 'devoirs/concours/19/sujet.typ') == 'exercice'
 assert classify('// #show: feuille.with()\n#let ex = exercice()', 'a.typ') == 'exercice'
 assert classify('/* a /* b */ #let ex = exercice() */', 'a.typ') is None
 assert classify('`#show: feuille.with()`', 'a.typ') is None

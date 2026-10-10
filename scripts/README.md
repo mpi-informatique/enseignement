@@ -6,7 +6,7 @@ Depuis la racine du dépôt :
 
 ```sh
 nix develop path:.
-python3 scripts/build.py c exercices/banque/langages/residuels-minimisation.typ
+python3 scripts/build.py c chapitres/langages/exercices/residuels-minimisation.typ
 python3 scripts/build.py check
 ```
 

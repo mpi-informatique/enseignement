@@ -2,12 +2,12 @@
 #import "/lib/exercice.typ": feuille, exercice, question
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
-#import "/exercices/banque/langages/cloture-miroir-prefixes-suffixes-facteurs.typ": ex as cloture
-#import "/exercices/banque/langages/reconnaissable-ou-non.typ": ex as reconnaissable
-#import "/exercices/banque/langages/algorithmes-vacuite-finitude-equivalence.typ": ex as algorithmes
-#import "/exercices/banque/langages/longueur-discriminante-automates.typ": ex as longueur
-#import "/exercices/banque/langages/ensembles-distinguants-automates.typ": ex as distinguant
-#import "/exercices/banque/langages/automates-palindromes.typ": ex as palindromes
+#import "/chapitres/langages/exercices/cloture-miroir-prefixes-suffixes-facteurs.typ": ex as cloture
+#import "/chapitres/langages/exercices/reconnaissable-ou-non.typ": ex as reconnaissable
+#import "/chapitres/langages/exercices/algorithmes-vacuite-finitude-equivalence.typ": ex as algorithmes
+#import "/chapitres/langages/exercices/longueur-discriminante-automates.typ": ex as longueur
+#import "/chapitres/langages/exercices/ensembles-distinguants-automates.typ": ex as distinguant
+#import "/chapitres/langages/exercices/automates-palindromes.typ": ex as palindromes
 
 #let determinisation = exercice(
   meta: (

@@ -5,20 +5,22 @@ Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-
 ## Organisation
 
 ```text
-exercices/banque/   Exercices autonomes, regroupés par thème
-exercices/concours/ Sujets complets avec leurs solutions, codes et tests
-exercices/devoirs/  Devoirs et codes associés
-exercices/feuilles/ Compositions de TD et colles
-lib/               API Typst, figures, code et métadonnées
-lib/tests/         Tests de l'API et du package, exclus de l'installation
-templates/         Modèles de documents
-docs/              Guide utilisateur, programme et référence de l'API
-scripts/           Découverte, compilation, catalogue et installation
-nix/               Versions et empreintes des dépendances Typst
-build/             PDF et catalogue générés, exclus de Git
+chapitres/               Contenus regroupés par chapitre
+  langages/              TD et colles, avec les exercices dans exercices/
+  graphes/               Exercices dans exercices/
+  structures-de-donnees/ Exercices dans exercices/
+  maths/                 Exercices dans determinants/ et reduction/, feuilles à côté
+devoirs/concours/        Sujets complets avec leurs solutions, codes et tests
+lib/                     API Typst, figures, code et métadonnées
+lib/tests/               Tests de l'API et du package, exclus de l'installation
+templates/               Modèles de documents
+docs/                    Guide utilisateur, programme et référence de l'API
+scripts/                 Découverte, compilation, catalogue et installation
+nix/                     Versions et empreintes des dépendances Typst
+build/                   PDF et catalogue générés, exclus de Git
 ```
 
-Les dossiers organisent les contenus : le type d'un document reste déclaré dans le code. La racine est celle de tous les imports `/lib/...` et `/exercices/...`. Conserver le code et les tests à côté du document qui les présente.
+Les dossiers organisent les contenus : le type d'un document reste déclaré dans le code. La racine est celle de tous les imports `/lib/...`, `/chapitres/...` et `/devoirs/...`. Conserver le code et les tests à côté du document qui les présente.
 
 ## Utilisation
 
@@ -26,8 +28,8 @@ Installer Nix avec `nix-command` et `flakes`, puis lancer :
 
 ```sh
 nix develop path:. -c just check
-nix develop path:. -c just c exercices/banque/langages/residuels-minimisation.typ
-nix develop path:. -c just w exercices/banque/langages/residuels-minimisation.typ
+nix develop path:. -c just c chapitres/langages/exercices/residuels-minimisation.typ
+nix develop path:. -c just w chapitres/langages/exercices/residuels-minimisation.typ
 ```
 
 `nix develop path:.` ouvre l'environnement avec Typst, Just, Python et OCaml. `just` affiche les commandes, `just all` compile les contenus et le catalogue, `just docs` génère la référence de l'API. `just w chemin.typ enonce` surveille l'énoncé au lieu du corrigé. L'aperçu se trouve dans le dossier `build/` de la source et peut être ouvert dans le lecteur PDF de son choix.
@@ -46,7 +48,7 @@ Ce dépôt fournit `@mpi-informatique/enseignement:0.1.0` :
 
 ```typst
 #import "@mpi-informatique/enseignement:0.1.0": feuille, charger
-#let sujet = charger("exercices/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
+#let sujet = charger("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
 #show: feuille.with(titre: sujet.titre, exercices: sujet.exercices)
 ```
 
@@ -58,7 +60,7 @@ Le namespace `mpi-informatique` est local : Typst ne télécharge pas ce package
 
 ## Contribuer
 
-Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/utilisation.md). Vérifier qu'un exercice n'existe pas déjà, conserver ses ressources et tests dans le même dossier, puis lancer `nix develop path:. -c just check` avant de proposer une pull request. Les tests `test.ml` et `test.py` placés sous `exercices/` sont découverts automatiquement.
+Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/utilisation.md). Vérifier qu'un exercice n'existe pas déjà, conserver ses ressources et tests dans le même dossier, puis lancer `nix develop path:. -c just check` avant de proposer une pull request. Les tests `test.ml` et `test.py` placés sous `chapitres/` ou `devoirs/` sont découverts automatiquement.
 
 Les données nominatives, copies et évaluations appartiennent au dépôt privé `mpi-informatique/enseignement-prive` et ne doivent jamais être ajoutées ici.
 
