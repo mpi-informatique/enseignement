@@ -38,6 +38,8 @@ nix develop path:. -c just w exercices/banque/langages/residuels-minimisation.ty
 
 Hors de Nix, installer Typst, Just, Python 3.11 ou ultérieur et OCaml : `just check` utilise alors l'installation et le cache Typst de la machine.
 
+Just est facultatif pour compiler : `nix develop path:. -c python3 scripts/build.py c chemin.typ` équivaut à `nix develop path:. -c just c chemin.typ`. Voir la [vue d'ensemble des scripts Python](scripts/README.md) pour leurs rôles et les commandes directes.
+
 ## Package Typst
 
 Ce dépôt fournit `@mpi-informatique/enseignement:0.1.0` :

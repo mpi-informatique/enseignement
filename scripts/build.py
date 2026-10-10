@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Compiler la banque avec Just, en réutilisant les sorties à jour."""
+"""Compiler et vérifier la banque, en réutilisant les sorties à jour.
+
+Point d'entrée utilisable directement ou depuis Just : déléguer la découverte
+à sources.py, l'export à catalogue.py et lancer Typst et les tests.
+"""
 
 import argparse
 import hashlib
