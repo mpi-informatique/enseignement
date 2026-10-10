@@ -1,7 +1,7 @@
 /// Environnements Theorion avec le thème Fancy en noir et blanc.
 #import "@preview/theorion:0.6.0" as theorion
 #import theorion.cosmos.fancy: *
-#import "blocs.typ": bloc-annotation, attention, remarque, exemple
+#import "blocs.typ": epaisseur-trait, bloc-annotation, attention, remarque, exemple
 
 #let espacement-cadres = state("enseignement-espacement-cadres", none)
 
@@ -10,7 +10,7 @@
   let cadre = environnement(
     ..args,
     frame: (
-      thickness: .05em,
+      thickness: epaisseur-trait,
       radius: get-fancy-radius(here()),
       inset: (x: 1.2em, top: if args.named().at("full-title", default: auto) != "" { .7em } else { 1.2em }, bottom: 1.2em),
       border-color: black,

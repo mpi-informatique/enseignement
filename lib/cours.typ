@@ -1,4 +1,5 @@
 /// Présentation A4 des cours, avec les environnements communs de la banque.
+#import "blocs.typ": epaisseur-trait
 #import "document.typ": document-pedagogique, auteur-par-defaut
 
 /// Compose un cours continu, utilisable seul ou comme thème article de Touying.
@@ -21,6 +22,6 @@
 #let espace-reponse(lignes) = {
   assert(type(lignes) == int and lignes >= 0)
   for _ in range(lignes) {
-    block(width: 100%, above: 1.1em, below: 0pt, line(length: 100%, stroke: 0.3pt + luma(65%)))
+    block(width: 100%, above: 1.1em, below: 0pt, line(length: 100%, stroke: epaisseur-trait + luma(65%)))
   }
 }

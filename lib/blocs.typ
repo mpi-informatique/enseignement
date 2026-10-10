@@ -1,6 +1,9 @@
 /// Espacement vertical commun aux blocs des feuilles et des cours.
 #let espacement-blocs = 8pt
 
+/// Épaisseur commune aux filets et aux bordures des documents.
+#let epaisseur-trait = 0.4pt
+
 /// Base commune aux annotations et aux solutions des exercices et des copies.
 /// - genre (str): solution, attention, remarque ou exemple.
 /// - icone (bool): Afficher l'icône ; false si le contenu possède déjà son propre repère.
@@ -10,7 +13,7 @@
 /// -> content
 #let bloc-annotation(body, genre: "solution", icone: true, above: espacement-blocs, below: espacement-blocs) = block(
   width: 100%, breakable: true,
-  stroke: (left: 0.4pt + luma(60%)),
+  stroke: (left: epaisseur-trait + luma(60%)),
   inset: (left: 10pt, y: 3pt), above: above, below: below,
   {
     if icone {

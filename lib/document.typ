@@ -1,7 +1,7 @@
 /// Mise en page A4 commune aux feuilles et aux cours.
 #import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
-#import "blocs.typ": espacement-blocs
+#import "blocs.typ": espacement-blocs, epaisseur-trait
 
 /// Auteur utilisé par défaut dans les documents pédagogiques.
 #let auteur-par-defaut = "Q. Fortier"
@@ -54,7 +54,7 @@
            texte-duree(duree)
          }],
       ),
-      line(length: 100%, stroke: 0.4pt),
+      line(length: 100%, stroke: epaisseur-trait),
     )
   })
   body
