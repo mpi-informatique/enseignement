@@ -23,12 +23,12 @@
 #let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, taille: 10pt, body) = {
   set document(title: titre)
   set document(author: auteur) if auteur != none
-  show: configurer-theoremes
+  show: configurer-theoremes.with(espacement: 1.2em)
   show: configurer-code
   set text(font: "New Computer Modern", size: taille, lang: "fr")
-  set par(justify: true, leading: 0.8em, spacing: 0.8em)
+  set par(justify: true, leading: 0.55em, spacing: 0.55em)
   set heading(numbering: "I.1.1 –")
-  show heading: set block(above: 1em, below: 0.5em)
+  show heading: set block(above: 1.4em, below: 1em)
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)

@@ -201,7 +201,8 @@ Les sections ordinaires sont numérotées `I`, `I.1`, `I.1.1`. Les titres d'exer
 - Dans le corrigé d'un exercice, conserver tout l'énoncé, y compris les blocs libres de `contenu` (préliminaires, définitions, notations et textes de contexte). Uniquement pour un sujet de concours écrit, utiliser `sujet-ecrit: true` dans `exercice` pour masquer ces blocs dans le corrigé. Conserver les titres des parties, les questions, leurs commentaires et leurs solutions. Les figures incluses dans les questions et solutions restent affichées. Les exercices oraux et les extraits autonomes conservent leur contexte, même s'ils portent une attribution de concours.
 
 Pour un exercice attribué à un concours, afficher le titre seul à gauche et l'attribution du concours à droite, à la place de la durée. Les en-têtes des documents conservent le nom du concours suivi du titre du document, avec la mention « (corrigé) » pour cette variante ; la durée reste affichée à droite.
-Le texte courant est composé en New Computer Modern, en 10 pt, avec un interligne supplémentaire de `0.8em`. Les titres de niveau 1, 2 et 3 sont respectivement en 11 pt, 10,5 pt et 10 pt ; les titres de section restent ainsi plus petits que le titre du document.
+Le texte courant est composé en New Computer Modern, en 10 pt, avec un interligne supplémentaire de `0.55em`. Les titres de niveau 1, 2 et 3 sont respectivement en 11 pt, 10,5 pt et 10 pt ; les titres de section restent ainsi plus petits que le titre du document.
+La base A4 réserve `1.2em` autour des cadres, `1.4em` avant les titres de section et `1em` après. Ces espacements sont distincts de l'interligne.
 Le paramètre `espacement` de `feuille` règle l'espacement vertical des textes et questions (12pt par défaut).
 
 ### Théorèmes, lemmes et définitions
