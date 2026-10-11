@@ -64,7 +64,6 @@
 }
 
 #let ex = exercice(
-  sujet-ecrit: true,
   meta: (
     titre: "Mots synchronisants",
     chapitres: ("automates-finis", "langages-reguliers", "graphes", "structures-de-donnees", "logique"),

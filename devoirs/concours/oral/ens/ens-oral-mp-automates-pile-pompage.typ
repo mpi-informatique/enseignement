@@ -17,7 +17,6 @@
 )
 
 #let ex = exercice(
-  sujet-ecrit: false,
   meta: (
     titre: "Automates à pile et lemme de pompage",
     chapitres: ("langages-reguliers", "automates-finis"),

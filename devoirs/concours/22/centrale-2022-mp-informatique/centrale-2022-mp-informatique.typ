@@ -200,7 +200,6 @@
 )
 
 #let ex = exercice(
-  sujet-ecrit: true,
   meta: (
     titre: "Option informatique",
     chapitres: ("langages-reguliers", "automates-finis", "recursivite-et-induction", "algorithmique"),

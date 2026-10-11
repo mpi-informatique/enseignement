@@ -1,6 +1,5 @@
 #import "/enseignement.typ": exercice, question, partie
 #let ex = exercice(
-  sujet-ecrit: false,
   meta: (
     titre: "Automates et monoïdes",
     chapitres: ("langages-reguliers", "automates-finis"),

@@ -107,10 +107,8 @@
 /// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
 /// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
 /// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `points` dans chaque `question`.
-/// - sujet-ecrit (bool): Masque les textes libres du contexte dans le corrigé d'un sujet écrit seulement. Les questions et figures qu'elles contiennent sont conservées.
 /// -> dictionary
-#let exercice(meta: (:), contenu: (), remarques: none, corrections: none, sujet-ecrit: false, bareme: none) = {
-  assert(type(sujet-ecrit) == bool, message: "sujet-ecrit doit être un booléen")
+#let exercice(meta: (:), contenu: (), remarques: none, corrections: none, bareme: none) = {
   let champs = ("titre", "chapitres", "difficulte")
   for champ in champs {
     assert(champ in meta, message: "Métadonnée manquante : " + champ)
@@ -204,7 +202,6 @@
     contenu: contenu,
     remarques: remarques,
     corrections: corrections,
-    sujet-ecrit: sujet-ecrit,
     bareme: bareme,
   )
 }
@@ -223,9 +220,10 @@
 /// - bareme (array, none): Barème remplaçant celui de l'exercice ; `none` utilise `ex.bareme`.
 /// - afficher-titre (bool): Afficher le titre de l'exercice.
 ///   Pour un exercice de concours, l'attribution s'affiche à droite à la place de la durée.
+/// - afficher-contexte (bool): Conserver les textes libres dans le corrigé, défaut true. Les questions et leurs figures restent toujours visibles.
 /// - espacement (length): Espacement vertical des textes et questions, défaut `espacement-blocs` de la base commune.
 /// -> content
-#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, bareme: none, espacement: espacement-blocs) = {
+#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, afficher-contexte: true, bareme: none, espacement: espacement-blocs) = {
   let bareme = if bareme == none { ex.bareme } else { bareme }
   let nombre = nombre-questions(ex.contenu)
   verifier-bareme(bareme, nombre)
@@ -246,8 +244,7 @@
     ]
   }
   let i = 1
-  // Seuls les sujets de concours écrits masquent le contexte dans leur corrigé.
-  for q in aplatir(ex.contenu, textes: not (corrige and ex.sujet-ecrit), commentaires: corrige) {
+  for q in aplatir(ex.contenu, textes: not corrige or afficher-contexte, commentaires: corrige) {
     if type(q) == content {
       block(width: 100%, above: espacement, below: espacement, q)
       continue
@@ -301,7 +298,7 @@
 /// - niveau (str, none): Niveau affiché dans l'en-tête ; remplacé par la filière lorsqu'un concours est renseigné.
 /// - auteur (str, none): Auteur lié au site dans l'en-tête, défaut « Q. Fortier » ; `none` le masque.
 /// - duree (array, none): Durée (heures, minutes) après le titre, uniquement pour un devoir/concours ; `none` reprend celle du sujet unique.
-/// - concours (dictionary, none): Filière affichée à gauche, autres informations à la place de l'auteur ; mêmes champs que `exercice.meta.concours`. Un concours utilise la base `type: "devoir"`.
+/// - concours (dictionary, none): Filière affichée à gauche, autres informations à la place de l'auteur ; mêmes champs que `exercice.meta.concours`. Un concours utilise la base `type: "devoir"`. Dans un devoir/concours écrit (`oral` absent ou false), les textes libres du contexte sont masqués dans le corrigé ; les exercices affichés seuls ou dans un TD les conservent.
 /// - exercices (array): Objets `ex` importés, dans l'ordre ; `()` crée une feuille vide.
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
@@ -348,11 +345,12 @@
     titre-entete: titre-entete, repeter-entete: type == "colle")
   [#metadata((type: type, titre: titre, niveau: niveau, concours: concours)) <document-meta>]
   body
+  let afficher-contexte = type not in ("devoir", "concours") or concours == none or concours.at("oral", default: false)
   let debut-bareme = 0
   for (i, ex) in if afficher-exercices { exercices.enumerate(start: 1) } else { () } {
     if nouvelle-page and i > 1 { pagebreak() }
     let fin-bareme = debut-bareme + nombre-questions(ex.contenu)
-    afficher-exercice(ex, bareme: if bareme == none { none } else { bareme.slice(debut-bareme, fin-bareme) }, numero: if exercices.len() > 1 { i } else { none }, corrige: corrige, afficher-titre: exercices.len() > 1 or titre != ex.meta.titre, espacement: espacement)
+    afficher-exercice(ex, bareme: if bareme == none { none } else { bareme.slice(debut-bareme, fin-bareme) }, numero: if exercices.len() > 1 { i } else { none }, corrige: corrige, afficher-titre: exercices.len() > 1 or titre != ex.meta.titre, afficher-contexte: afficher-contexte, espacement: espacement)
     debut-bareme = fin-bareme
   }
 }

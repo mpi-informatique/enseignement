@@ -193,7 +193,6 @@ let f x = (* f x renvoie ... *)
 
 Partir des modèles et utiliser les fonctions communes de `lib/` pour les documents, les blocs de code et les cadres.
 
-- Réserver `sujet-ecrit: true` aux sujets de concours écrits. Pour les exercices oraux et les extraits autonomes, conserver le contexte du corrigé.
 - Pour un titre déjà numéroté dans la source, utiliser `heading(numbering: none, ...)`.
 
 ### Théorèmes, lemmes et définitions

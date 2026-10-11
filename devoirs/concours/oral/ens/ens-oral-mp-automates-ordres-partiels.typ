@@ -22,7 +22,6 @@
 )
 
 #let ex = exercice(
-  sujet-ecrit: false,
   meta: (
     titre: "Automates et ordres partiels",
     chapitres: ("langages-reguliers", "automates-finis"),

@@ -72,3 +72,29 @@
 #let extrait = code-region(source-code, "test")
 #assert(code-texte(source-code, "test") == "let x = 1")
 #assert(extrait.text == "let x = 1" and extrait.lang == "ocaml" and extrait.block)
+
+// Seuls les corrigés de devoirs de concours écrits masquent les introductions.
+#let cas-contexte = (
+  (type: "devoir", concours: none),
+  (type: "devoir", concours: (nom: "ENS")),
+  (type: "concours", concours: (nom: "ENS", oral: false)),
+  (type: "devoir", concours: (nom: "ENS", oral: true)),
+  (type: "td", concours: (nom: "ENS", oral: false)),
+  (type: "exercice", concours: (nom: "ENS", oral: false)),
+)
+#for (i, cas) in cas-contexte.enumerate() {
+  let ex = exercice(meta: (..meta, concours: cas.concours), contenu: (
+    [#metadata(i) <contexte-test> Introduction.],
+    partie("I", "Partie", contenu: (
+      [#metadata(i) <contexte-partie-test> Définitions.],
+      question([#metadata(i) <enonce-test> Question avec sa figure.], solution: [#metadata(i) <solution-test> Solution.]),
+    )),
+  ))
+  feuille(type: cas.type, concours: cas.concours, exercices: (ex,), corrige: true, [])
+}
+#context {
+  assert(query(<contexte-test>).map(it => it.value) == (0, 3, 4, 5))
+  assert(query(<contexte-partie-test>).map(it => it.value) == (0, 3, 4, 5))
+  assert(query(<enonce-test>).map(it => it.value) == (0, 1, 2, 3, 4, 5))
+  assert(query(<solution-test>).map(it => it.value) == (0, 1, 2, 3, 4, 5))
+}

@@ -1,7 +1,6 @@
 #import "/enseignement.typ": exercice, question, partie
 #import "/enseignement.typ": sep
 #let ex = exercice(
-  sujet-ecrit: false,
   meta: (
     titre: "Clôture commutative de langages réguliers",
     chapitres: ("langages-reguliers", "automates-finis"),

@@ -96,7 +96,6 @@
 }))
 
 #let ex = exercice(
-  sujet-ecrit: true,
   // Barème pédagogique, non officiel : difficulté et longueur des preuves/code.
   meta: (
     titre: "Morphismes d'automates",

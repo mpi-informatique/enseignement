@@ -1,7 +1,6 @@
 #import "/enseignement.typ": exercice, question, partie
 #import "/enseignement.typ": sep
 #let ex = exercice(
-  sujet-ecrit: false,
   meta: (
     titre: "Évaluation accélérée d'automates",
     chapitres: ("langages-reguliers", "automates-finis"),
