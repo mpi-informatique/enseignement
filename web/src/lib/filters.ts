@@ -19,6 +19,10 @@ export function matchesFilters(resource: Resource, filters: SearchFilters): bool
     && (filters.difficulteMax === undefined || (resource.difficulte !== null && resource.difficulte <= filters.difficulteMax));
 }
 
+export function availableContestYears(resources: Resource[], contests: string[]): string[] {
+  return [...new Set(resources.filter(resource => matchesFilters(resource, { concours: contests })).flatMap(resource => fieldValues(resource, 'annee')))].sort((a, b) => Number(b) - Number(a));
+}
+
 const aliases: Record<string, FilterField | 'difficulteMax'> = {
   type: 'type', types: 'type', chapitre: 'chapitres', chapitres: 'chapitres',
   algorithme: 'algorithmes', algorithmes: 'algorithmes', structure: 'structures', structures: 'structures',

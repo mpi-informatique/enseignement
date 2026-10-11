@@ -1,13 +1,25 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { parseSearchQuery } from '../src/lib/filters.ts';
+import { availableContestYears, parseSearchQuery } from '../src/lib/filters.ts';
 import { createSearch } from '../src/lib/search.ts';
 import { resourceBadgeLabel } from '../src/lib/labels.ts';
 import type { Resource } from '../../shared/src/index.ts';
 
 const resources: Resource[] = JSON.parse(readFileSync(new URL('../src/generated/catalogue.json', import.meta.url), 'utf8'));
 const search = createSearch(resources);
+
+test('les années proposées dépendent des concours, sans doublons ni années inventées', () => {
+  const fixtures = [
+    { nom: 'CCINP', annee: 2023 }, { nom: 'CCINP', annee: 2023 },
+    { nom: 'ENS', annee: 2018 }, { nom: 'ENS' }, { nom: 'Mines-Ponts', annee: 2019 }, null,
+  ].map(concours => ({ ...resources[0]!, concours }));
+  assert.deepEqual(availableContestYears(fixtures, []), ['2023', '2019', '2018']);
+  assert.deepEqual(availableContestYears(fixtures, ['CCINP']), ['2023']);
+  assert.deepEqual(availableContestYears(fixtures, ['ENS', 'Mines-Ponts']), ['2019', '2018']);
+  assert.deepEqual(availableContestYears(fixtures, ['mines ponts']), ['2019']);
+  assert.deepEqual(availableContestYears(fixtures, ['absent']), []);
+});
 
 test('recherche française : accents, préfixes, fautes et plusieurs termes', () => {
   assert.ok(search('residuels minimisation', {}).some(resource => resource.id === 'residuels-minimisation'));

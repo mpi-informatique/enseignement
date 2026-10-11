@@ -72,7 +72,7 @@ export default function PdfViewer({ pdf, pending, dark, toolbar, actions, onRead
     return () => { cancelled = true; void loading.destroy(); };
   }, [pdf]);
   useEffect(() => {
-    const observer = new ResizeObserver(entries => setWidth(Math.max(200, entries[0]!.contentRect.width)));
+    const observer = new ResizeObserver(entries => setWidth(Math.max(1, entries[0]!.contentRect.width)));
     observer.observe(scroll.current!);
     onReady();
     return () => observer.disconnect();
@@ -114,7 +114,7 @@ export default function PdfViewer({ pdf, pending, dark, toolbar, actions, onRead
       if (event.key === '+' || event.key === '=' || event.key === '-') { event.preventDefault(); setZoom(zoom => Math.max(0.5, Math.min(2, zoom + (event.key === '-' ? -0.1 : 0.1)))); }
       if (event.key === '0') { event.preventDefault(); setZoom(1); }
     }}>
-      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.loadingTask.docId}-${index}`} document={document} dark={dark} number={index + 1} width={Math.min(width, 880) * zoom} />)}
+      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.loadingTask.docId}-${index}`} document={document} dark={dark} number={index + 1} width={width * zoom} />)}
       {!document && !error && <div className="preview-placeholder">{(pending || pdf) && <span className="loading loading-spinner loading-sm" />}<span>{pending ? 'Compilation…' : pdf ? 'Chargement…' : 'Aucun aperçu'}</span></div>}
       {error && <p className="viewer-error" role="alert">Impossible d’afficher le PDF : {error}</p>}
     </div>
