@@ -1,5 +1,5 @@
-#import "/enseignement.typ": feuille, afficher-exercice, bloc-solution
-#import "/enseignement.typ": sep
+#import "/load.typ": feuille, afficher-exercice, bloc-solution
+#import "/load.typ": sep
 #import "/chapitres/maths/reduction/diagonalisation-matrice-deux.typ": ex as matrice-deux
 #import "/chapitres/maths/reduction/diagonalisabilite-triangulaire-parametres.typ": ex as triangulaire
 #import "/chapitres/maths/reduction/reduction-endomorphisme-rang-un.typ": ex as rang-un

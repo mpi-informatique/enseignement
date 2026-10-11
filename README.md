@@ -56,15 +56,15 @@ Voir le [guide de rédaction](docs/utilisation.md#cours-et-présentations) pour 
 
 ## Package Typst
 
-Ce dépôt fournit `@mpi-informatique/enseignement:0.1.0` :
+Ce dépôt fournit `@mpi-informatique/mpi-exercices:0.1.0` :
 
 ```typst
-#import "@mpi-informatique/enseignement:0.1.0": feuille, charger
+#import "@mpi-informatique/mpi-exercices:0.1.0": feuille, charger
 #let sujet = charger("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
 #show: feuille.with(titre: sujet.titre, exercices: sujet.exercices)
 ```
 
-Pour les exports et les paramètres, consulter [l'API](enseignement.typ) et ses commentaires. Dans un dépôt consommateur, verrouiller ce dépôt comme entrée Nix et utiliser sa sortie `packages.<system>.typst-packages`.
+Pour les exports et les paramètres, consulter [l'API](load.typ) et ses commentaires. Dans un dépôt consommateur, verrouiller ce dépôt comme entrée Nix et utiliser sa sortie `packages.<system>.typst-packages`.
 
 `just install` installe facultativement une copie dans le répertoire utilisateur, pour Tinymist et les compilations hors de Nix. Réinstaller après modification, et changer de version pour conserver une ancienne installation.
 
@@ -78,6 +78,6 @@ Les données nominatives, copies et évaluations appartiennent au dépôt privé
 
 ## Éditeur et Codespaces
 
-Tinymist reste utilisable pour les sources et aperçus Typst. L'extension [Enseignement Typst](https://github.com/mpi-informatique/vscode-enseignement) utilise les scripts de compilation de la banque et partage son socle TypeScript avec le [site web](web/README.md).
+Tinymist reste utilisable pour les sources et aperçus Typst. L'extension [Exercices MPI](https://github.com/mpi-informatique/vscode-mpi-exercices) utilise les scripts de compilation de la banque et partage son socle TypeScript avec le [site web](web/README.md).
 
 La configuration [Codespaces](.devcontainer/devcontainer.json) installe Nix et recommande Tinymist.

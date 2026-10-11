@@ -1,4 +1,4 @@
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #import "/devoirs/concours/oral/ens/ens-oral-mp-automates-palindromes.typ": ex as palindromes
 #import "/devoirs/concours/oral/ens/ens-oral-mp-automates-pile-pompage.typ": ex as pile
 #import "/devoirs/concours/oral/ens/ens-oral-mp-automates-monoides.typ": ex as monoides

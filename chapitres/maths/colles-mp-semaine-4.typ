@@ -1,4 +1,4 @@
-#import "/enseignement.typ": feuille, afficher-exercice, bloc-solution
+#import "/load.typ": feuille, afficher-exercice, bloc-solution
 #import "/chapitres/maths/determinants/structure-complexe.typ": ex as structure-complexe
 #import "/chapitres/maths/determinants/derivee-exponentielle.typ": ex as derivee-exponentielle
 #import "/chapitres/maths/determinants/dominance-diagonale.typ": ex as dominance-diagonale

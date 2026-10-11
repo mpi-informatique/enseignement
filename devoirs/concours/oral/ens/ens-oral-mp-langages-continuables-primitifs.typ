@@ -1,4 +1,4 @@
-#import "/enseignement.typ": exercice, question, partie
+#import "/load.typ": exercice, question, partie
 #let ex = exercice(
   meta: (
     titre: "Langages continuables et mots primitifs",
@@ -80,7 +80,7 @@
   ),
 )
 
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

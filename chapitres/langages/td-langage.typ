@@ -1,4 +1,4 @@
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #import "/chapitres/langages/exercices/mots-qui-commutent.typ": ex as commutation
 #import "/chapitres/langages/exercices/mots-de-fibonacci.typ": ex as fibonacci
 #import "/chapitres/langages/exercices/regles-expressions-regulieres.typ": ex as regles

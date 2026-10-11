@@ -1,5 +1,5 @@
-#import "/enseignement.typ": exercice, question
-#import "/enseignement.typ": sep
+#import "/load.typ": exercice, question
+#import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
 #let ex = exercice(

@@ -1,4 +1,4 @@
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #import "/chapitres/langages/exercices/langages-locaux-glushkov.typ": ex as locaux
 #import "/devoirs/concours/oral/ccinp/ccinp-oral-langages-automates.typ": ex as ccp
 #import "/chapitres/langages/exercices/stabilite-langages-reguliers.typ": ex as stabilite

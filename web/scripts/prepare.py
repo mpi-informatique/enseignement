@@ -85,8 +85,8 @@ def prepare():
     shutil.rmtree(bank, ignore_errors=True)
     bank.mkdir(parents=True)
     files = []
-    shutil.copyfile(ROOT / "enseignement.typ", bank / "enseignement.typ")
-    files.append("enseignement.typ")
+    shutil.copyfile(ROOT / "load.typ", bank / "load.typ")
+    files.append("load.typ")
     for directory in ("chapitres", "devoirs", "lib", "templates"):
         files.extend(f"{directory}/{file}" for file in copy_tree(ROOT / directory, bank / directory))
     packages = []

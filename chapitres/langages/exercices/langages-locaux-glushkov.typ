@@ -1,7 +1,7 @@
-#import "/enseignement.typ": automate
+#import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/enseignement.typ": exercice, question
-#import "/enseignement.typ": sep
+#import "/load.typ": exercice, question
+#import "/load.typ": sep
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 

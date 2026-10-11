@@ -1,4 +1,4 @@
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #import "/chapitres/langages/exercices/palindromes-et-rationalite.typ": ex as palindromes
 #import "/chapitres/langages/exercices/ensembles-inevitables.typ": ex as inevitables
 #import "/chapitres/langages/exercices/mots-de-dyck.typ": ex as dyck

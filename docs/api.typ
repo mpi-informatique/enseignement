@@ -24,7 +24,7 @@ Guide utilisateur : `docs/utilisation.md`. Cette référence est générée depu
 #tidy.show-module(presentation, style: tidy.styles.default)
 
 == Chargement depuis le package local
-#let paquet = tidy.parse-module(read("/enseignement.typ"), old-syntax: true)
+#let paquet = tidy.parse-module(read("/load.typ"), old-syntax: true)
 #tidy.show-module(paquet, style: tidy.styles.default)
 
 == Métadonnées : vocabulaires autorisés

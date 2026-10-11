@@ -1,7 +1,7 @@
 [package]
-name = "enseignement"
+name = "mpi-exercices"
 version = "0.1.0"
-entrypoint = "enseignement.typ"
+entrypoint = "load.typ"
 authors = ["Quentin Fortier"]
 description = "Ressources pédagogiques et API Typst pour les classes préparatoires"
 repository = "https://github.com/mpi-informatique/exercices"

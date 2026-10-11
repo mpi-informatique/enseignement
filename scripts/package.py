@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Installer le package Typst @mpi-informatique/enseignement."""
+"""Installer le package Typst @mpi-informatique/mpi-exercices."""
 
 import argparse
 from pathlib import Path

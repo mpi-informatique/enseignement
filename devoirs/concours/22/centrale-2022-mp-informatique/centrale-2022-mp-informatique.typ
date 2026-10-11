@@ -1,9 +1,9 @@
-#import "/enseignement.typ": code
+#import "/load.typ": code
 #import code: code-region
-#import "/enseignement.typ": automate
+#import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/enseignement.typ": exercice, question, partie
-#import "/enseignement.typ": sep, widetilde
+#import "/load.typ": exercice, question, partie
+#import "/load.typ": sep, widetilde
 #import "@preview/cetz:0.4.2" as cetz
 #import "@preview/finite:0.5.1" as finite
 
@@ -743,7 +743,7 @@
   ),
 )
 
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

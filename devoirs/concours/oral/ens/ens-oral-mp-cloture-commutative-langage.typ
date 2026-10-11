@@ -1,5 +1,5 @@
-#import "/enseignement.typ": exercice, question, partie
-#import "/enseignement.typ": sep
+#import "/load.typ": exercice, question, partie
+#import "/load.typ": sep
 #let ex = exercice(
   meta: (
     titre: "Clôture commutative de langages réguliers",
@@ -123,7 +123,7 @@
   ),
 )
 
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

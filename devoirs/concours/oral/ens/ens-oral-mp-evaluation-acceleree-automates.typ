@@ -1,5 +1,5 @@
-#import "/enseignement.typ": exercice, question, partie
-#import "/enseignement.typ": sep
+#import "/load.typ": exercice, question, partie
+#import "/load.typ": sep
 #let ex = exercice(
   meta: (
     titre: "Évaluation accélérée d'automates",
@@ -97,7 +97,7 @@ renvoyer (q appartient à F)
   ),
 )
 
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

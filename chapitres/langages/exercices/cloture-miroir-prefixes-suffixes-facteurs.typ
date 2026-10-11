@@ -1,5 +1,5 @@
-#import "/enseignement.typ": exercice, question
-#import "/enseignement.typ": sep, widetilde
+#import "/load.typ": exercice, question
+#import "/load.typ": sep, widetilde
 
 #let ex = exercice(
   meta: (

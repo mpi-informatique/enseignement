@@ -1,7 +1,7 @@
-#import "/enseignement.typ": code
+#import "/load.typ": code
 #import code: code-region
-#import "/enseignement.typ": exercice, question
-#import "/enseignement.typ": sep
+#import "/load.typ": exercice, question
+#import "/load.typ": sep
 
 #let source = read("corrige.ml")
 #let code = code-region.with(source)

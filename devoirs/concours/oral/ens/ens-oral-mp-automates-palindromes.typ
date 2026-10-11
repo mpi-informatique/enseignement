@@ -1,4 +1,4 @@
-#import "/enseignement.typ": exercice, question, partie
+#import "/load.typ": exercice, question, partie
 #let ex = exercice(
   meta: (
     titre: "Automates et palindromes",
@@ -85,7 +85,7 @@
   ),
 )
 
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

@@ -1,5 +1,5 @@
-#import "/enseignement.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
-#import "/enseignement.typ": theoremes
+#import "/load.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
+#import "/load.typ": theoremes
 #import theoremes: definition, theorem, exercise
 
 #show: cours-et-presentation.with(titre: "Titre du cours", niveau: "MPI")

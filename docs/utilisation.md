@@ -11,7 +11,7 @@ Installer Nix avec les fonctionnalités `nix-command` et `flakes` activées.
 Pour lancer la banque web, utiliser `just web` (ou `nix develop path:. -c just web`) ; `just web-stop` arrête le serveur. Voir le [guide du site](../web/README.md) pour les options et la construction statique.
 L'extension VS Code sera adaptée ultérieurement à Just et à la nouvelle structure. Utiliser les commandes du terminal pour compiler.
 
-Ce dépôt fournit le package `@mpi-informatique/enseignement:0.1.0`.
+Ce dépôt fournit le package `@mpi-informatique/mpi-exercices:0.1.0`.
 `nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
 Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock`.
 Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `charger("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
@@ -31,12 +31,12 @@ Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
 
 ## Imports et déplacement entre dépôts
 
-Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/enseignement.typ": exercice, feuille, question` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/enseignement:0.1.0` à ce relais dans le dépôt privé.
+Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/load.typ": exercice, feuille, question` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/mpi-exercices:0.1.0` à ce relais dans le dépôt privé.
 
 Pour les modules spécialisés, écrire par exemple :
 
 ```typst
-#import "/enseignement.typ": automate, code, theoremes
+#import "/load.typ": automate, code, theoremes
 #import automate: dessiner-automate
 #import code: code-region
 #import theoremes: definition, theorem
@@ -49,8 +49,8 @@ Conserver les ressources propres au sujet (images, code, tests) à côté de cel
 Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [templates/presentation.typ](../templates/presentation.typ) pour des diapositives, ou de [templates/cours-presentation.typ](../templates/cours-presentation.typ) pour produire les deux à partir du même contenu.
 
 ```typst
-#import "/enseignement.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
-#import "/enseignement.typ": theoremes
+#import "/load.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
+#import "/load.typ": theoremes
 #import theoremes: definition, theorem, algorithm, exercise
 
 #show: cours-et-presentation.with(titre: "Titre du cours", niveau: "MPI")
@@ -181,7 +181,7 @@ let f x = (* f x renvoie ... *)
 - Indiquer le nombre de colonnes d'un déterminant dessiné seulement lorsque cela clarifie sa taille : préférer une accolade à droite, par exemple `lr(mat(delim: "|", ...) brace.r) n`. Omettre cette indication si les indices rendent déjà la taille explicite ou si elle répète une indication précédente. Noter les combinaisons avec `binom(n, k)`, lu « k parmi n ».
 - Noter un graphe `G = (S, A)`, où `S` est l'ensemble des sommets et `A` l'ensemble des arcs (ou des arêtes pour un graphe non orienté). Utiliser ces notations de façon cohérente dans les énoncés, corrigés et modèles.
 - Pour la programmation en MP2I ou MPI, utiliser C, OCaml, Python ou SQL, dans les questions comme dans les solutions. Le pseudocode reste possible lorsqu'une question demande seulement de décrire un algorithme.
-- Après une virgule séparant des conditions ou des formules, utiliser par défaut `#sep`, exporté par l'API. Importer `sep` depuis l'API commune : `#import "/enseignement.typ": sep`, puis écrire `$∀x ∈ E, #sep P(x)$`. Conserver l'espacement ordinaire dans les arguments, tuples, ensembles et indices : `$δ(q, x)$`, `$q_(i, j)$`.
+- Après une virgule séparant des conditions ou des formules, utiliser par défaut `#sep`, exporté par l'API. Importer `sep` depuis l'API commune : `#import "/load.typ": sep`, puis écrire `$∀x ∈ E, #sep P(x)$`. Conserver l'espacement ordinaire dans les arguments, tuples, ensembles et indices : `$δ(q, x)$`, `$q_(i, j)$`.
 - Pour les implications, préférer la flèche longue : écrire `==>` plutôt que `=>` ou `⇒` dans les formules Typst, et `⟹` dans le texte.
 - Utiliser les caractères Unicode pour les symboles mathématiques, par exemple `Σ` pour l'alphabet, `ε` pour le mot vide, `∪` pour l'union, `∩` pour l'intersection, `*` pour l'étoile de Kleene, `→` pour la flèche d'une fonction (sauf en programmation), `∀` et `∃` pour les quantificateurs.
 - Utiliser régulier au lieu de rationnel pour un langage ou expression régulière. Utiliser hors-contexte au lieu de langage algébrique. Utiliser | au lieu de + sur les expressions régulières.

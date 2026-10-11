@@ -1,7 +1,7 @@
-#import "/enseignement.typ": automate
+#import "/load.typ": automate
 #import automate: dessiner-automate as dessiner
-#import "/enseignement.typ": exercice, question, partie
-#import "/enseignement.typ": sep
+#import "/load.typ": exercice, question, partie
+#import "/load.typ": sep
 #let anbn = dessiner(
   (("q_0",(0,0),true,false), ("q_1",(3,0),false,false), ("q_2",(6,0),false,false), ("q_3",(9,0),false,true)),
   (("q_0","q_1","a:γ_0→γ_0",(:)), ("q_1","q_1","a:γ→γ α",(anchor: top)),
@@ -143,7 +143,7 @@
   ),
 )
 
-#import "/enseignement.typ": feuille
+#import "/load.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

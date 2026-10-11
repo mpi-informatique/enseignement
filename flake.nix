@@ -37,8 +37,8 @@
           default = package;
           typst-package = package;
           typst-packages = pkgs.linkFarm "enseignement-typst-packages" (previews ++ [{
-            name = "mpi-informatique/enseignement/${manifest.version}";
-            path = "${package}/mpi-informatique/enseignement/${manifest.version}";
+            name = "mpi-informatique/${manifest.name}/${manifest.version}";
+            path = "${package}/mpi-informatique/${manifest.name}/${manifest.version}";
           }]);
         });
       devShells = forAllSystems (system:
