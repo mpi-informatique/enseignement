@@ -186,7 +186,7 @@
         Chaque état accessible est traité une seule fois, avec deux transitions à examiner.
         L'initialisation coûte $O(n)$, comme le temps total et l'espace utilisé.
       ]),
-      question(points: 1, [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
+      question(points: 1.5, [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
         de l'automate donné. On pourra réemployer les questions 6 et 7.],
         commentaire: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
         solution: [
@@ -289,10 +289,10 @@
           avec, pour chaque couple $(q,q')$ et lettre $σ ∈ {a,b}$,
           $ δ_(cal(A) × cal(A)')((q,q'),σ)=(δ_cal(A)(q,σ),δ_(cal(A)')(q',σ)). $
         ],
-        question(points: 1, [Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
+        question(points: 1.5, [Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
           commentaire: [Le jury relève des incompréhensions de la définition du produit d'automates.],
           solution: [#produit-accessible]),
-        question(points: 1, [Écrire ```ocaml produit : automate -> automate -> automate``` renvoyant le produit des deux automates donnés.],
+        question(points: 1.5, [Écrire ```ocaml produit : automate -> automate -> automate``` renvoyant le produit des deux automates donnés.],
           commentaire: [Le jury insiste sur la renumérotation des couples d'états et des transitions associées.],
           solution: [
           On représente $(q,q')$ par $q+n q'$, où $n$ est le nombre d'états du premier automate.
