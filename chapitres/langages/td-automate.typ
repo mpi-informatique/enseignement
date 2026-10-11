@@ -1,5 +1,6 @@
-#import "/lib/automate.typ": unite-automates, rayon-etat, rayon-grand-etat, dist-lettre, style-automates
-#import "/lib/exercice.typ": feuille, exercice, question
+#import "/enseignement.typ": automate
+#import automate: unite-automates, rayon-etat, rayon-grand-etat, dist-lettre, style-automates
+#import "/enseignement.typ": feuille, exercice, question
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 #import "/chapitres/langages/exercices/cloture-miroir-prefixes-suffixes-facteurs.typ": ex as cloture

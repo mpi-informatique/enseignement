@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 #import "/templates/exercice.typ": ex
 
 #show: feuille.with(

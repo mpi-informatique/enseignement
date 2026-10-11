@@ -1,5 +1,6 @@
-#import "/lib/cours.typ": cours
-#import "/lib/theoremes.typ": definition, theorem, algorithm, exercise
+#import "/enseignement.typ": cours
+#import "/enseignement.typ": theoremes
+#import theoremes: definition, theorem, algorithm, exercise
 
 #show: cours.with(titre: "Titre du cours", niveau: "MPI")
 

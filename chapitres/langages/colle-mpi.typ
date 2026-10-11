@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 #import "/chapitres/langages/exercices/lemme-arden.typ": ex as arden
 #import "/chapitres/langages/exercices/palindromes-et-rationalite.typ": ex as palindromes
 #import "/chapitres/langages/exercices/ensembles-inevitables.typ": ex as inevitables

@@ -1,5 +1,6 @@
-#import "/lib/presentation.typ": presentation, pause
-#import "/lib/theoremes.typ": definition, theorem, algorithm
+#import "/enseignement.typ": presentation, pause
+#import "/enseignement.typ": theoremes
+#import theoremes: definition, theorem, algorithm
 
 #show: presentation.with(titre: "Titre de la présentation", niveau: "MPI")
 

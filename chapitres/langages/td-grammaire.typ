@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 #import "/chapitres/langages/exercices/miroir-langage-hors-contexte.typ": ex as miroir
 #import "/chapitres/langages/exercices/construire-grammaires.typ": ex as construire
 #import "/chapitres/langages/exercices/langages-engendres-grammaires.typ": ex as langages

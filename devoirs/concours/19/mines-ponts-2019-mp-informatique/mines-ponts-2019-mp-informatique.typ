@@ -1,7 +1,9 @@
-#import "/lib/code.typ": code-region
-#import "/lib/automate.typ": dessiner-automate, rayon-etat, rayon-grand-etat
-#import "/lib/exercice.typ": exercice, question, partie
-#import "/lib/document.typ": sep
+#import "/enseignement.typ": code
+#import code: code-region
+#import "/enseignement.typ": automate
+#import automate: dessiner-automate, rayon-etat, rayon-grand-etat
+#import "/enseignement.typ": exercice, question, partie
+#import "/enseignement.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
 #let source = read("corrige.ml")
@@ -499,7 +501,7 @@
   ),
 )
 
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 // Composition réutilisée par les copies corrigées, sans recopier les questions.
 #let sujet = (titre: ex.meta.titre, exercices: (ex,), bareme: none)
 #show: feuille.with(

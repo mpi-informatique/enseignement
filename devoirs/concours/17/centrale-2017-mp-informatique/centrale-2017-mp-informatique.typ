@@ -1,7 +1,9 @@
-#import "/lib/exercice.typ": exercice, question, partie, feuille
-#import "/lib/document.typ": sep, widetilde
-#import "/lib/code.typ": code-region
-#import "/lib/automate.typ": dessiner-automate, rayon-etat, rayon-grand-etat
+#import "/enseignement.typ": exercice, question, partie, feuille
+#import "/enseignement.typ": sep, widetilde
+#import "/enseignement.typ": code
+#import code: code-region
+#import "/enseignement.typ": automate
+#import automate: dessiner-automate, rayon-etat, rayon-grand-etat
 
 #let code = code-region.with(read("corrige.ml"))
 #let m0 = dessiner-automate(

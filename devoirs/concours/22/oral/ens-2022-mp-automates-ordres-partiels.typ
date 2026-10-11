@@ -1,5 +1,6 @@
-#import "/lib/automate.typ": dessiner-automate, rayon-etat, rayon-grand-etat
-#import "/lib/exercice.typ": exercice, question, partie
+#import "/enseignement.typ": automate
+#import automate: dessiner-automate, rayon-etat, rayon-grand-etat
+#import "/enseignement.typ": exercice, question, partie
 #let dessiner = dessiner-automate.with(
   echelle: (1.5, 1.3),
   rayon: nom => if nom.len() > 5 { 1.1 } else if nom.len() > 2 { rayon-grand-etat } else { rayon-etat },
@@ -131,7 +132,7 @@
   ),
 )
 
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

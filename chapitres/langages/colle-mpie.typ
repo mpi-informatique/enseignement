@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 #import "/chapitres/langages/exercices/automates-palindromes.typ": ex as palindromes
 #import "/chapitres/langages/exercices/automates-pile-pompage.typ": ex as pile
 #import "/chapitres/langages/exercices/automates-monoides.typ": ex as monoides

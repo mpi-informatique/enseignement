@@ -1,6 +1,7 @@
-#import "/lib/presentation.typ": cours-et-presentation, pause, only, cours-seulement, presentation-seulement
-#import "/lib/theoremes.typ": definition, theorem, lemma, property, exercise, problem, corollary
-#import "/lib/document.typ": sep, widetilde
+#import "/enseignement.typ": cours-et-presentation, pause, only, cours-seulement, presentation-seulement
+#import "/enseignement.typ": theoremes
+#import theoremes: definition, theorem, lemma, property, exercise, problem, corollary
+#import "/enseignement.typ": sep, widetilde
 
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
 

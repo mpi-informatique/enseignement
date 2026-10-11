@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": exercice, question, partie
+#import "/enseignement.typ": exercice, question, partie
 #let ex = exercice(
   sujet-ecrit: false,
   meta: (
@@ -86,7 +86,7 @@
   ),
 )
 
-#import "/lib/exercice.typ": feuille
+#import "/enseignement.typ": feuille
 #show: feuille.with(
   type: "concours",
   titre: ex.meta.titre,

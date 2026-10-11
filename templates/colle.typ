@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": feuille, sujet-colle
+#import "/enseignement.typ": feuille, sujet-colle
 #import "/templates/exercice.typ": ex
 
 // Importer les exercices sous des alias, puis composer chaque sujet ci-dessous.

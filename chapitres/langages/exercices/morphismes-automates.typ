@@ -1,5 +1,6 @@
-#import "/lib/automate.typ": dessiner-automate as dessiner
-#import "/lib/exercice.typ": exercice, question
+#import "/enseignement.typ": automate
+#import automate: dessiner-automate as dessiner
+#import "/enseignement.typ": exercice, question
 
 #let a1 = dessiner(
   (("0",(0,0),true,false),("1",(3,0),false,true)),

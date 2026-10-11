@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": exercice, question, partie, feuille
+#import "/enseignement.typ": exercice, question, partie, feuille
 
 #let ex = exercice(
   sujet-ecrit: true, // Mettre false pour un exercice oral ou un extrait autonome.

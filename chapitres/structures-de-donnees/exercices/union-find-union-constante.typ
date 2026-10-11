@@ -1,4 +1,4 @@
-#import "/lib/exercice.typ": exercice, question
+#import "/enseignement.typ": exercice, question
 
 #let ex = exercice(
   meta: (

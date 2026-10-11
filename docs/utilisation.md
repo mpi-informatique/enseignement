@@ -14,7 +14,7 @@ L'extension VS Code sera adaptée ultérieurement à Just et à la nouvelle stru
 Ce dépôt fournit le package `@mpi-informatique/enseignement:0.1.0`.
 `nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
 Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock`.
-Importer l'API depuis le package, puis `charger("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
+Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `charger("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
 Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple `read("corrige.ml")`.
 
 Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD, colles et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
@@ -29,13 +29,29 @@ Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
 - Pour ajouter un type de document, partir d'un modèle dans `templates/`. Garder `feuille.with` et un `titre` littéral (ou `ex.meta.titre` pour un sujet monolithique) pour permettre la recherche sans évaluation Typst.
 - Conserver le suivi individuel dans des copies séparées, liées au sujet (voir ci-dessous).
 
+## Imports et déplacement entre dépôts
+
+Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/enseignement.typ": exercice, feuille, question` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/enseignement:0.1.0` à ce relais dans le dépôt privé.
+
+Pour les modules spécialisés, écrire par exemple :
+
+```typst
+#import "/enseignement.typ": automate, code, theoremes
+#import automate: dessiner-automate
+#import code: code-region
+#import theoremes: definition, theorem
+```
+
+Conserver les ressources propres au sujet (images, code, tests) à côté de celui-ci et les référencer par des chemins relatifs. Lors d'un passage du privé au public demandé par l'utilisateur, déplacer le fichier ou son dossier complet : l'import de l'API commune reste identique. Vérifier les autres imports de contenus, adapter les chemins des feuilles qui réutilisent le sujet, puis lancer `just check` dans les deux dépôts. Les copies nominatives, évaluations et scans restent privés.
+
 ## Cours et présentations
 
 Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [templates/presentation.typ](../templates/presentation.typ) pour des diapositives, ou de [templates/cours-presentation.typ](../templates/cours-presentation.typ) pour produire les deux à partir du même contenu.
 
 ```typst
-#import "/lib/presentation.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
-#import "/lib/theoremes.typ": definition, theorem, algorithm, exercise
+#import "/enseignement.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
+#import "/enseignement.typ": theoremes
+#import theoremes: definition, theorem, algorithm, exercise
 
 #show: cours-et-presentation.with(titre: "Titre du cours", niveau: "MPI")
 
@@ -164,7 +180,7 @@ let f x = (* f x renvoie ... *)
 - Indiquer le nombre de colonnes d'un déterminant dessiné seulement lorsque cela clarifie sa taille : préférer une accolade à droite, par exemple `lr(mat(delim: "|", ...) brace.r) n`. Omettre cette indication si les indices rendent déjà la taille explicite ou si elle répète une indication précédente. Noter les combinaisons avec `binom(n, k)`, lu « k parmi n ».
 - Noter un graphe `G = (S, A)`, où `S` est l'ensemble des sommets et `A` l'ensemble des arcs (ou des arêtes pour un graphe non orienté). Utiliser ces notations de façon cohérente dans les énoncés, corrigés et modèles.
 - Pour la programmation en MP2I ou MPI, utiliser C, OCaml, Python ou SQL, dans les questions comme dans les solutions. Le pseudocode reste possible lorsqu'une question demande seulement de décrire un algorithme.
-- Après une virgule séparant des conditions ou des formules, utiliser par défaut `#sep`, exporté par l'API. Importer `sep` depuis la base commune : `#import "/lib/document.typ": sep`, puis écrire `$∀x ∈ E, #sep P(x)$`. Conserver l'espacement ordinaire dans les arguments, tuples, ensembles et indices : `$δ(q, x)$`, `$q_(i, j)$`.
+- Après une virgule séparant des conditions ou des formules, utiliser par défaut `#sep`, exporté par l'API. Importer `sep` depuis l'API commune : `#import "/enseignement.typ": sep`, puis écrire `$∀x ∈ E, #sep P(x)$`. Conserver l'espacement ordinaire dans les arguments, tuples, ensembles et indices : `$δ(q, x)$`, `$q_(i, j)$`.
 - Pour les implications, préférer la flèche longue : écrire `==>` plutôt que `=>` ou `⇒` dans les formules Typst, et `⟹` dans le texte.
 - Utiliser les caractères Unicode pour les symboles mathématiques, par exemple `Σ` pour l'alphabet, `ε` pour le mot vide, `∪` pour l'union, `∩` pour l'intersection, `*` pour l'étoile de Kleene, `→` pour la flèche d'une fonction (sauf en programmation), `∀` et `∃` pour les quantificateurs.
 - Utiliser régulier au lieu de rationnel pour un langage ou expression régulière. Utiliser hors-contexte au lieu de langage algébrique. Utiliser | au lieu de + sur les expressions régulières.
