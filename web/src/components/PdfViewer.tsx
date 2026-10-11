@@ -6,7 +6,7 @@ import { assetUrl } from '../lib/urls';
 
 GlobalWorkerOptions.workerSrc = assetUrl('pdfjs/pdf.worker.min.mjs');
 
-function PdfPage({ document, number, width }: { document: PDFDocumentProxy; number: number; width: number }) {
+function PdfPage({ document, number, width, dark }: { document: PDFDocumentProxy; number: number; width: number; dark: boolean }) {
   const container = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const text = useRef<HTMLDivElement>(null);
@@ -31,12 +31,12 @@ function PdfPage({ document, number, width }: { document: PDFDocumentProxy; numb
     element.height = Math.ceil(viewport.height * ratio);
     element.style.width = `${viewport.width}px`;
     element.style.height = `${viewport.height}px`;
-    const render = page.render({ canvas: element, viewport, transform: ratio === 1 ? undefined : [ratio, 0, 0, ratio, 0, 0] });
+    const render = page.render({ canvas: element, viewport, pageColors: dark ? { background: '#172129', foreground: '#e2e9ec' } : undefined, transform: ratio === 1 ? undefined : [ratio, 0, 0, ratio, 0, 0] });
     text.current!.replaceChildren();
     const layer = new TextLayer({ textContentSource: page.streamTextContent(), container: text.current!, viewport });
     Promise.all([render.promise, layer.render()]).catch(error => { if (error?.name !== 'RenderingCancelledException' && error?.name !== 'AbortException') setError(String(error)); });
     return () => { render.cancel(); layer.cancel(); };
-  }, [page, visible, width]);
+  }, [page, visible, width, dark]);
 
   const viewport = page?.getViewport({ scale: 1 });
   return <div ref={container} className="pdf-page" id={`pdf-page-${number}`} role="region" aria-label={`Page ${number}`} style={{ width, height: viewport ? width * viewport.height / viewport.width : width * Math.SQRT2, '--scale-factor': viewport ? width / viewport.width : 1 } as React.CSSProperties}>
@@ -47,12 +47,13 @@ function PdfPage({ document, number, width }: { document: PDFDocumentProxy; numb
 interface Props {
   pdf?: Uint8Array<ArrayBuffer>;
   pending: boolean;
+  dark: boolean;
   toolbar: ReactNode;
   actions: ReactNode;
   onReady: () => void;
 }
 
-export default function PdfViewer({ pdf, pending, toolbar, actions, onReady }: Props) {
+export default function PdfViewer({ pdf, pending, dark, toolbar, actions, onReady }: Props) {
   const [document, setDocument] = useState<PDFDocumentProxy>();
   const [error, setError] = useState('');
   const [width, setWidth] = useState(600);
@@ -111,7 +112,7 @@ export default function PdfViewer({ pdf, pending, toolbar, actions, onReady }: P
       if (event.key === '+' || event.key === '=' || event.key === '-') { event.preventDefault(); setZoom(zoom => Math.max(0.5, Math.min(2, zoom + (event.key === '-' ? -0.1 : 0.1)))); }
       if (event.key === '0') { event.preventDefault(); setZoom(1); }
     }}>
-      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.fingerprints[0]}-${index}`} document={document} number={index + 1} width={Math.min(width, 880) * zoom} />)}
+      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.fingerprints[0]}-${index}`} document={document} dark={dark} number={index + 1} width={Math.min(width, 880) * zoom} />)}
       {!document && !error && <div className="preview-placeholder">{(pending || pdf) && <span className="loading loading-spinner loading-sm" />}<span>{pending ? 'Compilation…' : pdf ? 'Chargement…' : 'Aucun aperçu'}</span></div>}
       {error && <p className="viewer-error" role="alert">Impossible d’afficher le PDF : {error}</p>}
     </div>

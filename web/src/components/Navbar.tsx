@@ -1,4 +1,4 @@
-import { BookOpen, CodeXml, Command, GitBranch, Moon, PanelLeft, Sun } from 'lucide-react';
+import { CodeXml, Command, GitBranch, Moon, PanelLeft, Sun } from 'lucide-react';
 
 interface Props {
   title: string;
@@ -15,7 +15,7 @@ interface Props {
 export function Navbar({ title, details, dark, sidebarOpen, editorOpen, onThemeChange, onSidebarToggle, onEditorToggle, onCommands }: Props) {
   return <header className="navbar topbar">
     <button className="btn btn-ghost btn-sm btn-square" aria-label={sidebarOpen ? 'Masquer la recherche' : 'Afficher la recherche'} title="Recherche (/)" aria-expanded={sidebarOpen} aria-controls="search-sidebar" onClick={onSidebarToggle}><PanelLeft size={17} /></button>
-    <a className="brand" href={import.meta.env.BASE_URL} aria-label="Enseignement MPI — accueil" title="Enseignement MPI"><BookOpen size={18} /><span>MPI</span></a>
+    <a className="brand" href={import.meta.env.BASE_URL} aria-label="Enseignement MPI — accueil" title="Enseignement MPI"><span>MPI</span></a>
     <h1 className="document-title" title={details ?? title}>{title}</h1>
     <div className="topbar-actions">
       <button className={`btn btn-ghost btn-sm btn-square code-toggle ${editorOpen ? 'active' : ''}`} aria-label="Code Typst" title="Afficher / masquer le code Typst" aria-expanded={editorOpen} aria-controls="editor-panel" onClick={onEditorToggle}><CodeXml size={17} /></button>

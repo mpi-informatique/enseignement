@@ -1,5 +1,6 @@
 import MiniSearch from 'minisearch';
-import { facets, normalize, type Filters, type Resource } from '@mpi-informatique/enseignement-core';
+import { normalize, type Resource } from '@mpi-informatique/enseignement-core';
+import { matchesFilters, parseSearchQuery, type SearchFilters } from './filters.ts';
 
 export type ResourceSearch = ReturnType<typeof createSearch>;
 
@@ -15,12 +16,9 @@ export function createSearch(resources: Resource[]) {
   });
   index.addAll(resources);
   const byId = new Map(resources.map(resource => [resource.id, resource]));
-  return (query: string, filters: Filters): Resource[] => {
-    const candidates = query.trim() ? index.search(query).map(result => byId.get(result.id)!) : resources;
-    return candidates.filter(resource =>
-      (!filters.type || resource.type === filters.type)
-      && facets.every(key => !filters[key] || (key === 'concours' ? resource.concours?.nom === filters[key] : resource[key].includes(filters[key]!)))
-      && (filters.difficulteMax === undefined || (resource.difficulte !== null && resource.difficulte <= filters.difficulteMax))
-    );
+  return (query: string, filters: SearchFilters): Resource[] => {
+    const parsed = parseSearchQuery(query);
+    const candidates = parsed.text ? index.search(parsed.text).map(result => byId.get(result.id)!) : resources;
+    return candidates.filter(resource => matchesFilters(resource, filters) && matchesFilters(resource, parsed.filters));
   };
 }

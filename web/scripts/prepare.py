@@ -113,6 +113,7 @@ def prepare():
     (bank / "bundle.json").write_text(json.dumps(bundle))
     generated = WEB / "src/generated"
     generated.mkdir(parents=True, exist_ok=True)
+    (generated / "files.json").write_text(json.dumps(files, ensure_ascii=False))
     (generated / "catalogue.json").write_text(json.dumps(entries, ensure_ascii=False))
     print(f"Banque web : {len(entries)} ressources, {len(files)} fichiers et {len(packages)} fichiers de packages.")
 

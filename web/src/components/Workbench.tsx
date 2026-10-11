@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Download, FileCode, RotateCcw, CircleAlert } from 'lucide-react';
-import { duration, pdfFilename, type Filters, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
+import { duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
 import { useCompiler } from '../hooks/useCompiler';
@@ -8,6 +8,7 @@ import { useSource } from '../hooks/useSource';
 import { Navbar } from './Navbar';
 import { VariantTabs } from './VariantTabs';
 import CommandPalette, { type Command } from './CommandPalette';
+import type { SearchFilters } from '../lib/filters';
 import { createSearch } from '../lib/search';
 import { resourceTypeLabel } from '../lib/labels';
 import { exerciseUrl, routeId } from '../lib/urls';
@@ -30,7 +31,7 @@ export default function Workbench({ resources, initialId }: Props) {
   const [selected, setSelected] = useState(initialId ?? 'residuels-minimisation');
   const resource = resources.find(resource => resource.id === selected);
   const [query, setQuery] = useState('');
-  const [filters, setFilters] = useState<Filters>({});
+  const [filters, setFilters] = useState<SearchFilters>({});
   const [variant, setVariant] = useState<Variant>('enonce');
   const [dark, setDark] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -73,7 +74,7 @@ export default function Workbench({ resources, initialId }: Props) {
       if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !target.closest('input, textarea, select, [contenteditable="true"]')) {
         event.preventDefault(); focusPanel('search');
       }
-      if (event.key === 'Escape' && sidebarOpen && window.innerWidth <= 900) closeSidebar();
+      if (event.key === 'Escape' && !target.closest('.facet-select[open]') && sidebarOpen && window.innerWidth <= 900) closeSidebar();
     };
     // La capture rend la palette accessible même lorsque l'éditeur traite les touches.
     window.addEventListener('keydown', keys, true);
@@ -147,11 +148,11 @@ export default function Workbench({ resources, initialId }: Props) {
         <div className="document-workspace">
           {editorOpen && <section className="editor-panel" id="editor-panel" aria-label="Éditeur Typst">
             <div className="pane-toolbar"><span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{selected}.typ</span>{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title="Brouillon modifié, enregistré localement" />}</span><div><button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button><button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button></div></div>
-            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
+            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} sourcePath={resource!.fichier} resources={resources} onNavigate={navigate} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
           </section>}
           {editorOpen && <ResizeHandle label="Largeur de l’éditeur" value={editorWidth} min={280} max={900} onChange={value => { setEditorWidth(value); store('editor-width', String(value)); }} />}
           <section className="preview-panel" aria-label="Document PDF">
-            <Suspense fallback={<div className="pane-loading">Chargement de l’aperçu…</div>}><PdfViewer pdf={compilation.pdf} pending={compilation.pending} onReady={focusPending} toolbar={<>
+            <Suspense fallback={<div className="pane-loading">Chargement de l’aperçu…</div>}><PdfViewer dark={dark} pdf={compilation.pdf} pending={compilation.pending} onReady={focusPending} toolbar={<>
               <VariantTabs variant={variant} onChange={value => resource && navigate(resource, value)} />
               <span className={`compilation-status ${compilation.error || loadError ? 'has-error' : ''}`} title={status} role="status">{compilation.pending ? <span className="loading loading-spinner loading-xs" /> : compilation.error || loadError ? <CircleAlert size={13} /> : <span className="status-dot" />}<span className="sr-only">{status}</span></span>
             </>} actions={<button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le PDF" title="Télécharger le PDF" disabled={!canDownloadPdf} onClick={downloadPdf}><Download size={14} /></button>} /></Suspense>

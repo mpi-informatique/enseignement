@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
-import { facets, labels, typeLabel, type Filters, type Resource } from '@mpi-informatique/enseignement-core';
+import { typeLabel, type Resource } from '@mpi-informatique/enseignement-core';
+import { fieldValues, filterFields, filterLabels, type FilterField, type SearchFilters } from '../lib/filters';
+import { MultiSelect } from './MultiSelect';
 import type { ResourceSearch } from '../lib/search';
 import { resourceTypeLabel } from '../lib/labels';
 import { exerciseUrl } from '../lib/urls';
@@ -10,9 +12,9 @@ interface Props {
   search: ResourceSearch;
   selected?: string;
   query: string;
-  filters: Filters;
+  filters: SearchFilters;
   onQuery: (query: string) => void;
-  onFilters: (filters: Filters) => void;
+  onFilters: (filters: SearchFilters) => void;
   onSelect: (resource: Resource) => void;
 }
 
@@ -22,31 +24,24 @@ export default function SearchSidebar({ resources, search, selected, query, filt
   const [focused, setFocused] = useState(selected);
   const active = results.find(resource => resource.id === focused) ?? results.find(resource => resource.id === selected) ?? results[0];
   useEffect(() => { setFocused(selected); list.current?.querySelector('[aria-current="page"]')?.scrollIntoView({ block: 'nearest' }); }, [selected]);
-  const types = useMemo(() => [...new Set(resources.map(resource => resource.type))].sort(), [resources]);
-  const hasFilters = query || Object.values(filters).some(value => value !== undefined && value !== '');
-  const filter = (key: keyof Filters, value: string) => onFilters({ ...filters, [key]: key === 'difficulteMax' ? value ? Number(value) : undefined : value });
-  const select = (key: typeof facets[number]) => <label className="filter-field" key={key}>
-    <span>{labels[key]}</span>
-    <select className="select select-sm" title={labels[key]} value={filters[key] ?? ''} onChange={event => filter(key, event.target.value)}>
-      <option value="">{key === 'chapitres' ? 'Chapitres' : 'Tous'}</option>
-      {[...new Set(resources.flatMap(resource => key === 'concours' ? resource.concours?.nom ? [resource.concours.nom] : [] : resource[key]))].sort((a, b) => a.localeCompare(b, 'fr')).map(value => <option key={value} value={value}>{value.replaceAll('-', ' ')}</option>)}
-    </select>
-  </label>;
+  const options = useMemo(() => Object.fromEntries(filterFields.map(key => [key, [...new Set(resources.flatMap(resource => fieldValues(resource, key)))].sort((a, b) => key === 'annee' ? Number(b) - Number(a) : a.localeCompare(b, 'fr')).map(value => ({ value, label: key === 'type' ? typeLabel(value) : value.replaceAll('-', ' ') }))])), [resources]);
+  const hasFilters = query || Object.values(filters).some(value => Array.isArray(value) ? value.length > 0 : value !== undefined);
+  const select = (key: FilterField) => <MultiSelect key={key} label={filterLabels[key]} placeholder={key === 'type' ? 'Types' : key === 'chapitres' ? 'Chapitres' : undefined} options={options[key]!} values={filters[key] ?? []} onChange={values => onFilters({ ...filters, [key]: values })} />;
 
   return <aside className="search-sidebar" id="search-sidebar" aria-label="Rechercher dans la banque">
     <div className="sidebar-top">
-      <label className="search-input input"><Search size={15} /><input type="search" placeholder="Rechercher…" aria-label="Rechercher un exercice" aria-keyshortcuts="/" value={query} onChange={event => onQuery(event.target.value)} onKeyDown={event => {
+      <label className="search-input input"><Search size={15} /><input type="search" placeholder="Recherche, concours:CCINP…" title='Critères : concours:CCINP année:2022 type:td chapitre:"automates finis". Plusieurs valeurs : concours:CCINP,ENS.' aria-label="Rechercher un exercice" aria-keyshortcuts="/" value={query} onChange={event => onQuery(event.target.value)} onKeyDown={event => {
         if (event.nativeEvent.isComposing) return;
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); const links = list.current?.querySelectorAll<HTMLAnchorElement>('a'); links?.[event.key === 'ArrowDown' ? 0 : links.length - 1]?.focus(); }
         if (event.key === 'Enter' && results[0]) { event.preventDefault(); onSelect(results[0]); }
       }} /><kbd>/</kbd></label>
       <div className="primary-filters">
-        <label className="filter-field"><span>Type de ressource</span><select className="select select-sm" title="Type de ressource" value={filters.type ?? ''} onChange={event => filter('type', event.target.value)}><option value="">Types</option>{types.map(type => <option key={type} value={type}>{typeLabel(type)}</option>)}</select></label>
+        {select('type')}
         {select('chapitres')}
       </div>
-      <details className="advanced-filters"><summary><SlidersHorizontal size={13} /> Filtres <span>{Object.entries(filters).filter(([key, value]) => key !== 'type' && key !== 'chapitres' && value).length || ''}</span></summary>
-        <div className="filter-grid">{facets.filter(key => key !== 'chapitres').map(select)}
-          <label className="filter-field"><span>Difficulté maximale</span><select className="select select-sm" value={filters.difficulteMax ?? ''} onChange={event => filter('difficulteMax', event.target.value)}><option value="">Toutes</option>{[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n} / 5</option>)}</select></label>
+      <details className="advanced-filters"><summary><SlidersHorizontal size={13} /> Filtres <span>{Object.entries(filters).filter(([key, value]) => key !== 'type' && key !== 'chapitres' && (Array.isArray(value) ? value.length : value !== undefined)).length || ''}</span></summary>
+        <div className="filter-grid">{filterFields.filter(key => key !== 'type' && key !== 'chapitres').map(select)}
+          <label className="filter-field"><span>Difficulté maximale</span><select className="select select-sm" value={filters.difficulteMax ?? ''} onChange={event => onFilters({ ...filters, difficulteMax: event.target.value ? Number(event.target.value) : undefined })}><option value="">Toutes</option>{[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n} / 5</option>)}</select></label>
         </div>
       </details>
     </div>

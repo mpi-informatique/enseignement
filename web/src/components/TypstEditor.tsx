@@ -6,18 +6,21 @@ import { indentWithTab } from '@codemirror/commands';
 import { HighlightStyle, LanguageSupport, syntaxHighlighting } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
 import { typst_lezer, typstTags, typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter } from 'codemirror-lang-typst/lezer';
+import type { Resource } from '@mpi-informatique/enseignement-core';
+import { fileLinks } from '../editor/fileLinks';
 
-interface Props { source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }
+interface Props { sourcePath: string; resources: Resource[]; onNavigate: (resource: Resource) => void; source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }
 
 const theme = (dark: boolean) => EditorView.theme({
   '&': { height: '100%', backgroundColor: 'var(--editor-bg)', color: 'var(--ink)' },
   '.cm-scroller': { overflow: 'auto', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12px', lineHeight: '1.6' },
   '.cm-content': { padding: '6px 0', caretColor: 'var(--accent)' },
   '.cm-gutters': { backgroundColor: 'var(--editor-bg)', border: 'none', color: 'var(--muted)', paddingRight: '8px' },
-  '.cm-activeLine, .cm-activeLineGutter': { backgroundColor: 'var(--hover)' },
+  '.cm-activeLine': { backgroundColor: dark ? '#ffffff08' : '#122d3d06' },
+  '.cm-activeLineGutter': { backgroundColor: 'var(--hover)' },
   '.cm-cursor': { borderLeftColor: 'var(--accent)' },
   '&.cm-focused': { outline: 'none' },
-  '&.cm-focused .cm-selectionBackground, .cm-selectionBackground': { backgroundColor: dark ? '#314b58' : '#cce8e1' },
+  '&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground, .cm-selectionBackground': { backgroundColor: dark ? '#356b87' : '#b5dcd4' },
 }, { dark });
 
 const highlighting = (dark: boolean) => syntaxHighlighting(HighlightStyle.define([
@@ -34,10 +37,12 @@ const highlighting = (dark: boolean) => syntaxHighlighting(HighlightStyle.define
   { tag: tags.invalid, textDecoration: 'underline wavy #bf4a4a' },
 ]));
 
-export default function TypstEditor({ source, dark, onChange, onReady }: Props) {
+export default function TypstEditor({ source, sourcePath, resources, onNavigate, dark, onChange, onReady }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const editor = useRef<EditorView | undefined>(undefined);
   const onChangeRef = useRef(onChange);
+  const navigateRef = useRef(onNavigate);
+  navigateRef.current = onNavigate;
   const themeSlot = useRef(new Compartment());
   onChangeRef.current = onChange;
 
@@ -49,7 +54,7 @@ export default function TypstEditor({ source, dark, onChange, onReady }: Props) 
       parent: container.current!,
       state: EditorState.create({
         doc: source,
-        extensions: [basicSetup, language, keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
+        extensions: [basicSetup, language, fileLinks(sourcePath, resources, resource => navigateRef.current(resource)), keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
           EditorView.contentAttributes.of({ 'aria-label': 'Code source Typst', spellcheck: 'false' }),
           EditorView.updateListener.of(update => { if (update.docChanged) onChangeRef.current(update.state.doc.toString()); })],
       }),
