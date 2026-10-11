@@ -106,7 +106,8 @@
     concours: (nom: "Mines-Ponts", annee: 2019, filiere: "MP"),
   ),
   correcteur: [
-    - Pour les questions 1 à 4, attribuer 0 % à toute réponse comportant une erreur de fond. Seules les toutes petites erreurs locales dont l'intention correcte est sans ambiguïté restent sans pénalité. Ne pas attribuer de crédit partiel pour un alphabet identifié ou une parité partiellement comprise.
+    - Pour les questions 1 et 2, attribuer uniquement 0 % ou 100 %. Les toutes petites maladresses de rédaction dont l'intention correcte est sans ambiguïté restent sans pénalité.
+    - Pour les questions 3 et 4, attribuer 50 % pour une seule petite erreur avec la bonne parité (facteur $a^*$ manquant, $b b$ imposés consécutifs, etc.), ou pour une expression dénotant exactement les mots de parité paire au lieu d'impaire. Attribuer 0 % en cas de cumul de deux erreurs ou d'absence de maîtrise de la parité. Une expression équivalente au langage demandé reçoit 100 %, en tolérant les toutes petites coquilles sans ambiguïté.
     - Accepter les formulations et méthodes équivalentes à celles du corrigé. Les preuves ne sont exigées que lorsqu'elles sont demandées. Appliquer les exigences particulières de chaque question.
     - Pour le code, tolérer les toutes petites erreurs de syntaxe sans ambiguïté. Un non-respect grave des types reçoit au plus 50 %, et moins si les erreurs d'algorithme ou de résultat le justifient.
     - Ne pas pénaliser de nouveau une erreur antérieure réutilisée, sauf en Q1 à Q4 où chaque description ou expression doit définir le langage demandé.
@@ -161,10 +162,10 @@
       question(correcteur: [Exiger un nombre impair de $b$, avec un nombre quelconque de $a$. La présence d'au moins un $b$ ne suffit pas et reçoit 0 %.],
         points: 0.5, [Donner, sans preuve, une description courte en langue française du langage reconnu par $cal(A)_2$ (figure 2).],
         solution: [Les mots contenant un nombre impair de $b$.]),
-      question(correcteur: [Accepter toute expression régulière équivalente. Vérifier notamment $ε$, $a$ et $a a$. Une expression qui décrit un autre langage reçoit 0 %, même si elle est cohérente avec une réponse fausse en Q1.],
+      question(correcteur: [Accepter toute expression régulière équivalente. Vérifier notamment $ε$, $a$ et $a a$. Attribuer 50 % pour une seule petite erreur si la parité de la longueur reste correcte, ou pour une expression décrivant exactement les longueurs paires au lieu des longueurs impaires. Attribuer 0 % pour deux erreurs cumulées ou pour une expression qui ne maîtrise pas la parité de la longueur, même si elle reprend Q1.],
         points: 0.5, [Donner, sans preuve, une expression régulière du langage reconnu par $cal(A)_1$.],
         solution: [$ (a|b)((a|b)(a|b))^*. $]),
-      question(correcteur: [Accepter toute expression régulière équivalente. Vérifier la parité des $b$ et les $a$ avant, après et entre tous les $b$, y compris entre deux blocs répétés. Un facteur $a^*$ manquant qui exclut des mots du langage constitue une erreur de fond et reçoit 0 %, comme une parité incorrecte, même si elle reprend Q2.],
+      question(correcteur: [Accepter toute expression régulière équivalente. Vérifier la parité des $b$ et les $a$ avant, après et entre tous les $b$, y compris entre deux blocs répétés. Attribuer 50 % pour une seule petite erreur avec un nombre impair de $b$, par exemple un facteur $a^*$ manquant ou des paires de $b$ imposées consécutives, ou pour une expression décrivant exactement les mots ayant un nombre pair de $b$. Attribuer 0 % pour deux erreurs cumulées ou pour une expression qui ne maîtrise pas la parité, même si elle reprend Q2.],
         points: 0.5, [Donner, sans preuve, une expression régulière du langage reconnu par $cal(A)_2$.],
         solution: [$ a^* b a^* (b a^* b a^*)^*. $]),
       question(correcteur: [Vérifier le triplet, les tableaux et les couples de transitions. Un enregistrement ou des listes à la place des structures demandées reçoivent au plus 50 %, même si les données sont correctes.],
