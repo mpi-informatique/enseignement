@@ -19,12 +19,12 @@ Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple 
 
 Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD, colles et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
 Les mathématiques conservent leurs sous-dossiers dans `chapitres/maths/`, notamment `determinants/` et `reduction/`. Leurs feuilles sont directement dans `chapitres/maths/`.
-Les sujets de concours sont dans `devoirs/concours/`, avec leur classement par année. Les cours et présentations sont dans leur chapitre, avec leurs ressources dans un sous-dossier voisin.
+Les sujets écrits de concours sont dans `devoirs/concours/`, avec leur classement par année. Les exercices oraux sont dans `devoirs/concours/oral/<concours>/`, où `<concours>` est le nom en minuscules de l'une des valeurs de `concours-possibles`. Les cours et présentations sont dans leur chapitre, avec leurs ressources dans un sous-dossier voisin.
 
 Partir des modèles [exercice](../templates/exercice.typ), [TD](../templates/feuille.typ), [devoir](../templates/devoir.typ) ou [sujet de concours](../templates/sujet-concours.typ).
 Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
 
-- Réutiliser une partie en exportant une variable puis en l'important, sans copier le sujet ni rechercher une partie par numéro.
+- Réutiliser un exercice par import direct de son fichier, sans créer de fichier relais dans les chapitres : les métadonnées permettent de le retrouver par chapitre. Réutiliser une partie en exportant une variable puis en l'important, sans copier le sujet ni rechercher une partie par numéro.
 - Placer les introductions et définitions dans `contenu`. Reprendre explicitement les rappels de `contexte` dans un exercice autonome.
 - Pour ajouter un type de document, partir d'un modèle dans `templates/`. Garder `feuille.with` et un `titre` littéral (ou `ex.meta.titre` pour un sujet monolithique) pour permettre la recherche sans évaluation Typst.
 - Conserver le suivi individuel dans des copies séparées, liées au sujet (voir ci-dessous).
@@ -119,6 +119,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 ## Sujets de concours et rapports du jury
 
 - Partir de `templates/sujet-concours.typ`, dans le dossier souhaité. Garder les questions, définitions et figures dans un seul sujet.
+- Nommer les exercices oraux `<concours>-oral-<filiere>-<theme>.typ`, par exemple `ens-oral-mp-automates-monoides.typ`. La filière peut être omise pour la MPI, par exemple `ccinp-oral-langages-automates.typ`. Conserver l'année dans les métadonnées. Pour un exercice avec des ressources associées, utiliser un sous-dossier du même nom sans extension.
 - Comparer le corrigé au sujet original, notamment les figures et les hypothèses. Corriger directement les erreurs importantes de l'énoncé, consigner les parties/questions corrigées dans le champ `corrections` du `.typ` et expliquer brièvement le problème et/ou le changement pour chacune. Ne pas conserver deux versions contradictoires du code.
 - Placer les commentaires généraux du jury dans `remarques`, sous forme de liste, sans ajouter de titre ni de référence. Associer les observations locales au paramètre `commentaire` de la partie ou de la question concernée.
 - Regrouper le sujet `<identifiant>.typ`, le code du corrigé et ses tests dans un même dossier `<identifiant>/` sous `devoirs/concours/`. Afficher le code depuis ces mêmes fichiers pour tester exactement le code publié.

@@ -4,7 +4,7 @@
 #import "/chapitres/langages/exercices/regles-expressions-regulieres.typ": ex as regles
 #import "/chapitres/langages/exercices/exemples-langages-reguliers.typ": ex as exemples
 #import "/chapitres/langages/exercices/distance-de-hamming.typ": ex as hamming
-#import "/chapitres/langages/exercices/cloture-sur-mots.typ": ex as sur-mots
+#import "/devoirs/concours/oral/ens/ens-oral-mp-cloture-sur-mots.typ": ex as sur-mots
 
 #show: feuille.with(
   titre: "TD : Langages réguliers",

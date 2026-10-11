@@ -8,7 +8,7 @@
 #import "/chapitres/langages/exercices/algorithmes-vacuite-finitude-equivalence.typ": ex as algorithmes
 #import "/chapitres/langages/exercices/longueur-discriminante-automates.typ": ex as longueur
 #import "/chapitres/langages/exercices/ensembles-distinguants-automates.typ": ex as distinguant
-#import "/chapitres/langages/exercices/automates-palindromes.typ": ex as palindromes
+#import "/devoirs/concours/oral/ens/ens-oral-mp-automates-palindromes.typ": ex as palindromes
 
 #let determinisation = exercice(
   meta: (

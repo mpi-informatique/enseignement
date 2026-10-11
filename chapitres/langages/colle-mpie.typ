@@ -1,12 +1,12 @@
 #import "/enseignement.typ": feuille
-#import "/chapitres/langages/exercices/automates-palindromes.typ": ex as palindromes
-#import "/chapitres/langages/exercices/automates-pile-pompage.typ": ex as pile
-#import "/chapitres/langages/exercices/automates-monoides.typ": ex as monoides
-#import "/chapitres/langages/exercices/automates-ordres-partiels.typ": ex as ordres
-#import "/chapitres/langages/exercices/cloture-commutative-langage.typ": ex as commutative
-#import "/chapitres/langages/exercices/langages-continuables-primitifs.typ": ex as primitifs
-#import "/chapitres/langages/exercices/evaluation-acceleree-automates.typ": ex as evaluation
-#import "/chapitres/langages/exercices/reparation-langage.typ": ex as reparation
+#import "/devoirs/concours/oral/ens/ens-oral-mp-automates-palindromes.typ": ex as palindromes
+#import "/devoirs/concours/oral/ens/ens-oral-mp-automates-pile-pompage.typ": ex as pile
+#import "/devoirs/concours/oral/ens/ens-oral-mp-automates-monoides.typ": ex as monoides
+#import "/devoirs/concours/oral/ens/ens-oral-mp-automates-ordres-partiels.typ": ex as ordres
+#import "/devoirs/concours/oral/ens/ens-oral-mp-cloture-commutative-langage.typ": ex as commutative
+#import "/devoirs/concours/oral/ens/ens-oral-mp-langages-continuables-primitifs.typ": ex as primitifs
+#import "/devoirs/concours/oral/ens/ens-oral-mp-evaluation-acceleree-automates.typ": ex as evaluation
+#import "/devoirs/concours/oral/ens/ens-oral-mp-reparation-langage/ens-oral-mp-reparation-langage.typ": ex as reparation
 #import "/chapitres/langages/exercices/morphismes-automates.typ": ex as morphismes
 
 #show: feuille.with(
