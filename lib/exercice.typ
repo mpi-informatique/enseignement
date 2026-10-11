@@ -298,10 +298,10 @@
 /// À utiliser avec `#show: feuille.with(...)` ; le type ne dépend pas du dossier.
 /// - type (str): Type libre : `"td"`, `"devoir"`, `"colle"` ou un type personnalisé. `"concours"` reste un alias de présentation de `"devoir"`.
 /// - titre (str): Titre de la feuille.
-/// - niveau (str, none): Niveau affiché dans l'en-tête.
+/// - niveau (str, none): Niveau affiché dans l'en-tête ; remplacé par la filière lorsqu'un concours est renseigné.
 /// - auteur (str, none): Auteur lié au site dans l'en-tête, défaut « Q. Fortier » ; `none` le masque.
 /// - duree (array, none): Durée (heures, minutes) après le titre, uniquement pour un devoir/concours ; `none` reprend celle du sujet unique.
-/// - concours (dictionary, none): Informations affichées à la place de l'auteur ; mêmes champs que `exercice.meta.concours`. Un concours utilise la base `type: "devoir"`.
+/// - concours (dictionary, none): Filière affichée à gauche, autres informations à la place de l'auteur ; mêmes champs que `exercice.meta.concours`. Un concours utilise la base `type: "devoir"`.
 /// - exercices (array): Objets `ex` importés, dans l'ordre ; `()` crée une feuille vide.
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
@@ -341,8 +341,10 @@
       [ -- Sujet #sujet.numero#if sujet.corrige [ (corrigé)]]
     }
   } } else { none }
-  show: document-pedagogique.with(titre: titre-affiche, niveau: niveau, auteur: auteur, duree: duree,
-    attribution: if concours == none { none } else { texte-concours(concours) },
+  show: document-pedagogique.with(titre: titre-affiche,
+    niveau: if concours == none { niveau } else { concours.at("filiere", default: none) },
+    auteur: auteur, duree: duree,
+    attribution: if concours == none { none } else { texte-concours((..concours, filiere: none)) },
     titre-entete: titre-entete, repeter-entete: type == "colle")
   [#metadata((type: type, titre: titre, niveau: niveau, concours: concours)) <document-meta>]
   body
