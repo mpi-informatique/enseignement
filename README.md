@@ -1,6 +1,6 @@
 # Enseignement
 
-Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-informatique) pour les classes préparatoires : exercices, sujets, feuilles, devoirs, cours et présentations en Typst. Le site et l'adaptation de l'extension VS Code seront ajoutés ultérieurement.
+Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-informatique) pour les classes préparatoires : exercices, sujets, feuilles, devoirs, cours et présentations en Typst. Le [site web](web/README.md) permet de rechercher les exercices, d'éditer leur source et de compiler leurs PDF dans le navigateur.
 
 ## Organisation
 
@@ -16,6 +16,8 @@ lib/tests/               Tests de l'API et du package
 templates/               Modèles de documents
 docs/                    Guide utilisateur, programme et référence de l'API
 scripts/                 Découverte, compilation, catalogue et installation
+shared/                  Socle TypeScript partagé avec l'extension VS Code
+web/                     Site Astro, recherche et compilation Typst en WASM
 nix/                     Versions et empreintes des dépendances Typst
 build/                   PDF et catalogue générés, exclus de Git
 ```
@@ -74,6 +76,6 @@ Les données nominatives, copies et évaluations appartiennent au dépôt privé
 
 ## Éditeur et Codespaces
 
-Tinymist reste utilisable pour les sources et aperçus Typst. L'extension Exercices Typst devra être adaptée à Just et aux nouveaux chemins : ne pas compter sur ses commandes de compilation actuelles. Les commandes du terminal fonctionnent indépendamment de cette adaptation.
+Tinymist reste utilisable pour les sources et aperçus Typst. L'extension [Enseignement Typst](https://github.com/mpi-informatique/vscode-enseignement) utilise les scripts de compilation de la banque et partage son socle TypeScript avec le [site web](web/README.md).
 
 La configuration [Codespaces](.devcontainer/devcontainer.json) installe Nix et recommande Tinymist.

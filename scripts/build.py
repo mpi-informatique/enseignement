@@ -28,7 +28,7 @@ def empreinte():
     digest = hashlib.sha256(subprocess.check_output([TYPST, '--version']))
     digest.update(os.environ.get('TYPST_PACKAGE_PATH', '').encode())
     for file in sorted(ROOT.rglob('*')):
-        if any(part.startswith('.') or part in {'build', 'tmp', '__pycache__', 'node_modules'} for part in file.relative_to(ROOT).parts):
+        if any(part.startswith('.') or part in {'build', 'tmp', '__pycache__', 'node_modules', 'web', 'shared'} for part in file.relative_to(ROOT).parts):
             continue
         if file.is_file():
             digest.update(file.relative_to(ROOT).as_posix().encode())

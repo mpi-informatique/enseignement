@@ -1,0 +1,10 @@
+node_modules/
+.astro/
+dist/
+public/banque/
+public/fonts/
+public/pdfjs/
+public/typst/
+src/generated/
+output/
+.playwright-cli/

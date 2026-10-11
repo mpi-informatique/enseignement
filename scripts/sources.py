@@ -7,7 +7,7 @@ import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-IGNORED = {"build", "lib", "templates", "ressources", "docs", "scripts", "tmp", "node_modules"}
+IGNORED = {"build", "lib", "templates", "ressources", "docs", "scripts", "tmp", "node_modules", "web", "shared"}
 
 
 def mask(text):

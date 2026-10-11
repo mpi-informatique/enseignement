@@ -12,7 +12,7 @@
         src = self;
         filter = path: type:
           let name = builtins.baseNameOf path; in
-          !(builtins.elem name [ ".git" ".direnv" "build" "tmp" "__pycache__" "node_modules" ".DS_Store" ])
+          !(builtins.elem name [ ".git" ".direnv" ".astro" "dist" "build" "tmp" "__pycache__" "node_modules" ".DS_Store" "web" "shared" ])
           && !(nixpkgs.lib.hasSuffix ".log" name);
       };
       dependencies = builtins.fromJSON (builtins.readFile ./nix/typst-packages.json);
@@ -46,6 +46,11 @@
           default = pkgs.mkShellNoCC {
             packages = [ pkgs.typst pkgs.just pkgs.python3 pkgs.ocaml pkgs.ripgrep ];
             TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
+          };
+          web = pkgs.mkShellNoCC {
+            packages = [ pkgs.nodejs_22 pkgs.typst pkgs.just pkgs.python3 pkgs.ripgrep pkgs.newcomputermodern pkgs.dejavu_fonts ];
+            TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
+            ENSEIGNEMENT_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts:${pkgs.dejavu_fonts}/share/fonts";
           };
         });
       checks = forAllSystems (system:
