@@ -3,9 +3,9 @@ import { basicSetup } from 'codemirror';
 import { EditorView, keymap } from '@codemirror/view';
 import { EditorState, Compartment } from '@codemirror/state';
 import { indentWithTab } from '@codemirror/commands';
-import { HighlightStyle, syntaxHighlighting } from '@codemirror/language';
+import { HighlightStyle, LanguageSupport, syntaxHighlighting } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
-import { typst_lezer } from 'codemirror-lang-typst/lezer';
+import { typst_lezer, typstTags, typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter } from 'codemirror-lang-typst/lezer';
 
 interface Props { source: string; dark: boolean; onChange: (source: string) => void }
 
@@ -27,6 +27,11 @@ const highlighting = (dark: boolean) => syntaxHighlighting(HighlightStyle.define
   { tag: tags.function(tags.variableName), color: dark ? '#92bdf0' : '#315ca1' },
   { tag: tags.comment, color: dark ? '#8d9ca7' : '#75828d', fontStyle: 'italic' },
   { tag: tags.operator, color: dark ? '#b9cad5' : '#43586c' },
+  { tag: [tags.escape, tags.labelName, typstTags.mathDelimiter], color: dark ? '#85cabb' : '#247565' },
+  { tag: [tags.propertyName, typstTags.interpolated, typstTags.listMarker], color: dark ? '#c9a6e6' : '#8b3cb0' },
+  { tag: [tags.heading, tags.strong], fontWeight: 'bold' },
+  { tag: tags.emphasis, fontStyle: 'italic' },
+  { tag: tags.invalid, textDecoration: 'underline wavy #bf4a4a' },
 ]));
 
 export default function TypstEditor({ source, dark, onChange }: Props) {
@@ -37,11 +42,14 @@ export default function TypstEditor({ source, dark, onChange }: Props) {
   onChangeRef.current = onChange;
 
   useEffect(() => {
+    // Le package ajoute deux palettes claires : garder ses services et fournir
+    // une seule palette adaptée au thème de l'application.
+    const language = new LanguageSupport(typst_lezer().language, [typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter]);
     const view = new EditorView({
       parent: container.current!,
       state: EditorState.create({
         doc: source,
-        extensions: [basicSetup, typst_lezer(), keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
+        extensions: [basicSetup, language, keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
           EditorView.contentAttributes.of({ 'aria-label': 'Code source Typst', spellcheck: 'false' }),
           EditorView.updateListener.of(update => { if (update.docChanged) onChangeRef.current(update.state.doc.toString()); })],
       }),
