@@ -54,6 +54,7 @@ BASE_PATH=/enseignement SITE_URL=https://mpi-informatique.github.io nix develop 
 
 ## Utilisation
 
+- Dans le menu Chapitres, cocher une matière sélectionne tous ses chapitres présents dans la banque. Les cases Informatique et Mathématiques indiquent aussi les sélections partielles ; les matières se combinent entre elles et avec les autres filtres. Le classement provient de `lib/meta.typ`. Les résultats et la palette affichent le nom, l'année et la filière des concours lorsqu'ils sont renseignés.
 - Rechercher par titre, nom de fichier, chapitre, concours, année ou autre métadonnée. `/` place le curseur dans la recherche hors des champs d'édition ; Entrée ouvre le premier résultat. Les filtres se cumulent ; plusieurs valeurs dans un filtre sont réunies par « ou ». Les cases à cocher acceptent Tab, Espace et Échap. Les critères peuvent aussi être saisis dans la recherche, par exemple `concours:CCINP année:2022`, `concours:CCINP,ENS`, `type:td` ou `chapitre:"automates finis"`. Répéter un critère ajoute une valeur ; les noms acceptent le singulier, le pluriel et les accents. Les filtres du panneau et du texte se cumulent ; la recherche ignore la casse et les accents et tolère les préfixes et petites fautes. Les filtres supplémentaires restent repliés par défaut.
 - `⌘K` / `Ctrl+K` ouvre la palette, y compris depuis CodeMirror. Chercher une action ou un exercice, utiliser ↑ / ↓ puis Entrée ; Échap ferme la palette et restitue le focus. Préfixer la recherche par `>` pour limiter la liste aux commandes. La palette permet notamment de changer de panneau, de variante ou de thème, et de télécharger les fichiers.
 - Dans la recherche, ↓ / ↑ rejoint le premier / dernier résultat. Dans les résultats, ↑ / ↓, Début et Fin déplacent le focus ; Entrée ouvre la ressource. Un seul résultat participe à la navigation par Tab, pour éviter de traverser toute la banque. Les onglets Énoncé / Corrigé acceptent ← / →, Début et Fin.
@@ -65,6 +66,8 @@ BASE_PATH=/enseignement SITE_URL=https://mpi-informatique.github.io nix develop 
 - Les brouillons, le thème et les largeurs sont conservés dans `localStorage`. Les brouillons sont propres à ce navigateur et ne modifient pas le dépôt. Télécharger le fichier `.typ` pour l'emporter, ou réinitialiser le code pour retrouver la banque. La réinitialisation est annulable dans CodeMirror. Si la source publiée a changé depuis le brouillon, un message le signale.
 
 Le premier aperçu charge le compilateur WASM (environ 27 Mo non compressés), les polices et la banque. Les éditions suivantes réutilisent le moteur et les ressources en mémoire. Le site n'utilise aucun CDN, compte ou service externe pour compiler. Une nouvelle dépendance Typst doit être ajoutée au manifeste Nix de la banque puis réexportée.
+
+Le compilateur typst.ts est fixé à `0.8.0-rc3` : cette préversion intègre Typst 0.15, nécessaire aux imports de l'API commune et à Touying 0.8. L'export inclut le point d'entrée `enseignement.typ` ; le test WASM compile toute la banque pour vérifier sa compatibilité.
 
 ## Organisation
 

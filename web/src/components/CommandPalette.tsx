@@ -2,7 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Command as CommandIcon, FileText, Search, X } from 'lucide-react';
 import { normalize, type Resource } from '@mpi-informatique/enseignement-core';
 import type { ResourceSearch } from '../lib/search';
-import { resourceTypeLabel } from '../lib/labels';
+import { resourceBadgeLabel } from '../lib/labels';
 
 export interface Command {
   id: string;
@@ -30,7 +30,7 @@ export default function CommandPalette({ commands, search, onSelect, onClose }: 
     const terms = normalize(query.replace(/^>/, '').trim()).split(/\s+/).filter(Boolean);
     const actions = commands.filter(command => !command.disabled && terms.every(term => normalize(`${command.label} ${command.keywords ?? ''}`).includes(term)))
       .map(command => ({ id: `command-${command.id}`, label: command.label, hint: command.shortcut, command: true, run: command.run }));
-    const resources = query.startsWith('>') ? [] : search(query, {}).map(resource => ({ id: `resource-${resource.id}`, label: resource.titre, hint: resourceTypeLabel(resource), command: false, run: () => onSelect(resource) }));
+    const resources = query.startsWith('>') ? [] : search(query, {}).map(resource => ({ id: `resource-${resource.id}`, label: resource.titre, hint: resourceBadgeLabel(resource), command: false, run: () => onSelect(resource) }));
     return [...actions, ...resources];
   }, [commands, search, query, onSelect]);
   const index = Math.max(0, items.findIndex(item => item.id === active));

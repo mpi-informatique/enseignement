@@ -4,8 +4,11 @@ import { typeLabel, type Resource } from '@mpi-informatique/enseignement-core';
 import { fieldValues, filterFields, filterLabels, type FilterField, type SearchFilters } from '../lib/filters';
 import { MultiSelect } from './MultiSelect';
 import type { ResourceSearch } from '../lib/search';
-import { resourceTypeLabel } from '../lib/labels';
+import { resourceBadgeLabel } from '../lib/labels';
 import { exerciseUrl } from '../lib/urls';
+import chapters from '../generated/chapitres.json';
+
+const chapterGroups = Object.entries(chapters).map(([label, values]) => ({ label, values }));
 
 interface Props {
   resources: Resource[];
@@ -26,7 +29,7 @@ export default function SearchSidebar({ resources, search, selected, query, filt
   useEffect(() => { setFocused(selected); list.current?.querySelector('[aria-current="page"]')?.scrollIntoView({ block: 'nearest' }); }, [selected]);
   const options = useMemo(() => Object.fromEntries(filterFields.map(key => [key, [...new Set(resources.flatMap(resource => fieldValues(resource, key)))].sort((a, b) => key === 'annee' ? Number(b) - Number(a) : a.localeCompare(b, 'fr')).map(value => ({ value, label: key === 'type' ? typeLabel(value) : value.replaceAll('-', ' ') }))])), [resources]);
   const hasFilters = query || Object.values(filters).some(value => Array.isArray(value) ? value.length > 0 : value !== undefined);
-  const select = (key: FilterField) => <MultiSelect key={key} label={filterLabels[key]} placeholder={key === 'type' ? 'Types' : key === 'chapitres' ? 'Chapitres' : undefined} options={options[key]!} values={filters[key] ?? []} onChange={values => onFilters({ ...filters, [key]: values })} />;
+  const select = (key: FilterField) => <MultiSelect key={key} label={filterLabels[key]} placeholder={key === 'type' ? 'Types' : key === 'chapitres' ? 'Chapitres' : undefined} options={options[key]!} groups={key === 'chapitres' ? chapterGroups : undefined} values={filters[key] ?? []} onChange={values => onFilters({ ...filters, [key]: values })} />;
 
   return <aside className="search-sidebar" id="search-sidebar" aria-label="Rechercher dans la banque">
     <div className="sidebar-top">
@@ -55,9 +58,9 @@ export default function SearchSidebar({ resources, search, selected, query, filt
       const next = event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1 : Math.max(0, Math.min(links.length - 1, position + (event.key === 'ArrowDown' ? 1 : -1)));
       links[next]?.focus();
     }}>
-      {results.map(resource => <a key={resource.id} href={exerciseUrl(resource.id)} title={[resource.titre, resource.fichier, ...resource.chapitres, resource.concours?.annee].filter(Boolean).join('\n')} className={`result ${selected === resource.id ? 'selected' : ''}`} aria-current={selected === resource.id ? 'page' : undefined} tabIndex={active?.id === resource.id ? 0 : -1} onFocus={event => { setFocused(resource.id); event.currentTarget.scrollIntoView({ block: 'nearest' }); }}
+      {results.map(resource => <a key={resource.id} href={exerciseUrl(resource.id)} title={[resource.titre, resourceBadgeLabel(resource), resource.fichier, ...resource.chapitres].join('\n')} className={`result ${selected === resource.id ? 'selected' : ''}`} aria-current={selected === resource.id ? 'page' : undefined} tabIndex={active?.id === resource.id ? 0 : -1} onFocus={event => { setFocused(resource.id); event.currentTarget.scrollIntoView({ block: 'nearest' }); }}
         onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onSelect(resource); } }}>
-        <span className="result-title">{resource.titre}</span><span className={`resource-type type-${resource.type}`}>{resourceTypeLabel(resource)}</span>
+        <span className="result-title">{resource.titre}</span><span className={`resource-type type-${resource.type}`}>{resourceBadgeLabel(resource)}</span>
       </a>)}
       {!results.length && <p className="empty-results">Aucun résultat</p>}
     </nav>

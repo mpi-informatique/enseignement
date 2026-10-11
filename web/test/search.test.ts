@@ -3,6 +3,7 @@ import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { parseSearchQuery } from '../src/lib/filters.ts';
 import { createSearch } from '../src/lib/search.ts';
+import { resourceBadgeLabel } from '../src/lib/labels.ts';
 import type { Resource } from '../../shared/src/index.ts';
 
 const resources: Resource[] = JSON.parse(readFileSync(new URL('../src/generated/catalogue.json', import.meta.url), 'utf8'));
@@ -49,4 +50,27 @@ test('la saisie incomplète ou incorrecte ne casse pas la recherche', () => {
     assert.equal(parseSearchQuery(query).text, query);
   }
   assert.deepEqual(parseSearchQuery('difficulté:3 difficulté:2').filters, { difficulteMax: 2 });
+});
+
+test('les chapitres sont regroupés selon le programme et une matière entière se combine aux types', () => {
+  const groups: Record<string, string[]> = JSON.parse(readFileSync(new URL('../src/generated/chapitres.json', import.meta.url), 'utf8'));
+  assert.deepEqual(Object.keys(groups), ['Informatique', 'Mathématiques']);
+  const chapters = Object.values(groups).flat();
+  assert.equal(new Set(chapters).size, chapters.length);
+  assert.ok(resources.every(resource => resource.chapitres.every(chapter => chapters.includes(chapter))));
+  for (const group of Object.values(groups)) {
+    const expected = resources.filter(resource => resource.chapitres.some(chapter => group.includes(chapter)));
+    assert.ok(expected.length);
+    assert.deepEqual(search('', { chapitres: group }), expected);
+    assert.deepEqual(search('', { chapitres: group, type: ['exercice', 'concours'] }), expected.filter(resource => ['exercice', 'concours'].includes(resource.type)));
+  }
+});
+
+test('les badges affichent les références connues du concours, sans inventer les champs absents', () => {
+  const resource = resources.find(resource => resource.id === 'mines-ponts-2019-mp-informatique')!;
+  assert.equal(resourceBadgeLabel(resource), 'Sujet · Mines-Ponts 2019 MP');
+  assert.equal(resourceBadgeLabel({ ...resource, kind: 'exercice' }), 'Mines-Ponts 2019 MP');
+  assert.equal(resourceBadgeLabel({ ...resource, kind: 'exercice', concours: { nom: 'ENS', oral: true } }), 'ENS oral');
+  assert.equal(resourceBadgeLabel({ ...resource, concours: {} }), 'Sujet');
+  assert.equal(resourceBadgeLabel({ ...resource, concours: null, type: 'td' }), 'TD');
 });

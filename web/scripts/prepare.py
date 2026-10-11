@@ -75,11 +75,18 @@ def copy_tree(source, destination, exclude_tests=True):
 def prepare():
     typst = os.environ.get("TYPST", "typst")
     entries = resources(typst)
+    chapters = subprocess.run(
+        [typst, "eval", "--root", str(ROOT),
+         'import "lib/meta.typ": chapitres-informatique, chapitres-maths; (Informatique: chapitres-informatique, Mathématiques: chapitres-maths)'],
+        cwd=ROOT, check=True, capture_output=True, text=True,
+    )
     public = WEB / "public"
     bank = public / "banque"
     shutil.rmtree(bank, ignore_errors=True)
     bank.mkdir(parents=True)
     files = []
+    shutil.copyfile(ROOT / "enseignement.typ", bank / "enseignement.typ")
+    files.append("enseignement.typ")
     for directory in ("chapitres", "devoirs", "lib", "templates"):
         files.extend(f"{directory}/{file}" for file in copy_tree(ROOT / directory, bank / directory))
     packages = []
@@ -115,6 +122,7 @@ def prepare():
     generated.mkdir(parents=True, exist_ok=True)
     (generated / "files.json").write_text(json.dumps(files, ensure_ascii=False))
     (generated / "catalogue.json").write_text(json.dumps(entries, ensure_ascii=False))
+    (generated / "chapitres.json").write_text(chapters.stdout)
     print(f"Banque web : {len(entries)} ressources, {len(files)} fichiers et {len(packages)} fichiers de packages.")
 
 
