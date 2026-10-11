@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 interface Props {
   label: string;
@@ -7,15 +7,17 @@ interface Props {
   groups?: { label: string; values: string[] }[];
   values: string[];
   onChange: (values: string[]) => void;
+  optionDetails?: (value: string) => ReactNode;
+  selectionHint?: string;
 }
 
 function SelectionCheckbox({ label, checked, mixed = false, onChange }: { label: string; checked: boolean; mixed?: boolean; onChange: (checked: boolean) => void }) {
   const input = useRef<HTMLInputElement>(null);
   useEffect(() => { if (input.current) input.current.indeterminate = mixed; }, [mixed]);
-  return <label><input ref={input} className="checkbox checkbox-xs" type="checkbox" checked={checked} onChange={event => onChange(event.target.checked)} /><span>{label}</span></label>;
+  return <label><input ref={input} className="checkbox checkbox-primary checkbox-xs" type="checkbox" checked={checked} onChange={event => onChange(event.target.checked)} /><span>{label}</span></label>;
 }
 
-export function MultiSelect({ label, placeholder = label, options, groups = [], values, onChange }: Props) {
+export function MultiSelect({ label, placeholder = label, options, groups = [], values, onChange, optionDetails, selectionHint }: Props) {
   const details = useRef<HTMLDetailsElement>(null);
   const [up, setUp] = useState(false);
   useEffect(() => {
@@ -27,7 +29,9 @@ export function MultiSelect({ label, placeholder = label, options, groups = [], 
   const ungrouped = options.filter(option => !groups.some(group => group.values.includes(option.value)));
   const wholeGroup = sections.find(group => group.options.length === values.length && group.options.every(option => values.includes(option.value)));
   const summary = wholeGroup?.label ?? (values.length === 1 ? options.find(option => option.value === values[0])?.label : values.length ? `${placeholder} · ${values.length}` : placeholder);
-  const optionCheckbox = (option: Props['options'][number]) => <SelectionCheckbox key={option.value} label={option.label} checked={values.includes(option.value)} onChange={checked => onChange(checked ? [...values, option.value] : values.filter(value => value !== option.value))} />;
+  const selectedLabels = values.map(value => options.find(option => option.value === value)?.label ?? value).join(', ');
+  const description = [selectedLabels || 'Tous', selectionHint].filter(Boolean).join(' · ');
+  const optionCheckbox = (option: Props['options'][number]) => <div className="facet-option" key={option.value}><SelectionCheckbox label={option.label} checked={values.includes(option.value)} onChange={checked => onChange(checked ? [...values, option.value] : values.filter(value => value !== option.value))} />{values.includes(option.value) && optionDetails?.(option.value)}</div>;
 
   return <div className="filter-field"><span>{label}</span><details ref={details} className={`facet-select ${up ? 'opens-up' : ''}`} onBlur={event => {
     // Un navigateur peut fournir Window, ou aucun élément lors d'un clic sur une case.
@@ -38,7 +42,7 @@ export function MultiSelect({ label, placeholder = label, options, groups = [], 
     if (event.key === 'Escape' && details.current?.open) { event.preventDefault(); event.stopPropagation(); details.current.open = false; details.current.querySelector('summary')?.focus(); }
     if (event.key === 'ArrowDown' && event.target === details.current?.querySelector('summary')) { event.preventDefault(); details.current!.open = true; requestAnimationFrame(() => details.current?.querySelector<HTMLInputElement>('input')?.focus()); }
   }}>
-    <summary aria-label={`${label} : ${values.length ? values.map(value => options.find(option => option.value === value)?.label ?? value).join(', ') : 'Tous'}`} title={values.length ? values.join(', ') : label}><span>{summary}</span></summary>
+    <summary aria-label={`${label} : ${description}`} title={values.length ? description : label}><span>{summary}{selectionHint && ` · ${selectionHint}`}</span></summary>
     <div className="facet-options" role="group" aria-label={label}>
       {values.length > 0 && <button className="clear-facet" onClick={() => onChange([])}>Tout effacer</button>}
       {sections.map(group => {
