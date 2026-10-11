@@ -25,7 +25,7 @@ with TemporaryDirectory() as dossier:
     assert not (package / 'lib/tests').exists()
     assert not (package / 'ressources').exists()
     source = racine / 'document.typ'
-    source.write_text('''#import "@mpi-informatique/enseignement:0.1.0": feuille, charger, meta, theoremes, bloc-solution, attention, remarque, exemple, sep, widetilde
+    source.write_text('''#import "@mpi-informatique/enseignement:0.1.0": feuille, charger, meta, theoremes, bloc-solution, sep, widetilde
 #let sujet = charger("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
 #let td = charger("chapitres/langages/td-grammaire.typ")
 #assert(td.sujet.exercices.len() > 0)
@@ -38,9 +38,6 @@ with TemporaryDirectory() as dossier:
 $widetilde(a b), #sep widetilde(L)$
 #theoremes.lemma-box(outlined: false, full-title: [Lemme admis])[Énoncé du lemme.]
 #bloc-solution[Une solution.]
-#attention[Une précaution.]
-#remarque[Une observation.]
-#exemple[Un exemple.]
 #theoremes.remark[Une remarque compatible.]
 #theoremes.note[Une note compatible.]
 #theoremes.example[Un exemple compatible.]

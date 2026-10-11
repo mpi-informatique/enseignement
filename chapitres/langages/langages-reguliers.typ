@@ -1,7 +1,6 @@
 #import "/lib/presentation.typ": cours-et-presentation, pause, only, cours-seulement, presentation-seulement
 #import "/lib/theoremes.typ": definition, theorem, lemma, property, exercise, problem, corollary
 #import "/lib/document.typ": sep, widetilde
-#import "/lib/blocs.typ": attention, remarque, exemple
 
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
 
@@ -211,7 +210,7 @@ $ L_1 (L_2 ∪ L_3) = L_1 L_2 ∪ L_1 L_3. $
 Dit autrement :
 $ L^n = underbrace(L … L, n " facteurs") = {m_1 … m_n ∣ m_1 ∈ L, …, m_n ∈ L}. $
 
-#exemple[$Σ^n$ est l'ensemble des mots de taille $n$ sur l'alphabet $Σ$.]
+#underline[Exemple] : $Σ^n$ est l'ensemble des mots de taille $n$ sur l'alphabet $Σ$.
 
 #presentation-seulement[
   == Puissance et inclusion
@@ -266,10 +265,9 @@ $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
   Par récurrence immédiate, si $L_1, …, L_n$ sont réguliers, alors $L_1 ∪ … ∪ L_n$ et $L_1 L_2 … L_n$ sont réguliers.
 ]
 
-#attention[
+#underline[Attention] :
   - Une union infinie de langages réguliers n'est pas forcément régulière.
   - Un langage particulier n'est pas forcément stable par concaténation.
-]
 
 #presentation-seulement[
   == Exemples de langages réguliers

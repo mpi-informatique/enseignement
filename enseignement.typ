@@ -1,7 +1,7 @@
 /// API et contenus du package mpi-informatique/enseignement.
 #import "lib/exercice.typ": *
 #import "lib/document.typ": sep, widetilde
-#import "lib/blocs.typ": epaisseur-trait, attention, remarque, exemple
+#import "lib/blocs.typ": epaisseur-trait
 #import "lib/meta.typ" as meta
 #import "lib/automate.typ" as automate
 #import "lib/code.typ" as code
