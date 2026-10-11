@@ -54,7 +54,9 @@ interface Props {
 }
 
 export default function PdfViewer({ pdf, pending, dark, toolbar, actions, onReady }: Props) {
-  const [document, setDocument] = useState<PDFDocumentProxy>();
+  const [loaded, setLoaded] = useState<{ pdf: Uint8Array<ArrayBuffer>; document: PDFDocumentProxy }>();
+  // Retirer les pages précédentes dès que les données changent, avant de détruire leur transport PDF.js.
+  const document = loaded?.pdf === pdf ? loaded?.document : undefined;
   const [error, setError] = useState('');
   const [width, setWidth] = useState(600);
   const [zoom, setZoom] = useState(1);
@@ -62,11 +64,11 @@ export default function PdfViewer({ pdf, pending, dark, toolbar, actions, onRead
   const scroll = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!pdf) { setDocument(undefined); return; }
+    if (!pdf) { setLoaded(undefined); return; }
     let cancelled = false;
     setError('');
     const loading = getDocument({ data: pdf.slice(), cMapUrl: `${assetUrl('pdfjs/cmaps')}/`, cMapPacked: true, standardFontDataUrl: `${assetUrl('pdfjs/standard_fonts')}/`, wasmUrl: `${assetUrl('pdfjs/wasm')}/` });
-    loading.promise.then(document => { if (!cancelled) { setDocument(document); setCurrent(page => Math.min(page, document.numPages)); } }).catch(error => { if (!cancelled) setError(String(error)); });
+    loading.promise.then(document => { if (!cancelled) { setLoaded({ pdf, document }); setCurrent(page => Math.min(page, document.numPages)); } }).catch(error => { if (!cancelled) setError(String(error)); });
     return () => { cancelled = true; void loading.destroy(); };
   }, [pdf]);
   useEffect(() => {
@@ -112,7 +114,7 @@ export default function PdfViewer({ pdf, pending, dark, toolbar, actions, onRead
       if (event.key === '+' || event.key === '=' || event.key === '-') { event.preventDefault(); setZoom(zoom => Math.max(0.5, Math.min(2, zoom + (event.key === '-' ? -0.1 : 0.1)))); }
       if (event.key === '0') { event.preventDefault(); setZoom(1); }
     }}>
-      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.fingerprints[0]}-${index}`} document={document} dark={dark} number={index + 1} width={Math.min(width, 880) * zoom} />)}
+      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.loadingTask.docId}-${index}`} document={document} dark={dark} number={index + 1} width={Math.min(width, 880) * zoom} />)}
       {!document && !error && <div className="preview-placeholder">{(pending || pdf) && <span className="loading loading-spinner loading-sm" />}<span>{pending ? 'Compilation…' : pdf ? 'Chargement…' : 'Aucun aperçu'}</span></div>}
       {error && <p className="viewer-error" role="alert">Impossible d’afficher le PDF : {error}</p>}
     </div>
