@@ -29,11 +29,12 @@
 /// - duree (array, none): Couple heures/minutes, affiché entre parenthèses après le titre.
 /// - attribution (str, none): Texte affiché à droite à la place de l'auteur.
 /// - titre-entete (content, none): Titre dynamique ; `none` reprend `titre`.
+/// - contenu-entete (content, none): En-tête personnalisé ; `none` utilise la composition commune.
 /// - repeter-entete (bool): Répéter l'en-tête sur chaque page.
 /// - taille (length): Taille du texte, défaut 10pt.
 /// - body (content): Contenu du document.
 /// -> content
-#let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, attribution: none, titre-entete: none, repeter-entete: false, taille: 10pt, body) = {
+#let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, attribution: none, titre-entete: none, contenu-entete: none, repeter-entete: false, taille: 10pt, body) = {
   set document(title: titre)
   set document(author: auteur) if auteur != none
   show: configurer-theoremes.with(espacement: espacement-blocs)
@@ -52,7 +53,7 @@
   show heading.where(level: 2): set text(size: 1 * taille)
   show heading.where(level: 3): set text(size: taille)
   set page(paper: "a4", margin: 12mm, header: none, footer: none, numbering: none)
-  let entete = block(above: 0pt, below: 0pt, sticky: true, {
+  let entete = if contenu-entete != none { contenu-entete } else { block(above: 0pt, below: 0pt, sticky: true, {
     set block(above: 0pt, below: 0pt)
     stack(dir: ttb, spacing: espacement-blocs,
       grid(columns: (24mm, 1fr, if attribution == none { 24mm } else { auto }), column-gutter: 1em, align: (left, center, right),
@@ -66,6 +67,7 @@
       line(length: 100%, stroke: epaisseur-trait),
     )
   })
+  }
   if repeter-entete {
     set page(margin: (top: 25mm, rest: 12mm), header: entete, header-ascent: espacement-blocs)
     body
