@@ -10,7 +10,7 @@
 /// - enonce (content): Énoncé, éventuellement avec sous-questions.
 /// - solution (content, none): Solution ; `none` affiche « Corrigé à compléter ».
 /// - commentaire (content, none): Observation du jury, en italique avant la solution uniquement dans le corrigé.
-/// - correcteur (content, none): Consignes de correction conservées dans les données, jamais affichées dans les documents.
+/// - correcteur (content, none): Consignes concises de notation (pourcentages, pénalités, tolérances), jamais affichées.
 /// - points (float, int, none): Barème de la question, affiché en marge du corrigé ; `none` masque les points.
 /// -> dictionary
 #let question(enonce, solution: none, commentaire: none, correcteur: none, points: none) = {
@@ -109,7 +109,7 @@
 /// - contenu (array): Textes libres `[...]`, `question(...)` et `partie(...)` ; au moins une question.
 /// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
 /// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
-/// - correcteur (content, none): Consignes globales de correction de l'exercice ou de l'épreuve, jamais affichées dans les documents.
+/// - correcteur (content, none): Consignes concises de notation communes à l'exercice ou à l'épreuve, jamais affichées.
 /// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `points` dans chaque `question`.
 /// -> dictionary
 #let exercice(meta: (:), contenu: (), remarques: none, corrections: none, correcteur: none, bareme: none) = {
