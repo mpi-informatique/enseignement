@@ -93,6 +93,7 @@
         On simplifie ce préfixe commun et on recommence. Une récurrence sur $p + q$ donne l'égalité des deux suites de facteurs.
 
         Pour décoder, on accumule les lettres jusqu'à obtenir un mot de $C$, on émet ce facteur, puis on recommence avec un mot courant vide.
+        On appelle *coupure* une position du message située à la fin d'un facteur de la décomposition.
         Si le message commence par un facteur $c ∈ C$, aucun préfixe propre de $c$ ne peut être dans $C$. La première coupure a donc lieu exactement à la fin de $c$.
         Le même raisonnement s'applique au reste du message, ce qui prouve la correction par récurrence sur le nombre de facteurs. Le mot vide produit la suite vide.
       ]),
@@ -151,7 +152,14 @@
     )),
     partie("III", "Tester un dictionnaire fini", contenu: (
       [On considère désormais un langage fini non vide $C ⊂ Σ^+$, qui n'est pas supposé préfixe. On pose $N = ∑_(c ∈ C) abs(c)$.
-        Lorsqu'on compare deux décompositions d'un même message, une coupure peut être en avance sur l'autre. On va mémoriser le mot restant entre les deux coupures.
+
+        Dans une décomposition d'un message en mots de $C$, on appelle *coupure* une position située à la fin d'un facteur.
+        Par exemple, pour $C = {a b, c d e, a b c, d e}$, le message $a b c d e$ admet les décompositions $a b | c d e$ et $a b c | d e$, où les barres indiquent les coupures entre les facteurs.
+        Après le premier facteur, on a lu $U = a b$ dans la première décomposition et $V = a b c$ dans la seconde. Le mot situé entre ces deux coupures est donc $r = c$, avec $U r = V$.
+
+        Plus généralement, on compare deux décompositions en lisant des facteurs entiers de chacune. Les préfixes déjà lus $U$ et $V$ peuvent avoir des longueurs différentes.
+        En échangeant leurs rôles si nécessaire, on peut supposer que $U$ est préfixe de $V$. On mémorise alors le mot $r$ défini par $U r = V$.
+        Ce mot représente ce qui a déjà été lu dans la seconde décomposition mais pas encore dans la première. Il vaut $ε$ lorsque les deux coupures sont à la même position.
 
         Soit $S$ l'ensemble formé de $ε$ et des suffixes propres non vides des mots de $C$.
         On définit le graphe orienté $G = (S, A)$ par les arcs suivants, pour $r ∈ S ∖ {ε}$ et $s ∈ S$ :
