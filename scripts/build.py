@@ -88,6 +88,7 @@ def modeles(signature):
     for nom, source, exercice in (
         ('exercice', 'templates/exercice.typ', True),
         ('feuille', 'templates/feuille.typ', False),
+        ('colle', 'templates/colle.typ', False),
         ('devoir', 'templates/devoir.typ', False),
         ('concours', 'templates/sujet-concours.typ', True),
     ):
