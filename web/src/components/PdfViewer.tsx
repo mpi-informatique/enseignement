@@ -1,29 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Minus, Plus, FileText } from 'lucide-react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react';
 import { getDocument, GlobalWorkerOptions, TextLayer, type PDFDocumentProxy, type PDFPageProxy } from 'pdfjs-dist';
 import 'pdfjs-dist/web/pdf_viewer.css';
 import { assetUrl } from '../lib/urls';
 
 GlobalWorkerOptions.workerSrc = assetUrl('pdfjs/pdf.worker.min.mjs');
 
-function PdfPage({ document, number, width, onVisible }: { document: PDFDocumentProxy; number: number; width: number; onVisible: (page: number) => void }) {
+function PdfPage({ document, number, width }: { document: PDFDocumentProxy; number: number; width: number }) {
   const container = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const text = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState<PDFPageProxy>();
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState('');
-  const visibility = useRef(onVisible);
-  visibility.current = onVisible;
 
   useEffect(() => {
     let cancelled = false;
     document.getPage(number).then(page => { if (!cancelled) setPage(page); }).catch(error => { if (!cancelled) setError(String(error)); });
     const observer = new IntersectionObserver(entries => setVisible(entries[0]!.isIntersecting), { rootMargin: '600px 0px' });
-    const currentObserver = new IntersectionObserver(entries => { if (entries[0]!.isIntersecting) visibility.current(number); }, { threshold: 0.1, rootMargin: '-20% 0px -60% 0px' });
     observer.observe(container.current!);
-    currentObserver.observe(container.current!);
-    return () => { cancelled = true; observer.disconnect(); currentObserver.disconnect(); };
+    return () => { cancelled = true; observer.disconnect(); };
   }, [document, number]);
 
   useEffect(() => {
@@ -48,7 +44,15 @@ function PdfPage({ document, number, width, onVisible }: { document: PDFDocument
   </div>;
 }
 
-export default function PdfViewer({ pdf, pending }: { pdf?: Uint8Array<ArrayBuffer>; pending: boolean }) {
+interface Props {
+  pdf?: Uint8Array<ArrayBuffer>;
+  pending: boolean;
+  toolbar: ReactNode;
+  actions: ReactNode;
+  onReady: () => void;
+}
+
+export default function PdfViewer({ pdf, pending, toolbar, actions, onReady }: Props) {
   const [document, setDocument] = useState<PDFDocumentProxy>();
   const [error, setError] = useState('');
   const [width, setWidth] = useState(600);
@@ -65,20 +69,50 @@ export default function PdfViewer({ pdf, pending }: { pdf?: Uint8Array<ArrayBuff
     return () => { cancelled = true; void loading.destroy(); };
   }, [pdf]);
   useEffect(() => {
-    const observer = new ResizeObserver(entries => setWidth(Math.max(200, entries[0]!.contentRect.width - 64)));
+    const observer = new ResizeObserver(entries => setWidth(Math.max(200, entries[0]!.contentRect.width)));
     observer.observe(scroll.current!);
+    onReady();
     return () => observer.disconnect();
   }, []);
-  function goTo(page: number) { scroll.current?.querySelector(`#pdf-page-${page}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  useEffect(() => { updateCurrentPage(); }, [document, width, zoom]);
+  function updateCurrentPage() {
+    const container = scroll.current!;
+    const pages = [...container.querySelectorAll<HTMLElement>('.pdf-page')];
+    if (!pages.length) return;
+    const bottom = container.scrollTop + container.clientHeight;
+    // Au bas du document, sélectionner aussi la dernière page lorsqu'elle est courte.
+    if (container.scrollTop > 0 && bottom >= container.scrollHeight - 1) { setCurrent(pages.length); return; }
+    let best = 0;
+    let visible = -1;
+    pages.forEach((page, index) => {
+      const height = Math.min(bottom, page.offsetTop + page.offsetHeight) - Math.max(container.scrollTop, page.offsetTop);
+      if (height > visible) { visible = height; best = index; }
+    });
+    setCurrent(best + 1);
+  }
+  function goTo(page: number) {
+    if (!document || page < 1 || page > document.numPages) return;
+    setCurrent(page);
+    scroll.current?.querySelector(`#pdf-page-${page}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   return <div className="pdf-viewer">
-    <div className="pdf-controls">
-      <div className="page-controls"><button className="btn btn-ghost btn-xs btn-square" aria-label="Page précédente" disabled={!document || current <= 1} onClick={() => goTo(current - 1)}><ChevronLeft size={16} /></button><span aria-live="polite">{document ? `${current} / ${document.numPages}` : '— / —'}</span><button className="btn btn-ghost btn-xs btn-square" aria-label="Page suivante" disabled={!document || current >= document.numPages} onClick={() => goTo(current + 1)}><ChevronRight size={16} /></button></div>
-      <div className="zoom-controls"><button className="btn btn-ghost btn-xs btn-square" aria-label="Réduire le zoom" disabled={zoom <= 0.5} onClick={() => setZoom(zoom => Math.max(0.5, zoom - 0.1))}><Minus size={14} /></button><button className="btn btn-ghost btn-xs zoom-reset" title="Ajuster à la largeur" onClick={() => setZoom(1)}>{Math.round(zoom * 100)} %</button><button className="btn btn-ghost btn-xs btn-square" aria-label="Agrandir le zoom" disabled={zoom >= 2} onClick={() => setZoom(zoom => Math.min(2, zoom + 0.1))}><Plus size={14} /></button></div>
+    <div className="pdf-controls pane-toolbar">
+      {toolbar}
+      <div className="pdf-navigation">
+        <div className="page-controls"><button className="btn btn-ghost btn-xs btn-square" aria-label="Page précédente" title="Page précédente (← dans l’aperçu)" disabled={!document || current <= 1} onClick={() => goTo(current - 1)}><ChevronLeft size={16} /></button><span aria-live="polite">{document ? `${current} / ${document.numPages}` : '— / —'}</span><button className="btn btn-ghost btn-xs btn-square" aria-label="Page suivante" title="Page suivante (→ dans l’aperçu)" disabled={!document || current >= document.numPages} onClick={() => goTo(current + 1)}><ChevronRight size={16} /></button></div>
+        <div className="zoom-controls"><button className="btn btn-ghost btn-xs btn-square" aria-label="Réduire le zoom" title="Réduire le zoom (− dans l’aperçu)" disabled={zoom <= 0.5} onClick={() => setZoom(zoom => Math.max(0.5, zoom - 0.1))}><Minus size={14} /></button><button className="btn btn-ghost btn-xs zoom-reset" aria-label="Ajuster à la largeur" title="Ajuster à la largeur (0 dans l’aperçu)" onClick={() => setZoom(1)}>{Math.round(zoom * 100)} %</button><button className="btn btn-ghost btn-xs btn-square" aria-label="Agrandir le zoom" title="Agrandir le zoom (+ dans l’aperçu)" disabled={zoom >= 2} onClick={() => setZoom(zoom => Math.min(2, zoom + 0.1))}><Plus size={14} /></button></div>
+      </div>
+      {actions}
     </div>
-    <div ref={scroll} className="pdf-scroll" aria-label="Aperçu PDF" aria-busy={pending}>
-      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.fingerprints[0]}-${index}`} document={document} number={index + 1} width={Math.min(width, 880) * zoom} onVisible={setCurrent} />)}
-      {!document && !error && <div className="preview-placeholder"><div className="placeholder-paper"><FileText size={34} /><span /><span /><span /></div><h3>{pending ? 'Préparation de l’aperçu' : 'Votre document, ici'}</h3><p>{pending ? 'Le premier chargement peut prendre quelques secondes.' : 'Ouvrir une ressource dans la bibliothèque.'}</p>{pending && <span className="loading loading-dots loading-sm" />}</div>}
+    <div ref={scroll} className="pdf-scroll" id="pdf-preview" role="tabpanel" tabIndex={0} aria-label="Aperçu PDF" aria-busy={pending} onScroll={updateCurrentPage} onKeyDown={event => {
+      if (event.target !== event.currentTarget || event.metaKey || event.ctrlKey || event.altKey) return;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); goTo(Math.max(1, Math.min(document?.numPages ?? 1, current + (event.key === 'ArrowRight' ? 1 : -1)))); }
+      if (event.key === '+' || event.key === '=' || event.key === '-') { event.preventDefault(); setZoom(zoom => Math.max(0.5, Math.min(2, zoom + (event.key === '-' ? -0.1 : 0.1)))); }
+      if (event.key === '0') { event.preventDefault(); setZoom(1); }
+    }}>
+      {document && Array.from({ length: document.numPages }, (_, index) => <PdfPage key={`${document.fingerprints[0]}-${index}`} document={document} number={index + 1} width={Math.min(width, 880) * zoom} />)}
+      {!document && !error && <div className="preview-placeholder">{(pending || pdf) && <span className="loading loading-spinner loading-sm" />}<span>{pending ? 'Compilation…' : pdf ? 'Chargement…' : 'Aucun aperçu'}</span></div>}
       {error && <p className="viewer-error" role="alert">Impossible d’afficher le PDF : {error}</p>}
     </div>
   </div>;

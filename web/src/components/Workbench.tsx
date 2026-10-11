@@ -1,11 +1,15 @@
-import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties } from 'react';
-import { Check, CodeXml, Download, FileCode, PanelLeftOpen, RotateCcw, CircleAlert, ChevronRight } from 'lucide-react';
-import { duration, pdfFilename, typeLabel, type Filters, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { Download, FileCode, RotateCcw, CircleAlert } from 'lucide-react';
+import { duration, pdfFilename, type Filters, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
 import { useCompiler } from '../hooks/useCompiler';
 import { useSource } from '../hooks/useSource';
 import { Navbar } from './Navbar';
+import { VariantTabs } from './VariantTabs';
+import CommandPalette, { type Command } from './CommandPalette';
+import { createSearch } from '../lib/search';
+import { resourceTypeLabel } from '../lib/labels';
 import { exerciseUrl, routeId } from '../lib/urls';
 import { stored, store } from '../lib/storage';
 
@@ -31,10 +35,13 @@ export default function Workbench({ resources, initialId }: Props) {
   const [dark, setDark] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [editorOpen, setEditorOpen] = useState(true);
-  const [sidebarWidth, setSidebarWidth] = useState(310);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(280);
   const [editorWidth, setEditorWidth] = useState(440);
   const [retry, setRetry] = useState(0);
   const app = useRef<HTMLDivElement>(null);
+  const focusTarget = useRef<'search' | 'editor' | 'pdf' | undefined>(undefined);
+  const search = useMemo(() => createSearch(resources), [resources]);
   const { code, loadError, notice, modified, changeSource, reload, reset, dismissNotice } = useSource(resource);
   const compilation = useCompiler(resource, code?.source, variant, retry);
 
@@ -51,19 +58,28 @@ export default function Workbench({ resources, initialId }: Props) {
       setSelected(routeId(location.pathname) ?? 'residuels-minimisation');
       setVariant(new URLSearchParams(location.search).get('vue') === 'corrige' ? 'corrige' : 'enonce');
     };
-    const keys = (event: KeyboardEvent) => {
-      const target = event.target as HTMLElement;
-      if (event.key === '/' && !target.closest('input, textarea, select, [contenteditable="true"]')) {
-        event.preventDefault(); setSidebarOpen(true);
-        requestAnimationFrame(() => app.current?.querySelector<HTMLInputElement>('input[type=search]')?.focus());
-      }
-      if (event.key === 'Escape' && window.innerWidth <= 900) setSidebarOpen(false);
-    };
     window.addEventListener('popstate', pop);
-    window.addEventListener('keydown', keys);
-    return () => { window.removeEventListener('popstate', pop); window.removeEventListener('keydown', keys); };
+    return () => window.removeEventListener('popstate', pop);
   }, []);
 
+  useEffect(() => {
+    const keys = (event: KeyboardEvent) => {
+      if (event.isComposing || event.defaultPrevented) return;
+      if ((event.metaKey || event.ctrlKey) && !event.altKey && event.key.toLowerCase() === 'k') {
+        event.preventDefault(); setPaletteOpen(open => !open); return;
+      }
+      if (paletteOpen) return;
+      const target = event.target as HTMLElement;
+      if (event.key === '/' && !event.metaKey && !event.ctrlKey && !event.altKey && !target.closest('input, textarea, select, [contenteditable="true"]')) {
+        event.preventDefault(); focusPanel('search');
+      }
+      if (event.key === 'Escape' && sidebarOpen && window.innerWidth <= 900) closeSidebar();
+    };
+    // La capture rend la palette accessible même lorsque l'éditeur traite les touches.
+    window.addEventListener('keydown', keys, true);
+    return () => window.removeEventListener('keydown', keys, true);
+  }, [paletteOpen, sidebarOpen]);
+  useEffect(() => { focusPending(); }, [sidebarOpen, editorOpen]);
   useEffect(() => {
     if (resource) document.title = `${resource.titre} · Enseignement MPI`;
   }, [resource]);
@@ -71,39 +87,74 @@ export default function Workbench({ resources, initialId }: Props) {
   function navigate(resource: Resource, nextVariant: Variant = variant) {
     history.pushState({}, '', exerciseUrl(resource.id, nextVariant));
     setSelected(resource.id); setVariant(nextVariant);
-    if (window.innerWidth <= 900) setSidebarOpen(false);
+    if (window.innerWidth <= 900) {
+      if (app.current?.querySelector('#search-sidebar')?.contains(document.activeElement)) focusPanel('pdf');
+      setSidebarOpen(false);
+    }
   }
   function toggleTheme() {
     const next = !dark;
     setDark(next); store('theme', next ? 'dark' : 'light');
     document.documentElement.dataset.theme = next ? 'enseignement-dark' : 'enseignement';
   }
-  function toggleEditor() { setEditorOpen(open => { store('editor-open', String(!open)); return !open; }); }
+  function toggleEditor() {
+    setEditorOpen(!editorOpen); store('editor-open', String(!editorOpen));
+    if (editorOpen && app.current?.querySelector('#editor-panel')?.contains(document.activeElement)) focusPanel('pdf');
+  }
+  function closeSidebar() {
+    setSidebarOpen(false);
+    app.current?.querySelector<HTMLButtonElement>('[aria-controls="search-sidebar"]')?.focus();
+  }
+  function focusPending() {
+    const selector = { search: 'input[type="search"]', editor: '.cm-content', pdf: '.pdf-scroll' };
+    const target = focusTarget.current && app.current?.querySelector<HTMLElement>(selector[focusTarget.current]);
+    if (target) { target.focus(); focusTarget.current = undefined; }
+  }
+  function focusPanel(panel: 'search' | 'editor' | 'pdf') {
+    focusTarget.current = panel;
+    if (panel === 'search') setSidebarOpen(true);
+    if (panel === 'editor') { setEditorOpen(true); store('editor-open', 'true'); }
+    if (panel === 'pdf' && window.innerWidth <= 1100) setEditorOpen(false);
+    requestAnimationFrame(focusPending);
+  }
+  function downloadSource() { if (code) download(code.source, `${selected}.typ`, 'text/plain;charset=utf-8'); }
+  const canDownloadPdf = !!resource && !!compilation.pdf && !compilation.pending && !compilation.error;
+  function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, pdfFilename(resource.fichier, variant), 'application/pdf'); }
+  const commands: Command[] = [
+    { id: 'search', label: 'Rechercher un exercice', shortcut: '/', keywords: 'banque filtre', run: () => focusPanel('search') },
+    { id: 'editor-focus', label: 'Modifier le code Typst', keywords: 'éditeur source focus', disabled: !code, run: () => focusPanel('editor') },
+    { id: 'pdf-focus', label: 'Afficher l’aperçu PDF', keywords: 'document focus', run: () => focusPanel('pdf') },
+    { id: 'sidebar', label: sidebarOpen ? 'Masquer la recherche' : 'Afficher la recherche', keywords: 'panneau latéral', run: () => sidebarOpen ? closeSidebar() : focusPanel('search') },
+    { id: 'editor', label: editorOpen ? 'Masquer le code Typst' : 'Afficher le code Typst', keywords: 'panneau éditeur source', run: toggleEditor },
+    ...(['enonce', 'corrige'] as const).map(value => ({ id: value, label: value === 'enonce' ? 'Voir l’énoncé' : 'Voir le corrigé', keywords: 'version solution correction', disabled: !resource, run: () => { if (resource) navigate(resource, value); focusPanel('pdf'); } })),
+    { id: 'pdf-download', label: 'Télécharger le PDF', keywords: 'export document', disabled: !canDownloadPdf, run: downloadPdf },
+    { id: 'source-download', label: 'Télécharger le fichier Typst', keywords: 'export source', disabled: !code, run: downloadSource },
+    { id: 'theme', label: dark ? 'Activer le thème clair' : 'Activer le thème sombre', keywords: 'apparence dark mode', run: toggleTheme },
+    { id: 'filters-reset', label: 'Effacer la recherche et les filtres', keywords: 'réinitialiser', run: () => { setQuery(''); setFilters({}); focusPanel('search'); } },
+    { id: 'compile', label: 'Recompiler le document', keywords: 'réessayer compilation', disabled: !code || compilation.pending, run: () => setRetry(n => n + 1) },
+    { id: 'source-reset', label: 'Réinitialiser le code Typst', keywords: 'brouillon annuler', disabled: !modified, run: reset },
+  ];
+  const status = loadError || compilation.message;
+  const details = resource && [resource.titre, resourceTypeLabel(resource), ...resource.chapitres.map(chapter => chapter.replaceAll('-', ' ')), duration(resource)].filter(Boolean).join(' · ');
 
   return <div ref={app} className={`workbench ${sidebarOpen ? 'sidebar-open' : ''} ${editorOpen ? 'editor-open' : ''}`} style={{ '--sidebar-width': `${sidebarWidth}px`, '--editor-width': `${editorWidth}px` } as CSSProperties}>
-    <Navbar dark={dark} onThemeChange={toggleTheme} />
+    <Navbar title={resource?.titre ?? 'Ressource introuvable'} details={details} dark={dark} sidebarOpen={sidebarOpen} editorOpen={editorOpen} onThemeChange={toggleTheme} onSidebarToggle={() => sidebarOpen ? closeSidebar() : focusPanel('search')} onEditorToggle={toggleEditor} onCommands={() => setPaletteOpen(true)} />
     <div className="app-body">
-      {sidebarOpen && <button className="sidebar-backdrop" aria-label="Fermer la recherche" onClick={() => setSidebarOpen(false)} />}
-      {sidebarOpen && <SearchSidebar resources={resources} selected={selected} query={query} filters={filters} onQuery={setQuery} onFilters={setFilters} onSelect={navigate} onClose={() => setSidebarOpen(false)} />}
+      {sidebarOpen && <button className="sidebar-backdrop" aria-label="Fermer la recherche" tabIndex={-1} onClick={closeSidebar} />}
+      {sidebarOpen && <SearchSidebar resources={resources} search={search} selected={selected} query={query} filters={filters} onQuery={setQuery} onFilters={setFilters} onSelect={navigate} />}
       {sidebarOpen && <ResizeHandle label="Largeur de la recherche" value={sidebarWidth} min={240} max={520} onChange={value => { setSidebarWidth(value); store('sidebar-width', String(value)); }} />}
-      <main className="main-panel" id="main">
-        <div className="document-heading">
-          <div className="document-breadcrumb"><button className="btn btn-ghost btn-xs btn-square" aria-label={sidebarOpen ? 'Masquer la recherche' : 'Afficher la recherche'} aria-expanded={sidebarOpen} aria-controls="search-sidebar" onClick={() => setSidebarOpen(open => !open)}><PanelLeftOpen size={17} /></button><span>Bibliothèque</span><ChevronRight size={12} /><span>{resource ? typeLabel(resource.type) : 'Ressource inconnue'}</span></div>
-          <div className="document-title-row"><div><h1>{resource?.titre ?? 'Ressource introuvable'}</h1><div className="document-meta">{resource && <><span className={`resource-type type-${resource.type}`}>{typeLabel(resource.type)}</span>{resource.chapitres.map(chapter => <span className="chapter-tag" key={chapter}>{chapter.replaceAll('-', ' ')}</span>)}{resource.concours && <span>{Object.values(resource.concours).filter(value => typeof value !== 'boolean').join(' · ')}</span>}{duration(resource) && <span>{duration(resource)}</span>}{resource.difficulte !== null && <span className="difficulty" title={`Difficulté : ${resource.difficulte} sur 5`}><span>{[1, 2, 3, 4, 5].map(n => <i key={n} className={n <= resource.difficulte! ? 'filled' : ''} />)}</span>{resource.difficulte}/5</span>}</>}</div></div>
-            <button className={`btn btn-sm code-toggle ${editorOpen ? 'active' : ''}`} aria-label="Code Typst" aria-expanded={editorOpen} aria-controls="editor-panel" onClick={toggleEditor}><CodeXml size={16} /><span>Code Typst</span></button>
-          </div>
-        </div>
+      <main className="main-panel" id="main" tabIndex={-1}>
         <div className="document-workspace">
           {editorOpen && <section className="editor-panel" id="editor-panel" aria-label="Éditeur Typst">
-            <div className="pane-toolbar"><span className="source-filename" title={resource?.fichier}><FileCode size={14} />{selected}.typ{modified && <span className="modified-dot" title="Brouillon modifié" />}</span><div><button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" disabled={!code} onClick={() => code && download(code.source, `${selected}.typ`, 'text/plain;charset=utf-8')}><Download size={14} /></button><button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button></div></div>
-            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} dark={dark} onChange={changeSource} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
-            <div className="editor-footer"><span>Typst</span><span>{modified ? 'Brouillon local' : 'Source de la banque'} <Check size={12} /></span></div>
+            <div className="pane-toolbar"><span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{selected}.typ</span>{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title="Brouillon modifié, enregistré localement" />}</span><div><button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button><button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button></div></div>
+            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
           </section>}
           {editorOpen && <ResizeHandle label="Largeur de l’éditeur" value={editorWidth} min={280} max={900} onChange={value => { setEditorWidth(value); store('editor-width', String(value)); }} />}
           <section className="preview-panel" aria-label="Document PDF">
-            <div className="pane-toolbar preview-toolbar"><div role="tablist" aria-label="Version du document" className="variant-tabs">{(['enonce', 'corrige'] as const).map(value => <button key={value} className={variant === value ? 'active' : ''} role="tab" aria-selected={variant === value} onClick={() => resource && navigate(resource, value)}>{value === 'enonce' ? 'Énoncé' : 'Corrigé'}</button>)}</div><button className="btn btn-sm download-pdf" disabled={!compilation.pdf || compilation.pending || !!compilation.error} onClick={() => resource && compilation.pdf && download(compilation.pdf, pdfFilename(resource.fichier, variant), 'application/pdf')}><Download size={14} /><span>PDF</span></button></div>
-            <Suspense fallback={<div className="pane-loading">Chargement de l’aperçu…</div>}><PdfViewer pdf={compilation.pdf} pending={compilation.pending} /></Suspense>
-            <div className={`compilation-status ${compilation.error || loadError ? 'has-error' : ''}`} role="status"><span>{compilation.pending ? <span className="loading loading-spinner loading-xs" /> : compilation.error || loadError ? <CircleAlert size={13} /> : <span className="status-dot" />}{loadError || compilation.message}</span><span>Compilation automatique</span></div>
+            <Suspense fallback={<div className="pane-loading">Chargement de l’aperçu…</div>}><PdfViewer pdf={compilation.pdf} pending={compilation.pending} onReady={focusPending} toolbar={<>
+              <VariantTabs variant={variant} onChange={value => resource && navigate(resource, value)} />
+              <span className={`compilation-status ${compilation.error || loadError ? 'has-error' : ''}`} title={status} role="status">{compilation.pending ? <span className="loading loading-spinner loading-xs" /> : compilation.error || loadError ? <CircleAlert size={13} /> : <span className="status-dot" />}<span className="sr-only">{status}</span></span>
+            </>} actions={<button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le PDF" title="Télécharger le PDF" disabled={!canDownloadPdf} onClick={downloadPdf}><Download size={14} /></button>} /></Suspense>
           </section>
         </div>
         {(loadError || compilation.error) && <div className="diagnostic alert alert-error" role="alert"><CircleAlert size={18} /><pre>{loadError || compilation.error}</pre><button className="btn btn-sm" onClick={() => loadError ? reload() : setRetry(n => n + 1)}>Réessayer</button></div>}
@@ -111,5 +162,6 @@ export default function Workbench({ resources, initialId }: Props) {
         {!!compilation.warnings?.length && <details className="compile-warnings"><summary>Avertissements Typst ({compilation.warnings.length})</summary><pre>{compilation.warnings.join('\n')}</pre></details>}
       </main>
     </div>
+    {paletteOpen && <CommandPalette commands={commands} search={search} onSelect={resource => { navigate(resource); focusPanel('pdf'); }} onClose={() => setPaletteOpen(false)} />}
   </div>;
 }

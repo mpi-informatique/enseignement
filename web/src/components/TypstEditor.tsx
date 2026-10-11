@@ -7,12 +7,12 @@ import { HighlightStyle, LanguageSupport, syntaxHighlighting } from '@codemirror
 import { tags } from '@lezer/highlight';
 import { typst_lezer, typstTags, typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter } from 'codemirror-lang-typst/lezer';
 
-interface Props { source: string; dark: boolean; onChange: (source: string) => void }
+interface Props { source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }
 
 const theme = (dark: boolean) => EditorView.theme({
   '&': { height: '100%', backgroundColor: 'var(--editor-bg)', color: 'var(--ink)' },
-  '.cm-scroller': { overflow: 'auto', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12px', lineHeight: '1.8' },
-  '.cm-content': { padding: '18px 0', caretColor: 'var(--accent)' },
+  '.cm-scroller': { overflow: 'auto', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12px', lineHeight: '1.6' },
+  '.cm-content': { padding: '6px 0', caretColor: 'var(--accent)' },
   '.cm-gutters': { backgroundColor: 'var(--editor-bg)', border: 'none', color: 'var(--muted)', paddingRight: '8px' },
   '.cm-activeLine, .cm-activeLineGutter': { backgroundColor: 'var(--hover)' },
   '.cm-cursor': { borderLeftColor: 'var(--accent)' },
@@ -34,7 +34,7 @@ const highlighting = (dark: boolean) => syntaxHighlighting(HighlightStyle.define
   { tag: tags.invalid, textDecoration: 'underline wavy #bf4a4a' },
 ]));
 
-export default function TypstEditor({ source, dark, onChange }: Props) {
+export default function TypstEditor({ source, dark, onChange, onReady }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const editor = useRef<EditorView | undefined>(undefined);
   const onChangeRef = useRef(onChange);
@@ -55,6 +55,7 @@ export default function TypstEditor({ source, dark, onChange }: Props) {
       }),
     });
     editor.current = view;
+    onReady();
     return () => { view.destroy(); editor.current = undefined; };
   }, []);
 

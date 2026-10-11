@@ -1,6 +1,8 @@
 import MiniSearch from 'minisearch';
 import { facets, normalize, type Filters, type Resource } from '@mpi-informatique/enseignement-core';
 
+export type ResourceSearch = ReturnType<typeof createSearch>;
+
 export function createSearch(resources: Resource[]) {
   const index = new MiniSearch({
     fields: ['titre', 'id', 'chapitres', 'algorithmes', 'structures', 'langages', 'niveaux', 'concours'],
