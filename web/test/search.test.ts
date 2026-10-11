@@ -80,9 +80,26 @@ test('les chapitres sont regroupés selon le programme et une matière entière 
 
 test('les badges affichent les références connues du concours, sans inventer les champs absents', () => {
   const resource = resources.find(resource => resource.id === 'mines-ponts-2019-mp-informatique')!;
-  assert.equal(resourceBadgeLabel(resource), 'Sujet · Mines-Ponts 2019 MP');
+  assert.equal(resourceBadgeLabel(resource), 'Mines-Ponts 2019 MP');
+  assert.equal(resourceBadgeLabel({ ...resource, concours: { nom: 'Centrale', annee: 2022, filiere: 'MP' } }), 'Centrale 2022 MP');
   assert.equal(resourceBadgeLabel({ ...resource, kind: 'exercice' }), 'Mines-Ponts 2019 MP');
   assert.equal(resourceBadgeLabel({ ...resource, kind: 'exercice', concours: { nom: 'ENS', oral: true } }), 'ENS oral');
   assert.equal(resourceBadgeLabel({ ...resource, concours: {} }), 'Sujet');
   assert.equal(resourceBadgeLabel({ ...resource, concours: null, type: 'td' }), 'TD');
+});
+
+test('les oraux déplacés sont indexés à leur nouveau chemin et restent trouvables par métadonnées', () => {
+  for (const fichier of [
+    'devoirs/concours/oral/ens/ens-oral-mp-automates-monoides.typ',
+    'devoirs/concours/oral/ens/ens-oral-mp-reparation-langage/ens-oral-mp-reparation-langage.typ',
+    'devoirs/concours/oral/ccinp/ccinp-oral-langages-automates.typ',
+  ]) {
+    const resource = resources.find(resource => resource.fichier === fichier);
+    assert.ok(resource, fichier);
+    assert.equal(resource.type, 'concours');
+    assert.equal(resource.concours?.oral, true);
+    assert.ok(resource.chapitres.length);
+    assert.ok(search(`concours:${resource.concours.nom} chapitre:${resource.chapitres[0]}`, {}).some(result => result.id === resource.id));
+  }
+  assert.ok(search('monoïdes concours:ENS année:2022', {}).some(resource => resource.id === 'ens-oral-mp-automates-monoides'));
 });
