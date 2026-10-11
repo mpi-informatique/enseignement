@@ -31,7 +31,6 @@
   L'entier $n$ est la taille de $m$, notée $abs(m)$.
   - Le mot vide, ne contenant aucune lettre, est noté $ε$.
   - Deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ sur $Σ$ sont égaux si $n = p$ et : $forall i ∈ [|1, n|]$, $u_i = v_i$.
-
   - $Σ^*$ est l'ensemble des mots sur $Σ$ et $Σ^+ = Σ^* ∖ {ε}$.
 ]
 
@@ -42,9 +41,8 @@
 ]
 
 #definition[
-  La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est $u v = u_1 … u_n v_1 … v_p$.
-
-  Si $u$ est un mot, on définit $u^0 = ε$ et $u^k = underbrace(u … u, k)$.
+  - La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est $u v = u_1 … u_n v_1 … v_p$.
+  - Si $u$ est un mot, on définit par récurrence $u^0 = ε$ et $u^k = u u^(k - 1)$ pour $k ≥ 1$.
 ]
 
 #presentation-seulement[
@@ -114,14 +112,15 @@ String.length s (* donne 3 *)
 "abc" ^ "def" (* concaténation *)
 ```
 
-Contrairement à ```ocaml array```, le type ```ocaml string``` est immuable : on ne peut pas modifier un caractère d'une chaîne.
+Contrairement à ```ocaml array```, le type ```ocaml string``` est immuable/persistant : on ne peut pas modifier un caractère d'une chaîne.
 
 #presentation-seulement[
   == Reconnaissance d'un sous-mot
 ]
 
 #exercise[
-  Écrire une fonction ```ocaml sous_mot : string -> string -> bool``` qui teste si un mot est un sous-mot d'un autre, en complexité linéaire.
+  1. Écrire une fonction ```ocaml sous_mot : string -> string -> bool``` testant si un mot est un sous-mot d'un autre.
+  2. Connaissez-vous des algorithmes plus efficaces ?
 ]
 
 = Langage
@@ -139,6 +138,7 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
   == Exemples de langages
 ]
 
+#underline[Exemples] :
 + L'ensemble $L_0 = {ε, a, b a b}$ sur $Σ = {a, b}$.
 + L'ensemble $L_1$ des mots d'un dictionnaire ne contenant que des lettres minuscules non accentuées, sur $Σ = {a, b, …, z}$.
 + L'ensemble $L_2$ des formules arithmétiques sur $Σ = {0, …, 9, "+", "-", "/", "*", "(", ")"}$.
@@ -166,7 +166,7 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
     Étant donné un texte $s$ et un langage $L$, $s$ contient-il un mot de $L$ ?
     Cas particulier $L = {m}$ : le mot $m$ apparaît-il dans le texte $s$ ?
   ]
-  *Application* : recherche d'un motif, par exemple une adresse électronique ou une séquence d'ADN.
+  #underline[Application] : recherche d'un motif, par exemple une adresse électronique ou une séquence d'ADN.
 ]
 
 = Opérations sur les langages
@@ -465,10 +465,10 @@ Sur $Σ = {a, b}$ :
 ]
 
 #exercise[
-  Si $m = m_1 … m_n$ est un mot, son miroir est $widetilde(m) = m_n … m_1$.
-  Si $L$ est un langage, son miroir est $widetilde(L) = {widetilde(m) ∣ m ∈ L}$.
+  On note $widetilde(m) = m_n … m_1$ le miroir d'un mot $m = m_1 … m_n$ et $widetilde(L) = {widetilde(m) ∣ m ∈ L}$ celui d'un langage $L$.
+  
   + Donner une expression régulière du miroir de $a (a | b)^* b$.
-  + Soit $e$ une expression régulière de langage $L$. Montrer que $widetilde(L)$ est régulier.
+  + Soit $L$ un langage régulier. Montrer que $widetilde(L)$ est régulier.
   + Écrire une fonction OCaml ```ocaml miroir : 'a regexp -> 'a regexp``` renvoyant le miroir d'une expression régulière.
 ]
 

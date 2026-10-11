@@ -6,7 +6,7 @@
 
 #let ex = exercice(
   meta: (
-    titre: "Sujet 0 CCP",
+    titre: "Sujet 0 CCINP",
     chapitres: ("langages-reguliers", "automates-finis"),
     algorithmes: ("determinisation",),
     difficulte: 2,

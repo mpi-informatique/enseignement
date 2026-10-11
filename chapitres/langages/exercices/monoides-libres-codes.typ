@@ -13,8 +13,7 @@
     duree: (2, 30),
   ),
   contenu: (
-    [On fixe un alphabet fini non vide $Σ$. On note $ε$ le mot vide, $abs(w)$ la taille d'un mot $w$ et $Σ^+ = Σ^* ∖ {ε}$.
-      La concaténation est notée par juxtaposition. La concaténation d'une suite vide de mots vaut $ε$.
+    [On fixe un alphabet fini non vide $Σ$. 
 
       Un *sous-monoïde* de $Σ^*$ est un langage $M$ contenant $ε$ et stable par concaténation :
       $ ∀u, v ∈ M, #sep u v ∈ M. $
@@ -23,13 +22,13 @@
       $ x_1 ⋯ x_p = y_1 ⋯ y_q ==> p = q " et " ∀i ∈ {1, …, p}, #sep x_i = y_i. $
       Un sous-monoïde est dit *libre* s'il est engendré par un code.
 
-      On cherche à comprendre quand un message obtenu en concaténant des mots d'un dictionnaire peut être décodé sans ambiguïté. Aucune connaissance préalable sur les monoïdes ou les codes n'est nécessaire.],
+      On cherche à comprendre quand un message obtenu en concaténant des mots d'un dictionnaire peut être décodé sans ambiguïté. ],
     partie("I", "Engendrer et décomposer", contenu: (
       question([
         Montrer qu'un langage $M$ est un sous-monoïde si et seulement si $M = M^*$.
         Donner un langage stable par concaténation qui n'est pas un sous-monoïde.
       ], solution: [
-        Si $M$ est un sous-monoïde, une récurrence sur le nombre de facteurs montre que toute concaténation de mots de $M$ appartient à $M$, y compris la concaténation vide. Donc $M^* ⊂ M$.
+        Si $M$ est un sous-monoïde, une récurrence sur le nombre de facteurs montre que toute concaténation de mots de $M$ appartient à $M$. Donc $M^* ⊂ M$.
         L'inclusion $M ⊂ M^*$ est toujours vraie.
 
         Réciproquement, $M^*$ contient $ε$ et est stable par concaténation. Ainsi $M = M^*$ est un sous-monoïde.
@@ -64,6 +63,8 @@
 
         Si $M$ est libre, le code qui l'engendre est donc nécessairement $B(M)$.
         Réciproquement, si $B(M)$ est un code, l'égalité $M = B(M)^*$ montre que $M$ est libre.
+
+        $B(M)$ est donc l'unique ensemble générateur minimal de $M$ : une base de $M$.
       ]),
       question([
         Sur $Σ = {a}$, on considère $M = {ε} ∪ {a^n ∣ n ≥ 2}$.

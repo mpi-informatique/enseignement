@@ -129,7 +129,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 
 ### Création de devoirs et d'exercices
 
-- Créer par défaut les nouveaux exercices produits par une IA dans le dépôt privé `mpi-informatique/exercices-prive`, sauf instruction explicite de l'utilisateur de les placer dans le dépôt public `mpi-informatique/exercices`.
+- Créer par défaut les nouveaux exercices produits par une IA dans le dépôt privé `mpi-informatique/exercices-prive` s'il existe, sauf instruction explicite de l'utilisateur de les placer dans le dépôt public `mpi-informatique/exercices`.
 - Consulter les cours correspondants dans `chapitres/`, ou dans le dépôt de cours existant pour les chapitres non encore intégrés, pour reprendre leurs notations, définitions et termes. Introduire explicitement les notions nouvelles et les résultats admis.
 - Énoncer dès l'introduction les hypothèses et conventions communes à tout le sujet. Éviter « sauf mention contraire » lorsqu'aucune exception n'est prévue. Pour une généralisation ponctuelle, préciser sa portée et utiliser une notation distincte si nécessaire.
 - Construire une progression : exemples, résultats intermédiaires, caractérisation, applications. Vérifier que chaque question dispose des résultats nécessaires et que les transitions entre parties sont explicites.
@@ -210,21 +210,12 @@ question([Justifier la complexité.], points: 1.5, solution: [ ... ])
 Échelle pédagogique : évidence 0.25, facile 0.5, moyen 1, assez difficile 2, difficile 3, très difficile 4. Tenir aussi compte de la longueur de la preuve ou du code ;
 1.5, 2.5 et 3.5 permettent d'affiner.
 
-## Copies corrigées et notes de classe
-
-Les copies individuelles et les outils de correction sont dans le dépôt privé
-`mpi-informatique/exercices-prive`, qui utilise le package
-`@mpi-informatique/enseignement:0.1.0`. La feuille d'origine exporte
-`sujet = (titre: ..., exercices: (...), bareme: none)` et utilise cette même
-composition dans `feuille.with`. Les copies importent ce sujet depuis le package.
-
 ## Figures
 
 - Générer les figures (automates, arbres, graphes, schémas…) en Typst avec [CeTZ](https://typst.app/universe/package/cetz/), [finite](https://typst.app/universe/package/finite/) pour les automates, ou un autre paquet adapté.
 - Conserver le code des figures dans le même fichier si possible.
 - Pour les automates, utiliser l'échelle et le style communs de `lib/automate.typ`. Placer les boucles, arcs de retour et étiquettes vers l'extérieur lorsqu'il y a le choix, et éviter les croisements.
 - Fixer les versions des paquets dans les imports. Préserver les informations de la figure : étiquettes, transitions, états initiaux et finaux, structure des arbres.
-
 
 ## Compilation et tests
 

@@ -32,6 +32,7 @@ Voir le [guide du site](web/README.md) pour les autres options web et la [docume
 
 ## Vérification et livraison
 
+- Après chaque modification du site ou de la banque affichée, arrêter puis relancer le serveur local avec les recettes `web-stop` et `web`, et ouvrir son URL locale dans le navigateur intégré de Codex. Conserver si possible l'exercice et la variante affichés. Vérifier que les derniers changements sont visibles avant de livrer.
 - Lancer `nix develop path:. -c just check` et annoncer les vérifications réellement effectuées.
 - N'inspecter les PDF générés que si c'est vraiment utile.
 - Communiquer les fichiers modifiés et les corrections, avec des liens cliquables vers les PDF d'énoncé et de corrigé lorsqu'ils ont été générés.

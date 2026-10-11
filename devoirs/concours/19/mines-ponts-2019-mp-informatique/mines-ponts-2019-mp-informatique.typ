@@ -102,7 +102,7 @@
     chapitres: ("automates-finis", "langages-reguliers", "graphes"),
     algorithmes: ("parcours-en-profondeur",),
     structures: ("tableau", "liste", "graphe-oriente", "graphe-non-oriente", "liste-adjacence"),
-    langages: ("OCaml",), difficulte: 4, niveaux: ("MPI",), duree: (3, 0),
+    langages: ("OCaml",), difficulte: 4, niveaux: ("MPI", "MP"), duree: (3, 0),
     concours: (nom: "Mines-Ponts", annee: 2019, filiere: "MP"),
   ),
   corrections: [

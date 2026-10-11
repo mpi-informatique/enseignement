@@ -1,5 +1,5 @@
 /// Espacement vertical commun aux blocs des feuilles et des cours.
-#let espacement-blocs = 8pt
+#let espacement-blocs = 8.5pt
 
 /// Épaisseur commune aux filets et aux bordures des documents.
 #let epaisseur-trait = 0.4pt

@@ -49,8 +49,8 @@
   show math.equation.where(block: true): set block(above: espacement-blocs, below: espacement-blocs)
   show list: set block(above: espacement-blocs, below: espacement-blocs)
   show enum: set block(above: espacement-blocs, below: espacement-blocs)
-  show heading.where(level: 1): set text(size: 1 * taille)
-  show heading.where(level: 2): set text(size: 1 * taille)
+  show heading.where(level: 1): set text(size: 1.1 * taille)
+  show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
   set page(paper: "a4", margin: 12mm, header: none, footer: none, numbering: none)
   let entete = if contenu-entete != none { contenu-entete } else { block(above: 0pt, below: 0pt, sticky: true, {
