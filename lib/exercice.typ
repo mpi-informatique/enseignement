@@ -10,14 +10,17 @@
 /// - enonce (content): Énoncé, éventuellement avec sous-questions.
 /// - solution (content, none): Solution ; `none` affiche « Corrigé à compléter ».
 /// - commentaire (content, none): Observation du jury, en italique avant la solution uniquement dans le corrigé.
+/// - correcteur (content, none): Consignes de correction conservées dans les données, jamais affichées dans les documents.
 /// - points (float, int, none): Barème de la question, affiché en marge du corrigé ; `none` masque les points.
 /// -> dictionary
-#let question(enonce, solution: none, commentaire: none, points: none) = {
+#let question(enonce, solution: none, commentaire: none, correcteur: none, points: none) = {
   assert(commentaire == none or type(commentaire) == content,
     message: "commentaire doit être un contenu Typst ou none")
+  assert(correcteur == none or type(correcteur) == content,
+    message: "correcteur doit être un contenu Typst ou none")
   assert(points == none or points in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
     message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none")
-  (type: "question", enonce: enonce, solution: solution, commentaire: commentaire, points: points)
+  (type: "question", enonce: enonce, solution: solution, commentaire: commentaire, correcteur: correcteur, points: points)
 }
 
 #let texte-concours(concours) = (
@@ -106,9 +109,10 @@
 /// - contenu (array): Textes libres `[...]`, `question(...)` et `partie(...)` ; au moins une question.
 /// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
 /// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
+/// - correcteur (content, none): Consignes globales de correction de l'exercice ou de l'épreuve, jamais affichées dans les documents.
 /// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `points` dans chaque `question`.
 /// -> dictionary
-#let exercice(meta: (:), contenu: (), remarques: none, corrections: none, bareme: none) = {
+#let exercice(meta: (:), contenu: (), remarques: none, corrections: none, correcteur: none, bareme: none) = {
   let champs = ("titre", "chapitres", "difficulte")
   for champ in champs {
     assert(champ in meta, message: "Métadonnée manquante : " + champ)
@@ -195,6 +199,7 @@
   verifier(contenu)
   verifier-bareme(bareme, nombre-questions(contenu))
   assert(corrections == none or type(corrections) == content, message: "corrections doit être un contenu Typst ou none")
+  assert(correcteur == none or type(correcteur) == content, message: "correcteur doit être un contenu Typst ou none")
   assert(remarques == none or type(remarques) == content, message: "remarques doit être un contenu Typst ou none")
   assert(nombre-questions(contenu) > 0, message: "Un exercice doit contenir au moins une question")
   (
@@ -202,6 +207,7 @@
     contenu: contenu,
     remarques: remarques,
     corrections: corrections,
+    correcteur: correcteur,
     bareme: bareme,
   )
 }
