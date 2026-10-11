@@ -1,4 +1,5 @@
 import { CodeXml, Command, GitBranch, Moon, PanelLeft, Sun } from 'lucide-react';
+import { repositoryUrl } from '../lib/github';
 
 interface Props {
   title: string;
@@ -23,7 +24,7 @@ export function Navbar({ title, details, dark, sidebarOpen, editorOpen, onThemeC
       <button className="btn btn-ghost btn-sm btn-square theme-toggle" aria-label={dark ? 'Activer le thème clair' : 'Activer le thème sombre'} title={dark ? 'Thème clair' : 'Thème sombre'} onClick={onThemeChange}>
         {dark ? <Sun size={18} /> : <Moon size={18} />}
       </button>
-      <a className="btn btn-ghost btn-sm btn-square" aria-label="Dépôt GitHub" title="Dépôt GitHub" href="https://github.com/mpi-informatique/enseignement" target="_blank" rel="noreferrer"><GitBranch size={17} /></a>
+      <a className="btn btn-ghost btn-sm btn-square" aria-label="Dépôt GitHub" title="Dépôt GitHub" href={repositoryUrl} target="_blank" rel="noreferrer"><GitBranch size={17} /></a>
     </div>
   </header>;
 }

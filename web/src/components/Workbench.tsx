@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Download, FileCode, RotateCcw, CircleAlert } from 'lucide-react';
+import { Download, FileCode, RotateCcw, CircleAlert, GitPullRequest, X } from 'lucide-react';
 import { duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
@@ -13,6 +13,7 @@ import { createSearch } from '../lib/search';
 import { resourceTypeLabel } from '../lib/labels';
 import { exerciseUrl, routeId } from '../lib/urls';
 import { stored, store } from '../lib/storage';
+import { githubEditUrl } from '../lib/github';
 
 const TypstEditor = lazy(() => import('./TypstEditor'));
 const PdfViewer = lazy(() => import('./PdfViewer'));
@@ -40,6 +41,7 @@ export default function Workbench({ resources, initialId }: Props) {
   const [sidebarWidth, setSidebarWidth] = useState(280);
   const [editorWidth, setEditorWidth] = useState(440);
   const [retry, setRetry] = useState(0);
+  const [contributionNotice, setContributionNotice] = useState('');
   const app = useRef<HTMLDivElement>(null);
   const focusTarget = useRef<'search' | 'editor' | 'pdf' | undefined>(undefined);
   const search = useMemo(() => createSearch(resources), [resources]);
@@ -83,6 +85,7 @@ export default function Workbench({ resources, initialId }: Props) {
   useEffect(() => { focusPending(); }, [sidebarOpen, editorOpen]);
   useEffect(() => {
     if (resource) document.title = `${resource.titre} · Enseignement MPI`;
+    setContributionNotice('');
   }, [resource]);
 
   function navigate(resource: Resource, nextVariant: Variant = variant) {
@@ -119,6 +122,15 @@ export default function Workbench({ resources, initialId }: Props) {
     requestAnimationFrame(focusPending);
   }
   function downloadSource() { if (code) download(code.source, `${selected}.typ`, 'text/plain;charset=utf-8'); }
+  async function copyContribution() {
+    if (!code || !modified) return;
+    try {
+      await navigator.clipboard.writeText(code.source);
+      setContributionNotice('Brouillon copié : coller dans GitHub, puis créer une branche et une pull request.');
+    } catch {
+      setContributionNotice('Copie impossible. Télécharger le fichier Typst pour reporter le brouillon dans GitHub, puis créer une branche et une pull request.');
+    }
+  }
   const canDownloadPdf = !!resource && !!compilation.pdf && !compilation.pending && !compilation.error;
   function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, pdfFilename(resource.fichier, variant), 'application/pdf'); }
   const commands: Command[] = [
@@ -147,7 +159,15 @@ export default function Workbench({ resources, initialId }: Props) {
       <main className="main-panel" id="main" tabIndex={-1}>
         <div className="document-workspace">
           {editorOpen && <section className="editor-panel" id="editor-panel" aria-label="Éditeur Typst">
-            <div className="pane-toolbar"><span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{selected}.typ</span>{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title="Brouillon modifié, enregistré localement" />}</span><div><button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button><button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button></div></div>
+            <div className="pane-toolbar">
+              <span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{selected}.typ</span>{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title="Brouillon modifié, enregistré localement" />}</span>
+              <div>
+                {resource && <a className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title={modified ? 'Copier le brouillon et ouvrir GitHub pour proposer une pull request' : 'Modifier le fichier sur GitHub pour proposer une pull request'} href={githubEditUrl(resource.fichier)} target="_blank" rel="noreferrer" onClick={copyContribution}><GitPullRequest size={14} /></a>}
+                <button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button>
+                <button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button>
+              </div>
+            </div>
+            {contributionNotice && <div className="draft-notice" role="status"><span>{contributionNotice}</span><button className="btn btn-ghost btn-xs btn-square" aria-label="Fermer le message GitHub" title="Fermer" onClick={() => setContributionNotice('')}><X size={13} /></button></div>}
             {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} sourcePath={resource!.fichier} resources={resources} onNavigate={navigate} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
           </section>}
           {editorOpen && <ResizeHandle label="Largeur de l’éditeur" value={editorWidth} min={280} max={900} onChange={value => { setEditorWidth(value); store('editor-width', String(value)); }} />}
