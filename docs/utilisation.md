@@ -112,6 +112,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 
 ### Création de devoirs et d'exercices
 
+- Créer par défaut les nouveaux exercices produits par une IA dans le dépôt privé `mpi-informatique/enseignement-prive`, sauf instruction explicite de l'utilisateur de les placer dans le dépôt public `mpi-informatique/enseignement`.
 - Consulter les cours correspondants dans `chapitres/`, ou dans le dépôt de cours existant pour les chapitres non encore intégrés, pour reprendre leurs notations, définitions et termes. Introduire explicitement les notions nouvelles et les résultats admis.
 - Énoncer dès l'introduction les hypothèses et conventions communes à tout le sujet. Éviter « sauf mention contraire » lorsqu'aucune exception n'est prévue. Pour une généralisation ponctuelle, préciser sa portée et utiliser une notation distincte si nécessaire.
 - Construire une progression : exemples, résultats intermédiaires, caractérisation, applications. Vérifier que chaque question dispose des résultats nécessaires et que les transitions entre parties sont explicites.
