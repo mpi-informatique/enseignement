@@ -72,6 +72,8 @@ Pour les exports et les paramètres, consulter [l'API](enseignement.typ) et ses 
 
 Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/utilisation.md). Le modèle de [colle](templates/colle.typ) regroupe les exercices par sujet et place les corrigés après tous les énoncés ; `--input corrige=false` produit uniquement les énoncés. Vérifier qu'un exercice n'existe pas déjà, conserver ses ressources et tests dans le même dossier, puis lancer `nix develop path:. -c just check` avant de proposer une pull request.
 
+Un sujet de concours utilise la même base qu'un devoir : `feuille.with(type: "devoir", concours: ex.meta.concours, exercices: (ex,), titre: ex.meta.titre)`. Voir les modèles [devoir](templates/devoir.typ) et [sujet de concours](templates/sujet-concours.typ).
+
 Les données nominatives, copies et évaluations appartiennent au dépôt privé `mpi-informatique/enseignement-prive` et ne doivent jamais être ajoutées ici.
 
 ## Éditeur et Codespaces

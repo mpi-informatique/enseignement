@@ -34,7 +34,7 @@
 }
 
 // Titres communs aux exercices et aux parties des sujets.
-#let titre-exercice(titre, prefixe, duree: none, concours: none, niveau: 1) = {
+#let titre-exercice(titre, prefixe, concours: none, niveau: 1) = {
   block(above: espacement-blocs, below: espacement-blocs, breakable: false)[
     #heading(level: niveau, numbering: none)[
       #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
@@ -42,10 +42,6 @@
         [#if concours != none {
           text(fill: luma(35%).transparentize(30%))[
             #texte-concours(concours)
-          ]
-        } else if duree != none {
-          text(fill: luma(35%).transparentize(30%))[
-            #texte-duree(duree)
           ]
         }],
       )
@@ -240,8 +236,7 @@
   [#metadata(ex.meta) <exercice-meta>]
   if afficher-titre {
     let prefixe = if numero == none { "I" } else { numbering("I", numero) }
-    titre-exercice(ex.meta.titre, prefixe,
-      duree: ex.meta.duree, concours: ex.meta.concours)
+    titre-exercice(ex.meta.titre, prefixe, concours: ex.meta.concours)
   }
   if corrige and ex.remarques != none {
     block(width: 100%, above: espacement, below: espacement)[
@@ -286,14 +281,27 @@
   }
 }
 
+/// Compose un sujet de colle et identifie ses pages pour l'en-tête répété de `feuille`.
+/// - numero (int): Numéro du sujet.
+/// - exercices (array): Exercices du sujet, renumérotés à partir de I.
+/// - corrige (bool): Afficher les solutions.
+/// -> content
+#let sujet-colle(numero, exercices, corrige: false) = {
+  counter(heading).update(0)
+  [#metadata((numero: numero, corrige: corrige)) <colle-sujet>]
+  for (i, ex) in exercices.enumerate(start: 1) {
+    afficher-exercice(ex, numero: i, corrige: corrige)
+  }
+}
+
 /// Compose tout type de document dans l'ordre du tableau `exercices`.
 /// À utiliser avec `#show: feuille.with(...)` ; le type ne dépend pas du dossier.
-/// - type (str): Type libre : `"td"`, `"devoir"`, `"concours"` ou un type personnalisé.
+/// - type (str): Type libre : `"td"`, `"devoir"`, `"colle"` ou un type personnalisé. `"concours"` reste un alias de présentation de `"devoir"`.
 /// - titre (str): Titre de la feuille.
 /// - niveau (str, none): Niveau affiché dans l'en-tête.
 /// - auteur (str, none): Auteur lié au site dans l'en-tête, défaut « Q. Fortier » ; `none` le masque.
-/// - duree (array, none): Durée (heures, minutes) affichée à droite ; `none` reprend celle d'un sujet de concours unique.
-/// - concours (dictionary, none): Attribution affichée avant le titre ; mêmes champs que `exercice.meta.concours`.
+/// - duree (array, none): Durée (heures, minutes) après le titre, uniquement pour un devoir/concours ; `none` reprend celle du sujet unique.
+/// - concours (dictionary, none): Informations affichées à la place de l'auteur ; mêmes champs que `exercice.meta.concours`. Un concours utilise la base `type: "devoir"`.
 /// - exercices (array): Objets `ex` importés, dans l'ordre ; `()` crée une feuille vide.
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
@@ -319,12 +327,23 @@
 ) = {
   assert(type == str(type) and type != "", message: "Le type de document doit être une chaîne non vide")
   verifier-bareme(bareme, exercices.map(ex => nombre-questions(ex.contenu)).sum(default: 0))
-  let titre-principal = titre-concours(titre, concours)
-  let titre-affiche = titre-principal + if corrige { " (corrigé)" } else { "" }
-  let duree = if duree != none { duree }
-    else if concours == none or exercices.len() != 1 { none }
-    else { exercices.first().meta.duree }
-  show: document-pedagogique.with(titre: titre-affiche, niveau: niveau, auteur: auteur, duree: duree)
+  let titre-affiche = titre + if corrige { " (corrigé)" } else { "" }
+  let duree = if type not in ("devoir", "concours") { none }
+    else if duree != none { duree }
+    else if exercices.len() == 1 { exercices.first().meta.duree }
+    else { none }
+  let titre-entete = if type == "colle" { context {
+    // Inclure le repère du début de page, même s'il suit l'en-tête dans le flux.
+    let sujets = query(<colle-sujet>).filter(sujet => sujet.location().page() <= here().page())
+    titre-affiche
+    if sujets.len() > 0 {
+      let sujet = sujets.last().value
+      [ -- Sujet #sujet.numero#if sujet.corrige [ (corrigé)]]
+    }
+  } } else { none }
+  show: document-pedagogique.with(titre: titre-affiche, niveau: niveau, auteur: auteur, duree: duree,
+    attribution: if concours == none { none } else { texte-concours(concours) },
+    titre-entete: titre-entete, repeter-entete: type == "colle")
   [#metadata((type: type, titre: titre, niveau: niveau, concours: concours)) <document-meta>]
   body
   let debut-bareme = 0

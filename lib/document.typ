@@ -26,11 +26,14 @@
 /// - titre (str): Titre du document.
 /// - niveau (str, none): Classe affichée à gauche.
 /// - auteur (str, none): Auteur lié au site en haut à droite ; `none` le masque.
-/// - duree (array, none): Couple heures/minutes, affiché sous l'auteur.
+/// - duree (array, none): Couple heures/minutes, affiché entre parenthèses après le titre.
+/// - attribution (str, none): Texte affiché à droite à la place de l'auteur.
+/// - titre-entete (content, none): Titre dynamique ; `none` reprend `titre`.
+/// - repeter-entete (bool): Répéter l'en-tête sur chaque page.
 /// - taille (length): Taille du texte, défaut 10pt.
 /// - body (content): Contenu du document.
 /// -> content
-#let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, taille: 10pt, body) = {
+#let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, attribution: none, titre-entete: none, repeter-entete: false, taille: 10pt, body) = {
   set document(title: titre)
   set document(author: auteur) if auteur != none
   show: configurer-theoremes.with(espacement: espacement-blocs)
@@ -49,22 +52,26 @@
   show heading.where(level: 2): set text(size: 1 * taille)
   show heading.where(level: 3): set text(size: taille)
   set page(paper: "a4", margin: 12mm, header: none, footer: none, numbering: none)
-  // L'en-tête fait partie du flux : sa hauteur ne réduit que la première page.
-  // Le premier bloc du contenu fournit lui-même l'espacement sous la ligne.
-  block(above: 0pt, below: 0pt, sticky: true, {
+  let entete = block(above: 0pt, below: 0pt, sticky: true, {
     set block(above: 0pt, below: 0pt)
     stack(dir: ttb, spacing: espacement-blocs,
-      grid(columns: (24mm, 1fr, 24mm), align: (left, center, right),
+      grid(columns: (24mm, 1fr, if attribution == none { 24mm } else { auto }), column-gutter: 1em, align: (left, center, right),
         if niveau != none { niveau },
-        text(size: 1.2em, weight: "bold", titre),
-        [#if auteur != none { link("https://mpi-informatique.github.io", auteur) }
-         #if duree != none {
-           if auteur != none { linebreak() }
-           texte-duree(duree)
-         }],
+        text(size: 1.2em, weight: "bold")[
+          #if titre-entete == none { titre } else { titre-entete }#if duree != none [ (#texte-duree(duree))]
+        ],
+        if attribution != none { attribution }
+        else if auteur != none { link("https://mpi-informatique.github.io", auteur) },
       ),
       line(length: 100%, stroke: epaisseur-trait),
     )
   })
-  body
+  if repeter-entete {
+    set page(margin: (top: 25mm, rest: 12mm), header: entete, header-ascent: espacement-blocs)
+    body
+  } else {
+    // L'en-tête dans le flux ne réduit que la première page.
+    entete
+    body
+  }
 }

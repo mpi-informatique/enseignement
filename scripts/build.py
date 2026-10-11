@@ -90,7 +90,7 @@ def modeles(signature):
         ('feuille', 'templates/feuille.typ', False),
         ('colle', 'templates/colle.typ', False),
         ('devoir', 'templates/devoir.typ', False),
-        ('concours', 'templates/sujet-concours.typ', True),
+        ('concours', 'templates/sujet-concours.typ', False),
     ):
         for corrige in (False, True):
             suffixe = '-corrige' if corrige else ''

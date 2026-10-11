@@ -31,7 +31,7 @@
 )
 
 #show: feuille.with(
-  type: "concours",
+  type: "devoir", // Un concours est un devoir avec une attribution.
   titre: ex.meta.titre,
   niveau: ex.meta.niveaux.join(" / "),
   concours: ex.meta.concours,
