@@ -74,7 +74,7 @@ Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/uti
 
 Un sujet de concours utilise la même base qu'un devoir : `feuille.with(type: "devoir", concours: ex.meta.concours, exercices: (ex,), titre: ex.meta.titre)`. Voir les modèles [devoir](templates/devoir.typ) et [sujet de concours](templates/sujet-concours.typ).
 
-Les données nominatives, copies et évaluations appartiennent au dépôt privé `mpi-informatique/enseignement-prive` et ne doivent jamais être ajoutées ici.
+Les données nominatives, copies et évaluations appartiennent au dépôt privé `mpi-informatique/exercices-prive` et ne doivent jamais être ajoutées ici.
 
 ## Éditeur et Codespaces
 

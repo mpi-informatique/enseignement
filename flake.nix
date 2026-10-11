@@ -1,5 +1,5 @@
 {
-  description = "Ressources pédagogiques mpi-informatique/enseignement";
+  description = "Ressources pédagogiques mpi-informatique/exercices";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs }:

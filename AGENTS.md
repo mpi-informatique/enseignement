@@ -15,7 +15,7 @@ Les consignes doivent porter uniquement sur les choix et procédures que le code
 
 ## Commandes utiles
 
-Depuis la racine du dépôt `enseignement/`, utiliser les recettes du [justfile](justfile). Si Just n'est pas disponible dans le terminal, remplacer `just …` par `nix develop path:. -c just …`.
+Depuis la racine du dépôt `exercices/`, utiliser les recettes du [justfile](justfile). Si Just n'est pas disponible dans le terminal, remplacer `just …` par `nix develop path:. -c just …`.
 
 | Commande | Usage |
 | --- | --- |

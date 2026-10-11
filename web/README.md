@@ -4,7 +4,7 @@ Application statique Astro + React + TypeScript, Tailwind CSS 4 et daisyUI. Mini
 
 ## Lancer
 
-Depuis la racine du dépôt `enseignement/` :
+Depuis la racine du dépôt `exercices/` :
 
 ```sh
 just web
@@ -12,7 +12,7 @@ just web
 
 La commande entre dans l'environnement Nix du site et installe les dépendances npm au premier lancement. Si Just n'est pas déjà disponible, utiliser `nix develop path:. -c just web`. Astro lance le serveur en arrière-plan ; `just web-stop` l'arrête. Les arguments sont transmis à Astro, par exemple `just web --port 4322 --open`. Après une modification des dépendances, lancer `just web-install`.
 
-Pour travailler directement depuis `enseignement/web/` :
+Pour travailler directement depuis `exercices/web/` :
 
 ```sh
 nix develop path:..#web
@@ -33,23 +33,23 @@ npm run preview
 Pour servir le site sous un préfixe, utiliser le même `BASE_PATH` pour construire et prévisualiser :
 
 ```sh
-BASE_PATH=/enseignement npm run build
-BASE_PATH=/enseignement npm run preview
+BASE_PATH=/exercices npm run build
+BASE_PATH=/exercices npm run preview
 ```
 
 Le serveur doit servir les `index.html` des répertoires et les `.wasm` avec le type `application/wasm`. Activer sa compression HTTP pour les fichiers JSON, JS et WASM. Les fichiers publics générés, les dépendances npm et `dist/` sont exclus de Git.
 
 ## Publication GitHub Pages
 
-Le site est publié à l'adresse <https://mpi-informatique.github.io/enseignement/> par le [workflow de vérification et publication](../.github/workflows/check.yml). Chaque push sur `main` construit le site avec Nix, teste la banque et déploie `web/dist/` après réussite des deux jobs de vérification. Les pull requests construisent et testent le site sans le publier. Le workflow peut aussi être lancé manuellement depuis l'onglet Actions.
+Le site est publié à l'adresse <https://mpi-informatique.github.io/exercices/> par le [workflow de vérification et publication](../.github/workflows/check.yml). Chaque push sur `main` construit le site avec Nix, teste la banque et déploie `web/dist/` après réussite des deux jobs de vérification. Les pull requests construisent et testent le site sans le publier. Le workflow peut aussi être lancé manuellement depuis l'onglet Actions.
 
 Dans **Settings → Pages → Build and deployment**, la source doit être **GitHub Actions**. Aucun secret supplémentaire n'est nécessaire. `configure-pages` fournit le préfixe et l'origine du site à Astro (`BASE_PATH` et `SITE_URL`) ; les routes, fichiers publics, workers et modules WASM utilisent ce préfixe. Un domaine personnalisé se configure dans ces mêmes réglages.
 
 Pour reproduire la construction Pages localement depuis `web/` :
 
 ```sh
-BASE_PATH=/enseignement SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run build
-BASE_PATH=/enseignement SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run preview
+BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run build
+BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run preview
 ```
 
 ## Utilisation
@@ -91,4 +91,4 @@ Les sources viennent exclusivement du dépôt public. Les cours et présentation
 
 Les licences des packages Typst restent dans `public/banque/packages/`. Celles des polices New Computer Modern 8.1.1 et DejaVu 2.37 sont dans `public/licenses/` ; leurs fichiers sont distribués sans modification. La licence de PDF.js est copiée avec ses ressources.
 
-Le favicon reprend `../../vscode-enseignement/media/mpi.png`. Pour les résultats Google, [une seule icône est associée à chaque nom d’hôte](https://developers.google.com/search/docs/appearance/favicon-in-search) : si ce site est déployé sous `/enseignement/`, la page d’accueil du domaine doit aussi déclarer cette icône. Son affichage dépend ensuite de Google.
+Le favicon reprend `../../vscode-enseignement/media/mpi.png`. Pour les résultats Google, [une seule icône est associée à chaque nom d’hôte](https://developers.google.com/search/docs/appearance/favicon-in-search) : si ce site est déployé sous `/exercices/`, la page d’accueil du domaine doit aussi déclarer cette icône. Son affichage dépend ensuite de Google.

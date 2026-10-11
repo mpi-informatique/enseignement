@@ -34,7 +34,7 @@ jobs:
       - run: nix develop path:..#web -c npm ci
       - run: nix develop path:..#web -c npm run build
         env:
-          BASE_PATH: ${{ github.event_name == 'pull_request' && '/enseignement' || steps.pages.outputs.base_path }}
+          BASE_PATH: ${{ github.event_name == 'pull_request' && '/exercices' || steps.pages.outputs.base_path }}
           SITE_URL: ${{ steps.pages.outputs.origin || 'https://mpi-informatique.github.io' }}
       - run: nix develop path:..#web -c npm test
       - name: Préparer le site à publier

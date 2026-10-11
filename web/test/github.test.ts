@@ -11,5 +11,5 @@ test('les noms de fichiers sont encodés sans devenir des paramètres ou des fra
   const url = new URL(githubEditUrl('chapitres/maths/exercices/énoncé #1?.typ'));
   assert.equal(url.search, '');
   assert.equal(url.hash, '');
-  assert.equal(decodeURIComponent(url.pathname), '/mpi-informatique/enseignement/edit/main/chapitres/maths/exercices/énoncé #1?.typ');
+  assert.equal(decodeURIComponent(url.pathname), '/mpi-informatique/exercices/edit/main/chapitres/maths/exercices/énoncé #1?.typ');
 });
