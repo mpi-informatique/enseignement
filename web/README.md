@@ -39,6 +39,19 @@ BASE_PATH=/enseignement npm run preview
 
 Le serveur doit servir les `index.html` des répertoires et les `.wasm` avec le type `application/wasm`. Activer sa compression HTTP pour les fichiers JSON, JS et WASM. Les fichiers publics générés, les dépendances npm et `dist/` sont exclus de Git.
 
+## Publication GitHub Pages
+
+Le site est publié à l'adresse <https://mpi-informatique.github.io/enseignement/> par le [workflow de vérification et publication](../.github/workflows/check.yml). Chaque push sur `main` construit le site avec Nix, teste la banque et déploie `web/dist/` après réussite des deux jobs de vérification. Les pull requests construisent et testent le site sans le publier. Le workflow peut aussi être lancé manuellement depuis l'onglet Actions.
+
+Dans **Settings → Pages → Build and deployment**, la source doit être **GitHub Actions**. Aucun secret supplémentaire n'est nécessaire. `configure-pages` fournit le préfixe et l'origine du site à Astro (`BASE_PATH` et `SITE_URL`) ; les routes, fichiers publics, workers et modules WASM utilisent ce préfixe. Un domaine personnalisé se configure dans ces mêmes réglages.
+
+Pour reproduire la construction Pages localement depuis `web/` :
+
+```sh
+BASE_PATH=/enseignement SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run build
+BASE_PATH=/enseignement SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run preview
+```
+
 ## Utilisation
 
 - Rechercher par titre, nom de fichier, chapitre, concours, année ou autre métadonnée. `/` place le curseur dans la recherche hors des champs d'édition ; Entrée ouvre le premier résultat. Les filtres se cumulent ; plusieurs valeurs dans un filtre sont réunies par « ou ». Les cases à cocher acceptent Tab, Espace et Échap. Les critères peuvent aussi être saisis dans la recherche, par exemple `concours:CCINP année:2022`, `concours:CCINP,ENS`, `type:td` ou `chapitre:"automates finis"`. Répéter un critère ajoute une valeur ; les noms acceptent le singulier, le pluriel et les accents. Les filtres du panneau et du texte se cumulent ; la recherche ignore la casse et les accents et tolère les préfixes et petites fautes. Les filtres supplémentaires restent repliés par défaut.
