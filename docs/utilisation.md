@@ -9,7 +9,7 @@ Installer Nix avec les fonctionnalités `nix-command` et `flakes` activées.
 `flake.lock` fixe leurs versions. Pour vérifier la banque sans ouvrir ce terminal :
 `nix develop path:. -c just check`.
 Pour lancer la banque web, utiliser `just web` (ou `nix develop path:. -c just web`) ; `just web-stop` arrête le serveur. Voir le [guide du site](../web/README.md) pour les options et la construction statique.
-L'extension VS Code sera adaptée ultérieurement à Just et à la nouvelle structure. Utiliser les commandes du terminal pour compiler.
+L'extension [Exercices MPI](https://github.com/mpi-informatique/vscode-mpi-exercices) permet aussi de rechercher, composer et compiler les documents dans VS Code.
 
 Ce dépôt fournit le package `@mpi-informatique/mpi-exercices:0.1.0`.
 `nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
