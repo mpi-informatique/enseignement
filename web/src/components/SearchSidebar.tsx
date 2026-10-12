@@ -8,6 +8,7 @@ import type { ResourceSearch } from '../lib/search';
 import { resourceBadgeLabel } from '../lib/labels';
 import { exerciseUrl } from '../lib/urls';
 import chapters from '../generated/chapitres.json';
+import { isPrivate } from '../lib/privateBank';
 
 const chapterGroups = Object.entries(chapters).map(([label, values]) => ({ label, values }));
 const primaryFields: FilterField[] = ['type', 'chapitres', 'concours', 'difficulte'];
@@ -67,7 +68,7 @@ export default function SearchSidebar({ resources, search, selected, query, filt
     }}>
       {results.map(resource => <a key={resource.id} href={exerciseUrl(resource.id)} title={[resource.titre, resourceBadgeLabel(resource), resource.fichier, ...resource.chapitres].join('\n')} className={`result ${selected === resource.id ? 'selected' : ''}`} aria-current={selected === resource.id ? 'page' : undefined} tabIndex={active?.id === resource.id ? 0 : -1} onFocus={event => { setFocused(resource.id); event.currentTarget.scrollIntoView({ block: 'nearest' }); }}
         onClick={event => { if (!event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onSelect(resource); } }}>
-        <span className="result-title">{resource.titre}</span><span className={`resource-type type-${resource.type}`}>{resourceBadgeLabel(resource)}</span>
+        <span className="result-title">{resource.titre}</span>{isPrivate(resource) && <span className="private-badge">Privé</span>}<span className={`resource-type type-${resource.type}`}>{resourceBadgeLabel(resource)}</span>
       </a>)}
       {!results.length && <p className="empty-results">Aucun résultat</p>}
     </nav>

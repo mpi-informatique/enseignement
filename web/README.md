@@ -87,8 +87,18 @@ Le compilateur typst.ts est fixé à `0.8.0-rc3` : cette préversion intègre Ty
 | `src/components/` | Recherche, éditeur, lecteur PDF, séparateurs et assemblage de l'interface. |
 | `src/pages/` | Accueil, routes statiques par identifiant et page 404. |
 
-Les sources viennent exclusivement du dépôt public. Les cours et présentations ne sont pas indexés pour l'instant : leurs variantes ne suivent pas le couple énoncé/corrigé. Une extension ultérieure pourra leur proposer Cours/Présentation en réutilisant le même moteur.
+La banque publique est exportée au build. Les sources privées facultatives sont chargées uniquement dans le navigateur après connexion GitHub. Les cours et présentations ne sont pas indexés pour l'instant : leurs variantes ne suivent pas le couple énoncé/corrigé. Une extension ultérieure pourra leur proposer Cours/Présentation en réutilisant le même moteur.
 
 Les licences des packages Typst restent dans `public/banque/packages/`. Celles des polices New Computer Modern 8.1.1 et DejaVu 2.37 sont dans `public/licenses/` ; leurs fichiers sont distribués sans modification. La licence de PDF.js est copiée avec ses ressources.
 
 Le favicon reprend `../../vscode-mpi-exercices/media/mpi.png`. Pour les résultats Google, [une seule icône est associée à chaque nom d’hôte](https://developers.google.com/search/docs/appearance/favicon-in-search) : si ce site est déployé sous `/exercices/`, la page d’accueil du domaine doit aussi déclarer cette icône. Son affichage dépend ensuite de Google.
+
+## Banque privée
+
+Le bouton **Se connecter** (cadenas) ouvre le panneau **Exercices privés**. Après autorisation GitHub, sélectionner un dépôt privé et cliquer **Charger le dépôt**. Les exercices s’ajoutent aux résultats publics avec le badge **Privé** ; le filtre **Visibilité** et la recherche `tag:privé` permettent de les retrouver. Les doublons de noms entre banques sont conservés. Le dépôt est lu sur un commit fixe de sa branche par défaut.
+
+Le dépôt doit contenir des sources Typst compatibles avec l’API de cette banque : exercices exportant `ex`, documents utilisant `feuille`, ainsi que leurs dépendances locales. Les métadonnées sont évaluées par Typst dans le navigateur ; aucun catalogue préexporté n’est nécessaire. Les fichiers `lib/`, `templates/` et `load.typ` du dépôt choisi remplacent les équivalents publics uniquement dans son moteur privé. En leur absence, le moteur utilise les modèles publics. Les packages Typst disponibles restent ceux verrouillés et distribués avec le site. Les fichiers non indexables sont signalés dans le panneau. Les arbres GitHub tronqués et les ressources dépassant 50 Mo sont refusés explicitement.
+
+Les exercices privés proposent le même éditeur, les variantes et les téléchargements. Leurs brouillons restent en mémoire, sans `localStorage`. **Se déconnecter**, retirer le dépôt ou recharger la page retire les fichiers privés de l’onglet ; télécharger les modifications souhaitées avant cette opération. La déconnexion locale ne révoque pas l’autorisation de l’application sur GitHub. Le bouton de contribution à la banque publique est masqué pour les ressources privées.
+
+La connexion utilise le [même Worker OAuth](../worker/README.md), sans nouvelle configuration serveur. L’écran précise que le scope OAuth `repo` demandé par GitHub inclut lecture et écriture sur les dépôts accessibles, même si ce parcours n’effectue que des lectures. Les autorisations d’organisation restent gérées par GitHub.

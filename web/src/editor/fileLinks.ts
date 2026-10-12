@@ -8,12 +8,13 @@ import { assetUrl, exerciseUrl } from '../lib/urls';
 
 const available = new Set(files);
 
-export function fileLinks(source: string, resources: Resource[], navigate: (resource: Resource) => void) {
+export function fileLinks(source: string, resources: Resource[], navigate: (resource: Resource) => void, privateResource = false) {
   const indexed = new Map(resources.map(resource => [resource.fichier, resource]));
+  const availableFiles = privateResource ? new Set(indexed.keys()) : available;
   function link(raw: string) {
     let target: string;
     try { target = JSON.parse(raw); } catch { return; }
-    const path = resolveSourcePath(source, target, available);
+    const path = resolveSourcePath(source, target, availableFiles);
     if (!path) return;
     const resource = indexed.get(path);
     return { path, resource, href: resource ? exerciseUrl(resource.id) : assetUrl(`banque/${path}`) };

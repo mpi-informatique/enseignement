@@ -32,6 +32,32 @@ export async function createEngine({ bundle, fonts, wasm }: Assets) {
   let previousSource: string | undefined;
 
   return {
+    async inspect(file: string, kind: Resource['kind']): Promise<Resource> {
+      const options = {
+        mainFilePath: kind === 'exercice' ? '/@memory/workspace/templates/fiche.typ' : `/@memory/workspace/${file}`,
+        root: '/@memory/workspace', inputs: { corrige: 'false', exercice: `/${file}` },
+      };
+      const meta = await compiler.runWithWorld(options, async world => {
+        const result = await world.compile({ diagnostics: 'unix' });
+        if (result.hasError) throw new Error(result.diagnostics?.join('\n') || 'Métadonnées Typst illisibles.');
+        const exercises = await world.query({ selector: '<exercice-meta>', field: 'value' });
+        const documents = kind === 'document' ? await world.query({ selector: '<document-meta>', field: 'value' }) : [];
+        return { exercises, documents };
+      });
+      const exercise = meta.exercises[0];
+      const document = meta.documents[0];
+      const base = kind === 'exercice' ? exercise : document;
+      if (!base || typeof base.titre !== 'string') throw new Error('Métadonnées de la banque absentes.');
+      const fields = ['chapitres', 'algorithmes', 'structures', 'langages', 'niveaux'] as const;
+      return {
+        id: file, fichier: file, kind, titre: base.titre,
+        type: kind === 'exercice' ? (base.concours ? 'concours' : 'exercice') : base.type,
+        concours: base.concours ?? null, duree: base.duree ?? null,
+        difficulte: meta.exercises.length ? Math.max(...meta.exercises.map((ex: { difficulte: number }) => ex.difficulte)) : null,
+        nombreExercices: meta.exercises.length,
+        ...Object.fromEntries(fields.map(field => [field, [...new Set<string>(meta.exercises.flatMap((ex: Record<string, string[]>) => ex[field] ?? []))]])) as Pick<Resource, typeof fields[number]>,
+      };
+    },
     async compile(resource: Pick<Resource, 'fichier' | 'kind'>, source: string, variant: Variant) {
       const path = `/@memory/workspace/${resource.fichier}`;
       // Une feuille peut importer l'exercice précédemment édité : restaurer sa source.

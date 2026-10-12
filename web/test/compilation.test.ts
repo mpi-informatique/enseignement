@@ -42,3 +42,26 @@ test('le modèle Touying compile avec les polices et le thème exportés pour le
   assert.equal(new TextDecoder().decode(result.pdf.slice(0, 5)), '%PDF-');
   assert.deepEqual(result.diagnostics, []);
 });
+
+test('Typst extrait les métadonnées sans catalogue et isole les fichiers privés de la banque publique', async () => {
+  const resource = resources.find(resource => resource.id === 'binomiaux')!;
+  const original = await source(resource);
+  const privateSource = original.replace('Déterminant de coefficients binomiaux', 'Exercice privé Σ');
+  const bundle = await json('banque/bundle.json');
+  const privateEngine = await createEngine({
+    bundle: { ...bundle, [`/@memory/workspace/${resource.fichier}`]: Buffer.from(privateSource).toString('base64') },
+    fonts: await Promise.all(manifest.fonts.map(async (font: string) => new Uint8Array(await readFile(new URL(`fonts/${font}`, publicPath))))),
+    wasm: new Uint8Array(await readFile(new URL('typst/compiler.wasm', publicPath))),
+  });
+  const metadata = await privateEngine.inspect(resource.fichier, 'exercice');
+  assert.equal(metadata.titre, 'Exercice privé Σ');
+  assert.deepEqual(metadata.chapitres, resource.chapitres);
+  assert.equal(metadata.nombreExercices, 1);
+  const pdf = await privateEngine.compile(resource, privateSource, 'corrige');
+  assert.ok(pdf.pdf.length > 1000);
+  assert.equal((await engine.inspect(resource.fichier, 'exercice')).titre, resource.titre);
+  const sheet = resources.find(resource => resource.id === 'td-automate')!;
+  const document = await engine.inspect(sheet.fichier, 'document');
+  assert.equal(document.titre, sheet.titre);
+  assert.equal(document.nombreExercices, sheet.nombreExercices);
+});

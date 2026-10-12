@@ -15,6 +15,9 @@ import { exerciseUrl, routeId } from '../lib/urls';
 import { stored, store } from '../lib/storage';
 import { githubEditUrl } from '../lib/github';
 import { authUrl, startContribution } from '../lib/githubAuth';
+import { usePrivateBank } from '../hooks/usePrivateBank';
+import PrivateBankPanel from './PrivateBankPanel';
+import { isPrivate } from '../lib/privateBank';
 
 const TypstEditor = lazy(() => import('./TypstEditor'));
 const PdfViewer = lazy(() => import('./PdfViewer'));
@@ -29,9 +32,13 @@ function download(data: BlobPart, name: string, type: string) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export default function Workbench({ resources, initialId }: Props) {
+export default function Workbench({ resources: publicResources, initialId }: Props) {
+  const library = usePrivateBank();
+  const resources = useMemo(() => [...publicResources, ...(library.bank?.resources ?? [])], [publicResources, library.bank]);
+  const [privatePanelOpen, setPrivatePanelOpen] = useState(false);
   const [selected, setSelected] = useState(initialId ?? 'residuels-minimisation');
   const resource = resources.find(resource => resource.id === selected);
+  const privateResource = isPrivate(resource);
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<SearchFilters>({});
   const [variant, setVariant] = useState<Variant>('enonce');
@@ -47,8 +54,15 @@ export default function Workbench({ resources, initialId }: Props) {
   const app = useRef<HTMLDivElement>(null);
   const focusTarget = useRef<'search' | 'editor' | 'pdf' | undefined>(undefined);
   const search = useMemo(() => createSearch(resources), [resources]);
-  const { code, loadError, notice, modified, changeSource, reload, reset, dismissNotice } = useSource(resource);
-  const compilation = useCompiler(resource, code?.source, variant, retry);
+  const { code, loadError, notice, modified, changeSource, reload, reset, dismissNotice } = useSource(resource, privateResource ? library.bank : undefined);
+  const compilation = useCompiler(resource, code?.source, variant, retry, privateResource ? library.bank?.bundle : undefined);
+
+  useEffect(() => {
+    if (isPrivate({ id: selected }) && !library.bank?.resources.some(item => item.id === selected)) {
+      setSelected('residuels-minimisation');
+      history.replaceState({}, '', exerciseUrl('residuels-minimisation', variant));
+    }
+  }, [library.bank]);
 
   useEffect(() => {
     setDark(document.documentElement.dataset.theme === 'enseignement-dark');
@@ -60,7 +74,7 @@ export default function Workbench({ resources, initialId }: Props) {
     if (side >= 240 && side <= 520) setSidebarWidth(side);
     if (editor >= 280 && editor <= 900) setEditorWidth(editor);
     const pop = () => {
-      setSelected(routeId(location.pathname) ?? 'residuels-minimisation');
+      setSelected(routeId(location.pathname, location.hash) ?? 'residuels-minimisation');
       setVariant(new URLSearchParams(location.search).get('vue') === 'corrige' ? 'corrige' : 'enonce');
     };
     window.addEventListener('popstate', pop);
@@ -123,9 +137,9 @@ export default function Workbench({ resources, initialId }: Props) {
     if (panel === 'pdf' && window.innerWidth <= 1100) setEditorOpen(false);
     requestAnimationFrame(focusPending);
   }
-  function downloadSource() { if (code) download(code.source, `${selected}.typ`, 'text/plain;charset=utf-8'); }
+  function downloadSource() { if (code && resource) download(code.source, resource.fichier.split('/').at(-1)!, 'text/plain;charset=utf-8'); }
   async function copyContribution() {
-    if (!code || !modified) return;
+    if (!code || !modified || privateResource) return;
     try {
       await navigator.clipboard.writeText(code.source);
       setContributionNotice('Brouillon copié : coller dans GitHub, puis créer une branche et une pull request.');
@@ -134,7 +148,7 @@ export default function Workbench({ resources, initialId }: Props) {
     }
   }
   async function proposeContribution() {
-    if (!resource || !code || !modified || contributionPending) return;
+    if (!resource || !code || !modified || contributionPending || privateResource) return;
     setContributionPending(true);
     setContributionNotice('Connexion à GitHub pour préparer votre modification…');
     try {
@@ -145,7 +159,7 @@ export default function Workbench({ resources, initialId }: Props) {
     }
   }
   const canDownloadPdf = !!resource && !!compilation.pdf && !compilation.pending && !compilation.error;
-  function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, pdfFilename(resource.fichier, variant), 'application/pdf'); }
+  function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, privateResource ? `${resource.fichier.split('/').at(-1)!.slice(0, -4)}${variant === 'corrige' ? '-cor' : ''}.pdf` : pdfFilename(resource.fichier, variant), 'application/pdf'); }
   const commands: Command[] = [
     { id: 'search', label: 'Rechercher un exercice', shortcut: '/', keywords: 'banque filtre', run: () => focusPanel('search') },
     { id: 'editor-focus', label: 'Modifier le code Typst', keywords: 'éditeur source focus', disabled: !code, run: () => focusPanel('editor') },
@@ -161,10 +175,10 @@ export default function Workbench({ resources, initialId }: Props) {
     { id: 'source-reset', label: 'Réinitialiser le code Typst', keywords: 'brouillon annuler', disabled: !modified, run: reset },
   ];
   const status = loadError || compilation.message;
-  const details = resource && [resource.titre, resourceTypeLabel(resource), ...resource.chapitres.map(chapter => chapter.replaceAll('-', ' ')), duration(resource)].filter(Boolean).join(' · ');
+  const details = resource && [resource.titre, privateResource ? 'Privé' : '', resourceTypeLabel(resource), ...resource.chapitres.map(chapter => chapter.replaceAll('-', ' ')), duration(resource)].filter(Boolean).join(' · ');
 
   return <div ref={app} className={`workbench ${sidebarOpen ? 'sidebar-open' : ''} ${editorOpen ? 'editor-open' : ''}`} style={{ '--sidebar-width': `${sidebarWidth}px`, '--editor-width': `${editorWidth}px` } as CSSProperties}>
-    <Navbar title={resource?.titre ?? 'Ressource introuvable'} details={details} dark={dark} sidebarOpen={sidebarOpen} editorOpen={editorOpen} onThemeChange={toggleTheme} onSidebarToggle={() => sidebarOpen ? closeSidebar() : focusPanel('search')} onEditorToggle={toggleEditor} onCommands={() => setPaletteOpen(true)} />
+    <Navbar title={resource?.titre ?? 'Ressource introuvable'} details={details} dark={dark} sidebarOpen={sidebarOpen} editorOpen={editorOpen} onThemeChange={toggleTheme} onSidebarToggle={() => sidebarOpen ? closeSidebar() : focusPanel('search')} onEditorToggle={toggleEditor} onCommands={() => setPaletteOpen(true)} onPrivateBank={() => setPrivatePanelOpen(true)} connected={!!library.account} privateResource={privateResource} />
     <div className="app-body">
       {sidebarOpen && <button className="sidebar-backdrop" aria-label="Fermer la recherche" tabIndex={-1} onClick={closeSidebar} />}
       {sidebarOpen && <SearchSidebar resources={resources} search={search} selected={selected} query={query} filters={filters} onQuery={setQuery} onFilters={setFilters} onSelect={navigate} />}
@@ -173,9 +187,9 @@ export default function Workbench({ resources, initialId }: Props) {
         <div className="document-workspace">
           {editorOpen && <section className="editor-panel" id="editor-panel" aria-label="Éditeur Typst">
             <div className="pane-toolbar">
-              <span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{selected}.typ</span>{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title="Brouillon modifié, enregistré localement" />}</span>
+              <span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{resource?.fichier.split('/').at(-1)}</span>{privateResource && <span className="private-badge">Privé</span>}{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title={privateResource ? 'Brouillon privé, conservé dans cet onglet' : 'Brouillon modifié, enregistré localement'} />}</span>
               <div>
-                {resource && (authUrl && modified
+                {resource && !privateResource && (authUrl && modified
                   ? <button className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title="Se connecter à GitHub et proposer le brouillon modifié" disabled={contributionPending} onClick={proposeContribution}>{contributionPending ? <span className="loading loading-spinner loading-xs" /> : <GitPullRequest size={14} />}</button>
                   : <a className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title={modified ? 'Copier le brouillon et ouvrir GitHub pour proposer une pull request' : 'Modifier le fichier sur GitHub pour proposer une pull request'} href={githubEditUrl(resource.fichier)} target="_blank" rel="noreferrer" onClick={copyContribution}><GitPullRequest size={14} /></a>)}
                 <button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button>
@@ -183,7 +197,7 @@ export default function Workbench({ resources, initialId }: Props) {
               </div>
             </div>
             {contributionNotice && <div className="draft-notice" role="status"><span>{contributionNotice}</span><button className="btn btn-ghost btn-xs btn-square" aria-label="Fermer le message GitHub" title="Fermer" onClick={() => setContributionNotice('')}><X size={13} /></button></div>}
-            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} sourcePath={resource!.fichier} resources={resources} onNavigate={navigate} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
+            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} sourcePath={resource!.fichier} resources={privateResource ? library.bank!.resources : publicResources} privateResource={privateResource} onNavigate={navigate} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
           </section>}
           {editorOpen && <ResizeHandle label="Largeur de l’éditeur" value={editorWidth} min={280} max={900} onChange={value => { setEditorWidth(value); store('editor-width', String(value)); }} />}
           <section className="preview-panel" aria-label="Document PDF">
@@ -199,5 +213,6 @@ export default function Workbench({ resources, initialId }: Props) {
       </main>
     </div>
     {paletteOpen && <CommandPalette commands={commands} search={search} onSelect={resource => { navigate(resource); focusPanel('pdf'); }} onClose={() => setPaletteOpen(false)} />}
+    {privatePanelOpen && <PrivateBankPanel library={library} onClose={() => setPrivatePanelOpen(false)} />}
   </div>;
 }

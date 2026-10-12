@@ -10,7 +10,7 @@ export interface Compilation {
   warnings?: string[];
 }
 
-export function useCompiler(resource: Resource | undefined, source: string | undefined, variant: Variant, retry: number): Compilation {
+export function useCompiler(resource: Resource | undefined, source: string | undefined, variant: Variant, retry: number, bundle?: Record<string, string>): Compilation {
   const [state, setState] = useState<Compilation>({ pending: false, message: 'Choisir une ressource' });
   const queue = useRef<(request: CompileRequest) => void>(() => {});
   const sequence = useRef(0);
@@ -50,7 +50,7 @@ export function useCompiler(resource: Resource | undefined, source: string | und
     };
     queue.current = request => { if (active) pending = request; else start(request); };
     return () => { clearTimeout(timeout); worker?.terminate(); };
-  }, []);
+  }, [bundle]);
 
   useEffect(() => {
     const id = ++sequence.current;
@@ -58,9 +58,9 @@ export function useCompiler(resource: Resource | undefined, source: string | und
     previousResource.current = resource?.id;
     setState(state => ({ ...(changed ? {} : state), pending: source !== undefined, message: 'En attente…', error: undefined }));
     if (!resource || source === undefined) return;
-    const timer = setTimeout(() => queue.current({ id, resource, source, variant }), 450);
+    const timer = setTimeout(() => queue.current({ id, resource, source, variant, bundle }), 450);
     return () => clearTimeout(timer);
-  }, [resource, source, variant, retry]);
+  }, [resource, source, variant, retry, bundle]);
 
   return state;
 }

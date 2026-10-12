@@ -1,12 +1,14 @@
 import { facets, labels, normalize, type Resource } from '@mpi-informatique/enseignement-core';
+import { isPrivate } from './privateBank.ts';
 
-export const filterFields = ['type', ...facets, 'annee', 'difficulte'] as const;
+export const filterFields = ['type', ...facets, 'annee', 'difficulte', 'visibilite'] as const;
 export type FilterField = typeof filterFields[number];
 export type YearRange = readonly [number, number];
 export type SearchFilters = Partial<Record<FilterField, string[]>> & { concoursAnnees?: YearRange };
-export const filterLabels: Record<FilterField, string> = { ...labels, type: 'Type', annee: 'Année', difficulte: 'Difficulté' };
+export const filterLabels: Record<FilterField, string> = { ...labels, type: 'Type', annee: 'Année', difficulte: 'Difficulté', visibilite: 'Visibilité' };
 
 export function fieldValues(resource: Resource, key: FilterField): string[] {
+  if (key === 'visibilite') return [isPrivate(resource) ? 'privé' : 'public'];
   if (key === 'type') return [resource.type];
   if (key === 'concours') return resource.concours?.nom ? [resource.concours.nom] : [];
   if (key === 'annee') return resource.concours?.annee === undefined ? [] : [String(resource.concours.annee)];
@@ -42,6 +44,7 @@ export function fitYearRange(range: YearRange | undefined, bounds: YearRange | u
 }
 
 const aliases: Record<string, FilterField> = {
+  visibilite: 'visibilite', prive: 'visibilite', tag: 'visibilite',
   type: 'type', types: 'type', chapitre: 'chapitres', chapitres: 'chapitres',
   algorithme: 'algorithmes', algorithmes: 'algorithmes', structure: 'structures', structures: 'structures',
   langage: 'langages', langages: 'langages', niveau: 'niveaux', niveaux: 'niveaux',

@@ -9,7 +9,7 @@ import { typst_lezer, typstTags, typstLezerIndentService, typstLezerListKeymap, 
 import type { Resource } from '@mpi-informatique/enseignement-core';
 import { fileLinks } from '../editor/fileLinks';
 
-interface Props { sourcePath: string; resources: Resource[]; onNavigate: (resource: Resource) => void; source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }
+interface Props { sourcePath: string; resources: Resource[]; privateResource?: boolean; onNavigate: (resource: Resource) => void; source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }
 
 const theme = (dark: boolean) => EditorView.theme({
   '&': { height: '100%', backgroundColor: 'var(--editor-bg)', color: 'var(--ink)' },
@@ -37,7 +37,7 @@ const highlighting = (dark: boolean) => syntaxHighlighting(HighlightStyle.define
   { tag: tags.invalid, textDecoration: 'underline wavy #bf4a4a' },
 ]));
 
-export default function TypstEditor({ source, sourcePath, resources, onNavigate, dark, onChange, onReady }: Props) {
+export default function TypstEditor({ source, sourcePath, resources, privateResource, onNavigate, dark, onChange, onReady }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const editor = useRef<EditorView | undefined>(undefined);
   const onChangeRef = useRef(onChange);
@@ -54,7 +54,7 @@ export default function TypstEditor({ source, sourcePath, resources, onNavigate,
       parent: container.current!,
       state: EditorState.create({
         doc: source,
-        extensions: [basicSetup, language, fileLinks(sourcePath, resources, resource => navigateRef.current(resource)), keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
+        extensions: [basicSetup, language, fileLinks(sourcePath, resources, resource => navigateRef.current(resource), privateResource), keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
           EditorView.contentAttributes.of({ 'aria-label': 'Code source Typst', spellcheck: 'false' }),
           EditorView.updateListener.of(update => { if (update.docChanged) onChangeRef.current(update.state.doc.toString()); })],
       }),

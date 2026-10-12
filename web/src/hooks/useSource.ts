@@ -2,10 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import type { Resource } from '@mpi-informatique/enseignement-core';
 import { assetUrl } from '../lib/urls';
 import { stored, store } from '../lib/storage';
+import { isPrivate, type PrivateBank } from '../lib/privateBank';
 
 interface Editor { id: string; source: string; original: string }
 
-export function useSource(resource: Resource | undefined) {
+export function useSource(resource: Resource | undefined, bank?: PrivateBank) {
   const [editor, setEditor] = useState<Editor>();
   const [loadError, setLoadError] = useState('');
   const [notice, setNotice] = useState('');
@@ -13,14 +14,23 @@ export function useSource(resource: Resource | undefined) {
   const code = editor?.id === resource?.id ? editor : undefined;
 
   useEffect(() => {
+    setEditor(undefined);
     if (!resource) return;
     const controller = new AbortController();
     setLoadError(''); setNotice('');
-    fetch(assetUrl(`banque/${resource.fichier}`), { signal: controller.signal }).then(async response => {
+    const load = isPrivate(resource)
+      ? Promise.resolve(new Response(bank?.sources[resource.fichier] ?? null, { status: bank?.sources[resource.fichier] === undefined ? 404 : 200 }))
+      : fetch(assetUrl(`banque/${resource.fichier}`), { signal: controller.signal });
+    load.then(async response => {
       if (!response.ok) throw new Error(`Chargement impossible (${response.status}).`);
       const original = await response.text();
       if (controller.signal.aborted) return;
       let source = original;
+      if (isPrivate(resource)) {
+        source = bank?.drafts.get(resource.fichier) ?? original;
+        setEditor({ id: resource.id, source, original });
+        return;
+      }
       try {
         const draft = JSON.parse(stored(`draft:${resource.fichier}`) ?? 'null');
         if (typeof draft?.source === 'string') {
@@ -31,14 +41,20 @@ export function useSource(resource: Resource | undefined) {
       setEditor({ id: resource.id, source, original });
     }).catch(error => { if (!controller.signal.aborted) setLoadError(String(error.message)); });
     return () => controller.abort();
-  }, [resource, loadRetry]);
+  }, [resource, loadRetry, bank]);
 
   const changeSource = useCallback((source: string) => {
     if (!code || !resource) return;
+    if (isPrivate(resource)) {
+      if (source === code.original) bank?.drafts.delete(resource.fichier);
+      else bank?.drafts.set(resource.fichier, source);
+      setEditor({ ...code, source });
+      return;
+    }
     const saved = store(`draft:${resource.fichier}`, source === code.original ? null : JSON.stringify({ original: code.original, source }));
     if (!saved) setNotice('Le navigateur ne peut pas conserver ce brouillon. Télécharger le fichier Typst pour le sauvegarder.');
     setEditor({ ...code, source });
-  }, [code, resource]);
+  }, [code, resource, bank]);
 
   return {
     code, loadError, notice, changeSource,

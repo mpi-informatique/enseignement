@@ -269,3 +269,15 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [role="separator"]
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; }
 }
+
+.private-badge { display: inline-flex; align-items: center; flex-shrink: 0; padding: 2px 6px; border: 1px solid var(--border-color); border-radius: 4px; color: var(--accent); background: var(--accent-soft); font-size: 10px; font-weight: 600; }
+.private-bank-dialog { width: min(540px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: 24px; border: 1px solid var(--border-color); border-radius: 12px; color: var(--ink); background: var(--surface); overflow: auto; box-shadow: 0 20px 60px #0004; }
+.private-bank-dialog::backdrop { background: #0006; }
+.private-bank-heading, .private-account { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.private-bank-heading h2 { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 600; }
+.private-bank-dialog p, .private-bank-dialog details, .private-repository { margin: 16px 0; font-size: 13px; line-height: 1.6; }
+.private-scope { padding: 12px; border-radius: 6px; background: var(--soft); }
+.private-repository { display: block; }
+.private-repository select { margin-top: 6px; }
+.private-bank-dialog pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
+@media (max-width: 700px) { .private-button-label { display: none; } }

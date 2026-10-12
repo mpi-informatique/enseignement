@@ -5,6 +5,7 @@ export interface CompileRequest {
   resource: Pick<Resource, 'fichier' | 'kind'>;
   source: string;
   variant: Variant;
+  bundle?: Record<string, string>;
 }
 
 export type CompileResponse =
