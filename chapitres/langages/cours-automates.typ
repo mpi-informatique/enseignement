@@ -1,4 +1,4 @@
-#import "/load.typ": cours-et-presentation, pause, article-only, slides-only, espace-reponse, sep, theoremes, automate
+#import "/load.typ": cours-et-presentation, pause, article-only, slides-only, sep, theoremes, automate
 #import theoremes: definition, theorem, lemma, exercise, algorithm
 #import automate: dessiner-automate
 
@@ -102,7 +102,6 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
 #slides-only[== Lecture d'un automate]
 #exercise[Déterminer le langage reconnu par l'automate suivant.]
 #impair
-#article-only[#espace-reponse(2)]
 #slides-only[#pause Il reconnaît les mots contenant un nombre impair de $a$, par exemple $b b a b$.]
 
 #slides-only[== Construction d'automates]
@@ -112,7 +111,6 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
   + Les mots de taille paire sur $Σ = {a, b}$.
   + $(b | a b | a b a)^*$.
 ]
-#article-only[#espace-reponse(8)]
 
 = Test d'appartenance
 
@@ -128,7 +126,6 @@ Cette méthode traite aussi le mot vide.
   + Écrire ```ocaml accepte (a : automate) (m : string)```.
   + Déterminer la complexité.
 ]
-#article-only[#espace-reponse(9)]
 #slides-only[
   == Une étape de lecture
   ```ocaml
@@ -167,7 +164,7 @@ On peut aussi essayer les chemins par retour sur trace, mais leur nombre peut ê
 Un automate complet n'a pas de blocage.
 #slides-only[== Compléter un automate]
 #theorem[Tout automate est équivalent à un automate complet.]
-#article-only[*Preuve* : #espace-reponse(4)]
+#article-only[*Preuve* :]
 #slides-only[
   #pause
   Ajouter un état puits $q_∞$ non final, bouclant sur chaque lettre.
@@ -184,7 +181,6 @@ Un automate complet n'a pas de blocage.
 ]
 S'il est aussi complet, sa fonction de transition est $δ : Q × Σ → Q$.
 #exercise[Quel est le nombre de transitions d'un automate déterministe complet ?]
-#article-only[#espace-reponse(1)]
 #slides-only[#pause Réponse : $abs(Q) abs(Σ)$.]
 
 == Fonction de transition étendue
@@ -196,7 +192,7 @@ S'il est aussi complet, sa fonction de transition est $δ : Q × Σ → Q$.
 On a $u ∈ L(A) ⇔ δ^*(q_i, u) ∈ F$.
 #slides-only[== Lecture d'une concaténation]
 #theorem[$δ^*(q, u v) = δ^*(δ^*(q, u), v)$.]
-#article-only[*Preuve* : #espace-reponse(3)]
+#article-only[*Preuve* :]
 #slides-only[#pause Démontrer le résultat par récurrence sur $abs(u)$.]
 
 == Implémentation déterministe
@@ -226,7 +222,7 @@ $ F' = {X ⊂ Q ∣ X ∩ F ≠ ∅}, quad δ'(X, a) = union.big_(q ∈ X) δ(q,
 #slides-only[== Correction de la déterminisation]
 *Invariant* : après lecture d'un mot $u$, l'état atteint dans $A'$ est exactement l'ensemble des états atteignables dans $A$ depuis $I$ en lisant $u$.
 
-#article-only[*Preuve* : #espace-reponse(4)]
+#article-only[*Preuve* :]
 #slides-only[
   #pause
   - Pour $ε$, cet ensemble est $I$.
@@ -246,7 +242,6 @@ L'automate des parties possède $2^(abs(Q))$ états. En pratique, ne construire 
 #slides-only[== Exemple de déterminisation]
 #exercise(coeur: true)[Déterminiser l'automate suivant.]
 #facteur
-#article-only[#espace-reponse(8)]
 #slides-only[
   == Automate déterminisé
   #dessiner-automate(
@@ -267,13 +262,12 @@ L'automate des parties possède $2^(abs(Q))$ états. En pratique, ne construire 
   + En déduire un automate déterministe à $2^(n + 2)$ états.
   + Montrer que tout automate déterministe reconnaissant $L_n$ possède au moins $2^n$ états.
 ]
-#article-only[#espace-reponse(7)]
 
 = Stabilité des langages reconnaissables
 
 == Complémentaire
 #theorem(coeur: true)[Si $L ⊂ Σ^*$ est reconnaissable, $Σ^* ∖ L$ est reconnaissable.]
-#article-only[*Preuve* : #espace-reponse(4)]
+#article-only[*Preuve* :]
 #slides-only[
   #pause
   Prendre un automate déterministe complet reconnaissant $L$ et remplacer $F$ par $Q ∖ F$.
@@ -284,7 +278,6 @@ L'automate des parties possède $2^(abs(Q))$ états. En pratique, ne construire 
   + Montrer pourquoi la preuve nécessite un automate déterministe complet.
   + Dessiner un automate reconnaissant les mots contenant le facteur $a a a$, puis un automate reconnaissant les mots ne le contenant pas.
 ]
-#article-only[#espace-reponse(9)]
 
 == Automate produit
 #theorem(coeur: true)[Les langages reconnaissables sur un même alphabet sont stables par intersection, union et différence.]
@@ -314,7 +307,6 @@ Le produit simule les deux lectures en parallèle. Compléter l'ensemble des ét
   + La construction fonctionne-t-elle sans les hypothèses de déterminisme et de complétude ? Examiner chaque opération.
   + Construire un automate reconnaissant les mots sur ${a, b}$ contenant un nombre pair de $a$ et un nombre de $b$ congru à $2$ modulo $3$.
 ]
-#article-only[#espace-reponse(10)]
 
 = Accessibilité et émondage
 
@@ -326,13 +318,11 @@ Le produit simule les deux lectures en parallèle. Compléter l'ensemble des ét
 ]
 #slides-only[== Calcul de l'accessibilité]
 #exercise[Décrire un algorithme de coût $O(abs(Q) + abs(E))$ déterminant ces deux ensembles.]
-#article-only[#espace-reponse(4)]
 #slides-only[#pause Parcourir le graphe depuis $I$, puis le graphe transposé depuis $F$.]
 #slides-only[== Émondage]
 #theorem[Tout automate est équivalent à un automate émondé.]
 Supprimer les états inaccessibles et les états non co-accessibles : aucun chemin acceptant ne les utilise.
 #exercise[Tout automate est-il équivalent à un automate émondé déterministe complet ?]
-#article-only[#espace-reponse(4)]
 
 = Lemme de l'étoile
 
@@ -369,7 +359,6 @@ Pour montrer que $L$ n'est pas reconnaissable :
   + $L_1 = {a^n b^n ∣ n ∈ ℕ}$.
   + $L_2 = {a^n b^p ∣ n, p ∈ ℕ, #sep n ≠ p}$.
 ]
-#article-only[#espace-reponse(8)]
 #slides-only[
   == Correction : autant de a que de b
   Supposer que $L_1$ est reconnu par un automate à $n ≥ 1$ états.
