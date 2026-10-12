@@ -48,6 +48,8 @@ Conserver les ressources propres au sujet (images, code, tests) à côté de cel
 
 Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [templates/presentation.typ](../templates/presentation.typ) pour des diapositives, ou de [templates/cours-presentation.typ](../templates/cours-presentation.typ) pour produire les deux à partir du même contenu.
 
+Pour personnaliser le [thème Touying Madrid](../lib/themes/madrid.typ), passer les options à `presentation.with` ou `cours-et-presentation.with`, par exemple `couleur: rgb("#233e6a"), palette: (exercise: rgb("#9a5b13"))`. Consulter la palette et les options dans [lib/presentation.typ](../lib/presentation.typ). Hors de Nix, installer New Computer Modern Sans ou choisir une police disponible avec `police: "Nom de la police"`.
+
 ```typst
 #import "/load.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
 #import "/load.typ": theoremes

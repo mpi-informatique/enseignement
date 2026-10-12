@@ -101,11 +101,11 @@ def prepare():
         # Certains packages importent test.typ dans leur API (notamment t4t).
         files_in_package = copy_tree(source, bank / "packages" / name, exclude_tests=False)
         packages.extend(f"{name}/{file}" for file in files_in_package)
-    # Les polices utilisées par lib/document.typ sont servies avec le site.
+    # Servir aussi la variante sans empattements utilisée par les présentations.
     fonts = public / "fonts"
     shutil.rmtree(fonts, ignore_errors=True)
     fonts.mkdir(parents=True)
-    wanted = {"NewCM10-Regular.otf", "NewCM10-Bold.otf", "NewCM10-Italic.otf", "NewCM10-BoldItalic.otf", "NewCMMath-Regular.otf", "DejaVuSansMono.ttf"}
+    wanted = {"NewCM10-Regular.otf", "NewCM10-Bold.otf", "NewCM10-Italic.otf", "NewCM10-BoldItalic.otf", "NewCMMath-Regular.otf", "NewCMSans10-Regular.otf", "NewCMSans10-Bold.otf", "NewCMSans10-Oblique.otf", "NewCMSans10-BoldOblique.otf", "DejaVuSansMono.ttf"}
     for directory in os.environ.get("ENSEIGNEMENT_FONT_PATHS", "").split(os.pathsep):
         if directory:
             for path in Path(directory).rglob("*"):

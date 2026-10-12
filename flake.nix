@@ -46,10 +46,12 @@
           default = pkgs.mkShellNoCC {
             packages = [ pkgs.typst pkgs.just pkgs.python3 pkgs.ocaml pkgs.ripgrep ];
             TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
+            TYPST_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts";
           };
           web = pkgs.mkShellNoCC {
             packages = [ pkgs.nodejs_22 pkgs.typst pkgs.just pkgs.python3 pkgs.ripgrep pkgs.newcomputermodern pkgs.dejavu_fonts ];
             TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
+            TYPST_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts";
             ENSEIGNEMENT_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts:${pkgs.dejavu_fonts}/share/fonts";
           };
         });
@@ -58,6 +60,7 @@
           documents = pkgs.runCommand "enseignement-check" {
             nativeBuildInputs = [ pkgs.typst pkgs.just pkgs.python3 pkgs.ocaml ];
             TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
+            TYPST_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts";
           } ''
             export HOME="$TMPDIR"
             cp -R ${source} source

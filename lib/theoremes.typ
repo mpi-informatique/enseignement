@@ -1,14 +1,16 @@
-/// Environnements Theorion avec le thème Fancy en noir et blanc.
+/// Environnements Theorion : cadres imprimés ou blocs colorés en présentation.
 #import "@preview/theorion:0.6.0" as theorion
 #import theorion.cosmos.fancy: *
 #import "blocs.typ": epaisseur-trait
 
 #let espacement-cadres = state("enseignement-espacement-cadres", none)
+#let style-cadres = state("enseignement-style-cadres", none)
 
 // Fancy lie par défaut le fond du titre à la couleur de la bordure.
 #let titre-blanc(environnement, coeur: false, ..args) = context {
   let cadre = environnement(
     ..args,
+    coeur: coeur,
     frame: (
       thickness: epaisseur-trait,
       radius: get-fancy-radius(here()),
@@ -22,7 +24,7 @@
   )
   let espacement = espacement-cadres.get()
   if espacement != none { v(espacement, weak: true) }
-  if coeur {
+  if coeur and style-cadres.get() == none {
     grid(
       columns: (0pt, 1fr), column-gutter: 0pt,
       align: (left + horizon, left + top),
@@ -93,6 +95,27 @@
   })
 }
 
+// Conserver les mêmes environnements, références et compteurs dans les deux formats.
+#let rendre-cadre(nom, body, prefix: none, title: "", full-title: auto, coeur: false, ..args) = context {
+  let palette = style-cadres.get()
+  if palette == none {
+    let rendre = if nom in ("exercise", "problem") { rendre-exercice } else { fancy-box }
+    rendre(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white, prefix: prefix, title: title, full-title: full-title, ..args, body)
+  } else {
+    let couleur = palette.at(nom, default: palette.at("theorem", default: rgb("#233e6a")))
+    block(width: 100%, breakable: false, above: 0.55em, below: 0.55em, {
+      set par(leading: 0.4em, spacing: 0.45em)
+      set block(spacing: 0pt)
+      if full-title != "" {
+        block(width: 100%, fill: couleur, radius: (top: 4pt), inset: (x: 0.7em, y: 0.3em),
+          text(size: 0.85em, weight: "bold", fill: white, [#full-title#if coeur { h(0.4em); [♡] }]),
+        )
+      }
+      block(width: 100%, fill: couleur.lighten(94%), radius: (bottom: 4pt), inset: (x: 0.7em, y: 0.5em), body)
+    })
+  }
+}
+
 // Chaque type possède un compteur indépendant, sans héritage des sections.
 #let creer-environnement(nom) = {
   let (compteur, sans-numero, numerote, afficher) = theorion.make-frame(
@@ -100,8 +123,7 @@
     if nom == "algorithm" { [Algorithme] } else { theorion.theorion-i18n-map.at(nom) },
     counter: compteur-cadres(nom),
     numbering: "1",
-    render: if nom in ("exercise", "problem") { rendre-exercice.with(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white) }
-      else { fancy-box.with(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white) },
+    render: rendre-cadre.with(nom),
   )
   (compteur, titre-blanc.with(numerote), titre-blanc.with(sans-numero), afficher)
 }
@@ -123,8 +145,14 @@
 #let (problem-counter, problem, problem-box, show-problem) = creer-environnement("problem")
 #let (algorithm-counter, algorithm, algorithm-box, show-algorithm) = creer-environnement("algorithm")
 
-#let configurer-theoremes(espacement: none, body) = {
+/// Active les règles Theorion ; `palette: none` conserve les cadres noirs imprimables.
+/// - espacement (length, none): Espacement supplémentaire autour des cadres.
+/// - palette (dictionary, none): Couleurs des environnements, indexées par leur nom anglais.
+/// - body (content): Document à mettre en forme.
+/// -> content
+#let configurer-theoremes(espacement: none, palette: none, body) = {
   espacement-cadres.update(espacement)
+  style-cadres.update(palette)
   set-primary-border-color(black)
   set-primary-body-color(white)
   set-secondary-border-color(black)

@@ -34,3 +34,11 @@ test('une erreur Typst ne bloque pas les compilations suivantes ni les imports',
   assert.ok(result.pdf.length > 1000);
   await assert.doesNotReject(engine.compile(resource, await source(resource), 'enonce'));
 });
+
+test('le modèle Touying compile avec les polices et le thème exportés pour le navigateur', async () => {
+  const fichier = 'templates/presentation.typ';
+  const code = await readFile(new URL(`banque/${fichier}`, publicPath), 'utf8');
+  const result = await engine.compile({ fichier, kind: 'document' }, code, 'enonce');
+  assert.equal(new TextDecoder().decode(result.pdf.slice(0, 5)), '%PDF-');
+  assert.deepEqual(result.diagnostics, []);
+});

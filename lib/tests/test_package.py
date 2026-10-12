@@ -68,7 +68,14 @@ $widetilde(a b), #sep widetilde(L)$
   }
   Un détail du polycopié.
 ]
-#presentation-seulement[Un complément projeté.]
+#presentation-seulement[
+  Un complément projeté.
+  #context {
+    // La définition de la première diapositive est répétée lors de la pause.
+    let definitions = query(<theorion-frame-metadata>).filter(it => it.value.identifier == "definition")
+    assert(definitions.map(it => (it.value.counter.at)(it.location())) == ((1,), (1,), (2,)))
+  }
+]
 ''', encoding='utf-8')
     for variante in ('cours', 'presentation'):
         output = racine / (variante + '.pdf')

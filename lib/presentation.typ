@@ -5,28 +5,44 @@
 #import "document.typ": auteur-par-defaut, espacement-blocs
 #import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
+#import "themes/madrid.typ": theme-madrid, titre-madrid
 
-/// Compose une présentation Touying, ou sa version article avec le thème du dépôt.
+/// Couleurs sémantiques des blocs projetés, surchargeables dans `presentation`.
+#let couleurs-blocs = (
+  theorem: rgb("#233e6a"), lemma: rgb("#233e6a"), corollary: rgb("#233e6a"),
+  proposition: rgb("#233e6a"), property: rgb("#233e6a"),
+  definition: rgb("#16716b"), assumption: rgb("#16716b"),
+  axiom: rgb("#16716b"), postulate: rgb("#16716b"),
+  exercise: rgb("#9a5b13"), problem: rgb("#a13f4b"),
+  algorithm: rgb("#65509a"), conjecture: rgb("#65509a"),
+  example: rgb("#47733d"), remark: rgb("#586475"), note: rgb("#586475"),
+)
+
+/// Compose une présentation Touying Madrid, ou sa version article avec le thème du dépôt.
+/// Bandeau de titre et blocs colorés, sans pied de page ni navigation ; cadres noirs en article.
 /// - titre (str): Titre du document.
 /// - niveau (str, none): Classe.
 /// - auteur (str, none): Auteur, défaut « Q. Fortier » ; `none` le masque.
 /// - aspect-ratio (str): Format Touying, défaut "16-9".
 /// - taille (length): Taille du texte des diapositives, défaut 22pt.
 /// - couleur (color): Couleur des titres, défaut bleu foncé.
+/// - palette (dictionary): Surcharges des couleurs de `couleurs-blocs`, indexées par nom d'environnement.
+/// - police (str, array): Police des diapositives, défaut New Computer Modern Sans avec repli New Computer Modern.
 /// - animations (bool): Produire toutes les étapes, défaut true.
 /// - article (bool): Utiliser le thème A4, défaut false.
 /// - body (content): Titres de section `=`, titres de diapositive `==` et contenu partagé.
 /// -> content
-#let presentation(titre: "Présentation", niveau: none, auteur: auteur-par-defaut, aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), animations: true, article: false, body) = {
+#let presentation(titre: "Présentation", niveau: none, auteur: auteur-par-defaut, aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), palette: (:), police: ("New Computer Modern Sans", "New Computer Modern"), animations: true, article: false, body) = {
   show: configurer-theoremes
   set text(font: "New Computer Modern", lang: "fr")
-  set par(leading: 0.65em, spacing: 0.65em)
-  show: touying.themes.simple.simple-theme.with(
+  show: theme-madrid.with(
     aspect-ratio: aspect-ratio,
-    primary: couleur,
-    footer: [#titre #if niveau != none { [· #niveau] }],
-    footer-right: none,
-    subslide-preamble: block(below: 0.7em, text(size: 1.15em, weight: "bold", touying.utils.display-current-heading(level: 2))),
+    couleur: couleur, taille: taille, police: police,
+    style: body => {
+      show: configurer-theoremes.with(palette: couleurs-blocs + (theorem: couleur, lemma: couleur, corollary: couleur, proposition: couleur, property: couleur) + palette)
+      show: configurer-code
+      body
+    },
     touying.config-info(title: titre, author: auteur, date: none),
     touying.config-common(
       export-mode: if article { "article" } else if animations { "presentation" } else { "handout" },
@@ -40,19 +56,8 @@
       detect-overflow: true,
     ),
     touying.config-article(wrap: false, linearize: false),
-    touying.config-methods(init: (self: none, body) => {
-      show: configurer-code
-      set text(size: taille)
-      body
-    }),
   )
-  touying.slides-only(touying.themes.simple.title-slide[
-    #align(center)[
-      #text(size: 1.7em, weight: "bold", titre)
-      #if niveau != none { [#v(1em) #niveau] }
-      #if auteur != none { [#v(0.5em) #auteur] }
-    ]
-  ])
+  touying.slides-only(titre-madrid(titre, niveau: niveau, auteur: auteur, couleur: couleur))
   body
 }
 
