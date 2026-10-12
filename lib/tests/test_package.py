@@ -46,7 +46,7 @@ $widetilde(a b), #sep widetilde(L)$
         subprocess.run(['typst', 'compile', '--root', str(racine), '--ignore-system-fonts',
                         '--package-path', str(racine / 'packages'), '--input', 'corrige=' + variante,
                         str(source), str(racine / (variante + '.pdf'))], check=True)
-    source.write_text('''#import "@mpi-informatique/mpi-exercices:0.1.0": cours-et-presentation, pause, cours-seulement, presentation-seulement, theoremes
+    source.write_text('''#import "@mpi-informatique/mpi-exercices:0.1.0": cours-et-presentation, pause, article-only, slides-only, theoremes
 #show: cours-et-presentation.with(titre: "Cours externe", niveau: "MPI")
 = Section
 == Notion
@@ -56,11 +56,11 @@ $widetilde(a b), #sep widetilde(L)$
 == Application
 #theoremes.exercise[Un exercice.]
 #theoremes.theorem[Un théorème.]
-#cours-seulement[#theoremes.definition-box[Une définition sans numéro.]]
+#article-only[#theoremes.definition-box[Une définition sans numéro.]]
 == Autre notion
 #theoremes.definition[Une deuxième définition.]
 #theoremes.theorem[Un deuxième théorème.]
-#cours-seulement[
+#article-only[
   #context {
     let cadres = query(<theorion-frame-metadata>).filter(it => it.value.numbering != none)
     assert(cadres.map(it => it.value.identifier) == ("definition", "algorithm", "exercise", "theorem", "definition", "theorem"))
@@ -68,7 +68,7 @@ $widetilde(a b), #sep widetilde(L)$
   }
   Un détail du polycopié.
 ]
-#presentation-seulement[
+#slides-only[
   Un complément projeté.
   #context {
     // La définition de la première diapositive est répétée lors de la pause.

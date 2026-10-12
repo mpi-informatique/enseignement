@@ -1,4 +1,4 @@
-#import "/load.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
+#import "/load.typ": cours-et-presentation, pause, article-only, slides-only
 #import "/load.typ": theoremes
 #import theoremes: definition, theorem, exercise
 
@@ -21,7 +21,7 @@
 #exercise[
   Appliquer le résultat précédent.
 ]
-#presentation-seulement[
+#slides-only[
   #pause
   Indication à révéler pendant la présentation.
 ]

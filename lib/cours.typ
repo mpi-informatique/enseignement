@@ -16,7 +16,7 @@
 }
 
 /// Réserve des lignes de réponse dans un cours imprimé.
-/// Dans une source commune, entourer l'appel de `cours-seulement[...]`.
+/// Dans une source commune, entourer l'appel de `article-only[...]`.
 /// - lignes (int): Nombre de lignes, positif ou nul.
 /// -> content
 #let espace-reponse(lignes) = {

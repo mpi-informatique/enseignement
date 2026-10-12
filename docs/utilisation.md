@@ -51,7 +51,7 @@ Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [te
 Pour personnaliser le [thème Touying Madrid](../lib/themes/madrid.typ), passer les options à `presentation.with` ou `cours-et-presentation.with`, par exemple `couleur: rgb("#233e6a"), palette: (exercise: rgb("#9a5b13"))`. Consulter la palette et les options dans [lib/presentation.typ](../lib/presentation.typ). Hors de Nix, installer New Computer Modern Sans ou choisir une police disponible avec `police: "Nom de la police"`.
 
 ```typst
-#import "/load.typ": cours-et-presentation, pause, cours-seulement, presentation-seulement
+#import "/load.typ": cours-et-presentation, pause, article-only, slides-only
 #import "/load.typ": theoremes
 #import theoremes: definition, theorem, algorithm, exercise
 
@@ -74,7 +74,7 @@ Pour personnaliser le [thème Touying Madrid](../lib/themes/madrid.typ), passer 
 #exercise[
   Appliquer le théorème.
 ]
-#presentation-seulement[
+#slides-only[
   #pause
   Indication à révéler pendant la présentation.
 ]
@@ -83,13 +83,11 @@ Pour personnaliser le [thème Touying Madrid](../lib/themes/madrid.typ), passer 
 Les titres `=` structurent les grandes parties. Les titres `==` ouvrent les diapositives et deviennent des sous-sections du cours. Limiter les sous-sections du polycopié aux regroupements utiles, sans reprendre chaque titre de diapositive. Pour un titre utile uniquement à la projection, écrire :
 
 ```typst
-#presentation-seulement[
-  == Titre
-]
+#slides-only[== Titre]
 Contenu commun aux deux formats.
 ```
 
-Utiliser `cours-seulement[...]` pour les détails destinés au polycopié, et `presentation-seulement[...]` pour les compléments projetés.
+Utiliser `article-only[...]` pour les détails destinés au polycopié, et `slides-only[...]` pour les compléments projetés.
 Ces commandes peuvent aussi entourer une section entière.
 Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
 

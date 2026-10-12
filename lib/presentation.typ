@@ -1,6 +1,6 @@
 /// Présentations Touying et cours issus d'une même source.
 #import "@preview/touying:0.8.0" as touying
-#import touying: pause, uncover, only, slide, article-only as cours-seulement, slides-only as presentation-seulement
+#import touying: pause, uncover, only, slide, article-only, slides-only
 #import "cours.typ": cours, espace-reponse
 #import "document.typ": auteur-par-defaut, espacement-blocs
 #import "theoremes.typ": configurer-theoremes
@@ -64,7 +64,7 @@
 /// Génère le cours A4 ou la présentation à partir du même contenu.
 /// - format (str): "cours" ou "presentation", choisi par `--input format=...` (défaut "cours").
 /// - ..args (arguments): Options de `presentation`, dont `titre`, `niveau` et `auteur`.
-/// - body (content): Contenu commun, avec `pause`, `cours-seulement` et `presentation-seulement` si nécessaire.
+/// - body (content): Contenu commun, avec `pause`, `article-only` et `slides-only` si nécessaire.
 /// -> content
 #let cours-et-presentation(format: sys.inputs.at("format", default: "cours"), ..args, body) = {
   assert(format in ("cours", "presentation"), message: "format doit valoir cours ou presentation")

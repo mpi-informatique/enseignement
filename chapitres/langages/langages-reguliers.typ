@@ -1,11 +1,11 @@
-#import "/load.typ": cours-et-presentation, pause, only, cours-seulement, presentation-seulement
+#import "/load.typ": cours-et-presentation, pause, only, article-only, slides-only
 #import "/load.typ": theoremes
 #import theoremes: definition, theorem, lemma, property, exercise, problem, corollary
 #import "/load.typ": sep, widetilde
 
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
 
-#presentation-seulement[
+#slides-only[
   = Motivation des langages formels
 
   == Recherche de motifs et syntaxe
@@ -21,9 +21,7 @@
 
 = Alphabet et mot
 
-#presentation-seulement[
-  == Alphabet, mot
-]
+#slides-only[== Alphabet, mot]
 
 #definition[
   - Un alphabet est un ensemble $Σ$ fini de lettres.
@@ -36,25 +34,21 @@
 
 #underline[Attention] : $ε$ est un mot, pas une lettre.
 
-#presentation-seulement[
-  == Concaténation et puissance
-]
+#slides-only[== Concaténation et puissance]
 
 #definition[
   - La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est $u v = u_1 … u_n v_1 … v_p$.
   - Si $u$ est un mot, on définit par récurrence $u^0 = ε$ et $u^k = u u^(k - 1)$ pour $k ≥ 1$.
 ]
 
-#presentation-seulement[
-  == Une équation sur les mots
-]
+#slides-only[== Une équation sur les mots]
 
 #exercise[
   Soient $Σ$ un alphabet, $a, b ∈ Σ$ et $u ∈ Σ^*$ tels que $a u = u b$.
   Montrer que $a = b$ et : $exists k ∈ ℕ, u = a^k$.
 ]
 
-#presentation-seulement[
+#slides-only[
   == Concaténation et taille (hors programme)
 
   Un monoïde est un ensemble muni d'une opération associative et d'un élément neutre.
@@ -74,9 +68,7 @@
   ]
 ]
 
-#presentation-seulement[
-  == Préfixe, suffixe, facteur, sous-mot
-]
+#slides-only[== Préfixe, suffixe, facteur, sous-mot]
 
 #definition[
   Soient $u$ et $m$ deux mots sur $Σ$.
@@ -88,7 +80,7 @@
 
 #underline[Exemple] : $a b c$ est un sous-mot de $a a b a c b$, mais pas un facteur.
 
-#presentation-seulement[
+#slides-only[
   == Dénombrement des préfixes et des sous-mots
 
   #exercise[
@@ -99,9 +91,7 @@
   ]
 ]
 
-#presentation-seulement[
-  == Implémentation d'un mot avec une chaîne de caractères
-]
+#slides-only[== Implémentation d'un mot avec une chaîne de caractères]
 
 Rappels d'utilisation d'une chaîne de caractères (```ocaml string```) :
 
@@ -114,9 +104,7 @@ String.length s (* donne 3 *)
 
 Contrairement à ```ocaml array```, le type ```ocaml string``` est immuable/persistant : on ne peut pas modifier un caractère d'une chaîne.
 
-#presentation-seulement[
-  == Reconnaissance d'un sous-mot
-]
+#slides-only[== Reconnaissance d'un sous-mot]
 
 #exercise[
   1. Écrire une fonction ```ocaml sous_mot : string -> string -> bool``` testant si un mot est un sous-mot d'un autre.
@@ -125,18 +113,14 @@ Contrairement à ```ocaml array```, le type ```ocaml string``` est immuable/pers
 
 = Langage
 
-#presentation-seulement[
-  == Langage sur un alphabet
-]
+#slides-only[== Langage sur un alphabet]
 
 #definition[
   Un langage $L$ sur un alphabet $Σ$ est un ensemble de mots sur $Σ$.
 ]
 De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal(P)(Σ^*)$.
 
-#presentation-seulement[
-  == Exemples de langages
-]
+#slides-only[== Exemples de langages]
 
 #underline[Exemples] :
 + L'ensemble $L_0 = {ε, a, b a b}$ sur $Σ = {a, b}$.
@@ -144,7 +128,7 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
 + L'ensemble $L_2$ des formules arithmétiques sur $Σ = {0, …, 9, "+", "-", "/", "*", "(", ")"}$.
 + L'ensemble $L_3$ des programmes OCaml sur $Σ = {a, …, z, "_", "!", "<", ">", …}$.
 
-#presentation-seulement[
+#slides-only[
   == Résumé des définitions
 
   *Exercice* : soit $Σ = {a, b}$.
@@ -180,18 +164,14 @@ De façon équivalente, $L$ est un langage si $L ⊂ Σ^*$, ou encore $L ∈ cal
 ]
 $L_1 L_2$ est l'ensemble des mots obtenus par concaténation d'un mot de $L_1$ et d'un mot de $L_2$.
 
-#presentation-seulement[
-  == Calcul d'une concaténation
-]
+#slides-only[== Calcul d'une concaténation]
 
 #exercise[
   + Soit $L_1 = {a, a b}$ et $L_2 = {ε, b, b b a}$. Déterminer $L_1 L_2$.
   + Quel lien a-t-on entre $abs(L_1 L_2)$ et $abs(L_1) abs(L_2)$ dans le cas général ?
 ]
 
-#presentation-seulement[
-  == Propriétés de la concaténation
-]
+#slides-only[== Propriétés de la concaténation]
 
 #exercise[
   + La concaténation de deux langages est-elle commutative ? Associative ?
@@ -213,9 +193,7 @@ $ L^n = underbrace(L … L, n " facteurs") = {m_1 … m_n ∣ m_1 ∈ L, …, m_
 
 #underline[Exemple] : $Σ^n$ est l'ensemble des mots de taille $n$ sur l'alphabet $Σ$.
 
-#presentation-seulement[
-  == Puissance et inclusion
-]
+#slides-only[== Puissance et inclusion]
 
 #exercise[
   Soit $L$ un langage.
@@ -239,17 +217,13 @@ $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
 
 = Langages réguliers
 
-#presentation-seulement[
-  == Définition des langages réguliers
-]
+#slides-only[== Définition des langages réguliers]
 
 #definition(coeur: true)[
   L'ensemble des langages réguliers sur $Σ$ est le plus petit ensemble, pour l'inclusion, contenant les langages finis sur $Σ$ et stable par union, concaténation et étoile de Kleene.
 ]
 
-#presentation-seulement[
-  == Définition inductive équivalente
-]
+#slides-only[== Définition inductive équivalente]
 
 #definition(coeur: true)[
   - Tout langage fini est régulier.
@@ -258,9 +232,7 @@ $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
   - Si $L$ est régulier, alors $L^*$ est régulier.
 ]
 
-#presentation-seulement[
-  == Unions et concaténations finies
-]
+#slides-only[== Unions et concaténations finies]
 
 #property[
   Par récurrence immédiate, si $L_1, …, L_n$ sont réguliers, alors $L_1 ∪ … ∪ L_n$ et $L_1 L_2 … L_n$ sont réguliers.
@@ -270,9 +242,7 @@ $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
   - Une union infinie de langages réguliers n'est pas forcément régulière.
   - Un langage particulier n'est pas forcément stable par concaténation.
 
-#presentation-seulement[
-  == Exemples de langages réguliers
-]
+#slides-only[== Exemples de langages réguliers]
 
 + Soit $m$ un mot. Alors ${m}$ est fini, donc régulier. On le note aussi $m$ par abus de notation.
 #pause
@@ -282,9 +252,7 @@ $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
 #pause
 + Si $m = m_1 … m_n$, l'ensemble des mots ayant $m$ comme sous-mot est égal à $Σ^* m_1 Σ^* m_2 … Σ^* m_n Σ^*$, donc régulier.
 
-#presentation-seulement[
-  == Construction de langages réguliers
-]
+#slides-only[== Construction de langages réguliers]
 
 #exercise[
   Montrer que les langages suivants sont réguliers sur $Σ = {a, b}$ :
@@ -308,9 +276,7 @@ Les expressions régulières sont une notation plus concise pour représenter un
   - Si $e ∈ cal(R)(Σ)$, alors $e^* ∈ cal(R)(Σ)$.
 ]
 
-#presentation-seulement[
-  == Notations et exemples
-]
+#slides-only[== Notations et exemples]
 
 - On utilise seulement les parenthèses nécessaires : $(((a b) c) | d)$ sera noté $a b c | d$.
 - On utilise parfois $+$ à la place de $|$.
@@ -329,7 +295,7 @@ type 'a regexp = (* 'a est le type des lettres de l'alphabet *)
 ```
 #type-regexp
 
-#presentation-seulement[
+#slides-only[
   #pause
   Par exemple, $a (a | b)^* b$ est représenté par :
   ```ocaml
@@ -356,9 +322,7 @@ type 'a regexp = (* 'a est le type des lettres de l'alphabet *)
   - $L(e^*) = L(e)^*$.
 ]
 
-#presentation-seulement[
-  == Langages réguliers et expressions régulières
-]
+#slides-only[== Langages réguliers et expressions régulières]
 
 Par abus de langage, on confond souvent $e$ et $L(e)$.
 Ainsi, suivant le contexte, $a$ peut désigner une lettre, un mot de taille $1$ ou un langage singleton.\
@@ -370,18 +334,14 @@ Cette notation est à la base des moteurs d'expressions régulières utilisés d
   Un langage $L$ est régulier si et seulement s'il existe une expression régulière $e$ telle que $L = L(e)$.
 ]
 
-#presentation-seulement[
-  == Exemples de langages associés
-]
+#slides-only[== Exemples de langages associés]
 
 Sur $Σ = {a, b}$ :
 - $(a | b)^*$ représente l'ensemble de tous les mots, $Σ^*$.
 #pause
 - $(a | b)^* b b$ représente les mots finissant par $b b$.
 
-#presentation-seulement[
-  == Recherche d'expressions régulières
-]
+#slides-only[== Recherche d'expressions régulières]
 
 #exercise[
   Donner une expression régulière pour les langages suivants sur $Σ = {a, b}$ :
@@ -396,9 +356,7 @@ Sur $Σ = {a, b}$ :
 
 = Équivalence d'expressions régulières
 
-#presentation-seulement[
-  == Définition de l'équivalence
-]
+#slides-only[== Définition de l'équivalence]
 
 #definition[
   Deux expressions régulières $e_1$ et $e_2$ sont dites équivalentes, ce que l'on note $e_1 ≡ e_2$, si elles définissent le même langage, c'est-à-dire si $L(e_1) = L(e_2)$.
@@ -406,9 +364,7 @@ Sur $Σ = {a, b}$ :
 
 #underline[Exemple] : $(a b)^* a ≡ a (b a)^*$.
 
-#presentation-seulement[
-  == Propriétés à compléter
-]
+#slides-only[== Propriétés à compléter]
 
 #property[
   Pour des expressions régulières $e$, $e_1$, $e_2$ et $e_3$, compléter :
@@ -441,7 +397,7 @@ Sur $Σ = {a, b}$ :
 
   Alors $cal(P)(L)$ est vraie pour tout langage régulier $L$.
 ]
-#presentation-seulement[
+#slides-only[
   #pause
   L'ensemble ${L ∣ cal(P)(L)}$ contient les langages finis et est stable par union, concaténation et étoile de Kleene.
   Il contient donc tous les langages réguliers, par définition.
@@ -460,9 +416,7 @@ Sur $Σ = {a, b}$ :
   Alors $cal(P)(e)$ est vraie pour toute expression régulière $e$.
 ]
 
-#presentation-seulement[
-  == Miroir d'un langage
-]
+#slides-only[== Miroir d'un langage]
 
 #exercise[
   On note $widetilde(m) = m_n … m_1$ le miroir d'un mot $m = m_1 … m_n$ et $widetilde(L) = {widetilde(m) ∣ m ∈ L}$ celui d'un langage $L$.
@@ -472,7 +426,7 @@ Sur $Σ = {a, b}$ :
   + Écrire une fonction OCaml ```ocaml miroir : 'a regexp -> 'a regexp``` renvoyant le miroir d'une expression régulière.
 ]
 
-#presentation-seulement[
+#slides-only[
   == Méthodes de démonstration
 
   - Pour montrer une égalité de deux mots, on peut faire une récurrence sur la taille du mot.
