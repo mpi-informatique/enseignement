@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "exercices-github-auth",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-10-12",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "vars": {
+    "SITE_URL": "https://mpi-informatique.github.io/exercices/",
+    "GITHUB_CLIENT_ID": "Ov23liMpwfdmrXDWsmtI"
+  }
+}

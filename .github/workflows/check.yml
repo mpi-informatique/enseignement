@@ -36,6 +36,7 @@ jobs:
         env:
           BASE_PATH: ${{ github.event_name == 'pull_request' && '/exercices' || steps.pages.outputs.base_path }}
           SITE_URL: ${{ steps.pages.outputs.origin || 'https://mpi-informatique.github.io' }}
+          PUBLIC_GITHUB_AUTH_URL: ${{ vars.PUBLIC_GITHUB_AUTH_URL }}
       - run: nix develop path:..#web -c npm test
       - name: Préparer le site à publier
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

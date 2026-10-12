@@ -1,0 +1,22 @@
+---
+import WorkbenchLayout from '../layouts/WorkbenchLayout.astro';
+---
+<WorkbenchLayout title="Proposer une modification · Enseignement MPI">
+  <main id="main" class="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-5 p-8">
+    <h1 class="text-2xl font-semibold">Proposer une modification</h1>
+    <p id="contribution-status" role="status">Préparation de votre proposition…</p>
+    <p>Votre brouillon reste enregistré dans ce navigateur. Vous pourrez vérifier les différences et envoyer la pull request sur GitHub.</p>
+    <a id="contribution-back" class="btn btn-outline self-start" href={import.meta.env.BASE_URL}>Revenir au brouillon</a>
+  </main>
+  <script>
+    import { finishContribution } from '../lib/githubAuth';
+    const message = document.querySelector<HTMLElement>('#contribution-status')!;
+    const back = document.querySelector<HTMLAnchorElement>('#contribution-back')!;
+    finishContribution(text => { message.textContent = text; }, url => { back.href = url; }).then(url => {
+      location.replace(url);
+    }).catch(error => {
+      message.textContent = error instanceof Error ? error.message : 'Impossible de préparer la proposition. Revenir au brouillon pour réessayer.';
+      message.setAttribute('role', 'alert');
+    });
+  </script>
+</WorkbenchLayout>

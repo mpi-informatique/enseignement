@@ -14,6 +14,7 @@ import { resourceTypeLabel } from '../lib/labels';
 import { exerciseUrl, routeId } from '../lib/urls';
 import { stored, store } from '../lib/storage';
 import { githubEditUrl } from '../lib/github';
+import { authUrl, startContribution } from '../lib/githubAuth';
 
 const TypstEditor = lazy(() => import('./TypstEditor'));
 const PdfViewer = lazy(() => import('./PdfViewer'));
@@ -42,6 +43,7 @@ export default function Workbench({ resources, initialId }: Props) {
   const [editorWidth, setEditorWidth] = useState(440);
   const [retry, setRetry] = useState(0);
   const [contributionNotice, setContributionNotice] = useState('');
+  const [contributionPending, setContributionPending] = useState(false);
   const app = useRef<HTMLDivElement>(null);
   const focusTarget = useRef<'search' | 'editor' | 'pdf' | undefined>(undefined);
   const search = useMemo(() => createSearch(resources), [resources]);
@@ -131,6 +133,17 @@ export default function Workbench({ resources, initialId }: Props) {
       setContributionNotice('Copie impossible. Télécharger le fichier Typst pour reporter le brouillon dans GitHub, puis créer une branche et une pull request.');
     }
   }
+  async function proposeContribution() {
+    if (!resource || !code || !modified || contributionPending) return;
+    setContributionPending(true);
+    setContributionNotice('Connexion à GitHub pour préparer votre modification…');
+    try {
+      await startContribution({ file: resource.fichier, source: code.source, original: code.original, title: resource.titre });
+    } catch (error) {
+      setContributionNotice(error instanceof Error ? error.message : 'Connexion GitHub impossible. Votre brouillon est conservé.');
+      setContributionPending(false);
+    }
+  }
   const canDownloadPdf = !!resource && !!compilation.pdf && !compilation.pending && !compilation.error;
   function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, pdfFilename(resource.fichier, variant), 'application/pdf'); }
   const commands: Command[] = [
@@ -162,7 +175,9 @@ export default function Workbench({ resources, initialId }: Props) {
             <div className="pane-toolbar">
               <span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{selected}.typ</span>{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title="Brouillon modifié, enregistré localement" />}</span>
               <div>
-                {resource && <a className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title={modified ? 'Copier le brouillon et ouvrir GitHub pour proposer une pull request' : 'Modifier le fichier sur GitHub pour proposer une pull request'} href={githubEditUrl(resource.fichier)} target="_blank" rel="noreferrer" onClick={copyContribution}><GitPullRequest size={14} /></a>}
+                {resource && (authUrl && modified
+                  ? <button className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title="Se connecter à GitHub et proposer le brouillon modifié" disabled={contributionPending} onClick={proposeContribution}>{contributionPending ? <span className="loading loading-spinner loading-xs" /> : <GitPullRequest size={14} />}</button>
+                  : <a className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title={modified ? 'Copier le brouillon et ouvrir GitHub pour proposer une pull request' : 'Modifier le fichier sur GitHub pour proposer une pull request'} href={githubEditUrl(resource.fichier)} target="_blank" rel="noreferrer" onClick={copyContribution}><GitPullRequest size={14} /></a>)}
                 <button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button>
                 <button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button>
               </div>
