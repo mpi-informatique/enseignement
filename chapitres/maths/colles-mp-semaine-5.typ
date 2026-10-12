@@ -1,4 +1,4 @@
-#import "/load.typ": feuille, sujet-colle, bloc-solution
+#import "/load.typ": feuille, sujet-colle, exercice, question
 #import "/load.typ": sep
 #import "/chapitres/maths/reduction/diagonalisation-matrice-deux.typ": ex as matrice-deux
 #import "/chapitres/maths/reduction/diagonalisabilite-triangulaire-parametres.typ": ex as triangulaire
@@ -11,18 +11,6 @@
 #import "/chapitres/maths/reduction/nilpotence-traces-puissances-trois.typ": ex as traces
 
 #let corrige = sys.inputs.at("corrige", default: "false") == "true"
-
-#show: feuille.with(
-  type: "colle",
-  titre: "Colles MP - semaine 5",
-  niveau: "MP",
-  exercices: (
-    matrice-deux, triangulaire, rang-un,
-    rotation, polynomes, commutant,
-    decalage, parametre, traces,
-  ),
-  afficher-exercices: false,
-)
 
 #let cours = (
   (
@@ -72,10 +60,29 @@
   ),
 )
 
+#let cours = cours.map(c => exercice(
+  meta: (
+    titre: "Question de cours",
+    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    matiere: "mathématiques",
+    niveaux: ("MP",),
+    difficulte: 1,
+  ),
+  contenu: (question(c.nom, solution: c.preuve),),
+))
+
 #let sujets = (
-  (cours: cours.at(0), exercices: (matrice-deux, triangulaire, rang-un)),
-  (cours: cours.at(1), exercices: (rotation, polynomes, commutant)),
-  (cours: cours.at(2), exercices: (decalage, parametre, traces)),
+  (cours.at(0), matrice-deux, triangulaire, rang-un),
+  (cours.at(1), rotation, polynomes, commutant),
+  (cours.at(2), decalage, parametre, traces),
+)
+
+#show: feuille.with(
+  type: "colle",
+  titre: "Colles MP - semaine 5",
+  niveau: "MP",
+  exercices: sujets.flatten(),
+  afficher-exercices: false,
 )
 
 = Programme de colle
@@ -113,12 +120,9 @@ Rappel : pour une question de cours, donner d'abord un énoncé clair introduisa
 Consignes du mail : être exigeant sur la clarté de la rédaction et des raisonnements en question de cours. En exercice, commencer par des choses basiques, les étudiants ayant encore peu de pratique de la réduction.
 
 #pagebreak()
-= Énoncés
 #for (i, sujet) in sujets.enumerate(start: 1) {
   if i > 1 { pagebreak() }
-  heading(level: 3)[Question de cours]
-  sujet.cours.nom
-  sujet-colle(i, sujet.exercices)
+  sujet-colle(i, sujet)
 }
 
 #if corrige {
@@ -126,9 +130,6 @@ Consignes du mail : être exigeant sur la clarté de la rédaction et des raison
   heading(level: 1)[Corrections]
   for (i, sujet) in sujets.enumerate(start: 1) {
     if i > 1 { pagebreak() }
-    heading(level: 3)[Question de cours]
-    sujet.cours.nom
-    bloc-solution(sujet.cours.preuve)
-    sujet-colle(i, sujet.exercices, corrige: true)
+    sujet-colle(i, sujet, corrige: true)
   }
 }
