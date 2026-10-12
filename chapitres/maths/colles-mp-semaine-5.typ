@@ -1,4 +1,4 @@
-#import "/load.typ": feuille, afficher-exercice, bloc-solution
+#import "/load.typ": feuille, sujet-colle, bloc-solution
 #import "/load.typ": sep
 #import "/chapitres/maths/reduction/diagonalisation-matrice-deux.typ": ex as matrice-deux
 #import "/chapitres/maths/reduction/diagonalisabilite-triangulaire-parametres.typ": ex as triangulaire
@@ -21,7 +21,6 @@
     rotation, polynomes, commutant,
     decalage, parametre, traces,
   ),
-  corrige: corrige,
   afficher-exercices: false,
 )
 
@@ -79,25 +78,6 @@
   (cours: cours.at(2), exercices: (decalage, parametre, traces)),
 )
 
-#let composer-sujet(numero, sujet, avec-solutions: false) = {
-  heading(level: 2)[Sujet #numero]
-  heading(level: 3)[Question de cours]
-  sujet.cours.nom
-  if avec-solutions { bloc-solution(sujet.cours.preuve) }
-  for (j, ex) in sujet.exercices.enumerate(start: 1) {
-    // Reprendre tout l'énoncé avant le bloc regroupant les réponses de l'exercice.
-    afficher-exercice(ex, numero: j, corrige: false)
-    if avec-solutions {
-      bloc-solution({
-        let questions = ex.contenu.filter(bloc => type(bloc) == dictionary)
-        for (k, q) in questions.enumerate(start: 1) {
-          enum(start: k, numbering: "1.", indent: 0pt, body-indent: 0.5em, q.solution)
-        }
-      })
-    }
-  }
-}
-
 = Programme de colle
 
 MP - Maths · Lycée Lalande · 2026/2027 · Semaine 5
@@ -136,7 +116,9 @@ Consignes du mail : être exigeant sur la clarté de la rédaction et des raison
 = Énoncés
 #for (i, sujet) in sujets.enumerate(start: 1) {
   if i > 1 { pagebreak() }
-  composer-sujet(i, sujet)
+  heading(level: 3)[Question de cours]
+  sujet.cours.nom
+  sujet-colle(i, sujet.exercices)
 }
 
 #if corrige {
@@ -144,6 +126,9 @@ Consignes du mail : être exigeant sur la clarté de la rédaction et des raison
   heading(level: 1)[Corrections]
   for (i, sujet) in sujets.enumerate(start: 1) {
     if i > 1 { pagebreak() }
-    composer-sujet(i, sujet, avec-solutions: true)
+    heading(level: 3)[Question de cours]
+    sujet.cours.nom
+    bloc-solution(sujet.cours.preuve)
+    sujet-colle(i, sujet.exercices, corrige: true)
   }
 }
