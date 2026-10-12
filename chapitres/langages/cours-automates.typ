@@ -1,6 +1,7 @@
 #import "/load.typ": cours-et-presentation, pause, article-only, slides-only, sep, theoremes, automate
 #import theoremes: definition, theorem, lemma, exercise, algorithm
-#import automate: dessiner-automate
+#import automate: dessiner-automate, cetz, finite, unite-automates, style-automates
+#import "@preview/touying:0.8.0": touying-reducer
 
 #show: cours-et-presentation.with(titre: "Automates", niveau: "MPI")
 
@@ -244,15 +245,45 @@ L'automate des parties possède $2^(abs(Q))$ états. En pratique, ne construire 
 #facteur
 #slides-only[
   == Automate déterminisé
-  #dessiner-automate(
-    (("{0}", (0, 2), true, false), ("{0,1}", (3, 2), false, false), ("{0,2}", (6, 2), false, false),
-     ("{0,3}", (0, -2), false, true), ("{0,1,3}", (3, -2), false, true), ("{0,2,3}", (6, -2), false, true)),
-    (("{0}", "{0}", "b", (:)), ("{0}", "{0,1}", "a", (:)), ("{0,1}", "{0,1}", "a", (:)),
-     ("{0,1}", "{0,2}", "b", (curve: 0.4)), ("{0,2}", "{0,1}", "a", (curve: 0.4)), ("{0,2}", "{0,3}", "b", (:)),
-     ("{0,3}", "{0,3}", "b", (:)), ("{0,3}", "{0,1,3}", "a", (:)), ("{0,1,3}", "{0,1,3}", "a", (:)),
-     ("{0,1,3}", "{0,2,3}", "b", (curve: 0.4)), ("{0,2,3}", "{0,1,3}", "a", (curve: 0.4)), ("{0,2,3}", "{0,3}", "b", (curve: 0.5))),
-    rayon: nom => 0.9,
-  )
+  // Les éléments masqués gardent leurs dimensions et leurs ancres entre les étapes.
+  #text(size: 0.6em)[
+    #facteur
+    #v(0.5em)
+    #align(center, touying-reducer(reduce: cetz.canvas, cover: cetz.draw.hide.with(bounds: true), length: unite-automates, {
+      import finite.draw: state, transition
+      cetz.draw.set-style(..style-automates, state: (radius: 0.9))
+      state((0, 2), "0", label: ${0}$, initial: (label: none))
+      (pause,)
+      state((3, 2), "1", label: ${0, 1}$)
+      transition("0", "1", label: (text: $a$))
+      (pause,)
+      transition("0", "0", label: (text: $b$))
+      (pause,)
+      transition("1", "1", label: (text: $a$))
+      (pause,)
+      state((6, 2), "2", label: ${0, 2}$)
+      transition("1", "2", label: (text: $b$), curve: 0.4)
+      (pause,)
+      transition("2", "1", label: (text: $a$), curve: 0.4)
+      (pause,)
+      state((6, -2), "3", label: ${0, 3}$, final: true)
+      transition("2", "3", label: (text: $b$))
+      (pause,)
+      state((3, -2), "4", label: ${0, 1, 3}$, final: true)
+      transition("3", "4", label: (text: $a$))
+      (pause,)
+      transition("3", "3", label: (text: $b$), anchor: bottom)
+      (pause,)
+      transition("4", "4", label: (text: $a$), anchor: bottom)
+      (pause,)
+      state((0, -2), "5", label: ${0, 2, 3}$, final: true)
+      transition("4", "5", label: (text: $b$), curve: 0.4)
+      (pause,)
+      transition("5", "4", label: (text: $a$), curve: 0.4)
+      (pause,)
+      transition("5", "3", label: (text: $b$, dist: -style-automates.transition.label.dist), curve: -3)
+    }))
+  ]
 ]
 
 #slides-only[== Coût exponentiel]
