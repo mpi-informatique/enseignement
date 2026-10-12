@@ -46,6 +46,8 @@ Conserver les ressources propres au sujet (images, code, tests) à côté de cel
 
 ## Cours et présentations
 
+Préfixer les sources de cours par `cours-`, y compris lorsqu'elles génèrent aussi une présentation : `cours-kleene.typ`, par exemple. Les PDF exportés depuis l'extension sont nommés `cours-kleene.pdf` et `presentation-kleene.pdf`.
+
 Partir de [templates/cours.typ](../templates/cours.typ) pour un cours A4, de [templates/presentation.typ](../templates/presentation.typ) pour des diapositives, ou de [templates/cours-presentation.typ](../templates/cours-presentation.typ) pour produire les deux à partir du même contenu.
 
 Pour personnaliser le [thème Touying Madrid](../lib/themes/madrid.typ), passer les options à `presentation.with` ou `cours-et-presentation.with`, par exemple `couleur: rgb("#233e6a"), palette: (exercise: rgb("#9a5b13"))`. Consulter la palette et les options dans [lib/presentation.typ](../lib/presentation.typ). Hors de Nix, installer New Computer Modern Sans ou choisir une police disponible avec `police: "Nom de la police"`.
@@ -92,9 +94,9 @@ Ces commandes peuvent aussi entourer une section entière.
 Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
 
 ```sh
-nix develop path:. -c just c chapitres/langages/langages-reguliers.typ
-nix develop path:. -c just w chapitres/langages/langages-reguliers.typ cours
-nix develop path:. -c just w chapitres/langages/langages-reguliers.typ presentation
+nix develop path:. -c just c chapitres/langages/cours-langages-reguliers.typ
+nix develop path:. -c just w chapitres/langages/cours-langages-reguliers.typ cours
+nix develop path:. -c just w chapitres/langages/cours-langages-reguliers.typ presentation
 ```
 
 Pour compiler directement, utiliser `typst compile --root . --input format=cours source.typ cours.pdf` ou `--input format=presentation`.
