@@ -35,7 +35,7 @@ export async function privateRepositories(token: string, signal: AbortSignal, re
   return repositories;
 }
 
-const ignored = new Set(['node_modules', 'web', 'worker', 'shared', 'build', 'dist', 'tests', 'scripts', 'docs', 'tmp']);
+const ignored = new Set(['node_modules', 'web', 'worker', 'shared', 'build', 'dist', 'tests', 'scripts', 'docs', 'tmp', 'corrections']);
 export function bankFile(path: string): boolean {
   return !path.split('/').some(part => !part || part === '..' || part.startsWith('.') || ignored.has(part))
     && !path.includes('\\') && /\.(typ|json|csv|svg|png|jpe?g|gif|webp|toml|ya?ml|txt|bib)$/i.test(path);

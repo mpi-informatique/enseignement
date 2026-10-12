@@ -51,7 +51,7 @@ test('un arbre incomplet est refusé, sans présenter une banque partielle', asy
 });
 
 test('les fichiers non pertinents et chemins hors banque sont exclus ; la découverte ignore commentaires et chaînes', () => {
-  for (const file of ['.env', '../secret.typ', 'web/source.typ', 'node_modules/data.json', 'devoirs/.secret/ex.typ', 'build/result.pdf', 'data\\secret.typ']) assert.equal(bankFile(file), false, file);
+  for (const file of ['.env', '../secret.typ', 'web/source.typ', 'node_modules/data.json', 'corrections/2026/liste-classe.csv', 'devoirs/.secret/ex.typ', 'build/result.pdf', 'data\\secret.typ']) assert.equal(bankFile(file), false, file);
   assert.equal(bankFile('chapitres/privé/image.png'), true);
   assert.equal(sourceKind('// #let ex = faux\n#let texte = "#let ex = faux"'), undefined);
   assert.equal(sourceKind('/* bloc /* imbriqué */ #let ex = faux */'), undefined);

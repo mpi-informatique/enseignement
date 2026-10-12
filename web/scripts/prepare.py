@@ -8,6 +8,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tomllib
 
 WEB = Path(__file__).resolve().parents[1]
 ROOT = WEB.parent
@@ -117,6 +118,12 @@ def prepare():
     (bank / "manifest.json").write_text(json.dumps({"files": files, "packages": packages, "fonts": sorted(wanted)}, ensure_ascii=False))
     bundle = {f"/@memory/workspace/{file}": base64.b64encode((bank / file).read_bytes()).decode() for file in files}
     bundle.update({f"/@memory/packages/{file}": base64.b64encode((bank / "packages" / file).read_bytes()).decode() for file in packages})
+    # Les banques privées importent cette API comme package, sans clone public voisin.
+    package_manifest = (ROOT / 'typst.toml').read_bytes()
+    package = tomllib.loads(package_manifest.decode())['package']
+    package_root = f"/@memory/packages/mpi-informatique/{package['name']}/{package['version']}"
+    bundle.update({f"{package_root}/{file}": bundle[f"/@memory/workspace/{file}"] for file in files})
+    bundle[f"{package_root}/typst.toml"] = base64.b64encode(package_manifest).decode()
     (bank / "bundle.json").write_text(json.dumps(bundle))
     generated = WEB / "src/generated"
     generated.mkdir(parents=True, exist_ok=True)
