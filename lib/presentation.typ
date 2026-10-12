@@ -13,7 +13,7 @@
   proposition: rgb("#233e6a"), property: rgb("#233e6a"),
   definition: rgb("#16716b"), assumption: rgb("#16716b"),
   axiom: rgb("#16716b"), postulate: rgb("#16716b"),
-  exercise: rgb("#9a5b13"), problem: rgb("#a13f4b"),
+  exercise: rgb("#8b1e2d"), problem: rgb("#a13f4b"),
   algorithm: rgb("#65509a"), conjecture: rgb("#65509a"),
   example: rgb("#47733d"), remark: rgb("#586475"), note: rgb("#586475"),
 )

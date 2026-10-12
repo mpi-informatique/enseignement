@@ -104,13 +104,13 @@
   } else {
     let couleur = palette.at(nom, default: palette.at("theorem", default: rgb("#233e6a")))
     block(width: 100%, breakable: false, above: 0.55em, below: 0.55em, {
-      set par(leading: 0.4em, spacing: 0.45em)
+      set par(leading: 0.6em, spacing: 0.55em)
       if full-title != "" {
         block(width: 100%, fill: couleur, radius: (top: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.3em),
-          text(size: 0.85em, weight: "bold", fill: white, [#full-title#if coeur { h(0.4em); [♡] }]),
+          text(size: 1em, weight: "bold", fill: white, [#full-title#if coeur { h(0.4em); [♡] }]),
         )
       }
-      block(width: 100%, fill: couleur.lighten(94%), radius: (bottom: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.5em), body)
+      block(width: 100%, fill: couleur.lighten(if nom == "exercise" { 88% } else { 94% }), radius: (bottom: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.5em), body)
     })
   }
 }

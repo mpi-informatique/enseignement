@@ -12,10 +12,10 @@
 /// -> content
 #let theme-madrid(aspect-ratio: "16-9", couleur: rgb("#233e6a"), taille: 22pt, police: ("New Computer Modern Sans", "New Computer Modern"), style: body => body, ..configurations, body) = {
   let bandeau(self) = context {
-    set text(fill: white, top-edge: "cap-height", bottom-edge: "descender")
+    set text(fill: white, top-edge: "bounds", bottom-edge: "bounds")
     block(
       width: 100%, height: 44pt, fill: couleur, above: 0pt, below: 0pt,
-      inset: (x: 32pt, top: 6pt, bottom: 8pt),
+      inset: (x: 32pt, y: 7pt),
       align(horizon, text(size: 1.22em, weight: "bold", touying.utils.display-current-heading(depth: self.slide-level, numbered: false, setting: touying.utils.fit-to-width.with(grow: false, 100%)))),
     )
   }
@@ -35,9 +35,9 @@
     touying.config-methods(init: (self: none, body) => {
       set text(font: police, size: taille, lang: "fr", fill: rgb("#202938"))
       show math.equation: set text(font: "New Computer Modern Math")
-      set par(leading: 0.45em, spacing: 0.55em)
-      set list(spacing: 0.4em, marker: text(fill: couleur)[•])
-      set enum(spacing: 0.4em)
+      set par(leading: 0.6em, spacing: 0.55em)
+      set list(spacing: 0.55em, marker: text(fill: couleur)[•])
+      set enum(spacing: 0.55em)
       set heading(numbering: (..n) => if n.pos().len() == 1 { numbering("I", ..n.pos()) })
       show link: set text(fill: couleur)
       show: style
