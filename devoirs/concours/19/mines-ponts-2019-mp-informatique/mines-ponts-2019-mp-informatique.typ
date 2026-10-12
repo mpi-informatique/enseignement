@@ -105,7 +105,7 @@
     langages: ("OCaml",), difficulte: 4, niveaux: ("MPI", "MP"), duree: (3, 0),
     concours: (nom: "Mines-Ponts", annee: 2019, filiere: "MP"),
   ),
-  correcteur: [
+  notation: [
     Coquilles sans ambiguïté : sans pénalité. Q1 à Q4 : noter chaque réponse indépendamment, même si l'erreur reprend une question précédente.
   ],
   corrections: [
@@ -152,19 +152,19 @@
       On utilisera aussi ```ocaml List.iter f l```, qui applique ```ocaml f``` à chaque élément de ```ocaml l```, dans l'ordre.
     ],
     partie("I", "Premiers exemples", contenu: (
-      question(correcteur: [100 % pour les longueurs impaires ; 0 % sinon.],
+      question(notation: [100 % pour les longueurs impaires ; 0 % sinon.],
         points: 0.5, [Donner, sans preuve, une description courte en langue française du langage reconnu par $cal(A)_1$ (figure 1).],
         solution: [Les mots de longueur impaire sur ${a,b}$.]),
-      question(correcteur: [100 % pour un nombre impair de $b$, sans restriction sur les $a$ ; 0 % sinon.],
+      question(notation: [100 % pour un nombre impair de $b$, sans restriction sur les $a$ ; 0 % sinon.],
         points: 0.5, [Donner, sans preuve, une description courte en langue française du langage reconnu par $cal(A)_2$ (figure 2).],
         solution: [Les mots contenant un nombre impair de $b$.]),
-      question(correcteur: [100 % si correcte ; 50 % pour une seule petite erreur avec longueur impaire, ou pour exactement les longueurs paires ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
+      question(notation: [100 % si correcte ; 50 % pour une seule petite erreur avec longueur impaire, ou pour exactement les longueurs paires ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
         points: 0.5, [Donner, sans preuve, une expression régulière du langage reconnu par $cal(A)_1$.],
         solution: [$ (a|b)((a|b)(a|b))^*. $]),
-      question(correcteur: [100 % si correcte ; 50 % pour une seule petite erreur avec un nombre impair de $b$ ($a^*$ manquant, $b b$ consécutifs imposés…), ou pour exactement les nombres pairs de $b$ ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
+      question(notation: [100 % si correcte ; 50 % pour une seule petite erreur avec un nombre impair de $b$ ($a^*$ manquant, $b b$ consécutifs imposés…), ou pour exactement les nombres pairs de $b$ ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
         points: 0.5, [Donner, sans preuve, une expression régulière du langage reconnu par $cal(A)_2$.],
         solution: [$ a^* b a^* (b a^* b a^*)^*. $]),
-      question(correcteur: [Au plus 50 % pour un enregistrement ou des listes à la place du triplet et des tableaux demandés.],
+      question(notation: [Au plus 50 % pour un enregistrement ou des listes à la place du triplet et des tableaux demandés.],
         points: 0.5, [Écrire en OCaml, sans justification, une instance du type ```ocaml automate``` correspondant à $cal(A)_2$.],
         solution: [On identifie $C$ à $0$ et $D$ à $1$. #code("a2")]),
       [#a1 #align(center)[Figure 1 — Automate $cal(A)_1$]
@@ -173,7 +173,7 @@
        #a4 #align(center)[Figure 4 — Automate $cal(A)_4$]],
     )),
     partie("II", "États accessibles d'un automate", contenu: (
-      question(correcteur: [Ne pas pénaliser une recherche quadratique correcte ni le choix d'une occurrence autre que la première.],
+      question(notation: [Ne pas pénaliser une recherche quadratique correcte ni le choix d'une occurrence autre que la première.],
         points: 1, [Écrire une fonction ```ocaml numero : int -> int list -> int array``` qui, à partir d'un entier $n$
         et d'une liste $A$ d'entiers entre $0$ et $n-1$, renvoie un tableau $T$ de taille $n$ :
         $T[i]=-1$ si $i$ est absent de $A$, et $T[i]$ est l'indice de l'une de ses occurrences sinon.
@@ -185,7 +185,7 @@
         L'état initial est donc toujours accessible.
         Si $Q'$ est l'ensemble des états accessibles, la partie accessible est $cal(A)'=⟨ Q',i_cal(A),δ',F_cal(A) ∩ Q' ⟩$, où $δ'$ est la restriction de $δ_cal(A)$ à $Q' × {a,b}$.
         Un automate est accessible si tous ses états le sont.],
-      question(correcteur: [Pénaliser l'absence de récursivité, indépendamment des erreurs de résultat. Pour la complexité, compter aussi l'initialisation du tableau.],
+      question(notation: [Pénaliser l'absence de récursivité, indépendamment des erreurs de résultat. Pour la complexité, compter aussi l'initialisation du tableau.],
         points: 2, [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles
         dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
         commentaire: [« Une attention toute particulière devait être consacrée à l'ordre exigé du résultat. » Le jury relève aussi des confusions avec le parcours en largeur et des oublis de marquage.],
@@ -195,7 +195,7 @@
         Chaque état accessible est traité une seule fois, avec deux transitions à examiner.
         L'initialisation coûte $O(n)$, comme le temps total et l'espace utilisé.
       ]),
-      question(correcteur: [75 % si seule la renumérotation des destinations manque ; moins si erreurs supplémentaires.],
+      question(notation: [75 % si seule la renumérotation des destinations manque ; moins si erreurs supplémentaires.],
         points: 1.5, [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
         de l'automate donné. On pourra réemployer les questions 6 et 7.],
         commentaire: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
@@ -236,7 +236,7 @@
         ]),
       )),
       partie("III.B", "Propriétés des morphismes d'automates", contenu: (
-        question(correcteur: [Repères : 50 % pour la seule première inclusion avec récurrence non détaillée ; 75 % pour le chemin image établi sans réciproque justifiée.],
+        question(notation: [Repères : 50 % pour la seule première inclusion avec récurrence non détaillée ; 75 % pour le chemin image établi sans réciproque justifiée.],
           points: 2, [Montrer que deux automates acceptent le même langage dès qu'il existe un morphisme de l'un vers l'autre.],
           commentaire: [« On doit citer les propriétés d'un morphisme utilisées, à chaque étape du raisonnement. »],
           solution: [
@@ -251,7 +251,7 @@
           Par (2) et (4), $δ_cal(A)^*(i_cal(A),w) ∈ F_cal(A) ⇔ δ_cal(B)^*(i_cal(B),w) ∈ F_cal(B)$.
           Les langages sont donc égaux.
         ]),
-        question(correcteur: [Ne pas pénaliser les seuls lapsus d'indices sans ambiguïté ; pénaliser l'absence de vérification du morphisme inverse.],
+        question(notation: [Ne pas pénaliser les seuls lapsus d'indices sans ambiguïté ; pénaliser l'absence de vérification du morphisme inverse.],
           points: 1.5, [Montrer qu'un morphisme $φ$ entre deux automates de même nombre d'états est bijectif
           et que $φ^(-1)$ est encore un morphisme. On dit alors que $φ$ est un isomorphisme.],
           commentaire: [Le jury relève des preuves confuses du caractère bijectif.],
@@ -264,7 +264,7 @@
             $φ^(-1)(δ_cal(B)(q,σ))=δ_cal(A)(φ^(-1)(q),σ)$.
           - Par (4), $q ∈ F_cal(B) ⇔ φ^(-1)(q) ∈ F_cal(A)$.
         ]),
-        question(correcteur: [90 % si seule la réciproque sur les finaux manque ; 75 % si la surjectivité reste non démontrée.],
+        question(notation: [90 % si seule la réciproque sur les finaux manque ; 75 % si la surjectivité reste non démontrée.],
           points: 1, [Montrer que la composition de deux morphismes est encore un morphisme.], solution: [
           Soient $φ: cal(A) → cal(B)$ et $ψ: cal(B) → cal(C)$.
           - $ψ ∘ φ$ est surjective comme composée de surjections.
@@ -276,7 +276,7 @@
          #a6 #align(center)[Figure 6 — Automate $cal(A)_6$]],
       )),
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
-        question(correcteur: [25 % pour une simple évocation des chemins sans construction d'antécédent.],
+        question(notation: [25 % pour une simple évocation des chemins sans construction d'antécédent.],
           points: 1, [Montrer que (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
           commentaire: [Pour établir la surjectivité, le jury attend un antécédent explicite pour chaque état.],
           solution: [
@@ -308,7 +308,7 @@
           avec, pour chaque couple $(q,q')$ et lettre $σ ∈ {a,b}$,
           $ δ_(cal(A) × cal(A)')((q,q'),σ)=(δ_cal(A)(q,σ),δ_(cal(A)')(q',σ)). $
         ],
-        question(correcteur: [90 % pour une seule transition fausse ou manquante, avec états et finaux corrects. Ne pas exiger le produit entier.],
+        question(notation: [90 % pour une seule transition fausse ou manquante, avec états et finaux corrects. Ne pas exiger le produit entier.],
           points: 1.5, [Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
           commentaire: [Le jury relève des incompréhensions de la définition du produit d'automates.],
           solution: [#produit-accessible]),
@@ -405,7 +405,7 @@
           - $q ∈ F_cal(A) ⇔ p ∈ F_cal(B) ⇔ [p] ∈ F_cal(C) ⇔ φ'(q) ∈ F_cal(C)$.
           On définit de même $ψ'(ψ(p))=[p]$. C'est un morphisme et $ψ' ∘ ψ=η$.
         ]),
-        question(correcteur: [Pénaliser un coût annoncé $O(n)$ pour une table indexée par les valeurs : compter $O(n+M+1)$, où $M$ est leur maximum.],
+        question(notation: [Pénaliser un coût annoncé $O(n)$ pour une table indexée par les valeurs : compter $O(n+M+1)$, où $M$ est leur maximum.],
           points: 1.5, [Écrire ```ocaml renomme : int array -> int array``` qui renomme un tableau d'entiers positifs ou nuls
           prenant $ℓ$ valeurs distinctes à l'aide des entiers de $0$ à $ℓ-1$.
           Si le tableau est non vide, le premier élément du résultat doit valoir $0$.

@@ -49,18 +49,18 @@
 // Le départ est fixé à 1 ; les corrections sont conservées mais jamais affichées.
 #let meta = (titre: "Présentation", chapitres: (), difficulte: 1)
 #let contenu = (question([Première question], solution: [Solution],
-    correcteur: [#metadata("question") <correcteur-test> Consigne locale.]),
+    notation: [#metadata("question") <notation-test> Consigne locale.]),
   question([Deuxième question], solution: [Solution]))
 #let ordinaire = exercice(meta: meta, contenu: contenu,
-  correcteur: [#metadata("epreuve") <correcteur-test> Consigne globale.],
+  notation: [#metadata("epreuve") <notation-test> Consigne globale.],
   corrections: [#metadata("modification") <correction-test> Correction.])
 #let sujet = exercice(meta: (..meta, concours: (nom: "ENS", oral: true)),
   contenu: contenu, corrections: ordinaire.corrections)
 #let unique = exercice(meta: meta, contenu: (question([Question unique], solution: [Solution]),))
 #assert("debut" not in ordinaire and "debut" not in sujet)
 #assert(sujet.corrections == ordinaire.corrections and sujet.corrections != none)
-#assert(ordinaire.correcteur != none and contenu.first().correcteur != none)
-#assert(unique.correcteur == none and unique.contenu.first().correcteur == none)
+#assert(ordinaire.notation != none and contenu.first().notation != none)
+#assert(unique.notation == none and unique.contenu.first().notation == none)
 #show: feuille.with(exercices: (), corrige: true)
 #afficher-exercice(ordinaire, corrige: true)
 #afficher-exercice(sujet, corrige: true)
@@ -69,7 +69,7 @@
 #context {
   assert(query(enum).map(q => q.start) == (1, 2, 1, 2, 1, 2))
   assert(query(<correction-test>).len() == 0)
-  assert(query(<correcteur-test>).len() == 0)
+  assert(query(<notation-test>).len() == 0)
 }
 
 // L'extraction conserve exactement le code entre les marqueurs et sa présentation.
