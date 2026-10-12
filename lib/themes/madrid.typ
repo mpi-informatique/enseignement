@@ -11,25 +11,24 @@
 /// - body (content): Contenu de la présentation.
 /// -> content
 #let theme-madrid(aspect-ratio: "16-9", couleur: rgb("#233e6a"), taille: 22pt, police: ("New Computer Modern Sans", "New Computer Modern"), style: body => body, ..configurations, body) = {
-  let bandeau(self) = block(
-    width: 100%, height: 76pt, fill: couleur, above: 0pt, below: 0pt,
-    inset: (x: 32pt, top: 12pt, bottom: 14pt),
-    {
-      set text(fill: white)
-      set par(leading: 0.2em, spacing: 0pt)
-      set block(spacing: 0pt)
-      let section = touying.utils.display-current-heading(level: 1, setting: touying.utils.fit-to-width.with(grow: false, 100%))
-      // Le titre courant peut être absent dans une diapositive explicite.
-      context if touying.utils.current-heading(level: 1) != none {
-        block(below: 6pt, text(size: 0.55em, section))
-      }
-      block(text(size: 1.22em, weight: "bold", touying.utils.display-current-heading(level: 2, numbered: false, setting: touying.utils.fit-to-width.with(grow: false, 100%))))
-    },
-  )
+  let bandeau(self) = context {
+    set text(fill: white, top-edge: "cap-height", bottom-edge: "descender")
+    let lignes = ()
+    // Composer les deux lignes sans paragraphe vide devant le titre.
+    if touying.utils.current-heading(level: 1) != none {
+      lignes.push(text(size: 0.55em, touying.utils.display-current-heading(level: 1, setting: touying.utils.fit-to-width.with(grow: false, 100%))))
+    }
+    lignes.push(text(size: 1.22em, weight: "bold", touying.utils.display-current-heading(level: 2, numbered: false, setting: touying.utils.fit-to-width.with(grow: false, 100%))))
+    block(
+      width: 100%, height: 58pt, fill: couleur, above: 0pt, below: 0pt,
+      inset: (x: 32pt, top: 6pt, bottom: 8pt),
+      stack(dir: ttb, spacing: 4pt, ..lignes),
+    )
+  }
   show: touying.touying-slides.with(
     touying.config-page(
       ..touying.utils.page-args-from-aspect-ratio(aspect-ratio),
-      margin: (x: 32pt, top: 94pt, bottom: 24pt),
+      margin: (x: 32pt, top: 76pt, bottom: 24pt),
       header: bandeau, header-ascent: 18pt, footer: none,
       fill: white,
     ),
