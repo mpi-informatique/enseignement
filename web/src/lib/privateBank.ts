@@ -1,9 +1,11 @@
 import type { Resource } from '@mpi-informatique/enseignement-core';
+import { encodeSource, type Contribution } from './github.ts';
 
 export interface PrivateRepository { full_name: string; default_branch: string; private: boolean }
 export interface PrivateBank {
   repository: string;
   revision: string;
+  branch: string;
   bundle: Record<string, string>;
   sources: Record<string, string>;
   resources: Resource[];
@@ -103,5 +105,28 @@ export async function loadPrivateFiles(repository: PrivateRepository, token: str
       status(`Chargement du dépôt privé… ${++completed}/${files.length} fichiers`);
     }
   }));
-  return { repository: repository.full_name, revision: commit.sha, bundle, sources, drafts: new Map() };
+  return { repository: repository.full_name, branch: repository.default_branch, revision: commit.sha, bundle, sources, drafts: new Map() };
+}
+
+/** Modifier seulement le fichier affiché, sans écraser une version distante plus récente. */
+export async function commitPrivateFile(bank: Pick<PrivateBank, 'repository' | 'branch' | 'sources'>, draft: Contribution, token: string, signal: AbortSignal, request: typeof fetch = fetch): Promise<string> {
+  if (!/^[\w.-]+\/[\w.-]+$/.test(bank.repository) || !bank.branch || !bankFile(draft.file) || !draft.file.endsWith('.typ') || bank.sources[draft.file] !== draft.original) throw new Error('Le fichier ne correspond pas à la banque privée chargée.');
+  if (draft.source === draft.original) throw new Error('Modifier le fichier avant de créer un commit.');
+  const prefix = `/repos/${bank.repository}`;
+  const repository = await githubRead(prefix, token, signal, request);
+  if (repository.private !== true) throw new Error('Le dépôt n’est plus privé. Aucun commit créé.');
+  if (!repository.permissions?.push) throw new Error('Votre compte n’a pas le droit d’écrire dans ce dépôt privé.');
+  const file = draft.file.split('/').map(encodeURIComponent).join('/');
+  const original = await githubRead(`${prefix}/contents/${file}?ref=${encodeURIComponent(bank.branch)}`, token, signal, request);
+  if (original.type !== 'file' || original.encoding !== 'base64' || typeof original.content !== 'string' || !/^[a-f\d]{40,64}$/i.test(original.sha) || decodeBlob(original.content) !== draft.original) throw new Error('Le fichier a changé sur GitHub. Votre brouillon est conservé : télécharger une copie puis recharger le dépôt pour comparer les versions.');
+  const response = await request(`https://api.github.com${prefix}/contents/${file}`, {
+    method: 'PUT',
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: `Modifier ${draft.title}`, content: encodeSource(draft.source), sha: original.sha, branch: bank.branch }),
+    signal: AbortSignal.any([signal, AbortSignal.timeout(30_000)]), cache: 'no-store', redirect: 'error', referrerPolicy: 'no-referrer',
+  });
+  if (!response.ok) throw new Error(response.status === 409 ? 'Le fichier ou la branche a changé pendant l’enregistrement. Votre brouillon est conservé : recharger le dépôt pour comparer les versions.' : response.status === 401 ? 'La connexion GitHub a expiré. Se reconnecter.' : [403, 422].includes(response.status) ? 'GitHub refuse le commit. Vérifier les droits d’écriture et les règles de protection de la branche. Votre brouillon est conservé.' : `Enregistrement GitHub impossible (${response.status}). Votre brouillon est conservé.`);
+  const result = await response.json();
+  if (!/^[a-f\d]{40,64}$/i.test(result.commit?.sha)) throw new Error('Réponse GitHub inattendue. Vérifier le dépôt avant de recommencer.');
+  return result.commit.sha;
 }

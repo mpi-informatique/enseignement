@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { connectPrivateBank } from '../lib/githubAuth';
-import { githubRead, loadPrivateFiles, privateRepositories, type PrivateBank, type PrivateRepository } from '../lib/privateBank';
+import { commitPrivateFile, githubRead, loadPrivateFiles, privateRepositories, type PrivateBank, type PrivateRepository } from '../lib/privateBank';
+import { encodeSource, type Contribution } from '../lib/github';
 
 export function usePrivateBank() {
   const token = useRef<string | undefined>(undefined);
   const controller = useRef<AbortController | undefined>(undefined);
   const indexer = useRef<Worker | undefined>(undefined);
   const generation = useRef(0);
+  const committing = useRef(false);
+  const [commitPending, setCommitPending] = useState(false);
   const [account, setAccount] = useState('');
   const [repositories, setRepositories] = useState<PrivateRepository[]>([]);
   const [bank, setBank] = useState<PrivateBank>();
@@ -84,5 +87,22 @@ export function usePrivateBank() {
   function disconnect() {
     clear(); token.current = undefined; setAccount(''); setRepositories([]); setBusy(false); setError(''); setMessage('Déconnecté. Les exercices privés et leurs brouillons ont été retirés de cet onglet.');
   }
-  return { account, repositories, bank, busy, message, error, connect, select, disconnect };
+
+  async function commit(draft: Contribution) {
+    if (!bank || !token.current || committing.current || busy) return;
+    committing.current = true; setCommitPending(true);
+    const current = generation.current;
+    try {
+      const sha = await commitPrivateFile(bank, draft, token.current, controller.current!.signal);
+      if (current !== generation.current) return;
+      // Conserver aussi les éditions effectuées pendant la requête, y compris une réinitialisation.
+      const latest = bank.drafts.get(draft.file) ?? bank.sources[draft.file];
+      if (latest === draft.source) bank.drafts.delete(draft.file);
+      else bank.drafts.set(draft.file, latest);
+      setBank({ ...bank, sources: { ...bank.sources, [draft.file]: draft.source }, bundle: { ...bank.bundle, [`/@memory/workspace/${draft.file}`]: encodeSource(draft.source) } });
+      return sha;
+    } catch (error) { if (current === generation.current) throw error; }
+    finally { committing.current = false; setCommitPending(false); }
+  }
+  return { account, repositories, bank, busy, message, error, connect, select, disconnect, commit, commitPending };
 }

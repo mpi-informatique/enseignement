@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Download, FileCode, RotateCcw, CircleAlert, GitPullRequest, X } from 'lucide-react';
+import { Download, FileCode, RotateCcw, CircleAlert, GitPullRequest, GitCommitHorizontal, X } from 'lucide-react';
 import { duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
@@ -37,6 +37,8 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   const resources = useMemo(() => [...publicResources, ...(library.bank?.resources ?? [])], [publicResources, library.bank]);
   const [privatePanelOpen, setPrivatePanelOpen] = useState(false);
   const [selected, setSelected] = useState(initialId ?? 'residuels-minimisation');
+  const selectedRef = useRef(selected);
+  selectedRef.current = selected;
   const resource = resources.find(resource => resource.id === selected);
   const privateResource = isPrivate(resource);
   const [query, setQuery] = useState('');
@@ -158,6 +160,17 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
       setContributionPending(false);
     }
   }
+  async function commitPrivate() {
+    if (!resource || !code || !privateResource || !modified || library.commitPending) return;
+    const id = resource.id;
+    setContributionNotice('Enregistrement sur GitHub…');
+    try {
+      const sha = await library.commit({ file: resource.fichier, source: code.source, original: code.original, title: resource.titre });
+      if (sha && selectedRef.current === id) setContributionNotice(`Commit ${sha.slice(0, 7)} enregistré sur ${library.bank!.branch}.`);
+    } catch (error) {
+      if (selectedRef.current === id) setContributionNotice(error instanceof Error ? error.message : 'Enregistrement impossible. Votre brouillon est conservé.');
+    }
+  }
   const canDownloadPdf = !!resource && !!compilation.pdf && !compilation.pending && !compilation.error;
   function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, privateResource ? `${resource.fichier.split('/').at(-1)!.slice(0, -4)}${variant === 'corrige' ? '-cor' : ''}.pdf` : pdfFilename(resource.fichier, variant), 'application/pdf'); }
   const commands: Command[] = [
@@ -189,6 +202,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
             <div className="pane-toolbar">
               <span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{resource?.fichier.split('/').at(-1)}</span>{privateResource && <span className="private-badge">Privé</span>}{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title={privateResource ? 'Brouillon privé, conservé dans cet onglet' : 'Brouillon modifié, enregistré localement'} />}</span>
               <div>
+                {privateResource && library.account && <button className="btn btn-ghost btn-xs btn-square" aria-label="Créer un commit sur GitHub" title={`Enregistrer les modifications dans ${library.bank?.repository}, branche ${library.bank?.branch}`} disabled={!modified || library.commitPending || library.busy} onClick={commitPrivate}>{library.commitPending ? <span className="loading loading-spinner loading-xs" /> : <GitCommitHorizontal size={14} />}</button>}
                 {resource && !privateResource && (authUrl && modified
                   ? <button className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title="Se connecter à GitHub et proposer le brouillon modifié" disabled={contributionPending} onClick={proposeContribution}>{contributionPending ? <span className="loading loading-spinner loading-xs" /> : <GitPullRequest size={14} />}</button>
                   : <a className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title={modified ? 'Copier le brouillon et ouvrir GitHub pour proposer une pull request' : 'Modifier le fichier sur GitHub pour proposer une pull request'} href={githubEditUrl(resource.fichier)} target="_blank" rel="noreferrer" onClick={copyContribution}><GitPullRequest size={14} /></a>)}
