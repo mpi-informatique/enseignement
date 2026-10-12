@@ -1,5 +1,5 @@
-// Même échelle et même rayon physique pour tous les automates de la banque.
-#let unite-automates = 0.8cm
+// Échelle commune proportionnelle au texte : 0.8cm à 10pt, agrandie en présentation.
+#let unite-automates = (0.8cm / 10pt) * 1em
 #let rayon-etat = 0.6
 #let rayon-grand-etat = 0.9
 #let dist-lettre = 0.33

@@ -32,6 +32,8 @@
 Un automate est un graphe orienté dont les arcs sont étiquetés par des lettres.
 Les flèches entrantes désignent les états initiaux et les doubles cercles les états finaux.
 
+#slides-only[== Exemple d'automate]
+
 #figure(exemple, numbering: none, caption: [
   *Exemple* : $Σ = {a, b}$, $Q = {0, 1, 2}$, $I = {0}$, $F = {2}$ et
   $ E = {(0, a, 0), (0, b, 1), (1, a, 0), (1, a, 2), (2, b, 2)}. $
