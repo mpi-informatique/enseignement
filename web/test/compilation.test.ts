@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { createEngine } from '../src/compiler/engine.ts';
-import type { Resource } from '../../shared/src/index.ts';
+import { availableVariants, type Resource } from '../../shared/src/index.ts';
 
 const publicPath = new URL('../public/', import.meta.url);
 const json = async (path: string) => JSON.parse(await readFile(new URL(path, publicPath), 'utf8'));
@@ -15,10 +15,10 @@ const engine = await createEngine({
 });
 const source = (resource: Resource) => readFile(new URL(`banque/${resource.fichier}`, publicPath), 'utf8');
 
-test('toute la banque compile avec le moteur WASM du navigateur, énoncés et corrigés', async () => {
+test('toute la banque compile avec le moteur WASM du navigateur dans ses formats disponibles', async () => {
   for (const resource of resources) {
     const code = await source(resource);
-    for (const variant of ['enonce', 'corrige'] as const) {
+    for (const variant of availableVariants(resource.type)) {
       const result = await engine.compile(resource, code, variant);
       assert.equal(new TextDecoder().decode(result.pdf.slice(0, 5)), '%PDF-', `${resource.id} / ${variant}`);
       assert.ok(result.pdf.length > 1000, `${resource.id} / ${variant}`);
@@ -68,4 +68,25 @@ test('Typst extrait les métadonnées sans catalogue et isole les fichiers priv�
   const document = await engine.inspect(sheet.fichier, 'document');
   assert.equal(document.titre, sheet.titre);
   assert.equal(document.nombreExercices, sheet.nombreExercices);
+});
+
+
+test('les cours sont indexés et les deux formats produisent des PDF distincts', async () => {
+  const resource = resources.find(resource => resource.id === 'cours-kleene')!;
+  assert.equal(resource.type, 'cours-presentation');
+  const code = '#assert(sys.inputs.at("corrige", default: "false") == "false")\n' + await source(resource);
+  const course = await engine.compile(resource, code, 'enonce');
+  const slides = await engine.compile(resource, code, 'corrige');
+  assert.notDeepEqual(course.pdf, slides.pdf);
+  const metadata = await engine.inspect(resource.fichier, 'document', resource.type);
+  assert.equal(metadata.titre, resource.titre);
+  assert.equal(metadata.type, 'cours-presentation');
+});
+
+test('les documents à un seul format exposent leurs métadonnées', async () => {
+  for (const type of ['cours', 'presentation']) {
+    const metadata = await engine.inspect(`templates/${type}.typ`, 'document');
+    assert.equal(metadata.type, type);
+    assert.ok(metadata.titre);
+  }
 });

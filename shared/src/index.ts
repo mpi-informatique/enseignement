@@ -18,8 +18,25 @@ export function safeSource(file: string): string {
   return file;
 }
 
-export function pdfFilename(source: string, variant: Variant): string {
+export function availableVariants(documentType?: string): Variant[] {
+  return documentType === 'cours' || documentType === 'presentation' ? ['enonce'] : ['enonce', 'corrige'];
+}
+
+export function outputVariant(variant: Variant, documentType?: string): string {
+  if (documentType === 'cours-presentation') return variant === 'enonce' ? 'cours' : 'presentation';
+  return documentType === 'cours' || documentType === 'presentation' ? documentType : variant;
+}
+
+export function variantLabels(documentType?: string): Record<Variant, string> {
+  if (documentType === 'cours-presentation') return { enonce: 'Cours', corrige: 'Présentation' };
+  if (documentType === 'cours' || documentType === 'presentation') return { enonce: documentType === 'cours' ? 'Cours' : 'Présentation', corrige: '' };
+  return { enonce: 'Énoncé', corrige: 'Corrigé' };
+}
+
+export function pdfFilename(source: string, variant: Variant, documentType?: string): string {
   safeSource(source);
+  if (documentType === 'cours-presentation') return `${outputVariant(variant, documentType)}-${sourceId(source).replace(/^cours-/, '')}.pdf`;
+  if (documentType === 'cours' || documentType === 'presentation') return `${sourceId(source)}.pdf`;
   return `${sourceId(source)}${variant === 'corrige' ? '-cor' : ''}.pdf`;
 }
 
@@ -72,7 +89,7 @@ export function sourceId(source: string): string {
   return source.slice(source.lastIndexOf('/') + 1, -4);
 }
 
-export const typeLabels: Record<string, string> = { exercice: 'Exercice', td: 'TD', devoir: 'Devoir', concours: 'Concours', colle: 'Colle', copie: 'Copie', cours: 'Cours', tp: 'TP', algorithme: 'Algorithme', poly: 'Polycopié', presentation: 'Présentation' };
+export const typeLabels: Record<string, string> = { exercice: 'Exercice', td: 'TD', devoir: 'Devoir', concours: 'Concours', colle: 'Colle', copie: 'Copie', cours: 'Cours', tp: 'TP', algorithme: 'Algorithme', poly: 'Polycopié', presentation: 'Présentation', 'cours-presentation': 'Cours / Présentation' };
 export const typeLabel = (type: string): string => typeLabels[type] ?? type;
 
 export interface Resource extends Omit<Exercise, 'difficulte'> {

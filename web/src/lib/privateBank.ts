@@ -44,7 +44,7 @@ export function bankFile(path: string): boolean {
 }
 
 /** Repérage seulement ; les métadonnées seront évaluées par Typst. */
-export function sourceKind(source: string): 'exercice' | 'document' | undefined {
+export function sourceType(source: string): 'exercice' | 'document' | 'cours' | 'presentation' | 'cours-presentation' | undefined {
   const chars = source.split('');
   let position = 0;
   while (position < source.length) {
@@ -75,9 +75,16 @@ export function sourceKind(source: string): 'exercice' | 'document' | undefined 
     for (let index = start; index < position; index++) if (chars[index] !== '\n') chars[index] = ' ';
   }
   const code = chars.join('');
-  if (/#show\s*:\s*(?:cours(?:-et-presentation)?|presentation)\.with\s*\(/.test(code)) return;
+  for (const [template, type] of [['cours-et-presentation', 'cours-presentation'], ['cours', 'cours'], ['presentation', 'presentation']] as const) {
+    if (new RegExp(`#show\\s*:\\s*${template}\\.with\\s*\\(`).test(code)) return type;
+  }
   if (/#show\s*:\s*feuille\.with\s*\(/.test(code)) return 'document';
   if (/#let\s+ex\s*=/.test(code) || [...code.matchAll(/#import\s*:\s*([^\n]+)/g)].some(match => match[1].split(',').some(member => /^(?:ex|[\w-]+\s+as\s+ex)$/.test(member.trim())))) return 'exercice';
+}
+
+export function sourceKind(source: string): 'exercice' | 'document' | undefined {
+  const type = sourceType(source);
+  return type === undefined ? undefined : type === 'exercice' ? 'exercice' : 'document';
 }
 
 export async function loadPrivateFiles(repository: PrivateRepository, token: string, signal: AbortSignal, status: (text: string) => void, request: typeof fetch = fetch): Promise<Omit<PrivateBank, 'resources' | 'warnings'>> {

@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Download, FileCode, RotateCcw, CircleAlert, GitPullRequest, GitCommitHorizontal, X } from 'lucide-react';
-import { duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/exercices-core';
+import { availableVariants, outputVariant, variantLabels, duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/exercices-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
 import { useCompiler } from '../hooks/useCompiler';
@@ -43,7 +43,10 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   const privateResource = isPrivate(resource);
   const [query, setQuery] = useState('');
   const [filters, setFilters] = useState<SearchFilters>({});
-  const [variant, setVariant] = useState<Variant>('enonce');
+  const [requestedVariant, setVariant] = useState<Variant>('enonce');
+  const variants = availableVariants(resource?.type);
+  const variant = variants.includes(requestedVariant) ? requestedVariant : variants[0]!;
+  const labels = variantLabels(resource?.type);
   const [dark, setDark] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [editorOpen, setEditorOpen] = useState(true);
@@ -107,6 +110,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   }, [resource]);
 
   function navigate(resource: Resource, nextVariant: Variant = variant) {
+    if (!availableVariants(resource.type).includes(nextVariant)) nextVariant = 'enonce';
     history.pushState({}, '', exerciseUrl(resource.id, nextVariant));
     setSelected(resource.id); setVariant(nextVariant);
     if (window.innerWidth <= 900) {
@@ -172,14 +176,21 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
     }
   }
   const canDownloadPdf = !!resource && !!compilation.pdf && !compilation.pending && !compilation.error;
-  function downloadPdf() { if (resource && compilation.pdf && canDownloadPdf) download(compilation.pdf, privateResource ? `${resource.fichier.split('/').at(-1)!.slice(0, -4)}${variant === 'corrige' ? '-cor' : ''}.pdf` : pdfFilename(resource.fichier, variant), 'application/pdf'); }
+  function downloadPdf() {
+    if (!resource || !compilation.pdf || !canDownloadPdf) return;
+    const stem = resource.fichier.split('/').at(-1)!.slice(0, -4);
+    const privateFilename = resource.type === 'cours-presentation'
+      ? `${outputVariant(variant, resource.type)}-${stem.replace(/^cours-/, '')}.pdf`
+      : `${stem}${variant === 'corrige' && resource.type !== 'cours' && resource.type !== 'presentation' ? '-cor' : ''}.pdf`;
+    download(compilation.pdf, privateResource ? privateFilename : pdfFilename(resource.fichier, variant, resource.type), 'application/pdf');
+  }
   const commands: Command[] = [
     { id: 'search', label: 'Rechercher un exercice', shortcut: '/', keywords: 'banque filtre', run: () => focusPanel('search') },
     { id: 'editor-focus', label: 'Modifier le code Typst', keywords: 'éditeur source focus', disabled: !code, run: () => focusPanel('editor') },
     { id: 'pdf-focus', label: 'Afficher l’aperçu PDF', keywords: 'document focus', run: () => focusPanel('pdf') },
     { id: 'sidebar', label: sidebarOpen ? 'Masquer la recherche' : 'Afficher la recherche', keywords: 'panneau latéral', run: () => sidebarOpen ? closeSidebar() : focusPanel('search') },
     { id: 'editor', label: editorOpen ? 'Masquer le code Typst' : 'Afficher le code Typst', keywords: 'panneau éditeur source', run: toggleEditor },
-    ...(['enonce', 'corrige'] as const).map(value => ({ id: value, label: value === 'enonce' ? 'Voir l’énoncé' : 'Voir le corrigé', keywords: 'version solution correction', disabled: !resource, run: () => { if (resource) navigate(resource, value); focusPanel('pdf'); } })),
+    ...variants.map(value => ({ id: value, label: `Voir : ${labels[value]}`, keywords: 'version solution correction cours présentation', disabled: !resource, run: () => { if (resource) navigate(resource, value); focusPanel('pdf'); } })),
     { id: 'pdf-download', label: 'Télécharger le PDF', keywords: 'export document', disabled: !canDownloadPdf, run: downloadPdf },
     { id: 'source-download', label: 'Télécharger le fichier Typst', keywords: 'export source', disabled: !code, run: downloadSource },
     { id: 'theme', label: dark ? 'Activer le thème clair' : 'Activer le thème sombre', keywords: 'apparence dark mode', run: toggleTheme },
@@ -216,7 +227,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
           {editorOpen && <ResizeHandle label="Largeur de l’éditeur" value={editorWidth} min={280} max={900} onChange={value => { setEditorWidth(value); store('editor-width', String(value)); }} />}
           <section className="preview-panel" aria-label="Document PDF">
             <Suspense fallback={<div className="pane-loading">Chargement de l’aperçu…</div>}><PdfViewer dark={dark} pdf={compilation.pdf} pending={compilation.pending} onReady={focusPending} toolbar={<>
-              <VariantTabs variant={variant} onChange={value => resource && navigate(resource, value)} />
+              <VariantTabs documentType={resource?.type} variant={variant} onChange={value => resource && navigate(resource, value)} />
               <span className={`compilation-status ${compilation.error || loadError ? 'has-error' : ''}`} title={status} role="status">{compilation.pending ? <span className="loading loading-spinner loading-xs" /> : compilation.error || loadError ? <CircleAlert size={13} /> : <span className="status-dot" />}<span className="sr-only">{status}</span></span>
             </>} actions={<button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le PDF" title="Télécharger le PDF" disabled={!canDownloadPdf} onClick={downloadPdf}><Download size={14} /></button>} /></Suspense>
           </section>

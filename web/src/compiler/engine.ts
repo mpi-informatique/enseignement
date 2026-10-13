@@ -2,7 +2,7 @@ import { createTypstCompiler } from '@myriaddreamin/typst.ts/compiler';
 import { loadFonts, withAccessModel, withPackageRegistry } from '@myriaddreamin/typst.ts/options.init';
 import { MemoryAccessModel } from '@myriaddreamin/typst.ts/fs/memory';
 import type { WebAssemblyModuleRef } from '@myriaddreamin/typst.ts/wasm';
-import type { Resource, Variant } from '@mpi-informatique/exercices-core';
+import { outputVariant, type Resource, type Variant } from '@mpi-informatique/exercices-core';
 
 interface Assets {
   bundle: Record<string, string>;
@@ -32,10 +32,10 @@ export async function createEngine({ bundle, fonts, wasm }: Assets) {
   let previousSource: string | undefined;
 
   return {
-    async inspect(file: string, kind: Resource['kind']): Promise<Resource> {
+    async inspect(file: string, kind: Resource['kind'], documentType?: string): Promise<Resource> {
       const options = {
         mainFilePath: kind === 'exercice' ? '/@memory/workspace/templates/fiche.typ' : `/@memory/workspace/${file}`,
-        root: '/@memory/workspace', inputs: { corrige: 'false', exercice: `/${file}` },
+        root: '/@memory/workspace', inputs: { format: 'cours', corrige: 'false', exercice: `/${file}` },
       };
       const meta = await compiler.runWithWorld(options, async world => {
         const result = await world.compile({ diagnostics: 'unix' });
@@ -51,14 +51,14 @@ export async function createEngine({ bundle, fonts, wasm }: Assets) {
       const fields = ['chapitres', 'algorithmes', 'structures', 'langages', 'niveaux'] as const;
       return {
         id: file, fichier: file, kind, titre: base.titre,
-        type: kind === 'exercice' ? (base.concours ? 'concours' : 'exercice') : base.type,
+        type: kind === 'exercice' ? (base.concours ? 'concours' : 'exercice') : documentType && documentType !== 'document' ? documentType : base.type,
         concours: base.concours ?? null, duree: base.duree ?? null,
         difficulte: meta.exercises.length ? Math.max(...meta.exercises.map((ex: { difficulte: number }) => ex.difficulte)) : null,
         nombreExercices: meta.exercises.length,
         ...Object.fromEntries(fields.map(field => [field, [...new Set<string>(meta.exercises.flatMap((ex: Record<string, string[]>) => ex[field] ?? []))]])) as Pick<Resource, typeof fields[number]>,
       };
     },
-    async compile(resource: Pick<Resource, 'fichier' | 'kind'>, source: string, variant: Variant) {
+    async compile(resource: Pick<Resource, 'fichier' | 'kind'> & Partial<Pick<Resource, 'type'>>, source: string, variant: Variant) {
       const path = `/@memory/workspace/${resource.fichier}`;
       // Une feuille peut importer l'exercice précédemment édité : restaurer sa source.
       if (previousSource && previousSource !== path) compiler.unmapShadow(previousSource);
@@ -68,7 +68,9 @@ export async function createEngine({ bundle, fonts, wasm }: Assets) {
       const result = await compiler.runWithWorld({
         mainFilePath: resource.kind === 'exercice' ? '/@memory/workspace/templates/fiche.typ' : path,
         root: '/@memory/workspace',
-        inputs: { corrige: String(variant === 'corrige'), exercice: `/${resource.fichier}` },
+        inputs: resource.type === 'cours-presentation'
+          ? { format: outputVariant(variant, resource.type) }
+          : { corrige: String(variant === 'corrige'), exercice: `/${resource.fichier}` },
       }, world => world.pdf({ diagnostics: 'unix' }));
       if (!result.result) throw new Error(result.diagnostics?.join('\n') || 'La compilation a échoué.');
       return { pdf: new Uint8Array(result.result), diagnostics: result.diagnostics ?? [], duration: Math.round(performance.now() - start) };

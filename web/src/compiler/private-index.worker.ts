@@ -1,5 +1,5 @@
 import { browserEngine } from './assets';
-import { privateId, sourceKind } from '../lib/privateBank';
+import { privateId, sourceType } from '../lib/privateBank';
 import type { Resource } from '@mpi-informatique/exercices-core';
 
 self.onmessage = async ({ data }: MessageEvent<{ repository: string; sources: Record<string, string>; bundle: Record<string, string> }>) => {
@@ -10,11 +10,12 @@ self.onmessage = async ({ data }: MessageEvent<{ repository: string; sources: Re
     const ignored = new Set(['lib', 'templates', 'ressources']);
     const candidates = Object.entries(data.sources).filter(([file]) => !file.split('/').some(part => ignored.has(part)));
     for (const [file, source] of candidates) {
-      const kind = sourceKind(source);
-      if (!kind) continue;
+      const type = sourceType(source);
+      if (!type) continue;
+      const kind = type === 'exercice' ? 'exercice' : 'document';
       self.postMessage({ type: 'progress', message: `Indexation des exercices privés… ${resources.length + warnings.length + 1}` });
       try {
-        const resource = await engine.inspect(file, kind);
+        const resource = await engine.inspect(file, kind, type);
         resources.push({ ...resource, id: privateId(data.repository, file) });
       } catch (error) { warnings.push(`${file} : ${error instanceof Error ? error.message : 'métadonnées illisibles'}`); }
     }

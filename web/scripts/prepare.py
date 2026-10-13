@@ -17,7 +17,7 @@ from catalogue import catalogue
 from sources import sources
 
 
-def document(typst, source):
+def document(typst, source, kind="document"):
     # Interroger la même API que les PDF, sans réinterpréter le code Typst.
     result = subprocess.run(
         [typst, "eval", "--root", str(ROOT), "--ignore-system-fonts", "--in", str(ROOT / source),
@@ -27,7 +27,7 @@ def document(typst, source):
     data = json.loads(result.stdout)
     meta, exercises = data["document"], data["exercices"]
     return {
-        "fichier": source, "titre": meta["titre"], "type": meta["type"],
+        "fichier": source, "titre": meta["titre"], "type": kind if kind != "document" else meta["type"],
         "concours": meta.get("concours"), "duree": None,
         "difficulte": max((ex["difficulte"] for ex in exercises), default=None),
         "nombreExercices": len(exercises),
@@ -42,8 +42,8 @@ def resources(typst):
         kind = "concours" if ex.get("concours") else "exercice"
         entries.append({**ex, "kind": "exercice", "type": kind, "nombreExercices": 1})
     for source, kind in sources():
-        if kind == "document":
-            entries.append({**document(typst, source), "kind": "document"})
+        if kind != "exercice":
+            entries.append({**document(typst, source, kind), "kind": "document"})
     identifiers = set()
     for entry in entries:
         entry["id"] = Path(entry["fichier"]).stem

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { bankFile, commitPrivateFile, loadPrivateFiles, privateId, privateRepositories, sourceKind } from '../src/lib/privateBank.ts';
+import { bankFile, commitPrivateFile, loadPrivateFiles, privateId, privateRepositories, sourceKind, sourceType } from '../src/lib/privateBank.ts';
 import { createSearch } from '../src/lib/search.ts';
 import type { Resource } from '../../shared/src/index.ts';
 
@@ -112,7 +112,13 @@ test('les fichiers non pertinents et chemins hors banque sont exclus ; la décou
   assert.equal(sourceKind('/* bloc /* imbriqué */ #let ex = faux */'), undefined);
   assert.equal(sourceKind('#let ex = exercice(meta: (:))'), 'exercice');
   assert.equal(sourceKind('#show: feuille.with(titre: "TD")'), 'document');
-  assert.equal(sourceKind('#show: cours.with(titre: "Cours")'), undefined);
+  for (const [template, type] of [['cours', 'cours'], ['presentation', 'presentation'], ['cours-et-presentation', 'cours-presentation']]) {
+    const source = `#show: ${template}.with(titre: "Cours")`;
+    assert.equal(sourceKind(source), 'document');
+    assert.equal(sourceType(source), type);
+    assert.equal(sourceKind(`// ${source}`), undefined);
+    assert.equal(sourceKind('```typst\n' + source + '\n```'), undefined);
+  }
 });
 
 test('la recherche conserve les doublons public/privé et filtre le tag privé', () => {

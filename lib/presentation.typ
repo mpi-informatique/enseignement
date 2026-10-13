@@ -56,7 +56,10 @@
     ),
     touying.config-article(wrap: false, linearize: false),
   )
-  touying.slides-only(titre-madrid(titre, niveau: niveau, auteur: auteur, couleur: couleur))
+  touying.slides-only(titre-madrid([
+    #metadata((type: "presentation", titre: titre, niveau: niveau)) <document-meta>
+    #titre
+  ], niveau: niveau, auteur: auteur, couleur: couleur))
   body
 }
 
