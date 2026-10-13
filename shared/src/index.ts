@@ -89,7 +89,7 @@ export function sourceId(source: string): string {
   return source.slice(source.lastIndexOf('/') + 1, -4);
 }
 
-export const typeLabels: Record<string, string> = { exercice: 'Exercice', td: 'TD', devoir: 'Devoir', concours: 'Concours', colle: 'Colle', copie: 'Copie', cours: 'Cours', tp: 'TP', algorithme: 'Algorithme', poly: 'Polycopié', presentation: 'Présentation', 'cours-presentation': 'Cours / Présentation' };
+export const typeLabels: Record<string, string> = { exercice: 'Exercice', td: 'TD', devoir: 'Devoir', concours: 'Concours', colle: 'Colle', copie: 'Copie', cours: 'Cours', tp: 'TP', algorithme: 'Algorithme', poly: 'Polycopié', presentation: 'Présentation', 'cours-presentation': 'Cours' };
 export const typeLabel = (type: string): string => typeLabels[type] ?? type;
 
 export interface Resource extends Omit<Exercise, 'difficulte'> {
