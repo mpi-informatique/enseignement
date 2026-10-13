@@ -109,7 +109,7 @@
           text(size: 1em, weight: "bold", fill: white, [#full-title#if coeur { h(0.4em); [♡] }]),
         )
       }
-      block(width: 100%, fill: couleur.lighten(if nom == "exercise" { 88% } else { 94% }), radius: (bottom: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.5em), body)
+      block(width: 100%, fill: couleur.lighten(88%), radius: (bottom: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.5em), body)
     })
   }
 }

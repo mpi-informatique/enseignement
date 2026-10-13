@@ -3,7 +3,7 @@
 
 #import "blocs.typ": bloc-solution
 #import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
-#import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree, espacement-blocs
+#import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree
 
 // Les exercices sont des données Typst ordinaires.
 /// Construit une question ; son énoncé reste visible dans le corrigé.
@@ -38,7 +38,7 @@
 
 // Titres communs aux exercices et aux parties des sujets.
 #let titre-exercice(titre, prefixe, concours: none, niveau: 1) = {
-  block(above: espacement-blocs, below: espacement-blocs, breakable: false)[
+  block(breakable: false)[
     #heading(level: niveau, numbering: none)[
       #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
         [#prefixe -- #titre],
@@ -229,7 +229,7 @@
 /// - afficher-contexte (bool): Conserver les textes libres dans le corrigé, défaut true. Les questions et leurs figures restent toujours visibles.
 /// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
 /// -> content
-#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, afficher-contexte: true, bareme: none, espacement: espacement-blocs) = {
+#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, afficher-contexte: true, bareme: none, espacement: auto) = {
   let bareme = if bareme == none { ex.bareme } else { bareme }
   let nombre = nombre-questions(ex.contenu)
   verifier-bareme(bareme, nombre)
@@ -324,7 +324,7 @@
   corrige: false,
   nouvelle-page: false,
   afficher-exercices: true,
-  espacement: espacement-blocs,
+  espacement: auto,
   bareme: none,
   body,
 ) = {

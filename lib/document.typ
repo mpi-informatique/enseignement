@@ -1,7 +1,7 @@
 /// Mise en page A4 commune aux feuilles et aux cours.
 #import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
-#import "blocs.typ": espacement-blocs, epaisseur-trait
+#import "blocs.typ": epaisseur-trait
 
 /// Espace horizontal de 0,5 em, utilisable dans une formule avec `#sep`.
 /// -> content

@@ -1,1 +1,0 @@
-Utiliser automatiquement la largeur du pdf pour le pdf viewer, comme pour l'extension vscode.

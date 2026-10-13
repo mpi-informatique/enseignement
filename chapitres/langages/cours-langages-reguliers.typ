@@ -6,16 +6,12 @@
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
 
 #slides-only[
-  = Motivation des langages formels
-  == Recherche de motifs et syntaxe
+  == Motivation des langages formels
 
-  - Recherche d'un motif dans un texte.
+  Recherche d'un motif dans un texte.
 
-  #align(center, image("langages-reguliers/code-mail.png", width: 36%))
+  #align(center, image("langages-reguliers/regexp-mail.jpeg", width: 70%))
   #align(center, text(size: 0.7em)[Recherche d'une adresse électronique dans Visual Studio Code])
-
-  #pause
-  - Formalisation de la syntaxe d'un langage de programmation et conception d'un nouveau langage : grammaires d'#link("https://ocaml.org/manual/lex.html")[OCaml] et de #link("https://docs.python.org/3/reference/grammar.html")[Python].
 ]
 
 = Alphabet et mot

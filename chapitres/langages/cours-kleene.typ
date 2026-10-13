@@ -22,14 +22,14 @@ On construit d'abord un automate à partir d'une expression régulière, puis un
 #definition[
   Une expression régulière est linéaire si chaque lettre y apparaît au plus une fois.
 ]
-*Exemples* : $b a | a$ n'est pas linéaire, mais $a^* b$ est linéaire.
+#underline[Exemple] : $b a | a$ n'est pas linéaire, mais $a^* b$ est linéaire.
 
 #slides-only[== Linéarisation]
 #definition[
   Linéariser une expression $e$ consiste à remplacer chacune de ses occurrences de lettres par une lettre distincte d'un nouvel alphabet $Σ'$.
   La projection $π : Σ' → Σ$ associe chaque nouvelle lettre à la lettre d'origine.
 ]
-*Exemple* : $e = ε | b (a | b b)^* b$ se linéarise en
+#underline[Exemple] : $e = ε | b (a | b b)^* b$ se linéarise en
 $ e' = ε | b_0 (a_0 | b_1 b_2)^* b_3, $
 avec $π(a_0) = a$ et $π(b_i) = b$.
 
@@ -112,8 +112,9 @@ Pour reconnaître un langage local $L$, utiliser $Q = Σ ∪ {q_0}$, avec $q_0 �
 
 == Algorithme de Berry-Sethi
 #algorithm(coeur: true)[
-  *Entrée* : une expression régulière $e$. *Sortie* : un automate de Glushkov reconnaissant $L(e)$.
-  + Linéariser $e$ en $e'$ et conserver la projection $π$.
+  #underline[Entrée] : une expression régulière $e$.\
+  #underline[Sortie] : un automate de Glushkov reconnaissant $L(e)$.
+  + Linéariser $e$ en $e'$ en remplaçant chaque lettre $a$ par une nouvelle lettre $phi(a)$.
   + Calculer $P(L(e'))$, $S(L(e'))$ et $F(L(e'))$, et tester $ε ∈ L(e')$.
   + Construire l'automate local reconnaissant $L(e')$.
   + Remplacer chaque étiquette $a' ∈ Σ'$ par $π(a')$.

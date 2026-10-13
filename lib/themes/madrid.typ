@@ -10,7 +10,7 @@
 /// - ..configurations (arguments): Configurations Touying supplémentaires.
 /// - body (content): Contenu de la présentation.
 /// -> content
-#let theme-madrid(aspect-ratio: "16-9", couleur: rgb("#233e6a"), taille: 22pt, police: ("New Computer Modern Sans", "New Computer Modern"), style: body => body, ..configurations, body) = {
+#let theme-madrid(aspect-ratio: "16-9", couleur: rgb("#233e6a"), taille: 22pt, police: ("New Computer Modern", "New Computer Modern"), style: body => body, ..configurations, body) = {
   let bandeau(self) = context {
     set text(fill: white, top-edge: "bounds", bottom-edge: "bounds")
     block(

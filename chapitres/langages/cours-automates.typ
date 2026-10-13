@@ -29,15 +29,11 @@
   - $F ⊂ Q$ est l'ensemble des états finaux, ou acceptants.
   - $E ⊂ Q × Σ × Q$ est l'ensemble des transitions.
 ]
-#slides-only[== Représentation graphique]
-Un automate est un graphe orienté dont les arcs sont étiquetés par des lettres.
-Les flèches entrantes désignent les états initiaux et les doubles cercles les états finaux.
-
 #slides-only[== Exemple d'automate]
 
 #figure(exemple, numbering: none, caption: [
-  *Exemple* : $Σ = {a, b}$, $Q = {0, 1, 2}$, $I = {0}$, $F = {2}$ et
-  $ E = {(0, a, 0), (0, b, 1), (1, a, 0), (1, a, 2), (2, b, 2)}. $
+  $Σ = {a, b}, Q = {0, 1, 2}, I = {0}, F = {2}$\
+  $E = {(0, a, 0), (0, b, 1), (1, a, 0), (1, a, 2), (2, b, 2)}$
 ])
 
 == Fonction de transition
@@ -399,3 +395,7 @@ Pour montrer que $L$ n'est pas reconnaissable :
   == Correction : des nombres différents
   Si $L_2$ était reconnaissable, $a^* b^* ∖ L_2 = L_1$ le serait aussi par stabilité par différence.
 ]
+
+#underline[Remarque] : 
+- Les automates sont sans mémoire : le choix d'une transition dépend uniquement de l'état actuel et de la lettre lue, pas du chemin déjà parcouru. Ils ne peuvent donc pas compter. 
+- ${a^n b^p | n ≡ p mod 2}$ est reconnaissable car il suffit de mémoriser la parité du nombre de $a$ et de $b$ lus (2 états suffisent) et pas une infinité de valeurs possibles.
