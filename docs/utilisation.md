@@ -17,7 +17,7 @@ Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock
 Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `charger("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
 Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple `read("corrige.ml")`.
 
-Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD, colles et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
+Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
 Les mathématiques conservent leurs sous-dossiers dans `chapitres/maths/`, notamment `determinants/` et `reduction/`. Leurs feuilles sont directement dans `chapitres/maths/`.
 Les sujets écrits de concours sont dans `devoirs/concours/`, avec leur classement par année. Les exercices oraux sont dans `devoirs/concours/oral/<concours>/`, où `<concours>` est le nom en minuscules de l'une des valeurs de `concours-possibles`. Les cours et présentations sont dans leur chapitre, avec leurs ressources dans un sous-dossier voisin.
 
@@ -28,6 +28,8 @@ Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
 - Placer les introductions et définitions dans `contenu`. Reprendre explicitement les rappels de `contexte` dans un exercice autonome.
 - Pour ajouter un type de document, partir d'un modèle dans `templates/`. Garder `feuille.with` et un `titre` littéral (ou `ex.meta.titre` pour un sujet monolithique) pour permettre la recherche sans évaluation Typst.
 - Conserver le suivi individuel dans des copies séparées, liées au sujet (voir ci-dessous).
+
+Les sujets de colle sont conservés dans le dépôt privé `exercices-prive`, sous `chapitres/<chapitre>/colles/` (avec un sous-dossier annuel si nécessaire). Les exercices publics qu'ils réutilisent restent dans la banque publique et sont chargés avec `charger`.
 
 ## Imports et déplacement entre dépôts
 
