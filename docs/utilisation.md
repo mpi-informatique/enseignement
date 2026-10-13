@@ -5,14 +5,15 @@ Ce guide décrit les choix éditoriaux et les procédures de travail. Pour les c
 ## Démarrage
 
 Installer Nix avec les fonctionnalités `nix-command` et `flakes` activées.
-`nix develop path:.` ouvre un terminal avec Typst, Just, Python et OCaml ;
+`nix develop .` ouvre un terminal avec Typst, Just, Python et OCaml ;
 `flake.lock` fixe leurs versions. Pour vérifier la banque sans ouvrir ce terminal :
-`nix develop path:. -c just check`.
-Pour lancer la banque web, utiliser `just web` (ou `nix develop path:. -c just web`) ; `just web-stop` arrête le serveur. Voir le [guide du site](../web/README.md) pour les options et la construction statique.
+`nix develop . -c just check`.
+Dans un dépôt Git, Nix utilise les fichiers suivis avec leurs modifications locales et exclut les fichiers non suivis, notamment les sorties ignorées. Ajouter les nouveaux fichiers nécessaires au package avec `git add` avant de relancer Nix ; un commit n'est pas nécessaire. Éviter `path:.`, qui inclut aussi les fichiers ignorés et peut multiplier les copies volumineuses dans le store. Pour plusieurs commandes successives, ouvrir une seule fois `nix develop .`, puis lancer les commandes dans ce terminal.
+Pour lancer la banque web, utiliser `just web` (ou `nix develop . -c just web`) ; `just web-stop` arrête le serveur. Voir le [guide du site](../web/README.md) pour les options et la construction statique.
 L'extension [Exercices MPI](https://github.com/mpi-informatique/vscode-mpi-exercices) permet aussi de rechercher, composer et compiler les documents dans VS Code.
 
 Ce dépôt fournit le package `@mpi-informatique/exercices:0.1.0`.
-`nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
+`nix develop . -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
 Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock`.
 Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `public("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
 Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple `read("corrige.ml")`.
@@ -96,9 +97,9 @@ Ces commandes peuvent aussi entourer une section entière.
 Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
 
 ```sh
-nix develop path:. -c just c chapitres/langages/cours-langages-reguliers.typ
-nix develop path:. -c just w chapitres/langages/cours-langages-reguliers.typ cours
-nix develop path:. -c just w chapitres/langages/cours-langages-reguliers.typ presentation
+nix develop . -c just c chapitres/langages/cours-langages-reguliers.typ
+nix develop . -c just w chapitres/langages/cours-langages-reguliers.typ cours
+nix develop . -c just w chapitres/langages/cours-langages-reguliers.typ presentation
 ```
 
 Pour compiler directement, utiliser `typst compile --root . --input format=cours source.typ cours.pdf` ou `--input format=presentation`.
@@ -109,7 +110,7 @@ Pour compiler directement, utiliser `typst compile --root . --input format=cours
 
 Les commentaires `///` de [lib/exercice.typ](../lib/exercice.typ) documentent les fonctions publiques, leurs paramètres et le comportement des corrigés. [lib/meta.typ](../lib/meta.typ) contient les valeurs autorisées, sans copie dans ce guide.
 
-Générer la référence PDF avec `nix develop path:. -c just docs`. Consulter aussi les commentaires de [lib/presentation.typ](../lib/presentation.typ) et la mise en page commune de [lib/document.typ](../lib/document.typ).
+Générer la référence PDF avec `nix develop . -c just docs`. Consulter aussi les commentaires de [lib/presentation.typ](../lib/presentation.typ) et la mise en page commune de [lib/document.typ](../lib/document.typ).
 
 ## Métadonnées
 
@@ -225,9 +226,9 @@ question([Justifier la complexité.], points: 1.5, solution: [ ... ])
 ## Compilation et tests
 
 ```sh
-nix develop path:. -c just check
-nix develop path:. -c just c chapitres/langages/exercices/residuels-minimisation.typ
-nix develop path:. -c just docs
+nix develop . -c just check
+nix develop . -c just c chapitres/langages/exercices/residuels-minimisation.typ
+nix develop . -c just docs
 ```
 
 Lancer `just check` avant livraison. Utiliser `just w <chemin> corrige` pour travailler sur un corrigé, ou `enonce` pour son énoncé. Les commandes directes sont décrites dans [scripts/README.md](../scripts/README.md).

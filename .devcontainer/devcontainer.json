@@ -9,7 +9,7 @@
   "containerEnv": {
     "NIX_CONFIG": "experimental-features = nix-command flakes"
   },
-  "postCreateCommand": "nix develop path:. -c true",
+  "postCreateCommand": "nix develop . -c true",
   "customizations": {
     "vscode": {
       "extensions": [

@@ -11,10 +11,10 @@ Worker de production : `https://exercices-github-auth.qpfortier.workers.dev`. L'
 3. Installer et connecter Wrangler, depuis `worker/` :
 
    ```sh
-   nix develop path:..#web -c npm ci
-   nix develop path:..#web -c npx wrangler login
-   nix develop path:..#web -c npm run deploy
-   nix develop path:..#web -c npx wrangler secret put GITHUB_CLIENT_SECRET
+   nix develop ..#web -c npm ci
+   nix develop ..#web -c npx wrangler login
+   nix develop ..#web -c npm run deploy
+   nix develop ..#web -c npx wrangler secret put GITHUB_CLIENT_SECRET
    ```
 
    Saisir le secret GitHub uniquement à l'invite de Wrangler. Les secrets locaux `.dev.vars` et `.env` sont ignorés par Git. Garder l'offre Workers Free si aucun abonnement payant n'est souhaité.
@@ -28,7 +28,7 @@ Sans `PUBLIC_GITHUB_AUTH_URL`, le site conserve le bouton historique de copie du
 
 ## Développement local
 
-Utiliser une **autre OAuth App** avec le callback `http://127.0.0.1:4321/contribution/`. Créer `worker/.dev.vars` avec `SITE_URL=http://127.0.0.1:4321/`, `GITHUB_CLIENT_ID` et `GITHUB_CLIENT_SECRET` de cette application. Lancer `npm run dev` dans `worker/`, puis le site avec `PUBLIC_GITHUB_AUTH_URL=http://127.0.0.1:8787 nix develop path:. -c just web`. Si un autre port ou préfixe est utilisé, adapter le callback et `SITE_URL` exactement.
+Utiliser une **autre OAuth App** avec le callback `http://127.0.0.1:4321/contribution/`. Créer `worker/.dev.vars` avec `SITE_URL=http://127.0.0.1:4321/`, `GITHUB_CLIENT_ID` et `GITHUB_CLIENT_SECRET` de cette application. Lancer `npm run dev` dans `worker/`, puis le site avec `PUBLIC_GITHUB_AUTH_URL=http://127.0.0.1:8787 nix develop . -c just web`. Si un autre port ou préfixe est utilisé, adapter le callback et `SITE_URL` exactement.
 
 Les tests du Worker et du parcours GitHub font partie de `npm test` dans `web/`. Ils simulent l'API et ne créent aucune ressource distante.
 

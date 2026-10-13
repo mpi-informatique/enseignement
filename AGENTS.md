@@ -15,7 +15,7 @@ Les consignes doivent porter uniquement sur les choix et procédures que le code
 
 ## Commandes utiles
 
-Depuis la racine du dépôt `exercices/`, utiliser les recettes du [justfile](justfile). Si Just n'est pas disponible dans le terminal, remplacer `just …` par `nix develop path:. -c just …`.
+Depuis la racine du dépôt `exercices/`, utiliser les recettes du [justfile](justfile). Si Just n'est pas disponible dans le terminal, remplacer `just …` par `nix develop . -c just …`.
 
 | Commande | Usage |
 | --- | --- |
@@ -33,7 +33,7 @@ Voir le [guide du site](web/README.md) pour les autres options web et la [docume
 ## Vérification et livraison
 
 - Après chaque modification du site ou de la banque affichée, arrêter puis relancer le serveur local avec les recettes `web-stop` et `web`, et ouvrir son URL locale dans le navigateur intégré de Codex. Conserver si possible l'exercice et la variante affichés. Vérifier que les derniers changements sont visibles avant de livrer.
-- Lancer `nix develop path:. -c just check` et annoncer les vérifications réellement effectuées.
+- Lancer `nix develop . -c just check` et annoncer les vérifications réellement effectuées.
 - N'inspecter les PDF générés que si c'est vraiment utile.
 - Communiquer les fichiers modifiés et les corrections, avec des liens cliquables vers les PDF d'énoncé et de corrigé lorsqu'ils ont été générés.
 - Pour chaque modification, faire un commit directement sur la branche principale, puis synchroniser avec le dépôt distant : récupérer et intégrer les éventuels commits distants, puis pousser les commits locaux, sans push forcé.

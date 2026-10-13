@@ -57,16 +57,16 @@ web *args:
     #!/usr/bin/env sh
     set -eu
     if [ ! -d node_modules ]; then
-        nix develop path:..#web -c npm ci
+        nix develop ..#web -c npm ci
     fi
-    exec nix develop path:..#web -c npm run dev -- "$@"
+    exec nix develop ..#web -c npm run dev -- "$@"
 
 # Installer ou actualiser les dépendances npm du site.
 [working-directory: 'web']
 web-install:
-    nix develop path:..#web -c npm ci
+    nix develop ..#web -c npm ci
 
 # Arrêter le serveur de développement Astro.
 [working-directory: 'web']
 web-stop:
-    nix develop path:..#web -c npx astro dev stop
+    nix develop ..#web -c npx astro dev stop

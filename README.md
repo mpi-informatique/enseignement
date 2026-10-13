@@ -29,18 +29,18 @@ Conserver le code et les tests à côté du document qui les présente. Les cons
 Installer Nix avec `nix-command` et `flakes`, puis lancer :
 
 ```sh
-nix develop path:. -c just check
-nix develop path:. -c just c chapitres/langages/exercices/residuels-minimisation.typ
-nix develop path:. -c just w chapitres/langages/exercices/residuels-minimisation.typ
+nix develop . -c just check
+nix develop . -c just c chapitres/langages/exercices/residuels-minimisation.typ
+nix develop . -c just w chapitres/langages/exercices/residuels-minimisation.typ
 ```
 
-Pour les autres commandes, lancer `just` ou consulter la [documentation des scripts](scripts/README.md). Pour les paramètres et fonctions Typst, générer la référence de l'API avec `nix develop path:. -c just docs`.
+Pour les autres commandes, lancer `just` ou consulter la [documentation des scripts](scripts/README.md). Pour les paramètres et fonctions Typst, générer la référence de l'API avec `nix develop . -c just docs`.
 
 Pour ajouter une dépendance Typst, fixer sa version dans l'import et ajouter son archive et son empreinte à [nix/typst-packages.json](nix/typst-packages.json), avec ses dépendances. Vérifier aussi la construction isolée avec `nix flake check path:.`.
 
 Hors de Nix, installer Typst, Just, Python 3.11 ou ultérieur et OCaml : `just check` utilise alors l'installation et le cache Typst de la machine.
 
-Just est facultatif pour compiler : `nix develop path:. -c python3 scripts/build.py c chemin.typ` équivaut à `nix develop path:. -c just c chemin.typ`. Voir la [vue d'ensemble des scripts Python](scripts/README.md) pour leurs rôles et les commandes directes.
+Just est facultatif pour compiler : `nix develop . -c python3 scripts/build.py c chemin.typ` équivaut à `nix develop . -c just c chemin.typ`. Voir la [vue d'ensemble des scripts Python](scripts/README.md) pour leurs rôles et les commandes directes.
 
 ## Cours et présentations
 
@@ -48,8 +48,8 @@ Partir des modèles [cours A4](templates/cours.typ), [présentation Touying](tem
 Le cours sur les [langages réguliers](chapitres/langages/cours-langages-reguliers.typ) génère les deux formats sans recopier les énoncés :
 
 ```sh
-nix develop path:. -c just c chapitres/langages/cours-langages-reguliers.typ
-nix develop path:. -c just w chapitres/langages/cours-langages-reguliers.typ presentation
+nix develop . -c just c chapitres/langages/cours-langages-reguliers.typ
+nix develop . -c just w chapitres/langages/cours-langages-reguliers.typ presentation
 ```
 
 Voir le [guide de rédaction](docs/utilisation.md#cours-et-présentations) pour les pauses et les contenus propres à un format.
@@ -70,7 +70,7 @@ Pour les exports et les paramètres, consulter [l'API](load.typ) et ses commenta
 
 ## Contribuer
 
-Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/utilisation.md). Le modèle de [colle](templates/colle.typ) regroupe les exercices par sujet et place les corrigés après tous les énoncés ; `--input corrige=false` produit uniquement les énoncés. Vérifier qu'un exercice n'existe pas déjà, conserver ses ressources et tests dans le même dossier, puis lancer `nix develop path:. -c just check` avant de proposer une pull request.
+Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/utilisation.md). Le modèle de [colle](templates/colle.typ) regroupe les exercices par sujet et place les corrigés après tous les énoncés ; `--input corrige=false` produit uniquement les énoncés. Vérifier qu'un exercice n'existe pas déjà, conserver ses ressources et tests dans le même dossier, puis lancer `nix develop . -c just check` avant de proposer une pull request.
 
 Un sujet de concours utilise la même base qu'un devoir : `feuille.with(type: "devoir", concours: ex.meta.concours, exercices: (ex,), titre: ex.meta.titre)`. Voir les modèles [devoir](templates/devoir.typ) et [sujet de concours](templates/sujet-concours.typ).
 

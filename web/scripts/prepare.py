@@ -93,7 +93,7 @@ def prepare():
     packages = []
     package_path = os.environ.get("TYPST_PACKAGE_PATH")
     if not package_path:
-        raise RuntimeError("TYPST_PACKAGE_PATH absent : lancer depuis nix develop path:..#web.")
+        raise RuntimeError("TYPST_PACKAGE_PATH absent : lancer depuis nix develop ..#web.")
     for dependency in json.loads((ROOT / "nix/typst-packages.json").read_text()):
         name = f"preview/{dependency['name']}/{dependency['version']}"
         source = Path(package_path) / name

@@ -5,12 +5,12 @@ La logique des commandes est en Python. Just fournit des raccourcis : `just chec
 Depuis la racine du dépôt :
 
 ```sh
-nix develop path:.
+nix develop .
 python3 scripts/build.py c chapitres/langages/exercices/residuels-minimisation.typ
 python3 scripts/build.py check
 ```
 
-Sans ouvrir l'environnement : `nix develop path:. -c python3 scripts/build.py c chemin.typ`.
+Sans ouvrir l'environnement : `nix develop . -c python3 scripts/build.py c chemin.typ`.
 
 ## Vue d'ensemble
 

@@ -10,12 +10,12 @@ Depuis la racine du dépôt `exercices/` :
 just web
 ```
 
-La commande entre dans l'environnement Nix du site et installe les dépendances npm au premier lancement. Si Just n'est pas déjà disponible, utiliser `nix develop path:. -c just web`. Astro lance le serveur en arrière-plan ; `just web-stop` l'arrête. Les arguments sont transmis à Astro, par exemple `just web --port 4322 --open`. Après une modification des dépendances, lancer `just web-install`.
+La commande entre dans l'environnement Nix du site et installe les dépendances npm au premier lancement. Si Just n'est pas déjà disponible, utiliser `nix develop . -c just web`. Astro lance le serveur en arrière-plan ; `just web-stop` l'arrête. Les arguments sont transmis à Astro, par exemple `just web --port 4322 --open`. Après une modification des dépendances, lancer `just web-install`.
 
 Pour travailler directement depuis `exercices/web/` :
 
 ```sh
-nix develop path:..#web
+nix develop ..#web
 npm ci
 npm run dev
 ```
@@ -48,8 +48,8 @@ Dans **Settings → Pages → Build and deployment**, la source doit être **Git
 Pour reproduire la construction Pages localement depuis `web/` :
 
 ```sh
-BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run build
-BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop path:..#web -c npm run preview
+BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop ..#web -c npm run build
+BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop ..#web -c npm run preview
 ```
 
 ## Utilisation
