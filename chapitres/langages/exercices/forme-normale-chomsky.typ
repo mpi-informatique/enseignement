@@ -15,7 +15,7 @@
       Une grammaire $G = (Σ,V,R,S)$ est en forme normale de Chomsky si ses règles sont $X → Y Z$, avec $Y,Z ∈ V$, ou $X → a$, avec $a ∈ Σ$.
       On autorise aussi $S → ε$, à condition que $S$ n'apparaisse dans aucun membre droit.],
     question([
-      Soit $G$ une grammaire hors-contexte telle que $ε ∉ L(G)$.
+      Soit $G$ une grammaire non-contextuelle telle que $ε ∉ L(G)$.
       Montrer qu'il existe une grammaire en forme normale de Chomsky engendrant $L(G)$.
       Commencer par supprimer les règles d'effacement $X → ε$, puis les règles unitaires $X → Y$.
     ], solution: [
@@ -75,8 +75,8 @@
       Le mot vide est rejeté immédiatement dans ce cas.
     ]),
     question([
-      Prolongement : montrer que l'intersection d'un langage hors-contexte avec un langage régulier
-      est hors-contexte. Utiliser un automate déterministe et une grammaire en forme normale de Chomsky pour les mots non vides. Une variable $(p,X,q)$ devra engendrer les mots produits par $X$ qui mènent l'automate de $p$ à $q$.
+      Prolongement : montrer que l'intersection d'un langage non-contextuel avec un langage régulier
+      est non-contextuel. Utiliser un automate déterministe et une grammaire en forme normale de Chomsky pour les mots non vides. Une variable $(p,X,q)$ devra engendrer les mots produits par $X$ qui mènent l'automate de $p$ à $q$.
     ], solution: [
       Soit l'automate d'états $Q$, d'état initial $q_0$, d'états finaux $F$ et de transition $δ$.
       Pour chaque règle $X → Y Z$ et tous $p,r,q ∈ Q$, ajouter
@@ -88,7 +88,7 @@
       Prendre un nouvel axiome $A$ et les règles $A → (q_0,S,f)$ pour $f ∈ F$.
       Elles engendrent exactement les mots non vides de l'intersection.
       Si le mot vide appartient aux deux langages, ajouter $A → ε$.
-      La grammaire obtenue est hors-contexte, même si ses règles d'axiome ne sont pas en forme normale.
+      La grammaire obtenue est non-contextuelle, même si ses règles d'axiome ne sont pas en forme normale.
     ]),
   ),
 )

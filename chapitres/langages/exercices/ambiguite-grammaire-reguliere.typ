@@ -45,7 +45,7 @@
     - Question 5 : utiliser le même nom de variable dans toutes les règles de la construction.
   ],
   contenu: (
-    [On considère la grammaire hors-contexte $G$ sur $Σ = {a,b}$, d'axiome $S$, donnée par $S → S a S ∣ b$.],
+    [On considère la grammaire non-contextuelle $G$ sur $Σ = {a,b}$, d'axiome $S$, donnée par $S → S a S ∣ b$.],
     question([Cette grammaire est-elle ambiguë ? Justifier.], solution: [
       Oui : le mot $b a b a b$ possède les deux arbres d'analyse distincts suivants.
       #arbres
@@ -53,7 +53,7 @@
     ]),
     question([
       Déterminer, sans preuve pour cette question, le langage $L$ engendré par $G$.
-      Quelle est la plus petite classe, parmi les langages réguliers et hors-contexte, à laquelle $L$ appartient ?
+      Quelle est la plus petite classe, parmi les langages réguliers et non-contextuels, à laquelle $L$ appartient ?
     ], solution: [Le langage est $L = (b a)^* b$ : il est régulier.]),
     question([Prouver que $L = L(G)$.], solution: [
       Pour $n=0$, $S ⇒ b$ engendre $(b a)^0 b$.
@@ -73,7 +73,7 @@
       contenir au plus une variable dans chaque forme ne suffit pas en général à exclure l'ambiguïté.
     ]),
     question([
-      Montrer que tout langage régulier peut être engendré par une grammaire hors-contexte non ambiguë.
+      Montrer que tout langage régulier peut être engendré par une grammaire non-contextuelle non ambiguë.
     ], solution: [
       Soit un automate fini déterministe reconnaissant le langage, d'état initial $q_0$, d'ensemble d'états $Q$, d'états finaux $F$ et de transition $δ$.
       Introduire une variable $V_q$ pour chaque $q ∈ Q$, prendre $V_(q_0)$ pour axiome, ajouter $V_q → a V_(δ(q,a))$ pour chaque transition définie, et $V_f → ε$ pour chaque $f ∈ F$.

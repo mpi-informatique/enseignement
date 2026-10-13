@@ -19,7 +19,7 @@
   ),
   contenu: (
     [
-      Une grammaire hors-contexte $G = (Σ, V, R, S)$ est dite linéaire si le membre droit de chaque règle contient au plus une occurrence de variable.
+      Une grammaire non-contextuelle $G = (Σ, V, R, S)$ est dite linéaire si le membre droit de chaque règle contient au plus une occurrence de variable.
       Ses règles sont donc de la forme $X → u Y v$ ou $X → w$, avec $X, Y ∈ V$ et $u, v, w ∈ Σ^*$.
       Le mot vide est noté $ε$ et $L(G) = {w ∈ Σ^* | S ⇒^* w}$.
 

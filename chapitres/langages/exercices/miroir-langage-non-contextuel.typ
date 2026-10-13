@@ -3,14 +3,14 @@
 
 #let ex = exercice(
   meta: (
-    titre: "Miroir d'un langage hors-contexte",
+    titre: "Miroir d'un langage non-contextuel",
     chapitres: ("grammaires-non-contextuelles",),
     difficulte: 2,
     niveaux: ("MPI",),
   ),
   contenu: (
     [On note $widetilde(u) = u_n … u_1$ le miroir d'un mot $u = u_1 … u_n$ et $widetilde(L) = {widetilde(u) | u ∈ L}$ le miroir d'un langage $L$.],
-    question([Soit $L$ un langage hors-contexte. Montrer que $widetilde(L)$ est hors-contexte.], solution: [
+    question([Soit $L$ un langage non-contextuel. Montrer que $widetilde(L)$ est non-contextuel.], solution: [
       Soit $G = (Σ, V, R, S)$ une grammaire engendrant $L$.
       Remplacer chaque règle $X → α$ par $X → widetilde(α)$ donne une grammaire $G'$.
       Si $p X q ⇒ p α q$ dans $G$, alors $widetilde(q) X widetilde(p) ⇒ widetilde(q) widetilde(α) widetilde(p)$ dans $G'$.

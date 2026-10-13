@@ -10,7 +10,7 @@
     niveaux: ("MPI",),
   ),
   contenu: (
-    [Montrer que chacun des langages suivants est hors-contexte en donnant une grammaire et en justifiant que son langage est exactement celui demandé.
+    [Montrer que chacun des langages suivants est non-contextuel en donnant une grammaire et en justifiant que son langage est exactement celui demandé.
       Tous les exposants sont des entiers naturels.],
     question([$L_1 = (a b)^*$.], solution: [
       Prendre $S → a b S ∣ ε$.
