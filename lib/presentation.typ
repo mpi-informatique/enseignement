@@ -2,7 +2,7 @@
 #import "@preview/touying:0.8.0" as touying
 #import touying: pause, uncover, only, slide, article-only, slides-only
 #import "cours.typ": cours, espace-reponse
-#import "document.typ": auteur-par-defaut, espacement-blocs
+#import "document.typ": auteur-par-defaut
 #import "theoremes.typ": configurer-theoremes
 #import "code.typ": configurer-code
 #import "themes/madrid.typ": theme-madrid, titre-madrid
@@ -32,7 +32,7 @@
 /// - article (bool): Utiliser le thème A4, défaut false.
 /// - body (content): Titres de section `=`, titres de diapositive `==` et contenu partagé.
 /// -> content
-#let presentation(titre: "Présentation", niveau: none, auteur: auteur-par-defaut, aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), palette: (:), police: ("New Computer Modern Sans", "New Computer Modern"), animations: true, article: false, body) = {
+#let presentation(titre: "Présentation", niveau: none, auteur: "Quentin Fortier", aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), palette: (:), police: ("New Computer Modern Sans", "New Computer Modern"), animations: true, article: false, body) = {
   show: configurer-theoremes
   set text(font: "New Computer Modern", lang: "fr")
   show: theme-madrid.with(
@@ -49,8 +49,7 @@
       article-theme: body => {
         // Touying encadre les paragraphes vides entre titres : leurs marges s'ajouteraient à celles des titres.
         show block.where(body: parbreak()): it => []
-        // Compenser la marge du bloc racine ajouté par Touying après l'en-tête.
-        cours(titre: titre, niveau: niveau, auteur: auteur, [#v(-espacement-blocs) #body])
+        cours(titre: titre, niveau: niveau, auteur: auteur, body)
       },
       breakable: false,
       detect-overflow: true,

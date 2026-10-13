@@ -37,25 +37,18 @@
 #let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, attribution: none, titre-entete: none, contenu-entete: none, repeter-entete: false, taille: 10pt, body) = {
   set document(title: titre)
   set document(author: auteur) if auteur != none
-  show: configurer-theoremes.with(espacement: espacement-blocs)
+  show: configurer-theoremes
   show: configurer-code
   set text(font: "New Computer Modern", size: taille, lang: "fr")
-  set par(justify: true, leading: 0.55em, spacing: espacement-blocs)
-  set block(above: espacement-blocs, below: espacement-blocs)
+  set par(justify: true)
   set heading(numbering: "I.1.1 –")
-  show heading: set block(above: espacement-blocs, below: espacement-blocs)
-  show raw.where(block: true): set block(above: espacement-blocs, below: espacement-blocs)
-  show figure: set block(above: espacement-blocs, below: espacement-blocs)
-  show math.equation.where(block: true): set block(above: espacement-blocs, below: espacement-blocs)
-  show list: set block(above: espacement-blocs, below: espacement-blocs)
-  show enum: set block(above: espacement-blocs, below: espacement-blocs)
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
   set page(paper: "a4", margin: 12mm, header: none, footer: none, numbering: none)
-  let entete = if contenu-entete != none { contenu-entete } else { block(above: 0pt, below: 0pt, sticky: true, {
+  let entete = if contenu-entete != none { contenu-entete } else { context block(above: 0pt, below: 0pt, sticky: true, {
     set block(above: 0pt, below: 0pt)
-    stack(dir: ttb, spacing: espacement-blocs,
+    stack(dir: ttb, spacing: par.spacing,
       grid(columns: (24mm, 1fr, if attribution == none { 24mm } else { auto }), column-gutter: 1em, align: (left, center, right),
         if niveau != none { niveau },
         text(size: 1.2em, weight: "bold")[
@@ -69,7 +62,7 @@
   })
   }
   if repeter-entete {
-    set page(margin: (top: 25mm, rest: 12mm), header: entete, header-ascent: espacement-blocs)
+    set page(margin: (top: 25mm, rest: 12mm), header: entete)
     body
   } else {
     // L'en-tête dans le flux ne réduit que la première page.

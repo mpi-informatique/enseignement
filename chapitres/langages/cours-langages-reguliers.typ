@@ -7,7 +7,6 @@
 
 #slides-only[
   = Motivation des langages formels
-
   == Recherche de motifs et syntaxe
 
   - Recherche d'un motif dans un texte.
@@ -38,7 +37,7 @@
 
 #definition[
   - La concaténation de deux mots $u = u_1 … u_n$ et $v = v_1 … v_p$ est $u v = u_1 … u_n v_1 … v_p$.
-  - Si $u$ est un mot, on définit par récurrence $u^0 = ε$ et $u^k = u u^(k - 1)$ pour $k ≥ 1$.
+  - Si $u in Σ^*$, on définit par récurrence $u^0 = ε$ et $u^k = u u^(k - 1)$ pour $k ≥ 1$.
 ]
 
 #slides-only[== Une équation sur les mots]
@@ -349,7 +348,7 @@ Sur $Σ = {a, b}$ :
   + Mots dont la taille est congrue à $1$ modulo $3$.
   + Mots contenant un nombre pair de $a$.
   + Mots contenant un nombre impair de $a$.
-
+  
   Sur $Σ = {0, 1}$ :
   #enum(start: 5)[Écritures en base $2$ des entiers divisibles par $4$.]
 ]

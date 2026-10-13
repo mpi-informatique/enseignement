@@ -227,7 +227,7 @@
 /// - afficher-titre (bool): Afficher le titre de l'exercice.
 ///   Pour un exercice de concours, l'attribution s'affiche à droite à la place de la durée.
 /// - afficher-contexte (bool): Conserver les textes libres dans le corrigé, défaut true. Les questions et leurs figures restent toujours visibles.
-/// - espacement (length): Espacement vertical des textes et questions, défaut `espacement-blocs` de la base commune.
+/// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
 /// -> content
 #let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, afficher-contexte: true, bareme: none, espacement: espacement-blocs) = {
   let bareme = if bareme == none { ex.bareme } else { bareme }
@@ -309,7 +309,7 @@
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
 /// - nouvelle-page (bool): Commencer chaque exercice après le premier sur une nouvelle page.
-/// - espacement (length): Espacement vertical des textes et questions, défaut `espacement-blocs` de la base commune.
+/// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
 /// - afficher-exercices (bool): Composer automatiquement le tableau d'exercices ; false permet une composition personnalisée dans body.
 /// - body (content): Contenu placé avant les exercices, fourni par la règle show.
 /// -> content

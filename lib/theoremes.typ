@@ -103,8 +103,7 @@
     rendre(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white, prefix: prefix, title: title, full-title: full-title, ..args, body)
   } else {
     let couleur = palette.at(nom, default: palette.at("theorem", default: rgb("#233e6a")))
-    block(width: 100%, breakable: false, above: 0.55em, below: 0.55em, {
-      set par(leading: 0.6em, spacing: 0.55em)
+    block(width: 100%, breakable: false, {
       if full-title != "" {
         block(width: 100%, fill: couleur, radius: (top: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.3em),
           text(size: 1em, weight: "bold", fill: white, [#full-title#if coeur { h(0.4em); [♡] }]),

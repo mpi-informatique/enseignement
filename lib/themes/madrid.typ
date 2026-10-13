@@ -35,9 +35,7 @@
     touying.config-methods(init: (self: none, body) => {
       set text(font: police, size: taille, lang: "fr", fill: rgb("#202938"))
       show math.equation: set text(font: "New Computer Modern Math")
-      set par(leading: 0.6em, spacing: 0.55em)
-      set list(spacing: 0.55em, marker: text(fill: couleur)[•])
-      set enum(spacing: 0.55em)
+      set list(marker: text(fill: couleur)[•])
       set heading(numbering: (..n) => if n.pos().len() == 1 { numbering("I", ..n.pos()) })
       show link: set text(fill: couleur)
       show: style
