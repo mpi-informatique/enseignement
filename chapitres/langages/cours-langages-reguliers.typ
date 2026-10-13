@@ -58,8 +58,8 @@
 
   #lemma[
     La taille est un morphisme de monoïdes de $(Σ^*, ⋅)$ vers $(ℕ, +)$ :
-    - $abs(ε) = 0$.
-    - $abs(m ⋅ n) = abs(m) + abs(n)$.
+    - $abs(ε) = 0$
+    - $abs(m ⋅ n) = abs(m) + abs(n)$
   ]
 ]
 
@@ -265,8 +265,8 @@ Les expressions régulières sont une notation plus concise pour représenter un
 
 #definition[
   L'ensemble $cal(R)(Σ)$ des expressions régulières sur $Σ$ est le plus petit ensemble vérifiant :
-  - $∀ a ∈ Σ, #sep a ∈ cal(R)(Σ)$.
-  - $∅ ∈ cal(R)(Σ)$ et $ε ∈ cal(R)(Σ)$.
+  - $∀ a ∈ Σ, #sep a ∈ cal(R)(Σ)$
+  - $∅ ∈ cal(R)(Σ)$ et $ε ∈ cal(R)(Σ)$
   - Si $e_1, e_2 ∈ cal(R)(Σ)$, alors $(e_1 | e_2) ∈ cal(R)(Σ)$ et $(e_1 e_2) ∈ cal(R)(Σ)$.
   - Si $e ∈ cal(R)(Σ)$, alors $e^* ∈ cal(R)(Σ)$.
 ]
@@ -311,10 +311,10 @@ type 'a regexp = (* 'a est le type des lettres de l'alphabet *)
 #definition[
   Le langage $L(e)$ d'une expression régulière $e$ est défini récursivement :
   - $L(a) = {a}$ si $a ∈ Σ$.
-  - $L(∅) = ∅$ et $L(ε) = {ε}$.
-  - $L(e | e') = L(e) ∪ L(e')$.
-  - $L(e e') = L(e) L(e')$.
-  - $L(e^*) = L(e)^*$.
+  - $L(∅) = ∅$ et $L(ε) = {ε}$
+  - $L(e | e') = L(e) ∪ L(e')$
+  - $L(e e') = L(e) L(e')$
+  - $L(e^*) = L(e)^*$
 ]
 
 #slides-only[== Langages réguliers et expressions régulières]
@@ -386,9 +386,9 @@ Sur $Σ = {a, b}$ :
 #theorem(coeur: true)[
   Soit $cal(P)(L)$ une propriété sur les langages réguliers telle que :
   - $cal(P)(L)$ est vraie pour les langages $L$ finis : cas de base.
-  - $cal(P)(L_1) ∧ cal(P)(L_2) ==> cal(P)(L_1 L_2)$.
-  - $cal(P)(L_1) ∧ cal(P)(L_2) ==> cal(P)(L_1 ∪ L_2)$.
-  - $cal(P)(L) ==> cal(P)(L^*)$.
+  - $cal(P)(L_1) ∧ cal(P)(L_2) ==> cal(P)(L_1 L_2)$
+  - $cal(P)(L_1) ∧ cal(P)(L_2) ==> cal(P)(L_1 ∪ L_2)$
+  - $cal(P)(L) ==> cal(P)(L^*)$
 
   Alors $cal(P)(L)$ est vraie pour tout langage régulier $L$.
 ]
@@ -404,9 +404,9 @@ Sur $Σ = {a, b}$ :
   Soit $cal(P)(e)$ une propriété sur les expressions régulières telle que :
   - $cal(P)(∅)$ et $cal(P)(ε)$ sont vraies : cas de base.
   - $cal(P)(a)$ est vraie pour $a ∈ Σ$ : cas de base.
-  - $cal(P)(e_1) ∧ cal(P)(e_2) ==> cal(P)(e_1 e_2)$.
-  - $cal(P)(e_1) ∧ cal(P)(e_2) ==> cal(P)(e_1 | e_2)$.
-  - $cal(P)(e) ==> cal(P)(e^*)$.
+  - $cal(P)(e_1) ∧ cal(P)(e_2) ==> cal(P)(e_1 e_2)$
+  - $cal(P)(e_1) ∧ cal(P)(e_2) ==> cal(P)(e_1 | e_2)$
+  - $cal(P)(e) ==> cal(P)(e^*)$
 
   Alors $cal(P)(e)$ est vraie pour toute expression régulière $e$.
 ]

@@ -166,7 +166,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 - Préférer la syntaxe Typst native pour le contenu fixe (`== Titre`, listes…) ; réserver les appels de fonctions aux éléments calculés ou réutilisables.
 - Délimiter les extraits de code Typst, inline ou en bloc, par des accents graves avec le langage adéquat, par exemple ```ocaml arbre_a_mot``` ; ne pas les entourer d'apostrophes.
 - Utiliser exclusivement l'apostrophe ASCII `'`, y compris dans les textes français.
-- Être concis.
+- Préférer la concision sans perdre en précision. Dans les listes de conditions mathématiques courtes et les blocs de règles de grammaire, omettre les points-virgules en fin de ligne et le point final. Ponctuer les phrases rédigées.
 - Commenter brièvement les éventuelles parties importantes et non évidentes du code. En particulier, commenter l'intérêt d'une nouvelle fonction/variable introduite si cela aide à la compréhension :
 ```ocaml
 let f x = (* f x renvoie ... *)

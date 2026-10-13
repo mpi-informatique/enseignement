@@ -80,7 +80,7 @@
     ], solution: [
       Soit l'automate d'états $Q$, d'état initial $q_0$, d'états finaux $F$ et de transition $δ$.
       Pour chaque règle $X → Y Z$ et tous $p,r,q ∈ Q$, ajouter
-      $ (p,X,q) → (p,Y,r) (r,Z,q). $
+      $ (p,X,q) → (p,Y,r) (r,Z,q) $
       Pour chaque règle $X → a$ et chaque transition $δ(p,a)=q$, ajouter $(p,X,q) → a$.
       Une induction sur les arbres prouve que $(p,X,q)$ engendre exactement les mots engendrés par $X$ qui conduisent de $p$ à $q$.
       En effet, une concaténation passe par un état intermédiaire $r$, et une lettre correspond à une transition de l'automate.

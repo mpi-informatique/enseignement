@@ -268,9 +268,9 @@
           points: 1, [Montrer que la composition de deux morphismes est encore un morphisme.], solution: [
           Soient $φ: cal(A) → cal(B)$ et $ψ: cal(B) → cal(C)$.
           - $ψ ∘ φ$ est surjective comme composée de surjections.
-          - $(ψ ∘ φ)(i_cal(A))=ψ(i_cal(B))=i_cal(C)$.
-          - $(ψ ∘ φ)(δ_cal(A)(q,σ))=ψ(δ_cal(B)(φ(q),σ))=δ_cal(C)((ψ ∘ φ)(q),σ)$.
-          - $q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B) ⇔ (ψ ∘ φ)(q) ∈ F_cal(C)$.
+          - $(ψ ∘ φ)(i_cal(A))=ψ(i_cal(B))=i_cal(C)$
+          - $(ψ ∘ φ)(δ_cal(A)(q,σ))=ψ(δ_cal(B)(φ(q),σ))=δ_cal(C)((ψ ∘ φ)(q),σ)$
+          - $q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B) ⇔ (ψ ∘ φ)(q) ∈ F_cal(C)$
         ]),
         [#a5 #align(center)[Figure 5 — Automate $cal(A)_5$]
          #a6 #align(center)[Figure 6 — Automate $cal(A)_6$]],
@@ -338,7 +338,7 @@
           Soit $cal(B)$ cette partie accessible et $φ(q,q')=q$ la première projection.
           - Pour chaque $q$, l'accessibilité de $cal(A)$ fournit $w$ menant à $q$.
             Avec $q'=δ_(cal(A)')^*(i_(cal(A)'),w)$, le couple $(q,q')$ est accessible et d'image $q$ : $φ$ est surjective.
-          - $φ(i_cal(B))=φ(i_cal(A),i_(cal(A)'))=i_cal(A)$.
+          - $φ(i_cal(B))=φ(i_cal(A),i_(cal(A)'))=i_cal(A)$
           - Par définition du produit, $φ(δ_cal(B)((q,q'),σ))=δ_cal(A)(q,σ)=δ_cal(A)(φ(q,q'),σ)$.
           - Par la question 20,
             $(q,q') ∈ F_cal(B) ⇔ q ∈ F_cal(A) " et " q' ∈ F_(cal(A)') ⇔ q ∈ F_cal(A)$.
@@ -399,10 +399,10 @@
           Cet antécédent existe par surjectivité. Si $φ(p)=φ(p')$, alors $p ≡ p'$, donc $[p]=[p']$ :
           la définition ne dépend pas du choix et $φ' ∘ φ=η$.
           - Toute classe $[p]$ est l'image de $φ(p)$, donc $φ'$ est surjective.
-          - $φ'(i_cal(A))=φ'(φ(i_cal(B)))=[i_cal(B)]=i_cal(C)$.
+          - $φ'(i_cal(A))=φ'(φ(i_cal(B)))=[i_cal(B)]=i_cal(C)$
           - Si $q=φ(p)$,
             $ φ'(δ_cal(A)(q,σ))=φ'(φ(δ_cal(B)(p,σ)))=[δ_cal(B)(p,σ)]=δ_cal(C)(φ'(q),σ). $
-          - $q ∈ F_cal(A) ⇔ p ∈ F_cal(B) ⇔ [p] ∈ F_cal(C) ⇔ φ'(q) ∈ F_cal(C)$.
+          - $q ∈ F_cal(A) ⇔ p ∈ F_cal(B) ⇔ [p] ∈ F_cal(C) ⇔ φ'(q) ∈ F_cal(C)$
           On définit de même $ψ'(ψ(p))=[p]$. C'est un morphisme et $ψ' ∘ ψ=η$.
         ]),
         question(notation: [Pénaliser un coût annoncé $O(n)$ pour une table indexée par les valeurs : compter $O(n+M+1)$, où $M$ est leur maximum.],

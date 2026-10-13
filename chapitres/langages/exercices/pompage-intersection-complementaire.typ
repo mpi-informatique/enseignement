@@ -11,9 +11,9 @@
   contenu: (
     [On admet le lemme de pompage suivant pour les langages non-contextuels :
       si $L$ est non-contextuel, il existe un entier $p ≥ 1$ tel que tout mot $t ∈ L$ de longueur au moins $p$ s'écrit $t = u v w x y$, avec
-      - $abs(v w x) ≤ p$ ;
-      - $v x ≠ ε$ ;
-      - $∀i ∈ ℕ, #sep u v^i w x^i y ∈ L$.
+      - $abs(v w x) ≤ p$
+      - $v x ≠ ε$
+      - $∀i ∈ ℕ, #sep u v^i w x^i y ∈ L$
 
       On considère $L_1 = {a^n b^n c^k | n,k ∈ ℕ}$ et $L_2 = {a^n b^n c^n | n ∈ ℕ}$.],
     question([Montrer que $L_1$ est non-contextuel.], solution: [

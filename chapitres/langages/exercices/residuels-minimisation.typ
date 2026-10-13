@@ -85,11 +85,11 @@
     question([
       Soit à présent $L$ un langage ayant un nombre fini de résiduels.
       On définit alors un automate $M(L) = (Σ,Q,I,F,δ)$, appelé automate des résiduels associé à $L$, où :
-      - $Q = cal(R)_L$ ;
-      - $I = {ε^(-1)L}$ ;
-      - $F = {u^(-1)L | u ∈ L}$ ;
+      - $Q = cal(R)_L$
+      - $I = {ε^(-1)L}$
+      - $F = {u^(-1)L | u ∈ L}$
       - pour toute lettre $a ∈ Σ$ et tout résiduel $u^(-1)L ∈ Q$,
-        $δ(u^(-1)L,a) = (u a)^(-1)L$.
+        $δ(u^(-1)L,a) = (u a)^(-1)L$
 
       #enum(numbering: "a)",
         [Montrer que la fonction $δ$ est correctement définie, c'est-à-dire que l'image donnée par $δ$ d'un résiduel $u^(-1)L$ ne dépend que du résiduel et pas de $u$.],

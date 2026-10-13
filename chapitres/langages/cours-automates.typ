@@ -104,9 +104,9 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
 #slides-only[== Construction d'automates]
 #exercise[
   Montrer que les langages suivants sont reconnaissables :
-  + $a b | a b c | c$.
+  + $a b | a b c | c$
   + Les mots de taille paire sur $Σ = {a, b}$.
-  + $(b | a b | a b a)^*$.
+  + $(b | a b | a b a)^*$
 ]
 
 = Test d'appartenance
@@ -183,8 +183,8 @@ S'il est aussi complet, sa fonction de transition est $δ : Q × Σ → Q$.
 == Fonction de transition étendue
 #definition[
   Pour un automate déterministe complet, la fonction $δ^* : Q × Σ^* → Q$ est définie par :
-  - $δ^*(q, ε) = q$.
-  - $δ^*(q, a v) = δ^*(δ(q, a), v)$.
+  - $δ^*(q, ε) = q$
+  - $δ^*(q, a v) = δ^*(δ(q, a), v)$
 ]
 On a $u ∈ L(A) ⇔ δ^*(q_i, u) ∈ F$.
 #slides-only[== Lecture d'une concaténation]
@@ -383,8 +383,8 @@ Pour montrer que $L$ n'est pas reconnaissable :
 #slides-only[== Langages non reconnaissables]
 #exercise[
   Montrer que les langages suivants ne sont pas reconnaissables :
-  + $L_1 = {a^n b^n ∣ n ∈ ℕ}$.
-  + $L_2 = {a^n b^p ∣ n, p ∈ ℕ, #sep n ≠ p}$.
+  + $L_1 = {a^n b^n ∣ n ∈ ℕ}$
+  + $L_2 = {a^n b^p ∣ n, p ∈ ℕ, #sep n ≠ p}$
 ]
 #slides-only[
   == Correction : autant de a que de b

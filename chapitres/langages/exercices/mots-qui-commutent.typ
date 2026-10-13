@@ -12,7 +12,7 @@
     question([
       Soient $u$ et $v$ deux mots *non vides*.
       Montrer que les trois conditions suivantes sont équivalentes :
-      + $u v = v u$.
+      + $u v = v u$
       + Il existe un mot $w$ et des entiers $k, p in NN$ tels que $u = w^k$ et $v = w^p$.
       + Il existe $m, n in NN^*$ tels que $u^m = v^n$.
     ], solution: [

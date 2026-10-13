@@ -40,7 +40,7 @@
     ]),
     question([
       Sur $Σ = {a, b}$, on considère la grammaire d'axiome $S$ donnée par
-      $ S → a T ∣ ε, #sep T → S b. $
+      $ S → a T ∣ ε, #sep T → S b $
       Déterminer son langage et montrer qu'il n'est pas régulier.
       Que se passe-t-il donc si l'on autorise simultanément les règles $X → a Y$ et $X → Y a$ ?
     ], solution: [
@@ -164,7 +164,7 @@
       nouvelles, propres à chaque règle.
       Pour $X → u Y v$, on émet d'abord les lettres de $u$ de gauche à droite avec des règles de préfixe, puis les lettres de $v$ de droite à gauche avec des règles de suffixe, la dernière règle laissant la variable $Y$.
       Par exemple, $X → a b Y c d$ est remplacée par
-      $ X → a A, #sep A → b B, #sep B → C d, #sep C → Y c. $
+      $ X → a A, #sep A → b B, #sep B → C d, #sep C → Y c $
       Comme la règle initiale n'était pas unitaire, $abs(u)+abs(v) ≥ 1$ :
       aucune règle unitaire n'est nécessaire.
       Les cas $u = ε$ ou $v = ε$ utilisent seulement l'une des deux orientations.

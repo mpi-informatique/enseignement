@@ -29,7 +29,7 @@
       $ S → 1 X_1 ∣ 0 quad
         X_0 → 0 X_0 ∣ 1 X_1 ∣ ε quad
         X_1 → 0 X_2 ∣ 1 X_0 quad
-        X_2 → 0 X_1 ∣ 1 X_2. $
+        X_2 → 0 X_1 ∣ 1 X_2 $
       Une forme $u X_r$ obtenue après le premier $1$ indique que la valeur de $u$ a pour reste $r$ modulo $3$. Seul $X_0$ peut terminer.
       Chaque représentation non nulle est donc engendrée exactement lorsqu'elle est divisible par $3$.
       La règle $S → 0$ ajoute zéro et aucune règle ne produit de zéro initial superflu ni le mot vide.

@@ -303,7 +303,7 @@
 
         Soit $F$ une formule sous forme normale conjonctive composée de $n$ clauses et faisant intervenir $m$ variables. On suppose les clauses numérotées $c_1,…,c_n$. On veut ramener le problème de sa satisfiabilité au problème de la recherche d'un mot synchronisant de longueur inférieure ou égale à $m$ sur une certaine machine. On introduit la machine suivante associée à $F$ :
         - $Q$ est formé de $m n+n+1$ états : un état particulier $f$ et $n(m+1)$ autres états notés $q_(i,j)$, avec $(i,j) ∈ ⟦1,n⟧ × ⟦1,m+1⟧$.
-        - $Σ={0,1}$.
+        - $Σ={0,1}$
         - $δ$ est définie par :
           - $f$ est un état puits : $δ(f,0)=δ(f,1)=f$.
           - Pour tout $i ∈ ⟦1,n⟧$, $δ(q_(i,m+1),0)=δ(q_(i,m+1),1)=f$.

@@ -15,7 +15,7 @@
       $ S → X ∣ Y \
         X → a X ∣ a Z \
         Y → Y b ∣ Z b \
-        Z → ε ∣ a Z b. $
+        Z → ε ∣ a Z b $
     ], solution: [
       Depuis $Z$, les dérivations produisent exactement les $a^n b^n$, pour $n ∈ ℕ$.
       Depuis $X$, on ajoute un nombre strictement positif de $a$ devant un tel mot :
@@ -26,7 +26,7 @@
     ]),
     question([
       $ S → 0 A 1 ∣ ε \
-        A → 1 S 0 ∣ ε. $
+        A → 1 S 0 ∣ ε $
     ], solution: [
       Les deux premières étapes d'une dérivation terminale depuis $S$ donnent soit $ε$, soit $01$, soit $01 S 01$. Une récurrence sur la longueur de la dérivation montre donc que tous les mots engendrés appartiennent à $(01)^*$.
 
@@ -36,7 +36,7 @@
     ]),
     question([
       $ S → X ∣ X a S \
-        X → a X b X ∣ b X a X ∣ ε. $
+        X → a X b X ∣ b X a X ∣ ε $
     ], solution: [
       Montrons d'abord que $X$ engendre exactement les mots ayant autant de $a$ que de $b$.
       Chaque règle conserve cette égalité.
@@ -60,7 +60,7 @@
       $ S → X ∣ Y \
         X → Z 0 X ∣ Z 0 Z \
         Y → Z 1 Y ∣ Z 1 Z \
-        Z → ε ∣ 1 Z 0 Z ∣ 0 Z 1 Z. $
+        Z → ε ∣ 1 Z 0 Z ∣ 0 Z 1 Z $
     ], solution: [
       La preuve précédente, avec $0$ et $1$ à la place de $a$ et $b$, montre que $Z$ engendre exactement les mots équilibrés.
       Les dérivations depuis $X$ produisent exactement les mots $u_0 0 u_1 … 0 u_k$, où les $u_i$ sont équilibrés et $k ≥ 1$ : ce sont tous les mots ayant plus de $0$ que de $1$, grâce à la décomposition démontrée à la question précédente.
