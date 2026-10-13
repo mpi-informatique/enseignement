@@ -4,7 +4,7 @@
 #let ex = exercice(
   meta: (
     titre: "Commuter avec un spectre simple",
-    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    chapitres: ("reduction",),
     difficulte: 3, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
@@ -13,7 +13,7 @@
     Pour chaque $j$, on choisit $e_j ∈ E_(λ_j) (f) ∖ {0}$.
     On note $cal(C)(f) = {g ∈ cal(L)(E) | g ∘ f = f ∘ g}$.],
     question(
-      [Montrer que $(e_1, …, e_n)$ est une base et caractériser les éléments de $cal(C)(f)$ par leur matrice dans cette base.],
+      [Montrer que $(e_1, …, e_n)$ est une base de $E$ et caractériser les éléments de $cal(C)(f)$ par leur matrice dans cette base.],
       solution: [Les $n$ vecteurs propres associés à des valeurs propres distinctes sont libres, donc forment une base.
       Si $g$ commute avec $f$, chaque droite $E_(λ_j) (f) = RR e_j$ est stable par $g$. Il existe donc $μ_j ∈ RR$ tel que $g(e_j) = μ_j e_j$.
       La matrice de $g$ dans cette base est diagonale. Réciproquement, deux matrices diagonales commutent, donc cette condition est suffisante.],

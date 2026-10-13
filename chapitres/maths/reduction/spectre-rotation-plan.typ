@@ -3,8 +3,8 @@
 
 #let ex = exercice(
   meta: (
-    titre: "Le corps de base intervient",
-    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    titre: "Spectre d'une rotation",
+    chapitres: ("reduction",),
     difficulte: 1, niveaux: ("MP",),
     matiere: "mathématiques",
   ),

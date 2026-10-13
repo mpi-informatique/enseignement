@@ -4,7 +4,7 @@
 #let ex = exercice(
   meta: (
     titre: "Une valeur propre double",
-    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    chapitres: ("reduction",),
     difficulte: 2, niveaux: ("MP",),
     matiere: "mathématiques",
   ),

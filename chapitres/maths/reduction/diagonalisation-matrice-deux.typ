@@ -4,7 +4,7 @@
 #let ex = exercice(
   meta: (
     titre: "Une première diagonalisation",
-    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    chapitres: ("reduction",),
     difficulte: 1, niveaux: ("MP",),
     matiere: "mathématiques",
   ),

@@ -4,7 +4,7 @@
 #let ex = exercice(
   meta: (
     titre: "Réduction en rang un",
-    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    chapitres: ("reduction",),
     difficulte: 3, niveaux: ("MP",),
     matiere: "mathématiques",
   ),

@@ -30,7 +30,7 @@
   "espaces-prehilbertiens-reels", "series-numeriques", "familles-sommables",
   "fonctions-de-deux-variables",
   // MP–MPI, p. 6–14 : structures-algebriques et series-numeriques déjà ci-dessus
-  "reduction-des-endomorphismes-et-des-matrices", "endomorphismes-des-espaces-euclidiens",
+  "reduction", "endomorphismes-des-espaces-euclidiens",
   "topologie-des-espaces-vectoriels-normes", "series-vectorielles",
   // MP–MPI, p. 15–28
   "suites-et-series-de-fonctions", "series-entieres", "fonctions-vectorielles",

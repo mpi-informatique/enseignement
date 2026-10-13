@@ -4,7 +4,7 @@
 #let ex = exercice(
   meta: (
     titre: "Un endomorphisme de polynômes",
-    chapitres: ("reduction-des-endomorphismes-et-des-matrices",),
+    chapitres: ("reduction",),
     difficulte: 2, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
@@ -18,7 +18,7 @@
       Elle est triangulaire, d'où $χ_u (X) = (X + 2)(X + 1)X(X - 1)$.],
     ),
     question(
-      [Calculer $u((X + 1)^k)$ pour $0 ≤ k ≤ 3$, puis déterminer les sous-espaces propres et une base propre de $u$.],
+      [Calculer $u((X + 1)^k)$ pour $0 ≤ k ≤ 3$, puis déterminer les sous-espaces propres et une base de vecteurs propres de $u$.],
       solution: [Pour $1 ≤ k ≤ 3$, la dérivation donne $u((X + 1)^k) = (k - 2)(X + 1)^k$. Pour $k = 0$, on vérifie directement $u(1) = -2$.
       Les quatre polynômes $(X + 1)^k$ sont des vecteurs propres non nuls pour les quatre valeurs propres distinctes $k - 2$.
       Ils forment une base de $E$, donc $E_(k - 2) (u) = RR (X + 1)^k$.],
