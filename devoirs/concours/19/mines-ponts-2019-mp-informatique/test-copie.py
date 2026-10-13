@@ -85,7 +85,7 @@ def main():
     parser.add_argument("--ocamlc", default="ocamlc")
     parser.add_argument("copies", nargs="+", type=Path)
     args = parser.parse_args()
-    tests = Path(__file__).with_name("tests.ml").read_text(encoding="utf-8")
+    tests = extraire(Path(__file__).with_name("test.ml").read_text(encoding="utf-8"), "verifications")
     for copie in args.copies:
         tester_copie(args.ocamlc, copie, tests)
 
