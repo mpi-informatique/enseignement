@@ -1,4 +1,19 @@
 #use "corrige.ml";;
+
+(* TESTS COPIES
+{
+  "tests": {
+    "1.5": {"code": "let a2 = {1.5}", "appel": "test_a2 a2"},
+    "1.6": {"code": "{1.6}", "appel": "test_numero numero"},
+    "1.7": {"code": "{1.7}", "appel": "test_etats_accessibles etats_accessibles"},
+    "1.8": {"code": "{1.7}\n{1.8}", "appel": "test_partie_accessible partie_accessible"},
+    "1.17": {"code": "{1.17}", "appel": "test_existe_morphisme existe_morphisme"},
+    "1.19": {"code": "{1.7}\n{1.19}", "appel": "test_produit etats_accessibles produit"},
+    "1.27": {"code": "{1.27}", "appel": "test_renomme renomme"}
+  },
+  "references": {"1.7": "etats_accessibles"}
+}
+*)
 (* Vérifications communes au corrigé et aux copies. *)
 (* BEGIN verifications *)
 let verifie message condition = if not condition then failwith message
