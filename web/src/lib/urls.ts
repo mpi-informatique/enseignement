@@ -1,4 +1,4 @@
-import type { Variant } from '@mpi-informatique/enseignement-core';
+import type { Variant } from '@mpi-informatique/exercices-core';
 
 export const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 export const assetUrl = (path: string): string => `${base}/${path.split('/').map(encodeURIComponent).join('/')}`;

@@ -2,7 +2,7 @@
 import WorkbenchLayout from '../layouts/WorkbenchLayout.astro';
 import Workbench from '../components/Workbench';
 import resources from '../generated/catalogue.json';
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 ---
 <WorkbenchLayout>
   <Workbench resources={resources as Resource[]} client:only="react" />

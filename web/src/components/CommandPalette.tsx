@@ -1,6 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Command as CommandIcon, FileText, Search, X } from 'lucide-react';
-import { normalize, type Resource } from '@mpi-informatique/enseignement-core';
+import { normalize, type Resource } from '@mpi-informatique/exercices-core';
 import type { ResourceSearch } from '../lib/search';
 import { resourceBadgeLabel } from '../lib/labels';
 import { isPrivate } from '../lib/privateBank';

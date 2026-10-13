@@ -6,7 +6,7 @@ import { indentWithTab } from '@codemirror/commands';
 import { HighlightStyle, LanguageSupport, syntaxHighlighting } from '@codemirror/language';
 import { tags } from '@lezer/highlight';
 import { typst_lezer, typstTags, typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter } from 'codemirror-lang-typst/lezer';
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 import { fileLinks } from '../editor/fileLinks';
 
 interface Props { sourcePath: string; resources: Resource[]; privateResource?: boolean; onNavigate: (resource: Resource) => void; source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }

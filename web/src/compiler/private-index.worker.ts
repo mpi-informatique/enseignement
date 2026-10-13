@@ -1,6 +1,6 @@
 import { browserEngine } from './assets';
 import { privateId, sourceKind } from '../lib/privateBank';
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 
 self.onmessage = async ({ data }: MessageEvent<{ repository: string; sources: Record<string, string>; bundle: Record<string, string> }>) => {
   try {

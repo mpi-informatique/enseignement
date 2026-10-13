@@ -20,7 +20,7 @@
       packages = forAllSystems (system:
         let
           pkgs = packagesFor system;
-          package = pkgs.runCommand "enseignement-typst-${manifest.version}" {
+          package = pkgs.runCommand "exercices-typst-${manifest.version}" {
             nativeBuildInputs = [ pkgs.python3 ];
           } ''
             python3 ${source}/scripts/package.py --path "$out"
@@ -36,7 +36,7 @@
         in {
           default = package;
           typst-package = package;
-          typst-packages = pkgs.linkFarm "enseignement-typst-packages" (previews ++ [{
+          typst-packages = pkgs.linkFarm "exercices-typst-packages" (previews ++ [{
             name = "mpi-informatique/${manifest.name}/${manifest.version}";
             path = "${package}/mpi-informatique/${manifest.name}/${manifest.version}";
           }]);
@@ -52,12 +52,12 @@
             packages = [ pkgs.nodejs_22 pkgs.typst pkgs.just pkgs.python3 pkgs.ripgrep pkgs.newcomputermodern pkgs.dejavu_fonts ];
             TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
             TYPST_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts";
-            ENSEIGNEMENT_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts:${pkgs.dejavu_fonts}/share/fonts";
+            EXERCICES_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts:${pkgs.dejavu_fonts}/share/fonts";
           };
         });
       checks = forAllSystems (system:
         let pkgs = packagesFor system; in {
-          documents = pkgs.runCommand "enseignement-check" {
+          documents = pkgs.runCommand "exercices-check" {
             nativeBuildInputs = [ pkgs.typst pkgs.just pkgs.python3 pkgs.ocaml ];
             TYPST_PACKAGE_PATH = self.packages.${system}.typst-packages;
             TYPST_FONT_PATHS = "${pkgs.newcomputermodern}/share/fonts";

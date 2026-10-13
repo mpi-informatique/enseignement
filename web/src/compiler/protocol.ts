@@ -1,4 +1,4 @@
-import type { Resource, Variant } from '@mpi-informatique/enseignement-core';
+import type { Resource, Variant } from '@mpi-informatique/exercices-core';
 
 export interface CompileRequest {
   id: number;

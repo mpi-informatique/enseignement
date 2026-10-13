@@ -2,13 +2,13 @@
 import WorkbenchLayout from '../../layouts/WorkbenchLayout.astro';
 import Workbench from '../../components/Workbench';
 import resources from '../../generated/catalogue.json';
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 
 export function getStaticPaths() {
   return resources.map(resource => ({ params: { id: resource.id }, props: { resource } }));
 }
 const { resource } = Astro.props;
 ---
-<WorkbenchLayout title={`${resource.titre} · Enseignement MPI`}>
+<WorkbenchLayout title={`${resource.titre} · Exercices MPI`}>
   <Workbench resources={resources as Resource[]} initialId={resource.id} client:only="react" />
 </WorkbenchLayout>

@@ -3,8 +3,8 @@
 #import theorion.cosmos.fancy: *
 #import "blocs.typ": epaisseur-trait
 
-#let espacement-cadres = state("enseignement-espacement-cadres", none)
-#let style-cadres = state("enseignement-style-cadres", none)
+#let espacement-cadres = state("exercices-espacement-cadres", none)
+#let style-cadres = state("exercices-style-cadres", none)
 
 // Fancy lie par défaut le fond du titre à la couleur de la bordure.
 #let titre-blanc(environnement, coeur: false, ..args) = context {
@@ -41,7 +41,7 @@
 // Compter une seule fois les cadres répétés par les animations de Touying.
 // Sans marqueurs Touying (cours et feuilles), les étapes sont simplement cumulées.
 #let compteur-cadres(nom) = {
-  let marqueur = label("enseignement-compteur-" + nom)
+  let marqueur = label("exercices-compteur-" + nom)
   let at(lieu) = {
     let selection = selector(marqueur).or(selector(<touying-metadata>))
     let evenements = query(if lieu == none { selection } else { selection.before(lieu) })
@@ -53,7 +53,7 @@
         courant += 1
       } else if type(evenement.value) == dictionary {
         let genre = evenement.value.at("kind", default: none)
-        if genre == "enseignement-compteur-update" {
+        if genre == "exercices-compteur-update" {
           total = evenement.value.numero - courant
         } else if genre == "touying-new-slide" {
           total += calc.max(maximum, courant)
@@ -71,7 +71,7 @@
     step: () => [#metadata(nom)#marqueur],
     update: numero => {
       assert(numero.len() == 1, message: "Les cadres utilisent un numéro simple")
-      [#metadata((kind: "enseignement-compteur-update", numero: numero.first()))#marqueur]
+      [#metadata((kind: "exercices-compteur-update", numero: numero.first()))#marqueur]
     },
     at: at,
     get: () => at(here()),

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Resource, Variant } from '@mpi-informatique/enseignement-core';
+import type { Resource, Variant } from '@mpi-informatique/exercices-core';
 import type { CompileRequest, CompileResponse } from '../compiler/protocol';
 
 export interface Compilation {

@@ -2,7 +2,7 @@ import { createTypstCompiler } from '@myriaddreamin/typst.ts/compiler';
 import { loadFonts, withAccessModel, withPackageRegistry } from '@myriaddreamin/typst.ts/options.init';
 import { MemoryAccessModel } from '@myriaddreamin/typst.ts/fs/memory';
 import type { WebAssemblyModuleRef } from '@myriaddreamin/typst.ts/wasm';
-import type { Resource, Variant } from '@mpi-informatique/enseignement-core';
+import type { Resource, Variant } from '@mpi-informatique/exercices-core';
 
 interface Assets {
   bundle: Record<string, string>;

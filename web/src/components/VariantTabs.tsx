@@ -1,4 +1,4 @@
-import type { Variant } from '@mpi-informatique/enseignement-core';
+import type { Variant } from '@mpi-informatique/exercices-core';
 
 export function VariantTabs({ variant, onChange }: { variant: Variant; onChange: (variant: Variant) => void }) {
   return <div role="tablist" aria-label="Version du document" className="variant-tabs">

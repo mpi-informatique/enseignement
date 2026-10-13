@@ -1,4 +1,4 @@
-import { facets, labels, normalize, type Resource } from '@mpi-informatique/enseignement-core';
+import { facets, labels, normalize, type Resource } from '@mpi-informatique/exercices-core';
 import { isPrivate } from './privateBank.ts';
 
 export const filterFields = ['type', ...facets, 'annee', 'difficulte', 'visibilite'] as const;

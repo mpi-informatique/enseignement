@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 import { assetUrl } from '../lib/urls';
 import { stored, store } from '../lib/storage';
 import { isPrivate, type PrivateBank } from '../lib/privateBank';

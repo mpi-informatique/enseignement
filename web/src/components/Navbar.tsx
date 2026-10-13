@@ -19,7 +19,7 @@ interface Props {
 export function Navbar({ title, details, dark, sidebarOpen, editorOpen, onThemeChange, onSidebarToggle, onEditorToggle, onCommands, onPrivateBank, connected, privateResource }: Props) {
   return <header className="navbar topbar">
     <button className="btn btn-ghost btn-sm btn-square" aria-label={sidebarOpen ? 'Masquer la recherche' : 'Afficher la recherche'} title="Recherche (/)" aria-expanded={sidebarOpen} aria-controls="search-sidebar" onClick={onSidebarToggle}><PanelLeft size={17} /></button>
-    <a className="brand" href={import.meta.env.BASE_URL} aria-label="Enseignement MPI — accueil" title="Enseignement MPI"><span>MPI</span></a>
+    <a className="brand" href={import.meta.env.BASE_URL} aria-label="Exercices MPI — accueil" title="Exercices MPI"><span>MPI</span></a>
     <h1 className="document-title" title={details ?? title}>{title}</h1>
     {privateResource && <span className="private-badge">Privé</span>}
     <div className="topbar-actions">

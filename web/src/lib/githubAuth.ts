@@ -2,7 +2,7 @@ import { assetUrl } from './urls';
 import { prepareContribution, type Contribution } from './github';
 
 export const authUrl = import.meta.env.PUBLIC_GITHUB_AUTH_URL?.replace(/\/$/, '') as string | undefined;
-const pendingKey = 'enseignement:github-contribution';
+const pendingKey = 'exercices:github-contribution';
 interface Pending { draft?: Contribution; purpose?: 'private'; state: string; verifier: string; redirectUri: string; returnUrl: string; created: number }
 
 function randomSecret(): string {
@@ -41,7 +41,7 @@ export async function connectPrivateBank(): Promise<string> {
     return await new Promise<string>((resolve, reject) => {
       const cleanup = () => { clearInterval(timer); window.removeEventListener('message', receive); popup.close(); };
       const receive = (event: MessageEvent) => {
-        if (event.origin !== location.origin || event.source !== popup || event.data?.type !== 'enseignement:github-login' || event.data.state !== pending.state) return;
+        if (event.origin !== location.origin || event.source !== popup || event.data?.type !== 'exercices:github-login' || event.data.state !== pending.state) return;
         cleanup();
         if (typeof event.data.token === 'string') resolve(event.data.token);
         else reject(new Error(typeof event.data.error === 'string' ? event.data.error : 'Connexion GitHub impossible.'));
@@ -67,7 +67,7 @@ export async function finishContribution(status: (message: string) => void, back
   if (pending.purpose === 'private') privateLogin();
   const notify = (result: { token?: string; error?: string }) => {
     if (pending.purpose === 'private' && window.opener) {
-      window.opener.postMessage({ type: 'enseignement:github-login', state: pending.state, ...result }, location.origin);
+      window.opener.postMessage({ type: 'exercices:github-login', state: pending.state, ...result }, location.origin);
       window.close();
     }
   };

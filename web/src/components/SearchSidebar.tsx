@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
-import { typeLabel, type Resource } from '@mpi-informatique/enseignement-core';
+import { typeLabel, type Resource } from '@mpi-informatique/exercices-core';
 import { contestYearBounds, fitYearRange, fieldValues, filterFields, filterLabels, type FilterField, type SearchFilters } from '../lib/filters';
 import { MultiSelect } from './MultiSelect';
 import { ContestYearRange } from './ContestYearRange';

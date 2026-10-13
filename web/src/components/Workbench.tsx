@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { Download, FileCode, RotateCcw, CircleAlert, GitPullRequest, GitCommitHorizontal, X } from 'lucide-react';
-import { duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/enseignement-core';
+import { duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/exercices-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
 import { useCompiler } from '../hooks/useCompiler';
@@ -67,7 +67,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   }, [library.bank]);
 
   useEffect(() => {
-    setDark(document.documentElement.dataset.theme === 'enseignement-dark');
+    setDark(document.documentElement.dataset.theme === 'exercices-dark');
     setVariant(new URLSearchParams(location.search).get('vue') === 'corrige' ? 'corrige' : 'enonce');
     setSidebarOpen(window.innerWidth > 900);
     setEditorOpen(window.innerWidth > 1100 && stored('editor-open') !== 'false');
@@ -102,7 +102,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   }, [paletteOpen, sidebarOpen]);
   useEffect(() => { focusPending(); }, [sidebarOpen, editorOpen]);
   useEffect(() => {
-    if (resource) document.title = `${resource.titre} · Enseignement MPI`;
+    if (resource) document.title = `${resource.titre} · Exercices MPI`;
     setContributionNotice('');
   }, [resource]);
 
@@ -117,7 +117,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   function toggleTheme() {
     const next = !dark;
     setDark(next); store('theme', next ? 'dark' : 'light');
-    document.documentElement.dataset.theme = next ? 'enseignement-dark' : 'enseignement';
+    document.documentElement.dataset.theme = next ? 'exercices-dark' : 'exercices';
   }
   function toggleEditor() {
     setEditorOpen(!editorOpen); store('editor-open', String(!editorOpen));

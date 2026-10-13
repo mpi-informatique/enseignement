@@ -1,5 +1,5 @@
 import MiniSearch from 'minisearch';
-import { normalize, type Resource } from '@mpi-informatique/enseignement-core';
+import { normalize, type Resource } from '@mpi-informatique/exercices-core';
 import { matchesFilters, parseSearchQuery, type SearchFilters } from './filters.ts';
 
 export type ResourceSearch = ReturnType<typeof createSearch>;

@@ -107,7 +107,7 @@ def prepare():
     shutil.rmtree(fonts, ignore_errors=True)
     fonts.mkdir(parents=True)
     wanted = {"NewCM10-Regular.otf", "NewCM10-Bold.otf", "NewCM10-Italic.otf", "NewCM10-BoldItalic.otf", "NewCMMath-Regular.otf", "NewCMSans10-Regular.otf", "NewCMSans10-Bold.otf", "NewCMSans10-Oblique.otf", "NewCMSans10-BoldOblique.otf", "DejaVuSansMono.ttf"}
-    for directory in os.environ.get("ENSEIGNEMENT_FONT_PATHS", "").split(os.pathsep):
+    for directory in os.environ.get("EXERCICES_FONT_PATHS", "").split(os.pathsep):
         if directory:
             for path in Path(directory).rglob("*"):
                 if path.name in wanted:

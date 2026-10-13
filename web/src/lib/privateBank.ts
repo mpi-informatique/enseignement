@@ -1,4 +1,4 @@
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 import { encodeSource, type Contribution } from './github.ts';
 
 export interface PrivateRepository { full_name: string; default_branch: string; private: boolean }

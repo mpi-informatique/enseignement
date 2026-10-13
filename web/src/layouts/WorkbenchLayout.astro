@@ -1,10 +1,10 @@
 ---
 import '../styles/global.css';
 interface Props { title?: string }
-const { title = 'Banque d’exercices · Enseignement MPI' } = Astro.props;
+const { title = 'Banque d’exercices · Exercices MPI' } = Astro.props;
 ---
 <!doctype html>
-<html lang="fr" data-theme="enseignement">
+<html lang="fr" data-theme="exercices">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,8 +14,8 @@ const { title = 'Banque d’exercices · Enseignement MPI' } = Astro.props;
     <title>{title}</title>
     <script is:inline>
       try {
-        const theme = localStorage.getItem('enseignement:theme');
-        document.documentElement.dataset.theme = (theme ? theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches) ? 'enseignement-dark' : 'enseignement';
+        const theme = localStorage.getItem('exercices:theme');
+        document.documentElement.dataset.theme = (theme ? theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches) ? 'exercices-dark' : 'exercices';
       } catch {}
     </script>
   </head>

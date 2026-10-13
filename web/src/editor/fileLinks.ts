@@ -1,7 +1,7 @@
 import type { Range } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
 import { Decoration, EditorView, ViewPlugin, keymap, type DecorationSet, type ViewUpdate } from '@codemirror/view';
-import type { Resource } from '@mpi-informatique/enseignement-core';
+import type { Resource } from '@mpi-informatique/exercices-core';
 import files from '../generated/files.json';
 import { resolveSourcePath } from '../lib/source-links';
 import { assetUrl, exerciseUrl } from '../lib/urls';

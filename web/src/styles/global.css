@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui" { themes: false; logs: false; }
 @plugin "daisyui/theme" {
-  name: "enseignement";
+  name: "exercices";
   default: true;
   color-scheme: light;
   --color-base-100: #ffffff;
@@ -32,7 +32,7 @@
   --noise: 0;
 }
 @plugin "daisyui/theme" {
-  name: "enseignement-dark";
+  name: "exercices-dark";
   color-scheme: dark;
   --color-base-100: #172129;
   --color-base-200: #1d2932;
@@ -76,7 +76,7 @@
   --editor-bg: #fcfdfd;
   --viewer-bg: #e9ecee;
 }
-[data-theme="enseignement-dark"] {
+[data-theme="exercices-dark"] {
   --ink: #e2e9ec;
   --muted: #97a6b1;
   --border-color: #2d3c47;
@@ -178,9 +178,9 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [role="separator"]
 .type-concours { background: #f5edda; color: #93702b; }
 .type-td { background: #e8eef7; color: #516e99; }
 .type-devoir { background: #f0e8f5; color: #876296; }
-[data-theme="enseignement-dark"] .type-concours { background: #3a3220; color: #dab970; }
-[data-theme="enseignement-dark"] .type-td { background: #24384a; color: #9ab9dc; }
-[data-theme="enseignement-dark"] .type-devoir { background: #342c40; color: #c0a7cd; }
+[data-theme="exercices-dark"] .type-concours { background: #3a3220; color: #dab970; }
+[data-theme="exercices-dark"] .type-td { background: #24384a; color: #9ab9dc; }
+[data-theme="exercices-dark"] .type-devoir { background: #342c40; color: #c0a7cd; }
 .status-dot { width: 6px; height: 6px; flex-shrink: 0; border-radius: 50%; background: var(--accent); display: inline-block; }
 .resize-handle { cursor: col-resize; touch-action: none; position: relative; background: var(--border-color); width: 5px; z-index: 4; }
 .resize-handle::after { content: ''; position: absolute; inset: 0 -3px; }
