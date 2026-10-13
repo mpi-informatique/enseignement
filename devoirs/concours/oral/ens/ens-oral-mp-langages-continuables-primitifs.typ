@@ -3,7 +3,7 @@
   meta: (
     titre: "Langages continuables et mots primitifs",
     chapitres: ("langages-reguliers", "automates-finis"),
-    algorithmes: ("parcours-en-largeur", "recherche-par-force-brute", ), structures: ("graphe-oriente", ),
+    algorithmes: ("parcours-en-largeur", ), structures: ("graphe-oriente", ),
     difficulte: 4, niveaux: ("MPI", "MP"), duree: (1, 0),
     concours: (nom: "ENS", annee: 2018, filiere: "MP", oral: true),
   ),

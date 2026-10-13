@@ -5,7 +5,7 @@
   meta: (
     titre: "Ensembles inévitables de mots",
     chapitres: ("langages-reguliers", "automates-finis", "graphes",),
-    algorithmes: ("recherche-par-force-brute", "parcours-en-profondeur", "determinisation"),
+    algorithmes: ("parcours-en-profondeur", "determinisation"),
     structures: ("graphe-oriente",),
     difficulte: 4,
     niveaux: ("MPI", "MP"),

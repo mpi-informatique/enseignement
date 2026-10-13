@@ -90,7 +90,7 @@
   // § 3.3, p. 9
   "parcours-prefixe", "parcours-infixe", "parcours-postfixe", "tri-par-tas",
   // § 4.2–4.3, p. 10–11 (algorithmes et méthodes algorithmiques)
-  "recherche-par-force-brute", "retour-sur-trace", "separation-et-evaluation",
+  "retour-sur-trace", "separation-et-evaluation",
   "algorithme-glouton", "diviser-pour-regner", "rencontre-au-milieu",
   "dichotomie", "programmation-dynamique",
   // § 4.4–4.5, p. 11

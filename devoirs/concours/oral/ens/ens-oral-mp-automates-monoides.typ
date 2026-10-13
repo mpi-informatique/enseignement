@@ -3,7 +3,7 @@
   meta: (
     titre: "Automates et monoïdes",
     chapitres: ("langages-reguliers", "automates-finis"),
-    algorithmes: ("recherche-par-force-brute", ), structures: ("tableau", ),
+    algorithmes: (), structures: ("tableau", ),
     difficulte: 4, niveaux: ("MPI", "MP"), duree: (1, 0),
     concours: (nom: "ENS", annee: 2022, filiere: "MP", oral: true),
   ),
