@@ -107,12 +107,14 @@
 /// Les vocabulaires autorisés sont exportés par `lib/meta.typ` ; `chapitres` couvre informatique et mathématiques.
 /// - meta (dictionary): Champs obligatoires : `titre` (chaîne non vide), `chapitres` (tableau de chaînes), `difficulte` (entier de 1 à 5). Champs facultatifs : `algorithmes`, `structures`, `langages`, `niveaux` (tableaux, défaut `()`), `duree` (couple heures/minutes positif, minutes < 60, ou `none`), `concours` (dictionnaire ou `none`). Concours : `nom`, `annee` (entier positif), `filiere`, `oral` (booléen), tous facultatifs ; aucune filière ajoutée implicitement. Champs supplémentaires libres ; `id` et `reference` interdits.
 /// - contenu (array): Textes libres `[...]`, `question(...)` et `partie(...)` ; au moins une question.
+/// - colonnes (int): Nombre de colonnes des questions dans l'énoncé ; le corrigé reste sur une colonne.
 /// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
 /// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
 /// - notation (content, none): Consignes concises de notation communes à l'exercice ou à l'épreuve, jamais affichées.
 /// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `points` dans chaque `question`.
 /// -> dictionary
-#let exercice(meta: (:), contenu: (), remarques: none, corrections: none, notation: none, bareme: none) = {
+#let exercice(meta: (:), contenu: (), colonnes: 1, remarques: none, corrections: none, notation: none, bareme: none) = {
+  assert(type(colonnes) == int and colonnes > 0, message: "colonnes doit être un entier strictement positif")
   let champs = ("titre", "chapitres", "difficulte")
   for champ in champs {
     assert(champ in meta, message: "Métadonnée manquante : " + champ)
@@ -205,6 +207,7 @@
   (
     meta: (niveaux: (), duree: none, ..meta, concours: concours-normalise),
     contenu: contenu,
+    colonnes: colonnes,
     remarques: remarques,
     corrections: corrections,
     notation: notation,
@@ -250,13 +253,20 @@
     ]
   }
   let i = 1
+  let colonnes = if corrige { 1 } else { ex.at("colonnes", default: 1) }
+  let questions = ()
+  let afficher-questions(questions) = grid(columns: (1fr,) * colonnes, column-gutter: 1.5em, row-gutter: 0.6em, ..questions)
   for q in aplatir(ex.contenu, textes: not corrige or afficher-contexte, commentaires: corrige) {
     if type(q) == content {
+      if questions.len() > 0 {
+        afficher-questions(questions)
+        questions = ()
+      }
       block(width: 100%, above: espacement, below: espacement, q)
       continue
     }
     // Chaque énoncé est un paragraphe distinct ; les longues questions restent sécables.
-    block(width: 100%, above: espacement, below: espacement, {
+    let enonce = block(width: 100%, above: espacement, below: espacement, {
       let points = if bareme == none { q.at("points", default: none) } else { bareme.at(i - 1) }
       if corrige and points != none {
         // Placement hors du corps : la note suit le début de la question sans réserver de hauteur.
@@ -271,6 +281,7 @@
           indent: 0pt, body-indent: 0.5em, q.enonce)
       }
     })
+    if colonnes == 1 { enonce } else { questions.push(enonce) }
     if corrige {
       if q.commentaire != none {
         block(width: 100%, above: espacement, below: espacement, text(style: "italic", q.commentaire))
@@ -282,6 +293,7 @@
     }
     i += 1
   }
+  if questions.len() > 0 { afficher-questions(questions) }
 }
 
 /// Compose un sujet de colle et identifie ses pages pour l'en-tête répété de `feuille`.

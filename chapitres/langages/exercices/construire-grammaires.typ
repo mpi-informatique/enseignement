@@ -2,6 +2,7 @@
 #import "/load.typ": sep
 
 #let ex = exercice(
+  colonnes: 2,
   meta: (
     titre: "Trouver une grammaire",
     chapitres: ("grammaires-non-contextuelles", "automates-finis"),

@@ -2,6 +2,7 @@
 #import "/load.typ": sep
 
 #let ex = exercice(
+  colonnes: 2,
   meta: (
     titre: "Trouver le langage engendré",
     chapitres: ("grammaires-non-contextuelles", "recursivite-et-induction"),
@@ -11,9 +12,9 @@
   contenu: (
     [Déterminer les langages engendrés par les grammaires suivantes, d'axiome $S$, en prouvant les deux inclusions. On note $abs(w)_a$ le nombre d'occurrences de $a$ dans $w$.],
     question([
-      $ S → X ∣ Y quad
-        X → a X ∣ a Z quad
-        Y → Y b ∣ Z b quad
+      $ S → X ∣ Y \
+        X → a X ∣ a Z \
+        Y → Y b ∣ Z b \
         Z → ε ∣ a Z b. $
     ], solution: [
       Depuis $Z$, les dérivations produisent exactement les $a^n b^n$, pour $n ∈ ℕ$.
@@ -24,7 +25,7 @@
       Ainsi $L(G_1) = {a^n b^p | n,p ∈ ℕ, n ≠ p}$.
     ]),
     question([
-      $ S → 0 A 1 ∣ ε quad
+      $ S → 0 A 1 ∣ ε \
         A → 1 S 0 ∣ ε. $
     ], solution: [
       Les deux premières étapes d'une dérivation terminale depuis $S$ donnent soit $ε$, soit $01$, soit $01 S 01$. Une récurrence sur la longueur de la dérivation montre donc que tous les mots engendrés appartiennent à $(01)^*$.
@@ -34,7 +35,7 @@
       par récurrence sur $n$. Ainsi $L(G_2) = (01)^*$.
     ]),
     question([
-      $ S → X ∣ X a S quad
+      $ S → X ∣ X a S \
         X → a X b X ∣ b X a X ∣ ε. $
     ], solution: [
       Montrons d'abord que $X$ engendre exactement les mots ayant autant de $a$ que de $b$.
@@ -56,9 +57,9 @@
       En particulier, $S → X$ permet les mots équilibrés et $ε$.
     ]),
     question([
-      $ S → X ∣ Y quad
-        X → Z 0 X ∣ Z 0 Z quad
-        Y → Z 1 Y ∣ Z 1 Z quad
+      $ S → X ∣ Y \
+        X → Z 0 X ∣ Z 0 Z \
+        Y → Z 1 Y ∣ Z 1 Z \
         Z → ε ∣ 1 Z 0 Z ∣ 0 Z 1 Z. $
     ], solution: [
       La preuve précédente, avec $0$ et $1$ à la place de $a$ et $b$, montre que $Z$ engendre exactement les mots équilibrés.
