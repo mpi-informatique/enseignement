@@ -14,7 +14,7 @@ L'extension [Exercices MPI](https://github.com/mpi-informatique/vscode-mpi-exerc
 Ce dépôt fournit le package `@mpi-informatique/mpi-exercices:0.1.0`.
 `nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
 Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock`.
-Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `charger("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
+Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `public("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
 Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple `read("corrige.ml")`.
 
 Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
@@ -29,7 +29,7 @@ Avant de créer un exercice, vérifier qu'il n'existe pas déjà dans la banque.
 - Pour ajouter un type de document, partir d'un modèle dans `templates/`. Garder `feuille.with` et un `titre` littéral (ou `ex.meta.titre` pour un sujet monolithique) pour permettre la recherche sans évaluation Typst.
 - Conserver le suivi individuel dans des copies séparées, liées au sujet (voir ci-dessous).
 
-Les sujets de colle sont conservés dans le dépôt privé `exercices-prive`, sous `chapitres/<chapitre>/colles/` (avec un sous-dossier annuel si nécessaire). Les exercices publics qu'ils réutilisent restent dans la banque publique et sont chargés avec `charger`.
+Les sujets de colle sont conservés dans le dépôt privé `exercices-prive`, sous `chapitres/<chapitre>/colles/` (avec un sous-dossier annuel si nécessaire). Les exercices publics qu'ils réutilisent restent dans la banque publique et sont chargés avec `public`.
 
 ## Imports et déplacement entre dépôts
 

@@ -25,12 +25,12 @@ with TemporaryDirectory() as dossier:
     assert not (package / 'lib/tests').exists()
     assert not (package / 'ressources').exists()
     source = racine / 'document.typ'
-    source.write_text('''#import "@mpi-informatique/mpi-exercices:0.1.0": feuille, charger, meta, theoremes, bloc-solution, sep, widetilde
-#let sujet = charger("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
-#let td = charger("chapitres/langages/td-grammaire.typ")
+    source.write_text('''#import "@mpi-informatique/mpi-exercices:0.1.0": feuille, public, meta, theoremes, bloc-solution, sep, widetilde
+#let sujet = public("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
+#let td = public("chapitres/langages/td-grammaire.typ")
 #assert(td.sujet.exercices.len() > 0)
-#assert(charger("chapitres/langages/exercices/grammaires-lineaires/grammaires-lineaires.typ").ex.meta.titre != "")
-#assert(charger("chapitres/maths/determinants/binomiaux.typ").ex.meta.matiere == "mathématiques")
+#assert(public("chapitres/langages/exercices/grammaires-lineaires/grammaires-lineaires.typ").ex.meta.titre != "")
+#assert(public("chapitres/maths/determinants/binomiaux.typ").ex.meta.matiere == "mathématiques")
 #assert("determinants" in meta.chapitres-programme)
 #assert(sujet.exercices.len() == 1)
 #show: feuille.with(titre: sujet.titre, exercices: sujet.exercices,

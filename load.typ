@@ -12,7 +12,7 @@
 /// Importe un exercice ou un sujet depuis le package.
 /// - chemin (str): Chemin relatif à la banque, par exemple "devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ".
 /// -> module
-#let charger(chemin) = {
+#let public(chemin) = {
   import chemin as source
   source
 }

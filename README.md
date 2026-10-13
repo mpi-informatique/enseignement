@@ -59,8 +59,8 @@ Voir le [guide de rédaction](docs/utilisation.md#cours-et-présentations) pour 
 Ce dépôt fournit `@mpi-informatique/mpi-exercices:0.1.0` :
 
 ```typst
-#import "@mpi-informatique/mpi-exercices:0.1.0": feuille, charger
-#let sujet = charger("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
+#import "@mpi-informatique/mpi-exercices:0.1.0": feuille, public
+#let sujet = public("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
 #show: feuille.with(titre: sujet.titre, exercices: sujet.exercices)
 ```
 
