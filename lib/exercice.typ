@@ -230,9 +230,10 @@
 /// - afficher-titre (bool): Afficher le titre de l'exercice.
 ///   Pour un exercice de concours, l'attribution s'affiche à droite à la place de la durée.
 /// - afficher-contexte (bool): Conserver les textes libres dans le corrigé, défaut true. Les questions et leurs figures restent toujours visibles.
-/// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
+/// - espacement (relative, auto): Espacement vertical des textes et questions ; `auto` utilise 0.6em.
 /// -> content
 #let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, afficher-contexte: true, bareme: none, espacement: auto) = {
+  let espacement = if espacement == auto { 0.6em } else { espacement }
   let bareme = if bareme == none { ex.bareme } else { bareme }
   let nombre = nombre-questions(ex.contenu)
   verifier-bareme(bareme, nombre)
@@ -255,7 +256,7 @@
   let i = 1
   let colonnes = if corrige { 1 } else { ex.at("colonnes", default: 1) }
   let questions = ()
-  let afficher-questions(questions) = grid(columns: (1fr,) * colonnes, column-gutter: 1.5em, row-gutter: 0.6em, ..questions)
+  let afficher-questions(questions) = grid(columns: (1fr,) * colonnes, column-gutter: 1.5em, row-gutter: espacement, ..questions)
   for q in aplatir(ex.contenu, textes: not corrige or afficher-contexte, commentaires: corrige) {
     if type(q) == content {
       if questions.len() > 0 {
@@ -321,7 +322,7 @@
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
 /// - nouvelle-page (bool): Commencer chaque exercice après le premier sur une nouvelle page.
-/// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
+/// - espacement (relative, auto): Espacement vertical des textes et questions ; `auto` utilise 0.6em.
 /// - afficher-exercices (bool): Composer automatiquement le tableau d'exercices ; false permet une composition personnalisée dans body.
 /// - body (content): Contenu placé avant les exercices, fourni par la règle show.
 /// -> content
