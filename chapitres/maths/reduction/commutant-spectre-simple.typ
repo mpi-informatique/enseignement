@@ -20,7 +20,7 @@
     ),
     question(
       [Montrer que $cal(C)(f)$ est un espace vectoriel, calculer sa dimension et montrer que ses éléments commutent deux à deux.],
-      solution: [L'équation $g f = f g$ est conservée par combinaison linéaire, donc $cal(C)(f)$ est un sous-espace de $cal(L)(E)$.
+      solution: [L'équation $g ∘ f = f ∘ g$ est conservée par combinaison linéaire, donc $cal(C)(f)$ est un sous-espace de $cal(L)(E)$.
       L'application qui associe à $g$ le tuple $(μ_1, …, μ_n)$ de sa diagonale est un isomorphisme de $cal(C)(f)$ sur $RR^n$ : sa dimension vaut $n$.
       Les matrices de deux éléments de $cal(C)(f)$ sont diagonales dans la même base, donc elles commutent.],
     ),
