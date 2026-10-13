@@ -1,4 +1,4 @@
-# Enseignement
+# Exercices MPI
 
 Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-informatique) pour les classes préparatoires : exercices, sujets, feuilles, devoirs, cours et présentations en Typst. Le [site web](web/README.md) permet de rechercher les exercices, d'éditer leur source et de compiler leurs PDF dans le navigateur.
 

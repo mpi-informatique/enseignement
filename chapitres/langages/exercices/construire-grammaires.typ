@@ -23,7 +23,6 @@
     ]),
     question([
       $L_3$ est l'ensemble des représentations en base $2$ des multiples de $3$.
-      La représentation de zéro est $0$ ; les autres représentations commencent par $1$.
     ], solution: [
       Le reste modulo $3$ devient $2r$ après lecture de $0$, et $2r+1$ après lecture de $1$.
       Prendre les règles

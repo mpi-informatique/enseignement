@@ -45,10 +45,10 @@
   show heading.where(level: 1): set text(size: 1.1 * taille)
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
-  set page(paper: "a4", margin: (top: 10mm, rest: 12mm), header: none, footer: none, numbering: none)
-  let entete = if contenu-entete != none { contenu-entete } else { context block(above: 0pt, below: 0.8em, sticky: true, {
+  set page(paper: "a4", margin: 10mm, header: none, footer: none, numbering: none)
+  let entete = if contenu-entete != none { contenu-entete } else { context block(above: 0pt, below: 1em, sticky: true, {
     set block(above: 0pt, below: 0pt)
-    stack(dir: ttb, spacing: 0.5em,
+    stack(dir: ttb, spacing: 0.6em,
       grid(columns: (24mm, 1fr, if attribution == none { 24mm } else { auto }), column-gutter: 1em, align: (left, center, right),
         if niveau != none { niveau },
         text(size: 1.2em, weight: "bold")[
