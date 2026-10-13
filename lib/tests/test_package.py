@@ -25,7 +25,7 @@ with TemporaryDirectory() as dossier:
     assert not (package / 'lib/tests').exists()
     assert not (package / 'ressources').exists()
     source = racine / 'document.typ'
-    source.write_text('''#import "@mpi-informatique/mpi-exercices:0.1.0": feuille, public, meta, theoremes, bloc-solution, sep, widetilde
+    source.write_text('''#import "@mpi-informatique/exercices:0.1.0": feuille, public, meta, theoremes, bloc-solution, sep, widetilde
 #let sujet = public("devoirs/concours/19/mines-ponts-2019-mp-informatique/mines-ponts-2019-mp-informatique.typ").sujet
 #let td = public("chapitres/langages/td-grammaire.typ")
 #assert(td.sujet.exercices.len() > 0)
@@ -46,7 +46,7 @@ $widetilde(a b), #sep widetilde(L)$
         subprocess.run(['typst', 'compile', '--root', str(racine), '--ignore-system-fonts',
                         '--package-path', str(racine / 'packages'), '--input', 'corrige=' + variante,
                         str(source), str(racine / (variante + '.pdf'))], check=True)
-    source.write_text('''#import "@mpi-informatique/mpi-exercices:0.1.0": cours-et-presentation, pause, article-only, slides-only, theoremes
+    source.write_text('''#import "@mpi-informatique/exercices:0.1.0": cours-et-presentation, pause, article-only, slides-only, theoremes
 #show: cours-et-presentation.with(titre: "Cours externe", niveau: "MPI")
 = Section
 == Notion

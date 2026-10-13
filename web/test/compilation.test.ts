@@ -51,7 +51,7 @@ test('Typst extrait les métadonnées sans catalogue et isole les fichiers priv�
   const privateEngine = await createEngine({
     bundle: {
       ...bundle,
-      '/@memory/workspace/load.typ': Buffer.from('#import "@mpi-informatique/mpi-exercices:0.1.0": *').toString('base64'),
+      '/@memory/workspace/load.typ': Buffer.from('#import "@mpi-informatique/exercices:0.1.0": *').toString('base64'),
       [`/@memory/workspace/${resource.fichier}`]: Buffer.from(privateSource).toString('base64'),
     },
     fonts: await Promise.all(manifest.fonts.map(async (font: string) => new Uint8Array(await readFile(new URL(`fonts/${font}`, publicPath))))),

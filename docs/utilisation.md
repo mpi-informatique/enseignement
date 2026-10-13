@@ -11,7 +11,7 @@ Installer Nix avec les fonctionnalités `nix-command` et `flakes` activées.
 Pour lancer la banque web, utiliser `just web` (ou `nix develop path:. -c just web`) ; `just web-stop` arrête le serveur. Voir le [guide du site](../web/README.md) pour les options et la construction statique.
 L'extension [Exercices MPI](https://github.com/mpi-informatique/vscode-mpi-exercices) permet aussi de rechercher, composer et compiler les documents dans VS Code.
 
-Ce dépôt fournit le package `@mpi-informatique/mpi-exercices:0.1.0`.
+Ce dépôt fournit le package `@mpi-informatique/exercices:0.1.0`.
 `nix develop path:. -c just install` installe facultativement une copie pour Tinymist et les autres outils hors de Nix. Réinstaller après une modification et changer la version dans `typst.toml` pour conserver une ancienne copie installée.
 Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock`.
 Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `public("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
@@ -33,7 +33,7 @@ Les sujets de colle sont conservés dans le dépôt privé `exercices-prive`, so
 
 ## Imports et déplacement entre dépôts
 
-Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/load.typ": exercice, feuille, question` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/mpi-exercices:0.1.0` à ce relais dans le dépôt privé.
+Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/load.typ": exercice, feuille, question` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/exercices:0.1.0` à ce relais dans le dépôt privé.
 
 Pour les modules spécialisés, écrire par exemple :
 

@@ -1,5 +1,5 @@
 [package]
-name = "mpi-exercices"
+name = "exercices"
 version = "0.1.0"
 entrypoint = "load.typ"
 authors = ["Quentin Fortier"]
