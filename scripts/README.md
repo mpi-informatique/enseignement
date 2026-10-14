@@ -29,8 +29,8 @@ Préfixer les commandes suivantes par `python3 scripts/build.py` :
 
 | Arguments | Résultat |
 | --- | --- |
-| `c chemin.typ` | Variantes dans `build/<chemin-sans-extension>/` : énoncé/corrigé, cours/présentation, ou format unique. |
-| `w chemin.typ --variant enonce` | Aperçu actualisé en continu dans `apercu.pdf`. Choisir explicitement `enonce`, `corrige`, `cours` ou `presentation` selon le document à relire. |
+| `c chemin.typ` | Variantes dans `build/<chemin-sans-extension>/` : `chemin.pdf` et `chemin-cor.pdf` pour l'énoncé et le corrigé. Les cours avec présentation conservent les noms `cours-<nom>.pdf` et `presentation-<nom>.pdf`. |
+| `w chemin.typ --variant enonce` | Actualiser en continu le même PDF que `c` pour la variante choisie. Choisir explicitement `enonce`, `corrige`, `cours` ou `presentation` selon le document à relire. |
 | `all` | Tous les exercices et documents, puis le catalogue. |
 | `exercices` / `documents` | Seulement les exercices autonomes / les documents composés. |
 | `catalogue` / `docs` | `build/catalogue.json` / `build/docs/api.pdf`. |

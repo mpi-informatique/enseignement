@@ -79,6 +79,14 @@ def variants(kind):
     return {'enonce': ('corrige=false',), 'corrige': ('corrige=true',)}
 
 
+def pdf_filename(source, variant, kind=None):
+    """Nom de PDF commun à la compilation, à la surveillance et aux exports."""
+    stem = Path(source).stem
+    if kind == 'cours-presentation':
+        return f'{variant}-{stem.removeprefix("cours-")}.pdf'
+    return stem + ('-cor' if variant == 'corrige' else '') + '.pdf'
+
+
 def sources():
     for file in sorted(ROOT.rglob("*.typ")):
         relative = file.relative_to(ROOT)

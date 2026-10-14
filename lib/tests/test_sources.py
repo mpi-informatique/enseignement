@@ -3,7 +3,13 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
-from sources import classify, sources, variants
+from sources import classify, pdf_filename, sources, variants
+
+assert pdf_filename('chapitres/langages/colle.typ', 'enonce') == 'colle.pdf'
+assert pdf_filename('chapitres/langages/colle.typ', 'corrige') == 'colle-cor.pdf'
+assert pdf_filename('chapitres/langages/cours-kleene.typ', 'cours', 'cours-presentation') == 'cours-kleene.pdf'
+assert pdf_filename('chapitres/langages/cours-kleene.typ', 'presentation', 'cours-presentation') == 'presentation-kleene.pdf'
+assert pdf_filename('chapitres/langages/support.typ', 'cours', 'cours') == 'support.pdf'
 
 assert classify('#let ex = exercice()', '2026/graphes/un.typ') == 'exercice'
 assert classify('#show: feuille.with(type: "devoir", exercices: ())', 'ds.typ') == 'document'

@@ -13,7 +13,7 @@ import shutil
 import subprocess
 import sys
 
-from sources import ROOT, sources, variants
+from sources import ROOT, pdf_filename, sources, variants
 
 TYPST = os.environ.get('TYPST', 'typst')
 OCAML = os.environ.get('OCAML', 'ocaml')
@@ -64,18 +64,24 @@ def documents(selection, signature, categorie=None):
         if categorie and (kind == 'exercice') != (categorie == 'exercices'):
             continue
         for variante, inputs in variants(kind).items():
-            compiler(source, Path('build') / Path(source).with_suffix('') / (variante + '.pdf'),
+            compiler(source, Path('build') / Path(source).with_suffix('') / pdf_filename(source, variante, kind),
                      signature, *inputs, exercice=kind == 'exercice')
 
 
 def tests(signature):
     for script in ('test_package.py', 'test_sources.py'):
         run([sys.executable, ROOT / 'lib/tests' / script])
+    for mode in ('feuille', 'sujet'):
+        for corrige in (False, True):
+            variante = 'corrige' if corrige else 'enonce'
+            source = 'lib/tests/pagination-colle.typ'
+            compiler(source, Path('build/lib/tests/pagination-colle') / mode / pdf_filename(source, variante), signature,
+                     'mode=' + mode, 'corrige=' + str(corrige).lower())
     for source, inputs in (
         ('points', ()), ('points', ('corrige=true',)), ('test', ()),
         ('bareme', ()), ('bareme', ('corrige=true',)),
     ):
-        suffixe = '-corrige' if inputs else ''
+        suffixe = '-cor' if inputs else ''
         compiler(f'lib/tests/{source}.typ', f'build/lib/tests/{source}{suffixe}.pdf', signature, *inputs)
     # Les tests restent à côté du code publié, sans liste de chemins à maintenir.
     for test in sorted(test for dossier in ('chapitres', 'devoirs') for test in (ROOT / dossier).rglob('test.ml')):
@@ -90,15 +96,16 @@ def modeles(signature):
         ('feuille', 'templates/feuille.typ', False),
         ('colle', 'templates/colle.typ', False),
         ('devoir', 'templates/devoir.typ', False),
-        ('concours', 'templates/sujet-concours.typ', False),
+        ('sujet-concours', 'templates/sujet-concours.typ', False),
     ):
         for corrige in (False, True):
-            suffixe = '-corrige' if corrige else ''
+            suffixe = '-cor' if corrige else ''
             compiler(source, f'build/templates/{nom}{suffixe}.pdf', signature,
                      'corrige=' + str(corrige).lower(), exercice=exercice)
     for nom, kind in (('cours', 'cours'), ('presentation', 'presentation'), ('cours-presentation', 'cours-presentation')):
         for variante, inputs in variants(kind).items():
-            compiler(f'templates/{nom}.typ', f'build/templates/{nom}-{variante}.pdf', signature, *inputs)
+            source = f'templates/{nom}.typ'
+            compiler(source, Path('build/templates') / nom / pdf_filename(source, variante, kind), signature, *inputs)
 
 
 def main():
@@ -125,7 +132,7 @@ def main():
             if variant not in available:
                 parser.error('Variantes disponibles : ' + ', '.join(available))
             run([sys.executable, ROOT / 'scripts/sources.py', '--typst', TYPST,
-                 '--source', relative, '--output', str(Path('build') / Path(relative).with_suffix('') / 'apercu.pdf'),
+                 '--source', relative, '--output', str(Path('build') / Path(relative).with_suffix('') / pdf_filename(relative, variant, kind)),
                  '--variant', variant, '--watch'])
             return
     else:
