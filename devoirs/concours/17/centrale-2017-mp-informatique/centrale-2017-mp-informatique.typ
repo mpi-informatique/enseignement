@@ -66,7 +66,7 @@
 #let ex = exercice(
   meta: (
     titre: "Mots synchronisants",
-    chapitres: ("automates-finis", "langages-reguliers", "graphes", "structures-de-donnees", "logique"),
+    chapitres: ("automates-finis", "langages-reguliers", "graphes", "structures", "logique"),
     algorithmes: ("parcours-en-largeur", "determinisation"),
     structures: ("file", "tableau", "liste-adjacence"),
     langages: ("OCaml",), difficulte: 4, niveaux: ("MPI",), duree: (4, 0),

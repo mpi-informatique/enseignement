@@ -18,7 +18,7 @@ Dans un dépôt consommateur, fixer une révision de ce dépôt dans `flake.lock
 Depuis un dépôt consommateur, importer l'API depuis le package (ou son relais local), puis `public("chemin.typ")` pour accéder aux exports d'un exercice, d'un sujet ou d'une feuille.
 Lire les fichiers associés depuis le sujet avec un chemin relatif, par exemple `read("corrige.ml")`.
 
-Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures-de-donnees`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
+Les contenus sont regroupés dans `chapitres/<chapitre>/` : `langages`, `graphes`, `structures`, etc. Les exercices autonomes sont dans le sous-dossier `exercices/` ; les feuilles (TD et devoirs) sont directement dans leur chapitre, par exemple `chapitres/langages/td-automate.typ`.
 Les mathématiques conservent leurs sous-dossiers dans `chapitres/maths/`, notamment `determinants/` et `reduction/`. Leurs feuilles sont directement dans `chapitres/maths/`.
 Les sujets écrits de concours sont dans `devoirs/concours/`, avec leur classement par année. Les exercices oraux sont dans `devoirs/concours/oral/<concours>/`, où `<concours>` est le nom en minuscules de l'une des valeurs de `concours-possibles`. Les cours et présentations sont dans leur chapitre, avec leurs ressources dans un sous-dossier voisin.
 

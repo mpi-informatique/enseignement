@@ -34,7 +34,7 @@ let etats_accessibles (n, delta, f) =
     end
   in
   visiter 0;
-  let rec renverser acc = function
+  let rec renverser acc = function (* ou List.rev *)
     | [] -> acc
     | q :: suite -> renverser (q :: acc) suite
   in

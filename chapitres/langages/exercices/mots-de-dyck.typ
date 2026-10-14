@@ -5,7 +5,7 @@
 #let ex = exercice(
   meta: (
     titre: "Mots de Dyck",
-    chapitres: ("langages-reguliers", "automates-finis", "recursivite-et-induction", "structures-de-donnees"),
+    chapitres: ("langages-reguliers", "automates-finis", "recursivite-et-induction", "structures"),
     structures: ("liste", "arbre-binaire"),
     langages: ("OCaml",),
     difficulte: 3,

@@ -5,7 +5,7 @@
   // § 1–2, p. 5–7
   "methodes-de-programmation", "recursivite-et-induction",
   // § 3–4, p. 8–12 ; graphes : § 3.4 et 4.5, p. 9 et 11
-  "structures-de-donnees", "algorithmique", "graphes",
+  "structures", "algorithmique", "graphes",
   // § 5–7, p. 13–17
   "gestion-des-ressources", "logique", "bases-de-donnees",
   // § 8.1–8.3, p. 18–19 : les mots et expressions relèvent de 8.1

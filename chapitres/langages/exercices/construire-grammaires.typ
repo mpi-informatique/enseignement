@@ -22,7 +22,7 @@
       Pour engendrer $a^n b^p$, appliquer $p$ fois la première règle, $n-p$ fois la deuxième, puis terminer par $ε$.
     ]),
     question([
-      $L_3$ est l'ensemble des représentations en base $2$ des multiples de $3$.
+      $L_3$ = représentations en base $2$ des multiples de $3$.
     ], solution: [
       Le reste modulo $3$ devient $2r$ après lecture de $0$, et $2r+1$ après lecture de $1$.
       Prendre les règles

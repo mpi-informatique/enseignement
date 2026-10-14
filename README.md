@@ -8,7 +8,7 @@ Ressources pédagogiques publiques de [mpi-informatique](https://github.com/mpi-
 chapitres/               Contenus regroupés par chapitre
   langages/              Cours, TD et colles, avec les exercices dans exercices/
   graphes/               Exercices dans exercices/
-  structures-de-donnees/ Exercices dans exercices/
+  structures/ Exercices dans exercices/
   maths/                 Exercices dans determinants/ et reduction/, feuilles à côté
 devoirs/concours/        Sujets complets avec leurs solutions, codes et tests
 lib/                     API Typst, figures, code et métadonnées

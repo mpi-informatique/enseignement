@@ -214,7 +214,7 @@
         L'initialisation coûte $O(n)$, comme le temps total et l'espace utilisé.
       ],
         bareme: 2,
-        notation: [25 % pour le marquage correct des états vus, 25 % pour la récursivité, 25 % pour le dépaquetage de l'automate et des transitions, 25 % pour la construction de la liste dans l'ordre demandé. Retirer 25 % si la complexité est absente ou fausse. Attribuer au moins 25 % si l'idée du parcours en profondeur est présente, même sans code correct.]
+        notation: [Retirer 25% pour chaque petite erreur différente, 25% pour complexité quadratique.]
       ),
       question(
         [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
@@ -367,7 +367,7 @@
           commentaire: [Le jury relève des incompréhensions de la définition du produit d'automates.],
           solution: [#produit-accessible],
           bareme: 1.5,
-          notation: [25 % pour les états accessibles, 25 % pour les états initial et finaux, 50 % pour les transitions. Attribuer 90 % pour une seule transition fausse ou manquante avec états et finaux corrects. Ne pas exiger le produit entier.]
+          notation: [Enlever 25% pour chaque petite erreur.]
         ),
         question(
           [Écrire ```ocaml produit : automate -> automate -> automate``` renvoyant le produit des deux automates donnés.],

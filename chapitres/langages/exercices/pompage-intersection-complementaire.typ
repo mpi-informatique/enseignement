@@ -3,14 +3,14 @@
 
 #let ex = exercice(
   meta: (
-    titre: "Lemme de pompage, intersection et complémentaire",
+    titre: "Lemme d'Ogden",
     chapitres: ("grammaires-non-contextuelles",),
     difficulte: 3,
     niveaux: ("MPI",),
   ),
   contenu: (
     [On admet le lemme de pompage suivant pour les langages non-contextuels :
-      si $L$ est non-contextuel, il existe un entier $p ≥ 1$ tel que tout mot $t ∈ L$ de longueur au moins $p$ s'écrit $t = u v w x y$, avec
+      si $L$ est non-contextuel, il existe un entier $p ≥ 1$ tel que tout mot $t ∈ L$ de longueur au moins $p$ s'écrit $t = u v w x y$, avec :
       - $abs(v w x) ≤ p$
       - $v x ≠ ε$
       - $∀i ∈ ℕ, #sep u v^i w x^i y ∈ L$

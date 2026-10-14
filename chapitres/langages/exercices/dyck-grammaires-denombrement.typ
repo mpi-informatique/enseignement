@@ -4,7 +4,7 @@
 #let ex = exercice(
   meta: (
     titre: "Mots de Dyck : grammaires et dénombrement",
-    chapitres: ("grammaires-non-contextuelles", "langages-reguliers", "recursivite-et-induction", "structures-de-donnees", "algorithmique"),
+    chapitres: ("grammaires-non-contextuelles", "langages-reguliers", "recursivite-et-induction", "structures", "algorithmique"),
     structures: ("pile", "arbre-binaire",),
     difficulte: 3,
     niveaux: ("MPI",),
