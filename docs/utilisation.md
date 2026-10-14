@@ -209,7 +209,7 @@ Utiliser les environnements de [lib/theoremes.typ](../lib/theoremes.typ). Dans l
 
 ### Barème
 
-Dans les devoirs et concours, ordonner les champs des questions ainsi : énoncé, `commentaire`, `solution`, `bareme`, `notation`. Placer les points dans `bareme` et détailler leur attribution en pourcentages dans `notation` lorsque la question s'y prête. Les questions ouvertes peuvent conserver des repères plus libres.
+Dans les devoirs et concours, ordonner les champs des questions ainsi : énoncé, `commentaire`, `solution`, `bareme`, `notation`. Placer les points dans `bareme` et détailler leur attribution en pourcentages dans `notation` lorsque la question s'y prête. Les questions ouvertes peuvent conserver des repères plus libres. Adapter les parts au nombre et au poids des critères, sans imposer des multiples de 25 % : par exemple un tiers pour chacune des trois propriétés d'une relation d'équivalence. Dans les copies, conserver les réussites en pourcentage et utiliser une expression telle que `100 / 3` pour un tiers.
 
 ```typst
 question([Justifier la complexité.], solution: [ ... ], bareme: 1.5)

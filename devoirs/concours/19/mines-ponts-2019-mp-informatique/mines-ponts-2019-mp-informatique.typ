@@ -197,7 +197,7 @@
         solution: [On mémorise la position courante. En cas de répétition, on conserve la dernière occurrence.
           #code("numero") Le coût est $O(n+abs(A))$.],
         bareme: 1,
-        notation: [25 % pour un tableau de taille $n$ initialisé à $-1$, 25 % pour le parcours de toute la liste, 25 % pour le suivi des indices, 25 % pour leur écriture aux bonnes cases. Ne pas pénaliser une recherche quadratique correcte ni le choix d'une occurrence autre que la première.]
+        notation: [Un tiers pour le tableau de taille $n$ initialisé à $-1$, un tiers pour le parcours de la liste avec suivi des indices, un tiers pour leur écriture aux bonnes cases. Ne pas pénaliser une recherche quadratique correcte ni le choix d'une occurrence autre que la première.]
       ),
       [Un état $q$ de $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ est accessible s'il existe $w ∈ {a,b}^*$ tel que $δ_cal(A)^*(i_cal(A),w)=q$.
         L'état initial est donc toujours accessible.
@@ -226,7 +226,7 @@
         #code("partie_accessible") La complexité est $O(n)$.
       ],
         bareme: 1.5,
-        notation: [25 % pour la détermination des états accessibles, 25 % pour leur renumérotation avec l'état initial en $0$, 25 % pour la reconstruction des transitions, 25 % pour la renumérotation de leurs destinations. Répartir les erreurs sur les états finaux dans la reconstruction de l'automate.]
+        notation: [Un cinquième pour la détermination des états accessibles, un cinquième pour leur renumérotation avec l'état initial en $0$, un cinquième pour les transitions associées aux bons états sources, un cinquième pour la renumérotation des destinations, un cinquième pour les états finaux.]
       ),
     )),
     partie("III", "Morphismes d'automates", contenu: (
@@ -246,7 +246,7 @@
           #align(center, table(columns: 2, [$q$], [$φ(q)$], [$E$], [], [$F$], [], [$G$], []))],
           solution: [$φ(E)=φ(F)=C$ et $φ(G)=D$.],
           bareme: 0.5,
-          notation: [50 % pour l'image de l'état initial, 50 % pour les deux autres images correctes.]
+          notation: [Un tiers pour chacune des trois images correctes.]
         ),
         question(
           [Donner, sans justification, un morphisme de $cal(A)_4$ vers $cal(A)_2$.],
@@ -306,7 +306,7 @@
           - Par (4), $q ∈ F_cal(B) ⇔ φ^(-1)(q) ∈ F_cal(A)$.
         ],
           bareme: 1.5,
-          notation: [25 % pour la bijectivité par égalité des cardinaux, 25 % pour la surjectivité et l'état initial de l'inverse, 25 % pour sa compatibilité avec les transitions, 25 % pour l'équivalence sur les finaux. Ne pas pénaliser les seuls lapsus d'indices sans ambiguïté.]
+          notation: [Un cinquième pour la bijectivité par égalité des cardinaux, puis un cinquième pour chacune des quatre propriétés de l'inverse : surjectivité, état initial, compatibilité avec les transitions, équivalence sur les finaux. Ne pas pénaliser les seuls lapsus d'indices sans ambiguïté.]
         ),
         question(
           [Montrer que la composition de deux morphismes est encore un morphisme.],
@@ -332,7 +332,7 @@
           Ainsi $φ$ est surjective. L'accessibilité de $cal(A)$ et (4) ne sont pas nécessaires ici.
         ],
           bareme: 1,
-          notation: [25 % pour un mot atteignant un état arbitraire du but, 50 % pour la construction de son antécédent, 25 % pour la vérification de son image. Une simple évocation des chemins sans construction d'antécédent reçoit 25 %.]
+          notation: [Un tiers pour un mot atteignant un état arbitraire du but, un tiers pour la construction de son antécédent, un tiers pour la vérification de son image. Une simple évocation des chemins sans construction d'antécédent reçoit au plus un tiers.]
         ),
         question(
           [Écrire ```ocaml existe_morphisme : automate -> automate -> bool * morphisme```
@@ -350,7 +350,7 @@
           La complexité est $O(n)$.
         ],
           bareme: 3,
-          notation: [25 % pour la propagation depuis les états initiaux, 25 % pour la mémorisation des images déjà imposées, 25 % pour la détection des contradictions sur les images et les finaux, 25 % pour le résultat booléen et le tableau renvoyés. Accepter toute méthode correcte, y compris moins efficace.]
+          notation: [Un cinquième pour la propagation depuis les états initiaux, un cinquième pour la mémorisation des images déjà imposées, un cinquième pour la détection des contradictions sur les images, un cinquième pour la vérification des caractères finaux, un cinquième pour le résultat booléen et le tableau renvoyés. Accepter toute méthode correcte, y compris moins efficace.]
         ),
       )),
     )),
@@ -378,7 +378,7 @@
           #code("produit") La complexité est $O(n n')$.
         ],
           bareme: 1.5,
-          notation: [25 % pour un codage bijectif des couples, 25 % pour le nombre d'états et les tableaux, 25 % pour les transitions vers les couples correctement codés, 25 % pour la conjonction des caractères finaux.]
+          notation: [Un tiers pour le codage bijectif des couples et les tableaux de tailles adaptées, un tiers pour les transitions vers les couples correctement codés, un tiers pour la conjonction des caractères finaux.]
         ),
         question(
           [Soit $(q,q')$ un état accessible du produit de deux automates acceptant le même langage.
@@ -408,7 +408,7 @@
           La seconde projection $ψ(q,q')=q'$ est de même un morphisme vers $cal(A)'$.
         ],
           bareme: 2,
-          notation: [25 % pour les projections, 25 % pour leur surjectivité, 25 % pour l'état initial et les transitions, 25 % pour l'équivalence sur les finaux. Accepter une seule vérification suivie d'un argument de symétrie.]
+          notation: [Un cinquième pour les projections, puis un cinquième pour chacune des quatre propriétés : surjectivité, état initial, compatibilité avec les transitions, équivalence sur les finaux. Accepter une seule vérification suivie d'un argument de symétrie.]
         ),
       )),
       partie("IV.B", "Diagramme d'automates",
@@ -428,7 +428,7 @@
           - Transitivité : on concatène les suites de $p$ à $q$ et de $q$ à $r$, en gardant une seule fois le terme commun $q$.
         ],
           bareme: 1,
-          notation: [25 % pour la réflexivité, 25 % pour la symétrie, 50 % pour la concaténation des suites établissant la transitivité.]
+          notation: [Un tiers pour la réflexivité, un tiers pour la symétrie, un tiers pour la concaténation des suites établissant la transitivité.]
         ),
         question(
           [Montrer que $p ≡ q$ entraîne $δ_cal(B)(p,σ) ≡ δ_cal(B)(q,σ)$ pour toute lettre $σ ∈ {a,b}$.],
@@ -439,7 +439,7 @@
           La suite $δ_cal(B)(q_0,σ),…,δ_cal(B)(q_k,σ)$ témoigne de l'équivalence recherchée.
         ],
           bareme: 1.5,
-          notation: [50 % pour la conservation de chaque égalité d'images par les transitions, avec les deux morphismes, 50 % pour la suite témoin obtenue. Retirer 25 % si l'un des deux cas est omis.]
+          notation: [Un tiers pour la conservation de l'égalité des images par $φ$, un tiers pour le cas de $ψ$, un tiers pour la suite témoin obtenue. Accepter un argument de symétrie explicite pour le second cas.]
         ),
         question(
           [Montrer que, si $p ≡ q$, alors $p$ est final dans $cal(B)$ si et seulement si $q$ l'est.],
@@ -450,7 +450,7 @@
           Le caractère final est donc constant le long d'une suite témoin.
         ],
           bareme: 1,
-          notation: [50 % pour l'équivalence des caractères finaux à chaque pas, avec les deux morphismes, 50 % pour sa propagation le long de la suite témoin.]
+          notation: [Un tiers pour l'équivalence des caractères finaux lorsque les images par $φ$ sont égales, un tiers pour le cas de $ψ$, un tiers pour la propagation le long de la suite témoin. Accepter un argument de symétrie explicite pour le second cas.]
         ),
         [La classe d'un état $q$ est $[q]={p ∈ Q_cal(B) | q ≡ p}$.
           On note $ℓ$ le nombre de classes et $S_0,…,S_(ℓ-1)$ ces classes, avec $i_cal(B) ∈ S_0$.
@@ -488,7 +488,7 @@
           On définit de même $ψ'(ψ(p))=[p]$. C'est un morphisme et $ψ' ∘ ψ=η$.
         ],
           bareme: 3,
-          notation: [25 % pour la définition par un antécédent, 25 % pour l'indépendance du choix, 25 % pour les propriétés du premier morphisme, 25 % pour le second et les égalités de composition. Accepter un argument de symétrie explicite.]
+          notation: [Un sixième pour la définition par un antécédent et les égalités de composition, un sixième pour l'indépendance du choix, puis un sixième pour chacune des quatre propriétés : surjectivité, état initial, compatibilité avec les transitions, équivalence sur les finaux. Vérifier ces critères pour les deux morphismes, en acceptant un argument de symétrie explicite.]
         ),
         question(
           [Écrire ```ocaml renomme : int array -> int array``` qui renomme un tableau d'entiers positifs ou nuls
@@ -591,7 +591,7 @@
           Il est surjectif, préserve l'état initial $P$ et le caractère final, et commute aux deux transitions comme le montre la figure.
         ],
           bareme: 1.5,
-          notation: [25 % pour la fusion supplémentaire imposée, 50 % pour l'automate obtenu, 25 % pour le morphisme. Accepter toute fusion valide répondant à l'énoncé.]
+          notation: [Un tiers pour la fusion supplémentaire imposée, un tiers pour l'automate obtenu, un tiers pour le morphisme. Accepter toute fusion valide répondant à l'énoncé.]
         ),
         question(
           [Expliquer brièvement pourquoi on ne peut construire $cal(A)_6^(Q,R)$ muni d'un morphisme
@@ -662,7 +662,7 @@
           Pour une entrée à $N$ états, dont $n$ accessibles, le temps et l'espace sont $O(N+n^2)$, donc $O(n^2)$ pour un automate accessible à $n$ états.
         ],
           bareme: 4,
-          notation: [Repères : 25 % pour les classes d'états indiscernables, 25 % pour la construction correcte du quotient, 25 % pour la justification de la conservation du langage et de la minimalité, 25 % pour une implémentation cohérente. Adapter la répartition à toute autre méthode correcte et aux progrès partiels démontrés.]
+          notation: [Repères : un cinquième pour les classes d'états indiscernables, un cinquième pour la construction correcte du quotient, un cinquième pour la conservation du langage, un cinquième pour la minimalité, un cinquième pour une implémentation cohérente. Adapter la répartition à toute autre méthode correcte et aux progrès partiels démontrés.]
         ),
       )),
     )),
