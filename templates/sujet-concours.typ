@@ -17,11 +17,13 @@
     partie("I", "Langages", commentaire: none, contenu: (
       partie("I.A", "Langages finis", contexte: ([On fixe un alphabet $Σ$.],), contenu: (
         question([Montrer qu'un langage fini sur $Σ$ est régulier.],
-          notation: none, // Consignes propres à cette question, sans affichage.
           commentaire: none, // Observation du jury, affichée en italique avant la solution.
           solution: [Un mot est décrit par la concaténation de ses lettres
             (par $ε$ pour le mot vide).
-            Une union finie de telles expressions décrit tout langage fini ; $∅$ décrit le langage vide.]),
+            Une union finie de telles expressions décrit tout langage fini ; $∅$ décrit le langage vide.],
+          bareme: none,
+          notation: none, // Consignes propres à cette question, sans affichage.
+        ),
       )),
       partie("I.B", "Miroir", contexte: ([On fixe un alphabet $Σ$.],), contenu: (
         question([Le miroir d'un langage fini est-il régulier ?],

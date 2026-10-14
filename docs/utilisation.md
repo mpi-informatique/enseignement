@@ -209,10 +209,10 @@ Utiliser les environnements de [lib/theoremes.typ](../lib/theoremes.typ). Dans l
 
 ### Barème
 
-Placer les points dans chaque question :
+Dans les devoirs et concours, ordonner les champs des questions ainsi : énoncé, `commentaire`, `solution`, `bareme`, `notation`. Placer les points dans `bareme` et détailler leur attribution en pourcentages dans `notation` lorsque la question s'y prête. Les questions ouvertes peuvent conserver des repères plus libres.
 
 ```typst
-question([Justifier la complexité.], points: 1.5, solution: [ ... ])
+question([Justifier la complexité.], solution: [ ... ], bareme: 1.5)
 ```
 
 Échelle pédagogique : évidence 0.25, facile 0.5, moyen 1, assez difficile 2, difficile 3, très difficile 4. Tenir aussi compte de la longueur de la preuve ou du code ;

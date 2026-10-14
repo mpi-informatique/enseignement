@@ -8,19 +8,19 @@
 // Les exercices sont des données Typst ordinaires.
 /// Construit une question ; son énoncé reste visible dans le corrigé.
 /// - enonce (content): Énoncé, éventuellement avec sous-questions.
-/// - solution (content, none): Solution ; `none` affiche « Corrigé à compléter ».
 /// - commentaire (content, none): Observation du jury, en italique avant la solution uniquement dans le corrigé.
+/// - solution (content, none): Solution ; `none` affiche « Corrigé à compléter ».
+/// - bareme (float, int, none): Barème de la question, affiché en marge du corrigé ; `none` masque les points.
 /// - notation (content, none): Consignes concises de notation (pourcentages, pénalités, tolérances), jamais affichées.
-/// - points (float, int, none): Barème de la question, affiché en marge du corrigé ; `none` masque les points.
 /// -> dictionary
-#let question(enonce, solution: none, commentaire: none, notation: none, points: none) = {
+#let question(enonce, commentaire: none, solution: none, bareme: none, notation: none) = {
   assert(commentaire == none or type(commentaire) == content,
     message: "commentaire doit être un contenu Typst ou none")
   assert(notation == none or type(notation) == content,
     message: "notation doit être un contenu Typst ou none")
-  assert(points == none or points in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+  assert(bareme == none or bareme in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
     message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none")
-  (type: "question", enonce: enonce, solution: solution, commentaire: commentaire, notation: notation, points: points)
+  (type: "question", enonce: enonce, commentaire: commentaire, solution: solution, bareme: bareme, notation: notation)
 }
 
 #let texte-concours(concours) = (
@@ -111,7 +111,7 @@
 /// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
 /// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
 /// - notation (content, none): Consignes concises de notation communes à l'exercice ou à l'épreuve, jamais affichées.
-/// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `points` dans chaque `question`.
+/// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `bareme` dans chaque `question`.
 /// -> dictionary
 #let exercice(meta: (:), contenu: (), colonnes: 1, remarques: none, corrections: none, notation: none, bareme: none) = {
   assert(type(colonnes) == int and colonnes > 0, message: "colonnes doit être un entier strictement positif")
@@ -267,7 +267,7 @@
     }
     // Chaque énoncé est un paragraphe distinct ; les longues questions restent sécables.
     let enonce = block(width: 100%, above: espacement, below: espacement, {
-      let points = if bareme == none { q.at("points", default: none) } else { bareme.at(i - 1) }
+      let points = if bareme == none { q.at("bareme", default: none) } else { bareme.at(i - 1) }
       if corrige and points != none {
         // Placement hors du corps : la note suit le début de la question sans réserver de hauteur.
         marge-droite[

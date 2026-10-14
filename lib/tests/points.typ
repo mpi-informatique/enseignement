@@ -2,14 +2,14 @@
 
 #let meta = (titre: "Points par question", chapitres: (), difficulte: 1)
 #let premier = exercice(meta: meta, contenu: (
-  question([Question A], points: 0.5, solution: [Réponse A]),
+  question([Question A], bareme: 0.5, solution: [Réponse A]),
   partie("I", "Partie", contenu: (
-    question([Question B], points: 2, solution: [Réponse B]),
+    question([Question B], bareme: 2, solution: [Réponse B]),
     question([Question sans barème], solution: [Réponse]),
   )),
 ))
 #let second = exercice(meta: meta, contenu: (
-  question([Question C], points: 1.5, solution: [Réponse C]),
+  question([Question C], bareme: 1.5, solution: [Réponse C]),
 ))
 #let corrige = sys.inputs.at("corrige", default: "false") == "true"
 #show: feuille.with(type: "devoir", titre: "Devoir : barème par question",
