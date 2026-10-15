@@ -54,26 +54,28 @@
       Le langage reconnu est $⋃_(f ∈ F) L(0,f,n)$, une union finie de langages réguliers ; il est donc régulier. Tout langage reconnaissable admet un automate déterministe, ce qui donne le résultat annoncé.
     ]),
     question([
-      On reprend le type des expressions régulières du cours :
-      ```ocaml
-      type 'a regexp =
-        | Vide | Epsilon | L of 'a
-        | Union of 'a regexp * 'a regexp
-        | Concat of 'a regexp * 'a regexp
-        | Etoile of 'a regexp
-      ```
-      Un automate déterministe d'état initial $0$ est représenté par :
-      ```ocaml
-      type 'a automate = {
-        n : int;
-        finaux : int list;
-        transitions : (int * 'a * int) list;
-      }
-      ```
-      Le champ `n` est le nombre d'états, strictement positif. Les états sont les entiers de $0$ à $n-1$. Un triplet `(i, a, j)` représente une transition de $i$ vers $j$ étiquetée par `a`. Les états finaux sont distincts et, pour chaque couple `(i, a)`, la liste contient au plus une transition. Une transition absente signifie que le mot est rejeté.
-
-      Écrire en OCaml une fonction ```ocaml kleene : 'a automate -> 'a regexp``` renvoyant une expression régulière du langage reconnu, en utilisant un tableau tridimensionnel dont la case ```ocaml r.(k).(i).(j)``` dénote $L(i,j,k)$.
-      Préciser les complexités en temps et en mémoire, puis expliquer comment remplacer ce tableau par des tableaux bidimensionnels.
+      Écrire en OCaml une fonction ```ocaml kleene : 'a automate -> 'a regexp``` renvoyant une expression régulière du langage reconnu.
+      Préciser les complexités en temps et en mémoire.
+      #grid(columns: (1fr, 1fr), column-gutter: 1.5em, align: top,
+        [
+          ```ocaml
+          type 'a regexp =
+            | Vide | Epsilon | L of 'a
+            | Union of 'a regexp * 'a regexp
+            | Concat of 'a regexp * 'a regexp
+            | Etoile of 'a regexp
+          ```
+        ],
+        [
+          ```ocaml
+          type 'a automate = {
+            n : int;
+            finaux : int list;
+            transitions : (int * 'a * int) list;
+          }
+          ```
+        ],
+      )
     ], solution: [
       On initialise le niveau $0$ avec les transitions et le mot vide sur la diagonale, puis on applique la récurrence :
 
