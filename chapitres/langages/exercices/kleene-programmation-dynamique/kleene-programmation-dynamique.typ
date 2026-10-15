@@ -1,5 +1,9 @@
-#import "/load.typ": exercice, question, automate
+#import "/load.typ": exercice, question, automate, code
+#import code: code-region
+
 #import automate: dessiner-automate
+
+#let source = read("corrige.ml")
 
 #let ex = exercice(
   meta: (
@@ -54,67 +58,19 @@
       Le langage reconnu est $⋃_(f ∈ F) L(0,f,n)$, une union finie de langages réguliers ; il est donc régulier. Tout langage reconnaissable admet un automate déterministe, ce qui donne le résultat annoncé.
     ]),
     question([
-      Écrire en OCaml une fonction ```ocaml kleene : 'a automate -> 'a regexp``` renvoyant une expression régulière du langage reconnu.
-      Préciser les complexités en temps et en mémoire.
+      Implémenter cet algorithme avec une fonction ```ocaml kleene : 'a automate -> 'a regexp```.
+      Préciser la complexité.
       #grid(columns: (1fr, 1fr), column-gutter: 1.5em, align: top,
-        [
-          ```ocaml
-          type 'a regexp =
-            | Vide | Epsilon | L of 'a
-            | Union of 'a regexp * 'a regexp
-            | Concat of 'a regexp * 'a regexp
-            | Etoile of 'a regexp
-          ```
-        ],
-        [
-          ```ocaml
-          type 'a automate = {
-            n : int;
-            finaux : int list;
-            transitions : (int * 'a * int) list;
-          }
-          ```
-        ],
+        code-region(source, "regexp"),
+        code-region(source, "automate"),
       )
     ], solution: [
-      On initialise le niveau $0$ avec les transitions et le mot vide sur la diagonale, puis on applique la récurrence :
+      #block(breakable: false)[#code-region(source, "kleene")]
 
-      ```ocaml
-      let kleene a =
-        let n = a.n in
-        let r = Array.init (n + 1) (fun _ ->
-          Array.init n (fun _ -> Array.make n Vide)) in
-        for i = 0 to n - 1 do
-          r.(0).(i).(i) <- Epsilon
-        done;
-        List.iter (fun (i, c, j) ->
-          r.(0).(i).(j) <- Union (r.(0).(i).(j), L c)
-        ) a.transitions;
-        for k = 0 to n - 1 do
-          for i = 0 to n - 1 do
-            for j = 0 to n - 1 do
-              r.(k + 1).(i).(j) <- Union (r.(k).(i).(j),
-                Concat (r.(k).(i).(k),
-                  Concat (Etoile r.(k).(k).(k), r.(k).(k).(j))))
-            done
-          done
-        done;
-        List.fold_left (fun e f -> Union (e, r.(n).(0).(f))) Vide a.finaux
-      ```
+      Avant le tour $k$, ```ocaml l.(i).(j)``` dénote $L(i,j,k)$. Les copies de la ligne et de la colonne $k$ permettent d'appliquer la récurrence sans mélanger les niveaux.
 
-      Les appels à `Array.init` créent des matrices et des lignes distinctes : une modification de case n'en modifie aucune autre.
-      La récurrence assure que ```ocaml r.(k).(i).(j)``` dénote $L(i,j,k)$.
-      L'union finale dénote donc le langage reconnu. Si aucun état n'est final, le résultat est `Vide`.
-
-      Soit $m$ le nombre de transitions. L'initialisation coûte $O(n^3 + m)$ et les trois boucles effectuent $n^3$ mises à jour.
-      Un constructeur OCaml crée un nœud immuable contenant des références vers ses sous-expressions, sans les recopier : chaque mise à jour coûte $O(1)$.
-      Le temps et la mémoire totale sont donc $O(n^3 + m)$. Le tableau lui-même occupe $O(n^3)$ cases.
-
-      *Optimisation en 2D.* Pour calculer le niveau $k+1$, seul le niveau $k$ est nécessaire. On peut conserver deux matrices $n × n$, l'une pour le niveau courant et l'autre pour le suivant, puis échanger leurs rôles à chaque tour.
-      Les deux matrices occupent alors $O(n^2)$ cases et le temps reste $O(n^3 + m)$.
-      Les sous-expressions des niveaux précédents restent toutefois référencées par les nouvelles expressions : la mémoire totale reste $O(n^3 + m)$ dans le pire cas.
-
-      Pour écrire l'expression entière sous forme de texte, il faut déplier les références partagées. Sa taille peut être exponentielle en $n$ : le coût de cette écriture dépend de la taille produite.
+      Pour $m$ transitions, le temps est $O(n^3 + m)$ : chaque constructeur partage ses sous-expressions en $O(1)$.
+      La matrice occupe $O(n^2)$ cases, mais les expressions construites peuvent occuper $O(n^3 + m)$ en mémoire. Leur écriture complète peut être de taille exponentielle.
     ]),
   ),
 )

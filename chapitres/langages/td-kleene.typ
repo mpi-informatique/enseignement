@@ -2,7 +2,7 @@
 #import "/chapitres/langages/exercices/langages-locaux-glushkov.typ": ex as locaux
 #import "/devoirs/concours/oral/ccinp/ccinp-oral-langages-automates.typ": ex as ccp
 #import "/chapitres/langages/exercices/stabilite-langages-reguliers.typ": ex as stabilite
-#import "/chapitres/langages/exercices/kleene-programmation-dynamique.typ": ex as dynamique
+#import "/chapitres/langages/exercices/kleene-programmation-dynamique/kleene-programmation-dynamique.typ": ex as dynamique
 #import "/chapitres/langages/exercices/residuels-minimisation.typ": ex as residuels
 
 #show: feuille.with(
