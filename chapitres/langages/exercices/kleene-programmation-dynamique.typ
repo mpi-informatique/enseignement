@@ -6,6 +6,7 @@
     titre: "Reconnaissable ⟹ régulier par programmation dynamique",
     chapitres: ("langages-reguliers", "automates-finis", "algorithmique"),
     algorithmes: ("programmation-dynamique",),
+    langages: ("OCaml",),
     difficulte: 3,
     niveaux: ("MPI",),
   ),
@@ -53,39 +54,65 @@
       Le langage reconnu est $⋃_(f ∈ F) L(0,f,n)$, une union finie de langages réguliers ; il est donc régulier. Tout langage reconnaissable admet un automate déterministe, ce qui donne le résultat annoncé.
     ]),
     question([
-      Écrire le pseudocode d'un algorithme ayant pour entrée un automate déterministe et renvoyant une expression régulière dénotant le langage reconnu par cet automate. Préciser la complexité.
-    ], solution: [
-      On manipule des expressions avec les constructeurs $"Vide"$, $"Epsilon"$, $"Lettre"(a)$, $"Union"(e,f)$, $"Concat"(e,f)$ et $"Etoile"(e)$.
-      Pour chaque $k$, la case $R[i,j]$ dénote $L(i,j,k)$.
+      On reprend le type des expressions régulières du cours :
+      ```ocaml
+      type 'a regexp =
+        | Vide | Epsilon | L of 'a
+        | Union of 'a regexp * 'a regexp
+        | Concat of 'a regexp * 'a regexp
+        | Etoile of 'a regexp
+      ```
+      Un automate déterministe d'état initial $0$ est représenté par :
+      ```ocaml
+      type 'a automate = {
+        n : int;
+        finaux : int list;
+        transitions : (int * 'a * int) list;
+      }
+      ```
+      Le champ `n` est le nombre d'états, strictement positif. Les états sont les entiers de $0$ à $n-1$. Un triplet `(i, a, j)` représente une transition de $i$ vers $j$ étiquetée par `a`. Les états finaux sont distincts et, pour chaque couple `(i, a)`, la liste contient au plus une transition. Une transition absente signifie que le mot est rejeté.
 
-      ```text
-      R ← matrice n × n remplie avec Vide
-      pour i de 0 à n − 1 :
-          R[i,i] ← Epsilon
-      pour chaque transition i —a→ j :
-          R[i,j] ← Union(R[i,j], Lettre(a))
-      pour k de 0 à n − 1 :
-          T ← nouvelle matrice n × n
-          pour i de 0 à n − 1 :
-              pour j de 0 à n − 1 :
-                  T[i,j] ← Union(R[i,j],
-                      Concat(R[i,k], Concat(Etoile(R[k,k]), R[k,j])))
-          R ← T
-      e ← Vide
-      pour chaque état final f :
-          e ← Union(e, R[0,f])
-      renvoyer e
+      Écrire en OCaml une fonction ```ocaml kleene : 'a automate -> 'a regexp``` renvoyant une expression régulière du langage reconnu, en utilisant un tableau tridimensionnel dont la case ```ocaml r.(k).(i).(j)``` dénote $L(i,j,k)$.
+      Préciser les complexités en temps et en mémoire, puis expliquer comment remplacer ce tableau par des tableaux bidimensionnels.
+    ], solution: [
+      On initialise le niveau $0$ avec les transitions et le mot vide sur la diagonale, puis on applique la récurrence :
+
+      ```ocaml
+      let kleene a =
+        let n = a.n in
+        let r = Array.init (n + 1) (fun _ ->
+          Array.init n (fun _ -> Array.make n Vide)) in
+        for i = 0 to n - 1 do
+          r.(0).(i).(i) <- Epsilon
+        done;
+        List.iter (fun (i, c, j) ->
+          r.(0).(i).(j) <- Union (r.(0).(i).(j), L c)
+        ) a.transitions;
+        for k = 0 to n - 1 do
+          for i = 0 to n - 1 do
+            for j = 0 to n - 1 do
+              r.(k + 1).(i).(j) <- Union (r.(k).(i).(j),
+                Concat (r.(k).(i).(k),
+                  Concat (Etoile r.(k).(k).(k), r.(k).(k).(j))))
+            done
+          done
+        done;
+        List.fold_left (fun e f -> Union (e, r.(n).(0).(f))) Vide a.finaux
       ```
 
-      L'initialisation dénote les chemins sans état intermédiaire, y compris le chemin vide sur la diagonale. La récurrence démontrée assure l'invariant après chaque tour. La matrice $T$ évite de mélanger deux valeurs de $k$.
-      L'union finale dénote donc le langage reconnu, y compris lorsque $F = ∅$.
+      Les appels à `Array.init` créent des matrices et des lignes distinctes : une modification de case n'en modifie aucune autre.
+      La récurrence assure que ```ocaml r.(k).(i).(j)``` dénote $L(i,j,k)$.
+      L'union finale dénote donc le langage reconnu. Si aucun état n'est final, le résultat est `Vide`.
 
-      Soit $m$ le nombre de transitions. Il y a $n^3$ mises à jour.
-      Si chaque constructeur crée un nœud immuable contenant des références vers ses sous-expressions, son coût est constant : le temps et la mémoire totale sont $O(n^3 + m)$ ; les deux matrices seules occupent $O(n^2)$ cases.
-      Les sous-expressions communes sont partagées, sans être recopiées.
+      Soit $m$ le nombre de transitions. L'initialisation coûte $O(n^3 + m)$ et les trois boucles effectuent $n^3$ mises à jour.
+      Un constructeur OCaml crée un nœud immuable contenant des références vers ses sous-expressions, sans les recopier : chaque mise à jour coûte $O(1)$.
+      Le temps et la mémoire totale sont donc $O(n^3 + m)$. Le tableau lui-même occupe $O(n^3)$ cases.
 
-      Si l'on veut écrire l'expression entière sous forme de texte, il faut déplier ces références. Une mise à jour peut recopier quatre expressions du tour précédent : la taille peut donc croître exponentiellement en $n$.
-      Le coût de cette écriture dépend de la taille produite ; il ne se limite pas à $O(n^3)$.
+      *Optimisation en 2D.* Pour calculer le niveau $k+1$, seul le niveau $k$ est nécessaire. On peut conserver deux matrices $n × n$, l'une pour le niveau courant et l'autre pour le suivant, puis échanger leurs rôles à chaque tour.
+      Les deux matrices occupent alors $O(n^2)$ cases et le temps reste $O(n^3 + m)$.
+      Les sous-expressions des niveaux précédents restent toutefois référencées par les nouvelles expressions : la mémoire totale reste $O(n^3 + m)$ dans le pire cas.
+
+      Pour écrire l'expression entière sous forme de texte, il faut déplier les références partagées. Sa taille peut être exponentielle en $n$ : le coût de cette écriture dépend de la taille produite.
     ]),
   ),
 )
