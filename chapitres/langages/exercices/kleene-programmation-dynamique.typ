@@ -1,4 +1,5 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, question, automate
+#import automate: dessiner-automate
 
 #let ex = exercice(
   meta: (
@@ -24,12 +25,21 @@
       Dans les deux cas, le langage est fini donc régulier.
     ]),
     question([Donner une équation de récurrence sur $L(i,j,k)$, en la démontrant.], solution: [
-      Pour $0 ≤ k < n$, soit $u ∈ L(i,j,k+1)$ l'étiquette d'un chemin $C$ de $i$ à $j$ n'utilisant que des états intermédiaires inférieurs ou égaux à $k$.
-      Si $C$ n'utilise pas l'état $k$ comme état intermédiaire, alors $u ∈ L(i,j,k)$.
-      Sinon, en coupant à chaque passage intermédiaire par $k$, $C$ est la
-      concaténation d'un chemin de $i$ à $k$, d'un certain nombre de cycles de $k$ à $k$, puis d'un chemin de $k$ à $j$, dont les états intermédiaires sont tous strictement inférieurs à $k$.
-      Réciproquement, une telle concaténation ne possède que des états
-      intermédiaires inférieurs ou égaux à $k$. On en déduit :
+      Soit $u ∈ L(i,j,k+1)$ l'étiquette d'un chemin $C$ de $i$ à $j$ avec des états intermédiaires inférieurs ou égaux à $k$.
+      - Si $C$ n'utilise pas l'état $k$ comme état intermédiaire : $u ∈ L(i,j,k)$
+      - Sinon, en coupant à chaque passage intermédiaire par $k$, on décompose $C$ en un chemin de $i$ à $k$, zéro ou plusieurs chemins de $k$ à $k$, puis un chemin de $k$ à $j$. Chacun n'a que des états intermédiaires strictement inférieurs à $k$.
+
+      #dessiner-automate(
+        (("i", (0, 0), false, false), ("k", (5, 0), false, false), ("j", (10, 0), false, false)),
+        (
+          ("i", "k", "L(i,k,k)", (curve: 0)),
+          ("k", "k", "L(k,k,k)", (anchor: top)),
+          ("k", "j", "L(k,j,k)", (curve: 0)),
+        ),
+      )
+      #align(center)[La boucle en $k$ peut être parcourue zéro, une ou plusieurs fois.]
+
+      Réciproquement, une telle concaténation n'a que des états intermédiaires inférieurs ou égaux à $k$. On obtient donc :
       $ L(i,j,k+1) = L(i,j,k) ∪ L(i,k,k) L(k,k,k)^* L(k,j,k). $
     ]),
     question([En déduire, par récurrence, que tout langage reconnaissable est régulier.], solution: [
