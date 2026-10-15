@@ -1,20 +1,15 @@
-(* BEGIN regexp *)
 type 'a regexp =
   | Vide | Epsilon | L of 'a
   | Union of 'a regexp * 'a regexp
   | Concat of 'a regexp * 'a regexp
   | Etoile of 'a regexp
-(* END regexp *)
 
-(* BEGIN automate *)
 type 'a automate = {
   n : int;
   finaux : int list;
   transitions : (int * 'a * int) list;
 }
-(* END automate *)
 
-(* BEGIN kleene *)
 let kleene a =
   let n = a.n in
   let l = Array.make_matrix n n Vide in
@@ -38,7 +33,6 @@ let kleene a =
   let e = ref Vide in
   List.iter (fun f -> e := Union (!e, l.(0).(f))) a.finaux;
   !e
-(* END kleene *)
 
 let accepte_regexp e mot =
   let rec positions e i =
