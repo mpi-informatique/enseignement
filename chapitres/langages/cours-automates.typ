@@ -135,12 +135,21 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
 #slides-only[#pause Il reconnaît les mots contenant un nombre impair de $a$, par exemple $b b a b$.]
 
 #slides-only[== Construction d'automates]
-#exercise[
-  Montrer que les langages suivants sont reconnaissables :
-  + $a b | a b c | c$
-  + Les mots de taille paire sur $Σ = {a, b}$.
-  + $(b | a b | a b a)^*$
-]
+#colonnes-cours(
+  encadrer: contenu => exercise[
+    Montrer que les langages suivants sont reconnaissables :
+    #contenu
+  ],
+  [
+    + $a b | a b c | c$
+    + Les mots de taille paire sur $Σ = {a, b}$.
+  ],
+  [
+    #set enum(start: 3)
+    + $(b | a b | a b a)^*$
+    + Les mots sur $Σ = {a, b}$ dont l'avant-dernière lettre est $a$.
+  ],
+)
 
 = Test d'appartenance
 
