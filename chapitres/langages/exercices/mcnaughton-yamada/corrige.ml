@@ -10,23 +10,19 @@ type 'a automate = {
   transitions : (int * 'a * int) list;
 }
 
-let kleene a =
+let to_regexp a =
   let n = a.n in
   let l = Array.make_matrix n n Vide in
-  for i = 0 to n - 1 do
-    l.(i).(i) <- Epsilon
-  done;
-  List.iter (fun (i, c, j) ->
-    l.(i).(j) <- Union (l.(i).(j), L c)
-  ) a.transitions;
-  for k = 0 to n - 1 do
+  (* initialisation *)
+  for i = 0 to n - 1 do l.(i).(i) <- Epsilon done;
+  List.iter (fun (i, c, j) -> l.(i).(j) <- Union (l.(i).(j), L c)) a.transitions;
+  for k = 0 to n - 1 do (* récurrence Q2 *)
     let ligne = Array.copy l.(k) in
     let colonne = Array.init n (fun i -> l.(i).(k)) in
     let boucle = Etoile l.(k).(k) in
     for i = 0 to n - 1 do
       for j = 0 to n - 1 do
-        l.(i).(j) <- Union (l.(i).(j),
-          Concat (colonne.(i), Concat (boucle, ligne.(j))))
+        l.(i).(j) <- Union (l.(i).(j), Concat (colonne.(i), Concat (boucle, ligne.(j))))
       done
     done
   done;
@@ -81,11 +77,11 @@ let exemples = [
 
 let () =
   List.iteri (fun i a ->
-    let e = kleene a in
+    let e = to_regexp a in
     List.iter (fun mot ->
       if accepte_regexp e mot <> accepte_automate a mot then
         failwith (Printf.sprintf "Automate %d, mot %S" i mot)
     ) (mots 4)
   ) exemples;
-  let (_ : int regexp) = kleene { n = 1; finaux = [0]; transitions = [0, 42, 0] } in
+  let (_ : int regexp) = to_regexp { n = 1; finaux = [0]; transitions = [0, 42, 0] } in
   print_endline "10 automates : équivalence vérifiée sur tous les mots de longueur au plus 4 ; polymorphisme vérifié."
