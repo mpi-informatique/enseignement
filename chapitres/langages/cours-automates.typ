@@ -26,7 +26,7 @@
 
 = Automate non déterministe
 
-#let definition-automate = definition[
+#let definition-automate = definition(marge-haute: false)[
   Un automate est un $5$-uplet $A = (Σ, Q, I, F, E)$ où :
   - $Σ$ est un alphabet.
   - $Q$ est un ensemble fini d'états.
@@ -61,7 +61,7 @@
 
 == Fonction de transition
 #let definition-transition = [
-  #definition[
+  #definition(marge-haute: false)[
     On peut remplacer $E$ par la fonction $δ : Q × Σ → cal(P)(Q)$ définie par :
     $ δ(q, a) = {q' ∈ Q ∣ (q, a, q') ∈ E}. $
   ]

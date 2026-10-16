@@ -7,7 +7,8 @@
 #let style-cadres = state("exercices-style-cadres", none)
 
 // Fancy lie par défaut le fond du titre à la couleur de la bordure.
-#let titre-blanc(environnement, coeur: false, ..args) = context {
+// Désactiver marge-haute pour un cadre placé en tête de cellule.
+#let titre-blanc(environnement, coeur: false, marge-haute: true, ..args) = context {
   let cadre = environnement(
     ..args,
     coeur: coeur,
@@ -25,7 +26,7 @@
   let espacement = espacement-cadres.get()
   if espacement != none {
     v(espacement, weak: true)
-  } else if style-cadres.get() == none {
+  } else if style-cadres.get() == none and marge-haute {
     // Garder une marge même au début d'un bloc de contenu de Touying en mode article.
     v(0.6em)
   }
