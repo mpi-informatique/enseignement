@@ -68,6 +68,7 @@
   Il y a un blocage lorsque $δ(q, a) = ∅$.
 ]
 #let exercice-transition = [
+  #set align(center)
   #exercise[Donner la fonction de transition de l'automate précédent.]
   #table(
     columns: 4,
