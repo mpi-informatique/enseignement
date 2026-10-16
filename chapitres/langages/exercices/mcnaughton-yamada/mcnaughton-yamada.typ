@@ -18,37 +18,37 @@
     [
       On présente une alternative à la méthode d'élimination des états pour convertir un automate en expression régulière, avec un algorithme par programmation dynamique similaire à Floyd-Warshall.
 
-      Soit $A = (Σ,Q,0,F,δ)$ un automate déterministe tel que $Q = {0, …, n-1}$. Pour $i,j ∈ Q$ et $k ∈ {0, …, n}$, on note $L(i,j,k)$ le langage des étiquettes des chemins de $i$ à $j$ dont tous les états intermédiaires sont strictement inférieurs à $k$. Seules les occurrences initiale et finale sont exemptées de cette condition : un retour en $i$ ou en $j$ au milieu du chemin compte comme un état intermédiaire.
+      Soit $A = (Σ, Q, 0, F, δ)$ un automate déterministe tel que $Q = {0, …, n-1}$. Pour $i, j ∈ Q$ et $k ∈ {0, …, n}$, on note $L(i, j, k)$ le langage des étiquettes des chemins de $i$ à $j$ dont tous les états intermédiaires sont strictement inférieurs à $k$. Seules les occurrences initiale et finale sont exemptées de cette condition : un retour en $i$ ou en $j$ au milieu du chemin compte comme un état intermédiaire.
     ],
-    question([Montrer que $L(i,j,0)$ est régulier, pour tout $i,j ∈ Q$.], solution: [
+    question([Montrer que $L(i, j, 0)$ est régulier, pour tout $i, j ∈ Q$.], solution: [
       Soient $i, j ∈ Q$ deux états.
-      - Si $i ≠ j$, $L(i,j,0) = {a ∈ Σ | delta(i, a) = j}$.
-      - Si $i = j$, $L(i,i,0) = {a ∈ Σ | delta(i, a) = i} ∪ {ε}$.
+      - Si $i ≠ j$, $L(i, j, 0) = {a ∈ Σ | delta(i, a) = j}$.
+      - Si $i = j$, $L(i, i, 0) = {a ∈ Σ | delta(i, a) = i} ∪ {ε}$.
       Dans les deux cas, le langage est fini donc régulier.
     ]),
-    question([Donner une équation de récurrence sur $L(i,j,k)$ pour $0 ≤ k < n$, en la démontrant.], solution: [
-      Soit $u ∈ L(i,j,k+1)$ l'étiquette d'un chemin $C$ de $i$ à $j$ avec des états intermédiaires inférieurs ou égaux à $k$.
-      - Si $C$ n'utilise pas l'état $k$ comme état intermédiaire : $u ∈ L(i,j,k)$
+    question([Donner une équation de récurrence sur $L(i, j, k)$ pour $0 ≤ k < n$, en la démontrant.], solution: [
+      Soit $u ∈ L(i, j, k+1)$ l'étiquette d'un chemin $C$ de $i$ à $j$ avec des états intermédiaires inférieurs ou égaux à $k$.
+      - Si $C$ n'utilise pas l'état $k$ comme état intermédiaire : $u ∈ L(i, j, k)$
       - Sinon, en coupant à chaque passage intermédiaire par $k$, on décompose $C$ en un chemin de $i$ à $k$, zéro ou plusieurs chemins de $k$ à $k$, puis un chemin de $k$ à $j$. Chacun n'a que des états intermédiaires strictement inférieurs à $k$.
 
       #dessiner-automate(
         (("i", (0, 0), false, false), ("k", (5, 0), false, false), ("j", (10, 0), false, false)),
         (
-          ("i", "k", "L(i,k,k)", (curve: 0)),
-          ("k", "k", "L(k,k,k)", (anchor: top)),
-          ("k", "j", "L(k,j,k)", (curve: 0)),
+          ("i", "k", "L(i, k, k)", (curve: 0)),
+          ("k", "k", "L(k, k, k)", (anchor: top)),
+          ("k", "j", "L(k, j, k)", (curve: 0)),
         ),
       )
 
       Réciproquement, une telle concaténation n'a que des états intermédiaires inférieurs ou égaux à $k$. On obtient donc :
-      $ L(i,j,k+1) = L(i,j,k) ∪ L(i,k,k) L(k,k,k)^* L(k,j,k). $
+      $ L(i, j, k+1) = L(i, j, k) ∪ L(i, k, k) L(k, k, k)^* L(k, j, k). $
     ]),
     question([En déduire, par récurrence, que tout langage reconnaissable est régulier.], solution: [
-      Montrons par récurrence sur $k ∈ {0, …, n}$ la propriété $P(k)$ : « pour tout $i,j ∈ Q$, $L(i,j,k)$ est régulier ».
+      Montrons par récurrence sur $k ∈ {0, …, n}$ la propriété $P(k)$ : « pour tout $i, j ∈ Q$, $L(i, j, k)$ est régulier ».
       - $P(0)$ est vraie d'après la question 1.
-      - Supposons $P(k)$ vraie pour un $k$ tel que $0 ≤ k < n$. Les langages $L(i,j,k)$, $L(i,k,k)$, $L(k,k,k)$ et $L(k,j,k)$ sont réguliers par hypothèse de récurrence. La relation de la question précédente montre que $L(i,j,k+1)$ est régulier par stabilité par union, concaténation et étoile. Donc $P(k+1)$ est vraie.
+      - Supposons $P(k)$ vraie pour un $k$ tel que $0 ≤ k < n$. Les langages $L(i, j, k)$, $L(i, k, k)$, $L(k, k, k)$ et $L(k, j, k)$ sont réguliers par hypothèse de récurrence. La relation de la question précédente montre que $L(i, j, k+1)$ est régulier par stabilité par union, concaténation et étoile. Donc $P(k+1)$ est vraie.
 
-      $L(A) = ⋃_(f ∈ F) L(0,f,n)$ est une union finie de langages réguliers donc est régulier. On conclut en utilisant le fait que tout langage reconnaissable est reconnu par un automate déterministe.
+      $L(A) = ⋃_(f ∈ F) L(0, f, n)$ est une union finie de langages réguliers donc est régulier. On conclut en utilisant le fait que tout langage reconnaissable est reconnu par un automate déterministe.
     ]),
     question(
       [
