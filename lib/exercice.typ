@@ -379,7 +379,7 @@
 ) = {
   assert(type == str(type) and type != "", message: "Le type de document doit être une chaîne non vide")
   verifier-bareme(bareme, exercices.map(ex => nombre-questions(ex.contenu)).sum(default: 0))
-  let titre-affiche = titre + if corrige { " (corrigé)" } else { "" }
+  let titre-affiche = titre + if corrige { " : corrigé" } else { "" }
   let duree = if type not in ("devoir", "concours") { none } else if duree != none { duree } else if (
     exercices.len() == 1
   ) { exercices.first().meta.duree } else { none }

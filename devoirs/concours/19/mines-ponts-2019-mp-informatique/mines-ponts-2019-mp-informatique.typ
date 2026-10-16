@@ -181,7 +181,7 @@
   contenu: (
     [
       == Définition mathématique d'un automate
-      Dans tout le sujet, un automate est un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.
+      Dans tout le sujet, le terme _automate_ désigne un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.
       On note $ε$ le mot vide et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
       $ δ^*(q,ε)=q, #sep δ^*(q,σ w)=δ^*(δ(q,σ),w). $
       On note $L(cal(A))$ le langage reconnu par $cal(A)$.
@@ -240,8 +240,7 @@
     )),
     partie("II", "États accessibles d'un automate", contenu: (
       question(
-        [Écrire une fonction ```ocaml numero : int -> int list -> int array``` qui, à partir d'un entier $n$
-          et d'une liste $A$ d'entiers entre $0$ et $n-1$, renvoie un tableau $T$ de taille $n$ :
+        [Écrire une fonction ```ocaml numero : int -> int list -> int array``` qui, à partir d'un entier $n$ et d'une liste $A$ d'entiers entre $0$ et $n-1$, renvoie un tableau $T$ de taille $n$ :
           $T[i]=-1$ si $i$ est absent de $A$, et $T[i]$ est l'indice de l'une de ses occurrences sinon.
           Par exemple, ```ocaml numero 5 [3;2;0]``` peut renvoyer ```ocaml [|2;-1;1;0;-1|]```.],
         jury: [Un compteur et un parcours de la liste suffisent. Certaines solutions correctes étaient inutilement quadratiques.],
@@ -254,8 +253,7 @@
         Si $Q'$ est l'ensemble des états accessibles, la partie accessible de $cal(A)$ est $cal(A)'=⟨ Q',i_cal(A),δ',F_cal(A) ∩ Q' ⟩$, où $δ'$ est la restriction de $δ_cal(A)$ à $Q' × {a,b}$.
         Un automate est accessible si tous ses états le sont.],
       question(
-        [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles
-          dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
+        [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
         jury: [« Une attention toute particulière devait être consacrée à l'ordre exigé du résultat. » Le jury relève aussi des confusions avec le parcours en largeur et des oublis de marquage.],
         solution: [
           On marque chaque état avant d'explorer ses successeurs, d'abord par $a$.
@@ -288,8 +286,7 @@
         $ ∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B). quad "(4)" $
         En OCaml, $φ$ est représenté par le tableau $[φ(q)]_(q ∈ Q_cal(A))$,
         de type ```ocaml morphisme```, de longueur $abs(Q_cal(A))$ et à valeurs entre $0$ et $abs(Q_cal(B))-1$.
-        #code("morphisme")
-      ],
+        #code("morphisme")],
       partie("III.A", "Exemples de morphismes d'automates", contenu: (
         question(
           [Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
@@ -604,8 +601,7 @@
             notation: [50 % pour la partie accessible du produit et ses projections, 50 % pour l'application de la construction du diagramme avec les résultats correspondants.],
           ),
           question(
-            [Déterminer l'automate $cal(C)$ de la question 29 pour $cal(A)_3$ et $cal(A)_4$,
-              et préciser $φ'$ et $ψ'$.],
+            [Déterminer l'automate $cal(C)$ de la question 29 pour $cal(A)_3$ et $cal(A)_4$ et préciser $φ'$ et $ψ'$.],
             solution: [
               Les classes dans la partie accessible du produit sont
               $ S_0={(E,H),(F,H),(F,I)}, #sep S_1={(G,J),(G,K)}. $
@@ -684,7 +680,8 @@
             notation: [25 % pour la fusion de $R$ et $S$, 50 % pour l'automate à trois états, 25 % pour la conservation du langage. La preuve de minimalité n'est pas exigée.],
           ),
           question(
-            [Soit $cal(A)=⟨ Q,i,δ,F ⟩$ un automate accessible.
+            [
+              Soit $cal(A)=⟨ Q,i,δ,F ⟩$ un automate accessible.
               On appelle $P=(S,A)$ le graphe orienté de sommets $S=Q × Q$,
               avec, pour chaque $σ ∈ {a,b}$, un arc de $(p,q)$ vers $(δ(p,σ),δ(q,σ))$.
               Écrire ```ocaml table_de_predecesseurs : automate -> bool array array```
