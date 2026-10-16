@@ -67,16 +67,18 @@
   ]
   Il y a un blocage lorsque $δ(q, a) = ∅$.
 ]
-#let exercice-transition = [
-  #set align(center)
-  #exercise[Donner la fonction de transition de l'automate précédent.]
-  #table(
-    columns: 4,
+#let exercice-transition = align(center, figure(
+  table(
+    columns: (auto, 2.5em, 2.5em, 2.5em),
+    rows: 2.2em,
+    align: center + horizon,
     table.header([$q$], [$0$], [$1$], [$2$]),
     [$δ(q, a)$], [], [], [],
     [$δ(q, b)$], [], [], [],
-  )
-]
+  ),
+  numbering: none,
+  caption: [Fonction de transition de l'automate précédent.],
+))
 
 #article-only[
   #grid(
