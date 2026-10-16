@@ -126,6 +126,7 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
 #slides-only[== Lecture d'un automate]
 #colonnes-cours(
   columns: (1.15fr, 1fr),
+  align: horizon,
   encadrer: exercise,
   [Déterminer le langage reconnu par l'automate suivant.],
   text(size: 0.75em, impair),
