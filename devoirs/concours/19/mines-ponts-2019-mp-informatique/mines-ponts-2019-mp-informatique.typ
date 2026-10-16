@@ -80,7 +80,7 @@
     ("S", "S", "b", (anchor: right)),
     ("S", "T", "a", (curve: 0)),
     ("T", "P", "b", (curve: 0)),
-    ("T", "R", "a", (curve: -2.8)),
+    ("T", "R", "a", (curve: -1)),
   ),
 )
 #let produit-accessible = dessiner(
