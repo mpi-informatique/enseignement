@@ -16,7 +16,7 @@
     - Question 6, corrigé : la lecture part de l'état initial ; le parcours inverse part de tous les états finaux.
     - Question 7, corrigé : inclure $i=0$ lorsque l'automate a un seul état.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (

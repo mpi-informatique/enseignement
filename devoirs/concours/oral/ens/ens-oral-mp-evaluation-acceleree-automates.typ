@@ -16,7 +16,7 @@
     - Question 6, corrigé : remplacer la décomposition dyadique fautive par un parcours de l'arbre d'intervalles ; conserver l'ordre des compositions.
     - Question 8, corrigé : conserver le facteur $abs(Q)$ pour les mises à jour et préciser les informations à maintenir.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (

@@ -175,7 +175,7 @@
   corrections: [
     - Question 36 : inverser le sens du chemin recherché, de $(p,q)$ vers une paire de caractères finaux différents, pour calculer les paires distinguables.
   ],
-  remarques: [
+  jury: [
     Le jury demande des preuves argumentées, en citant les propriétés et résultats antérieurs utilisés.
   ],
   contenu: (
@@ -244,7 +244,7 @@
           et d'une liste $A$ d'entiers entre $0$ et $n-1$, renvoie un tableau $T$ de taille $n$ :
           $T[i]=-1$ si $i$ est absent de $A$, et $T[i]$ est l'indice de l'une de ses occurrences sinon.
           Par exemple, ```ocaml numero 5 [3;2;0]``` peut renvoyer ```ocaml [|2;-1;1;0;-1|]```.],
-        commentaire: [Un compteur et un parcours de la liste suffisent. Certaines solutions correctes étaient inutilement quadratiques.],
+        jury: [Un compteur et un parcours de la liste suffisent. Certaines solutions correctes étaient inutilement quadratiques.],
         solution: [On mémorise la position courante. En cas de répétition, on conserve la dernière occurrence.
           #code("numero") Le coût est $O(n+abs(A))$.],
         bareme: 1,
@@ -256,7 +256,7 @@
       question(
         [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles
           dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
-        commentaire: [« Une attention toute particulière devait être consacrée à l'ordre exigé du résultat. » Le jury relève aussi des confusions avec le parcours en largeur et des oublis de marquage.],
+        jury: [« Une attention toute particulière devait être consacrée à l'ordre exigé du résultat. » Le jury relève aussi des confusions avec le parcours en largeur et des oublis de marquage.],
         solution: [
           On marque chaque état avant d'explorer ses successeurs, d'abord par $a$.
           #code("etats_accessibles")
@@ -269,7 +269,7 @@
       question(
         [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
           de l'automate donné. On pourra réemployer les questions 6 et 7.],
-        commentaire: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
+        jury: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
         solution: [
           On renumérote dans l'ordre obtenu précédemment : la liste commence par $0$, qui reste l'état initial.
           Les successeurs d'un état accessible sont accessibles.
@@ -333,7 +333,7 @@
       partie("III.B", "Propriétés des morphismes d'automates", contenu: (
         question(
           [Montrer que s'il existe un morphisme de $cal(A)$ vers $cal(B)$ alors $L(cal(A)) = L(cal(B))$.],
-          commentaire: [« On doit citer les propriétés d'un morphisme utilisées, à chaque étape du raisonnement. »],
+          jury: [« On doit citer les propriétés d'un morphisme utilisées, à chaque étape du raisonnement. »],
           solution: [
             Pour un morphisme $φ: cal(A) → cal(B)$, montrons par récurrence sur $abs(w)$ que
             $ ∀ q ∈ Q_cal(A), #sep φ(δ_cal(A)^*(q,w))=δ_cal(B)^*(φ(q),w). quad "(∗)" $
@@ -354,7 +354,7 @@
         question(
           [Montrer qu'un morphisme $φ$ entre deux automates de même nombre d'états est bijectif
             et que $φ^(-1)$ est encore un morphisme. On dit alors que $φ$ est un isomorphisme.],
-          commentaire: [Le jury relève des preuves confuses du caractère bijectif.],
+          jury: [Le jury relève des preuves confuses du caractère bijectif.],
           solution: [
             Une surjection entre ensembles finis de même cardinal est bijective.
             Vérifions les quatre conditions pour $φ^(-1)$ :
@@ -385,7 +385,7 @@
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
         question(
           [Montrer que (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
-          commentaire: [Pour établir la surjectivité, le jury attend un antécédent explicite pour chaque état.],
+          jury: [Pour établir la surjectivité, le jury attend un antécédent explicite pour chaque état.],
           solution: [
             La preuve de (∗) n'utilise que (3). Pour tout $q' ∈ Q_cal(B)$, l'accessibilité donne un mot $w$ avec $q'=δ_cal(B)^*(i_cal(B),w)=φ(δ_cal(A)^*(i_cal(A),w))$, par (2) et (∗).
             Ainsi $φ$ est surjective. L'accessibilité de $cal(A)$ et (4) ne sont pas nécessaires ici.
@@ -398,7 +398,7 @@
             qui, pour deux automates accessibles, indique s'il existe un morphisme du premier vers le second
             et en renvoie un lorsqu'il existe. Sinon, le tableau renvoyé est quelconque.
             On pourra expliquer le principe de l'algorithme avant le code.],
-          commentaire: [Le jury conseille de décrire l'algorithme et de commenter les différentes étapes du code.],
+          jury: [Le jury conseille de décrire l'algorithme et de commenter les différentes étapes du code.],
           solution: [
             On impose l'image de l'état initial, puis celles des états rencontrés en profondeur.
             L'appel ```ocaml visiter q q'``` impose $φ(q)=q'$. Si l'image est déjà fixée, on vérifie sa compatibilité.
@@ -425,14 +425,14 @@
         ],
         question(
           [Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
-          commentaire: [Le jury relève des incompréhensions de la définition du produit d'automates.],
+          jury: [Le jury relève des incompréhensions de la définition du produit d'automates.],
           solution: [#produit-accessible],
           bareme: 1.5,
           notation: [Enlever 25% pour chaque petite erreur.],
         ),
         question(
           [Écrire ```ocaml produit : automate -> automate -> automate``` renvoyant le produit des deux automates donnés.],
-          commentaire: [Le jury insiste sur la renumérotation des couples d'états et des transitions associées.],
+          jury: [Le jury insiste sur la renumérotation des couples d'états et des transitions associées.],
           solution: [
             On représente $(q,q')$ par $q+n q'$, où $n$ est le nombre d'états du premier automate.
             L'état initial $(0,0)$ est codé par $0$.
@@ -444,7 +444,7 @@
         question(
           [Soit $(q,q')$ un état accessible du produit de deux automates acceptant le même langage.
             Montrer que $q$ est final dans le premier si et seulement si $q'$ est final dans le second.],
-          commentaire: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
+          jury: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
             Par récurrence sur $abs(w)$,
             $ δ_(cal(A) × cal(A)')^*((q,q'),w)=(δ_cal(A)^*(q,w),δ_(cal(A)')^*(q',w)). $
@@ -457,7 +457,7 @@
         question(
           [Montrer qu'il existe toujours un morphisme de la partie accessible du produit
             de deux automates accessibles acceptant le même langage vers chacun de ces automates.],
-          commentaire: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
+          jury: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
             Soit $cal(B)$ cette partie accessible et $φ(q,q')=q$ la première projection.
             - Pour chaque $q$, l'accessibilité de $cal(A)$ fournit $w$ menant à $q$.
@@ -475,7 +475,7 @@
       partie(
         "IV.B",
         "Diagramme d'automates",
-        commentaire: [À chaque pas de la chaîne, l'égalité peut porter sur les images par $φ$ ou sur celles par $ψ$. Ce choix n'est pas nécessairement le même à tous les pas.],
+        jury: [À chaque pas de la chaîne, l'égalité peut porter sur les images par $φ$ ou sur celles par $ψ$. Ce choix n'est pas nécessairement le même à tous les pas.],
         contenu: (
           [Dans toute cette sous-partie, $cal(A)$, $cal(A)'$ et $cal(B)$ sont accessibles, et $φ: cal(B) → cal(A)$ et $ψ: cal(B) → cal(A)'$ sont des morphismes.
             On veut construire un automate accessible $cal(C)$ et trois morphismes $φ'$, $ψ'$, $η$ :
@@ -589,7 +589,7 @@
     partie(
       "V",
       "Réduction d'automates",
-      commentaire: [« Chacune de ces questions doit être citée dans une argumentation, au moment de leur utilisation. »],
+      jury: [« Chacune de ces questions doit être citée dans une argumentation, au moment de leur utilisation. »],
       contenu: (
         partie("V.A", "Existence et unicité", contenu: (
           question(

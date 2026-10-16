@@ -172,7 +172,7 @@
       Pour $(q,q') ∈ Q^2$, on note $L_(q,q')$ le langage des mots étiquetant un chemin de $q$ à $q'$ dans $A$.],
     question(
       [Montrer que $L_(q,q')$ est reconnaissable et exprimer $L_A$ en fonction des langages $L_(q,q')$.],
-      commentaire: [Distinguer une famille de langages de leur union.],
+      jury: [Distinguer une famille de langages de leur union.],
       solution: [
         L'automate $(Q,{q},{q'},T)$ reconnaît $L_(q,q')$.
         Un chemin est acceptant s'il part d'un état initial et arrive à un état final, d'où
@@ -234,7 +234,7 @@
     - Questions 26–27 : remplacer $δ^*({I},u)$ par $δ^*(I,u)$, car l'état initial du déterminisé est $I$.
     - Partie II.B.3, avant la question 38 : $a$ est une expression régulière quelconque, pas nécessairement une lettre.
   ],
-  remarques: [
+  jury: [
     - Justifier les réponses théoriques et les calculs de complexité.
     - Lire chaque partie avant de programmer ; les trois parties sont indépendantes.
     - « L'indentation, certes utile pour comprendre le code, n'est pas un délimiteur comme en Python. »
@@ -314,7 +314,7 @@
           Pour tout langage $L ⊂ Σ^*$, on pose $widetilde(L)={widetilde(w) | w ∈ L}$.],
         question(
           [Décrire le langage $L_1$ de l'automate $cal(A)_1$ de la figure 1 et décrire son langage miroir $widetilde(L)_1$.],
-          commentaire: [Distinguer un langage d'un ensemble de langages.],
+          jury: [Distinguer un langage d'un ensemble de langages.],
           solution: [
             Les chemins acceptants bouclent d'abord sur $0$, lisent $a b$ pour atteindre $2$, puis lisent uniquement des $a$.
             Ainsi
@@ -349,7 +349,7 @@
       partie(
         "I.C",
         "Déterminisation",
-        commentaire: [Pour la représentation binaire, travailler directement sur les entiers : les conversions intermédiaires en listes annulent le gain recherché.],
+        jury: [Pour la représentation binaire, travailler directement sur les entiers : les conversions intermédiaires en listes annulent le gain recherché.],
         contenu: (
           [Pour tout automate non déterministe $A=(Q,I,F,T)$, on définit le déterminisé accessible $A_"det"=(Y,{I},F',δ)$, où $Y ⊂ cal(P)(Q)$ est l'ensemble des états accessibles depuis l'état initial $I$ dans l'automate des parties.
             Il reconnaît le même langage que $A$.],
@@ -364,7 +364,7 @@
           question(
             [Déterminiser l'automate miroir $widetilde(cal(A))_2$ pour obtenir $cal(A)_3=(widetilde(cal(A))_2)_"det"$.
               Renommer ses états $e_0,e_1,…$.],
-            commentaire: [Vérifier le déterminisme et les états finaux.],
+            jury: [Vérifier le déterminisme et les états finaux.],
             solution: [
               Les états accessibles sont
               $ e_0={3}, #sep e_1={2}, #sep e_2=∅, #sep e_3={0}, #sep e_4={0,1}. $
@@ -375,7 +375,7 @@
           question(
             [Déterminiser l'automate miroir $widetilde(cal(A))_3$ pour obtenir $cal(A)_4=(widetilde(cal(A))_3)_"det"$.
               Renommer ses états $q_0,q_1,…$.],
-            commentaire: [Vérifier le déterminisme et les états finaux.],
+            jury: [Vérifier le déterminisme et les états finaux.],
             solution: [
               Les états accessibles sont
               $ q_0={e_3,e_4}, #sep q_1={e_4}, #sep q_2={e_1,e_3,e_4}, $
@@ -412,7 +412,7 @@
             Soient $q ∈ ⟦0,n-1⟧$ et $k="numero"(X) ∈ ⟦0,2^n-1⟧$.],
           question(
             [Écrire ```ocaml est_dans : int -> int -> bool``` qui teste, à l'aide d'opérations arithmétiques, si $q ∈ X$ en $O(1)$ opérations.],
-            commentaire: [Le codage binaire permet un test en temps constant.],
+            jury: [Le codage binaire permet un test en temps constant.],
             solution: [#code("est_dans") Le quotient par $2^q$, modulo $2$, est le bit d'indice $q$.],
           ),
           [Soit $ℓ$ une liste d'états pouvant contenir des doublons, représentant $X$.],
@@ -436,7 +436,7 @@
             En parcourant $T$, on calcule simultanément $δ(X,a)$ et $δ(X,b)$.],
           question(
             [Écrire ```ocaml etat_suivant : int -> (int * char * int) list -> int * int``` qui, à partir de $k="numero"(X)$ et de $T$, renvoie $(k_a,k_b)=("numero"(δ(X,a)),"numero"(δ(X,b)))$.],
-            commentaire: [Éviter les parcours répétés de toutes les transitions et les conversions en listes.],
+            jury: [Éviter les parcours répétés de toutes les transitions et les conversions en listes.],
             solution: [
               #code("etat_suivant")
               Chaque transition issue de $X$ ajoute son arrivée à l'accumulateur de sa lettre.
@@ -477,7 +477,7 @@
       partie(
         "I.D",
         "Algorithme de Brzozowski",
-        commentaire: [Raisonner sur les chemins ; distinguer accessibilité et coaccessibilité.],
+        jury: [Raisonner sur les chemins ; distinguer accessibilité et coaccessibilité.],
         contenu: (
           [L'algorithme de Brzozowski donne un automate déterministe complet ayant un nombre minimal d'états parmi les automates déterministes complets reconnaissant le même langage.
             On se donne $A=(Q,I,{f},T)$ reconnaissant $L$, dont le miroir $widetilde(A)$ est déterministe et accessible.
@@ -573,7 +573,7 @@
           ),
           question(
             [Écrire ```ocaml simplifie : exprat -> exprat``` qui simplifie une expression selon ces règles.],
-            commentaire: [Simplifier toute l'expression en profondeur.],
+            jury: [Simplifier toute l'expression en profondeur.],
             solution: [
               #code(("sc", "simplifie"))
               On simplifie les fils avant la racine.
@@ -634,7 +634,7 @@
         partie(
           "II.B.3",
           "Étoile d'une matrice de taille quelconque",
-          commentaire: [Calculer chaque résultat récursif une seule fois avant de compter les appels et de résoudre la récurrence.],
+          jury: [Calculer chaque résultat récursif une seule fois avant de compter les appels et de résoudre la récurrence.],
           contenu: (
             [On définit récursivement l'étoile de $M$ : si $M=(e)$ est de taille $1$, alors $M^*=(e^*)$.
               Sinon, on découpe en blocs

@@ -11,12 +11,12 @@
   ),
   // Corrections conservées dans les données, sans affichage. Remarques du jury en italique.
   corrections: none, // Exemple : [- Question 1 : ajouter l'hypothèse de finitude.]
-  remarques: none,
+  jury: none,
   notation: none, // Consignes globales pour le correcteur, sans affichage.
   contenu: (
     [Les réponses doivent être justifiées.
       On fixe un alphabet $Σ$.],
-    partie("I", "Langages", commentaire: none, contenu: (
+    partie("I", "Langages", jury: none, contenu: (
       partie(
         "I.A",
         "Langages finis",
@@ -24,7 +24,7 @@
         contenu: (
           question(
             [Montrer qu'un langage fini sur $Σ$ est régulier.],
-            commentaire: none, // Observation du jury, affichée en italique avant la solution.
+            jury: none, // Observation du jury, affichée en italique avant la solution.
             solution: [Un mot est décrit par la concaténation de ses lettres
               (par $ε$ pour le mot vide).
               Une union finie de telles expressions décrit tout langage fini ; $∅$ décrit le langage vide.],

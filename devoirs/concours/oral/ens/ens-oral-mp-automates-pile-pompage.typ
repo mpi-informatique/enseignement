@@ -47,7 +47,7 @@
     - Questions 6 et 7, corrigé : une transition peut remplacer le sommet initial, qui n'est donc pas nécessairement conservé au retour. Renforcer le choix des montagnes en imposant aussi le même sommet de sortie.
     - Question 6, corrigé : sélectionner les hauteurs par minima successifs à rebours ; une montée peut sauter des hauteurs.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (
@@ -63,7 +63,7 @@
       [
         Étant donné un automate fini sans pile sur $Σ$, construire un automate à pile reconnaissant le même langage.
       ],
-      commentaire: [« Un automate fini n'est pas nécessairement déterministe ! »],
+      jury: [« Un automate fini n'est pas nécessairement déterministe ! »],
       solution: [
         On peut d'abord déterminiser l'automate pour disposer d'un unique état initial.
         Prendre $Γ={γ_0}$, garder états et finaux, et remplacer chaque transition $q arrow(a)q'$ par $(q',γ_0)∈δ'(q,a,γ_0)$.

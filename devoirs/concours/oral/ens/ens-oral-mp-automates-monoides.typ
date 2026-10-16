@@ -18,7 +18,7 @@
     - Question 6 : corriger les types de $I$, $δ$ et la définition de $R_u$.
     - Question 7 : réparer la phrase incomplète et préciser la base du logarithme ; la borne est $sqrt(log_2 n)$.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (

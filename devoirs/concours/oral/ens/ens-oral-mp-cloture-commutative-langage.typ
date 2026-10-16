@@ -18,7 +18,7 @@
     - Question 5, corrigé : distinguer composantes fortement connexes et composantes connexes.
     - Question 7, corrigé : expliciter la croissance dans chacune des deux coordonnées avant de stabiliser la diagonale.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (

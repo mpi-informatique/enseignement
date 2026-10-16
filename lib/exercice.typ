@@ -2,45 +2,55 @@
 /// Guide de rédaction : docs/utilisation.md. Documentation générée : just docs.
 
 #import "blocs.typ": bloc-solution
-#import "meta.typ": chapitres-programme, niveaux-par-chapitre, algorithmes-programme, structures-programme, concours-possibles, filieres-possibles, langages-possibles
-#import "document.typ": document-pedagogique, auteur-par-defaut, texte-duree
+#import "meta.typ": (
+  algorithmes-programme, chapitres-programme, concours-possibles, filieres-possibles, langages-possibles,
+  niveaux-par-chapitre, structures-programme,
+)
+#import "document.typ": auteur-par-defaut, document-pedagogique, texte-duree
 
 // Les exercices sont des données Typst ordinaires.
 /// Construit une question ; son énoncé reste visible dans le corrigé.
 /// - enonce (content): Énoncé, éventuellement avec sous-questions.
-/// - commentaire (content, none): Observation du jury, en italique avant la solution uniquement dans le corrigé.
+/// - jury (content, none): Observation du jury, en italique avant la solution uniquement dans le corrigé.
 /// - solution (content, none): Solution ; `none` affiche « Corrigé à compléter ».
 /// - bareme (float, int, none): Barème de la question, affiché en marge du corrigé ; `none` masque les points.
 /// - notation (content, none): Consignes concises de notation (pourcentages, pénalités, tolérances), jamais affichées.
 /// -> dictionary
-#let question(enonce, commentaire: none, solution: none, bareme: none, notation: none) = {
-  assert(commentaire == none or type(commentaire) == content,
-    message: "commentaire doit être un contenu Typst ou none")
-  assert(notation == none or type(notation) == content,
-    message: "notation doit être un contenu Typst ou none")
-  assert(bareme == none or bareme in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
-    message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none")
-  (type: "question", enonce: enonce, commentaire: commentaire, solution: solution, bareme: bareme, notation: notation)
+#let question(enonce, jury: none, solution: none, bareme: none, notation: none) = {
+  assert(jury == none or type(jury) == content, message: "jury doit être un contenu Typst ou none")
+  assert(notation == none or type(notation) == content, message: "notation doit être un contenu Typst ou none")
+  assert(
+    bareme == none or bareme in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+    message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none",
+  )
+  (type: "question", enonce: enonce, jury: jury, solution: solution, bareme: bareme, notation: notation)
 }
 
 #let texte-concours(concours) = (
-  concours.at("nom", default: none),
-  concours.at("annee", default: none),
-  concours.at("filiere", default: none),
-  if concours.at("oral", default: false) { "oral" } else { none },
-).filter(valeur => valeur != none).map(valeur => str(valeur)).join(" ")
+  (
+    concours.at("nom", default: none),
+    concours.at("annee", default: none),
+    concours.at("filiere", default: none),
+    if concours.at("oral", default: false) { "oral" } else { none },
+  )
+    .filter(valeur => valeur != none)
+    .map(valeur => str(valeur))
+    .join(" ")
+)
 
 // Conserver à la fois l'attribution et le titre du contenu.
 #let titre-concours(titre, concours) = {
-  if concours == none { titre }
-  else { texte-concours(concours) + " : " + titre }
+  if concours == none { titre } else { texte-concours(concours) + " : " + titre }
 }
 
 // Titres communs aux exercices et aux parties des sujets.
 #let titre-exercice(titre, prefixe, concours: none, niveau: 1) = {
   block(breakable: false)[
     #heading(level: niveau, numbering: none)[
-      #grid(columns: (1fr, auto), column-gutter: 1em, align: (left, right),
+      #grid(
+        columns: (1fr, auto),
+        column-gutter: 1em,
+        align: (left, right),
         [#prefixe -- #titre],
         [#if concours != none {
           text(fill: luma(35%).transparentize(30%))[
@@ -59,28 +69,28 @@
 /// - contenu (array): Textes Typst, questions et parties dans l'ordre.
 /// - contexte (array): Textes de rappel à reprendre explicitement dans un extrait autonome ; non insérés automatiquement.
 /// - meta (dictionary): Métadonnées de réutilisation de la partie ; non validées ici.
-/// - commentaire (content, none): Observation du jury affichée dans le corrigé après le titre.
+/// - jury (content, none): Observation du jury affichée dans le corrigé après le titre.
 /// -> dictionary
-#let partie(numero, titre, contenu: (), contexte: (), meta: (:), commentaire: none) = {
+#let partie(numero, titre, contenu: (), contexte: (), meta: (:), jury: none) = {
   assert(type(numero) == str and numero != "", message: "Numéro de partie vide")
   assert(type(titre) == str and titre != "", message: "Titre de partie vide")
   assert(type(contenu) == array and type(contexte) == array)
   assert(contexte.all(bloc => type(bloc) == content), message: "Le contexte contient uniquement du texte Typst")
-  assert(commentaire == none or type(commentaire) == content)
-  (commentaire: commentaire, type: "partie", numero: numero, titre: titre, contenu: contenu, contexte: contexte, meta: meta)
+  assert(jury == none or type(jury) == content)
+  (jury: jury, type: "partie", numero: numero, titre: titre, contenu: contenu, contexte: contexte, meta: meta)
 }
 
 #let est-partie(bloc) = type(bloc) == dictionary and bloc.at("type", default: none) == "partie"
 
-#let aplatir(contenu, niveau: 1, textes: true, commentaires: false) = {
+#let aplatir(contenu, niveau: 1, textes: true, jury: false) = {
   let resultat = ()
   for bloc in contenu {
     if est-partie(bloc) {
       resultat.push(titre-exercice(bloc.titre, bloc.numero, niveau: niveau))
-      if commentaires and bloc.commentaire != none {
-        resultat.push(text(style: "italic", bloc.commentaire))
+      if jury and bloc.jury != none {
+        resultat.push(text(style: "italic", bloc.jury))
       }
-      resultat += aplatir(bloc.contenu, niveau: niveau + 1, textes: textes, commentaires: commentaires)
+      resultat += aplatir(bloc.contenu, niveau: niveau + 1, textes: textes, jury: jury)
     } else if textes or type(bloc) != content {
       resultat.push(bloc)
     }
@@ -96,8 +106,10 @@
     assert(type(bareme) == array, message: "bareme doit être un tableau ou none")
     assert(bareme.len() == nombre, message: "bareme doit contenir une valeur par question")
     for points in bareme {
-      assert(points == none or points in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
-        message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none")
+      assert(
+        points == none or points in (0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+        message: "Points autorisés : 0.25, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4 ou none",
+      )
     }
   }
 }
@@ -108,12 +120,12 @@
 /// - meta (dictionary): Champs obligatoires : `titre` (chaîne non vide), `chapitres` (tableau de chaînes), `difficulte` (entier de 1 à 5). Champs facultatifs : `algorithmes`, `structures`, `langages`, `niveaux` (tableaux, défaut `()`), `duree` (couple heures/minutes positif, minutes < 60, ou `none`), `concours` (dictionnaire ou `none`). Concours : `nom`, `annee` (entier positif), `filiere`, `oral` (booléen), tous facultatifs ; aucune filière ajoutée implicitement. Champs supplémentaires libres ; `id` et `reference` interdits.
 /// - contenu (array): Textes libres `[...]`, `question(...)` et `partie(...)` ; au moins une question.
 /// - colonnes (int): Nombre de colonnes des questions dans l'énoncé ; le corrigé reste sur une colonne.
-/// - remarques (content, none): Commentaires généraux du jury, en italique au début du corrigé.
+/// - jury (content, none): Commentaires généraux du jury, en italique au début du corrigé.
 /// - corrections (content, none): Liste des corrections éditoriales conservée dans les données, jamais affichée.
 /// - notation (content, none): Consignes concises de notation communes à l'exercice ou à l'épreuve, jamais affichées.
 /// - bareme (array, none): Ancien barème global, conservé pour compatibilité. Préférer `bareme` dans chaque `question`.
 /// -> dictionary
-#let exercice(meta: (:), contenu: (), colonnes: 1, remarques: none, corrections: none, notation: none, bareme: none) = {
+#let exercice(meta: (:), contenu: (), colonnes: 1, jury: none, corrections: none, notation: none, bareme: none) = {
   assert(type(colonnes) == int and colonnes > 0, message: "colonnes doit être un entier strictement positif")
   let champs = ("titre", "chapitres", "difficulte")
   for champ in champs {
@@ -128,13 +140,19 @@
       assert(type(valeur) == str, message: champ + " doit contenir des chaînes")
     }
   }
-  for (champ, valeurs) in (("chapitres", chapitres-programme), ("algorithmes", algorithmes-programme), ("structures", structures-programme)) {
+  for (champ, valeurs) in (
+    ("chapitres", chapitres-programme),
+    ("algorithmes", algorithmes-programme),
+    ("structures", structures-programme),
+  ) {
     for valeur in meta.at(champ) {
       assert(valeur in valeurs, message: champ + " : étiquette absente du programme : " + valeur)
     }
   }
-  assert(type(meta.difficulte) == int and meta.difficulte >= 1 and meta.difficulte <= 5,
-    message: "difficulte doit être un entier de 1 à 5")
+  assert(
+    type(meta.difficulte) == int and meta.difficulte >= 1 and meta.difficulte <= 5,
+    message: "difficulte doit être un entier de 1 à 5",
+  )
   let niveaux = meta.at("niveaux", default: ())
   assert(type(niveaux) == array, message: "niveaux doit être un tableau")
   for niveau in niveaux {
@@ -142,42 +160,52 @@
   }
   for chapitre in meta.chapitres {
     for niveau in niveaux {
-      assert(niveau in niveaux-par-chapitre.at(chapitre),
-        message: "chapitres : " + chapitre + " n'est pas au programme du niveau " + niveau)
+      assert(
+        niveau in niveaux-par-chapitre.at(chapitre),
+        message: "chapitres : " + chapitre + " n'est pas au programme du niveau " + niveau,
+      )
     }
   }
   // Convention de la banque pour la programmation en MP2I–MPI.
   if "MP2I" in niveaux or "MPI" in niveaux {
     for langage in meta.langages {
-      assert(langage in langages-possibles,
-        message: "langages : en MP2I–MPI, utiliser C, OCaml, Python ou SQL : " + langage)
+      assert(
+        langage in langages-possibles,
+        message: "langages : en MP2I–MPI, utiliser C, OCaml, Python ou SQL : " + langage,
+      )
     }
   }
   let duree = meta.at("duree", default: none)
   if duree != none {
-    assert(type(duree) == array and duree.len() == 2,
-      message: "duree doit être un couple (heures, minutes) ou none")
+    assert(type(duree) == array and duree.len() == 2, message: "duree doit être un couple (heures, minutes) ou none")
     let (heures, minutes) = duree
-    assert(type(heures) == int and type(minutes) == int,
-      message: "heures et minutes doivent être des entiers")
-    assert(heures >= 0 and minutes >= 0 and minutes < 60 and heures + minutes > 0,
-      message: "duree doit être positive, avec 0 ≤ minutes < 60")
+    assert(type(heures) == int and type(minutes) == int, message: "heures et minutes doivent être des entiers")
+    assert(
+      heures >= 0 and minutes >= 0 and minutes < 60 and heures + minutes > 0,
+      message: "duree doit être positive, avec 0 ≤ minutes < 60",
+    )
   }
   assert(not ("reference" in meta), message: "Utiliser concours au lieu de reference")
   let concours = meta.at("concours", default: none)
   let concours-normalise = if concours != none {
     assert(type(concours) == dictionary, message: "concours doit être un dictionnaire ou none")
     if "nom" in concours {
-      assert(type(concours.nom) == str and concours.nom in concours-possibles,
-        message: "nom doit être un concours connu")
+      assert(
+        type(concours.nom) == str and concours.nom in concours-possibles,
+        message: "nom doit être un concours connu",
+      )
     }
     if "annee" in concours {
-      assert(type(concours.annee) == int and concours.annee > 0,
-        message: "L'année du concours doit être un entier strictement positif")
+      assert(
+        type(concours.annee) == int and concours.annee > 0,
+        message: "L'année du concours doit être un entier strictement positif",
+      )
     }
     if "filiere" in concours {
-      assert(type(concours.filiere) == str and concours.filiere in filieres-possibles,
-        message: "filiere doit être une filière connue")
+      assert(
+        type(concours.filiere) == str and concours.filiere in filieres-possibles,
+        message: "filiere doit être une filière connue",
+      )
     }
     if "oral" in concours {
       assert(type(concours.oral) == bool, message: "oral doit être un booléen")
@@ -202,37 +230,43 @@
   verifier-bareme(bareme, nombre-questions(contenu))
   assert(corrections == none or type(corrections) == content, message: "corrections doit être un contenu Typst ou none")
   assert(notation == none or type(notation) == content, message: "notation doit être un contenu Typst ou none")
-  assert(remarques == none or type(remarques) == content, message: "remarques doit être un contenu Typst ou none")
+  assert(jury == none or type(jury) == content, message: "jury doit être un contenu Typst ou none")
   assert(nombre-questions(contenu) > 0, message: "Un exercice doit contenir au moins une question")
   (
     meta: (niveaux: (), duree: none, ..meta, concours: concours-normalise),
     contenu: contenu,
     colonnes: colonnes,
-    remarques: remarques,
+    jury: jury,
     corrections: corrections,
     notation: notation,
     bareme: bareme,
   )
 }
 
-#let marge-droite(body) = place(top + left, dx: 100% + 5mm,
-  block(width: 15mm, {
-    set align(left)
-    body
-  }),
-)
+#let marge-droite(body) = place(top + left, dx: 100% + 5mm, block(width: 15mm, {
+  set align(left)
+  body
+}))
 
 /// Affiche un objet construit avec `exercice` et publie ses métadonnées pour le catalogue.
 /// - ex (dictionary): Exercice à afficher.
 /// - numero (int, none): Numéro romain du titre ; `none` utilise I.
-/// - corrige (bool): Afficher solutions et commentaires.
+/// - corrige (bool): Afficher solutions et observations du jury.
 /// - bareme (array, none): Barème remplaçant celui de l'exercice ; `none` utilise `ex.bareme`.
 /// - afficher-titre (bool): Afficher le titre de l'exercice.
 ///   Pour un exercice de concours, l'attribution s'affiche à droite à la place de la durée.
 /// - afficher-contexte (bool): Conserver les textes libres dans le corrigé, défaut true. Les questions et leurs figures restent toujours visibles.
 /// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
 /// -> content
-#let afficher-exercice(ex, numero: none, corrige: false, afficher-titre: true, afficher-contexte: true, bareme: none, espacement: auto) = {
+#let afficher-exercice(
+  ex,
+  numero: none,
+  corrige: false,
+  afficher-titre: true,
+  afficher-contexte: true,
+  bareme: none,
+  espacement: auto,
+) = {
   let bareme = if bareme == none { ex.bareme } else { bareme }
   let nombre = nombre-questions(ex.contenu)
   verifier-bareme(bareme, nombre)
@@ -245,18 +279,21 @@
     let prefixe = if numero == none { "I" } else { numbering("I", numero) }
     titre-exercice(ex.meta.titre, prefixe, concours: ex.meta.concours)
   }
-  if corrige and ex.remarques != none {
+  if corrige and ex.jury != none {
     block(width: 100%, above: espacement, below: espacement)[
       #text(style: "italic")[
-        #ex.remarques
+        #ex.jury
       ]
     ]
   }
   let i = 1
   let colonnes = if corrige { 1 } else { ex.at("colonnes", default: 1) }
   let questions = ()
-  let afficher-questions(questions) = context grid(columns: (1fr,) * colonnes, column-gutter: 1.5em, row-gutter: if espacement == auto { par.spacing } else { espacement }, ..questions)
-  for q in aplatir(ex.contenu, textes: not corrige or afficher-contexte, commentaires: corrige) {
+  let afficher-questions(questions) = context grid(columns: (1fr,)
+      * colonnes, column-gutter: 1.5em, row-gutter: if espacement == auto { par.spacing } else {
+      espacement
+    }, ..questions)
+  for q in aplatir(ex.contenu, textes: not corrige or afficher-contexte, jury: corrige) {
     if type(q) == content {
       if questions.len() > 0 {
         afficher-questions(questions)
@@ -275,20 +312,19 @@
           #text(size: 9pt, weight: "regular", fill: black.transparentize(50%), str(points))
         ]
       }
-      if nombre == 1 { q.enonce }
-      else {
-        enum(start: i, numbering: "1.",
-          indent: 0pt, body-indent: 0.5em, q.enonce)
+      if nombre == 1 { q.enonce } else {
+        enum(start: i, numbering: "1.", indent: 0pt, body-indent: 0.5em, q.enonce)
       }
     })
     if colonnes == 1 { enonce } else { questions.push(enonce) }
     if corrige {
-      if q.commentaire != none {
-        block(width: 100%, above: espacement, below: espacement, text(style: "italic", q.commentaire))
+      if q.jury != none {
+        block(width: 100%, above: espacement, below: espacement, text(style: "italic", q.jury))
       }
       bloc-solution(
         if q.solution == none { emph[Corrigé à compléter.] } else { q.solution },
-        above: espacement, below: espacement,
+        above: espacement,
+        below: espacement,
       )
     }
     i += 1
@@ -344,24 +380,29 @@
   assert(type == str(type) and type != "", message: "Le type de document doit être une chaîne non vide")
   verifier-bareme(bareme, exercices.map(ex => nombre-questions(ex.contenu)).sum(default: 0))
   let titre-affiche = titre + if corrige { " (corrigé)" } else { "" }
-  let duree = if type not in ("devoir", "concours") { none }
-    else if duree != none { duree }
-    else if exercices.len() == 1 { exercices.first().meta.duree }
-    else { none }
-  let titre-entete = if type == "colle" { context {
-    // Inclure le repère du début de page, même s'il suit l'en-tête dans le flux.
-    let sujets = query(<colle-sujet>).filter(sujet => sujet.location().page() <= here().page())
-    titre-affiche
-    if sujets.len() > 0 {
-      let sujet = sujets.last().value
-      [ -- Sujet #sujet.numero#if sujet.corrige [ (corrigé)]]
+  let duree = if type not in ("devoir", "concours") { none } else if duree != none { duree } else if (
+    exercices.len() == 1
+  ) { exercices.first().meta.duree } else { none }
+  let titre-entete = if type == "colle" {
+    context {
+      // Inclure le repère du début de page, même s'il suit l'en-tête dans le flux.
+      let sujets = query(<colle-sujet>).filter(sujet => sujet.location().page() <= here().page())
+      titre-affiche
+      if sujets.len() > 0 {
+        let sujet = sujets.last().value
+        [ -- Sujet #sujet.numero#if sujet.corrige [ (corrigé)]]
+      }
     }
-  } } else { none }
-  show: document-pedagogique.with(titre: titre-affiche,
+  } else { none }
+  show: document-pedagogique.with(
+    titre: titre-affiche,
     niveau: if concours == none { niveau } else { concours.at("filiere", default: none) },
-    auteur: auteur, duree: duree,
+    auteur: auteur,
+    duree: duree,
     attribution: if concours == none { none } else { texte-concours((..concours, filiere: none)) },
-    titre-entete: titre-entete, repeter-entete: type == "colle")
+    titre-entete: titre-entete,
+    repeter-entete: type == "colle",
+  )
   [#metadata((type: type, titre: titre, niveau: niveau, concours: concours)) <document-meta>]
   body
   let afficher-contexte = type not in ("devoir", "concours") or concours == none or concours.at("oral", default: false)
@@ -369,7 +410,15 @@
   for (i, ex) in if afficher-exercices { exercices.enumerate(start: 1) } else { () } {
     if i > 1 and (if type == "colle" { not corrige } else { nouvelle-page }) { pagebreak() }
     let fin-bareme = debut-bareme + nombre-questions(ex.contenu)
-    afficher-exercice(ex, bareme: if bareme == none { none } else { bareme.slice(debut-bareme, fin-bareme) }, numero: if exercices.len() > 1 { i } else { none }, corrige: corrige, afficher-titre: exercices.len() > 1 or titre != ex.meta.titre, afficher-contexte: afficher-contexte, espacement: espacement)
+    afficher-exercice(
+      ex,
+      bareme: if bareme == none { none } else { bareme.slice(debut-bareme, fin-bareme) },
+      numero: if exercices.len() > 1 { i } else { none },
+      corrige: corrige,
+      afficher-titre: exercices.len() > 1 or titre != ex.meta.titre,
+      afficher-contexte: afficher-contexte,
+      espacement: espacement,
+    )
     debut-bareme = fin-bareme
   }
 }

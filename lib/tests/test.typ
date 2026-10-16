@@ -1,5 +1,7 @@
-#import "/lib/exercice.typ": exercice, question, partie, feuille, afficher-exercice, titre-concours, texte-concours
-#import "/lib/meta.typ": langages-possibles, chapitres-informatique, chapitres-maths, chapitres-programme, niveaux-par-chapitre
+#import "/lib/exercice.typ": afficher-exercice, exercice, feuille, partie, question, texte-concours, titre-concours
+#import "/lib/meta.typ": (
+  chapitres-informatique, chapitres-maths, chapitres-programme, langages-possibles, niveaux-par-chapitre,
+)
 
 // L'attribution complète le titre, sans mention « écrit » redondante.
 #let centrale = (nom: "Centrale", annee: 2017, filiere: "MP", oral: false)
@@ -10,8 +12,13 @@
 // Les chapitres de première année restent acceptés en deuxième année.
 #for niveaux in (("MPSI",), ("MP2I",), ("MP",), ("MPI",)) {
   let ex = exercice(
-    meta: (titre: "Chapitres de maths", chapitres: ("determinants",),
-      matiere: "mathématiques", difficulte: 1, niveaux: niveaux),
+    meta: (
+      titre: "Chapitres de maths",
+      chapitres: ("determinants",),
+      matiere: "mathématiques",
+      difficulte: 1,
+      niveaux: niveaux,
+    ),
     contenu: (question([Énoncé]),),
   )
   assert(ex.meta.chapitres == ("determinants",))
@@ -29,8 +36,7 @@
 // SQL doit être accepté pour tous les niveaux, ainsi que sans niveau.
 #for niveaux in ((), ("MP2I",), ("MPI",)) {
   let ex = exercice(
-    meta: (titre: "Test SQL", chapitres: ("bases-de-donnees",),
-      langages: ("SQL",), difficulte: 1, niveaux: niveaux),
+    meta: (titre: "Test SQL", chapitres: ("bases-de-donnees",), langages: ("SQL",), difficulte: 1, niveaux: niveaux),
     contenu: (question([Énoncé], solution: [Solution]),),
   )
   assert(ex.meta.langages == ("SQL",))
@@ -48,14 +54,25 @@
 #assert(p.contexte.len() == 1)
 // Le départ est fixé à 1 ; les corrections sont conservées mais jamais affichées.
 #let meta = (titre: "Présentation", chapitres: (), difficulte: 1)
-#let contenu = (question([Première question], solution: [Solution],
-    notation: [#metadata("question") <notation-test> Consigne locale.]),
-  question([Deuxième question], solution: [Solution]))
-#let ordinaire = exercice(meta: meta, contenu: contenu,
+#let contenu = (
+  question(
+    [Première question],
+    solution: [Solution],
+    notation: [#metadata("question") <notation-test> Consigne locale.],
+  ),
+  question([Deuxième question], solution: [Solution]),
+)
+#let ordinaire = exercice(
+  meta: meta,
+  contenu: contenu,
   notation: [#metadata("epreuve") <notation-test> Consigne globale.],
-  corrections: [#metadata("modification") <correction-test> Correction.])
-#let sujet = exercice(meta: (..meta, concours: (nom: "ENS", oral: true)),
-  contenu: contenu, corrections: ordinaire.corrections)
+  corrections: [#metadata("modification") <correction-test> Correction.],
+)
+#let sujet = exercice(
+  meta: (..meta, concours: (nom: "ENS", oral: true)),
+  contenu: contenu,
+  corrections: ordinaire.corrections,
+)
 #let unique = exercice(meta: meta, contenu: (question([Question unique], solution: [Solution]),))
 #assert("debut" not in ordinaire and "debut" not in sujet)
 #assert(sujet.corrections == ordinaire.corrections and sujet.corrections != none)
@@ -73,7 +90,7 @@
 }
 
 // L'extraction par nom conserve le code et la présentation, sans balises.
-#import "/lib/code.typ": code-texte, code-extrait
+#import "/lib/code.typ": code-extrait, code-texte
 #let source-code = "let y = 2\nlet x = 1"
 #let extrait = code-extrait(source-code, "x")
 #assert(code-texte(source-code, "x") == "let x = 1")
@@ -95,7 +112,10 @@
     [#metadata(i) <contexte-test> Introduction.],
     partie("I", "Partie", contenu: (
       [#metadata(i) <contexte-partie-test> Définitions.],
-      question([#metadata(i) <enonce-test> Question avec sa figure.], solution: [#metadata(i) <solution-test> Solution.]),
+      question(
+        [#metadata(i) <enonce-test> Question avec sa figure.],
+        solution: [#metadata(i) <solution-test> Solution.],
+      ),
     )),
   ))
   feuille(type: cas.type, concours: cas.concours, exercices: (ex,), corrige: true, [])
@@ -105,4 +125,16 @@
   assert(query(<contexte-partie-test>).map(it => it.value) == (0, 3, 4, 5))
   assert(query(<enonce-test>).map(it => it.value) == (0, 1, 2, 3, 4, 5))
   assert(query(<solution-test>).map(it => it.value) == (0, 1, 2, 3, 4, 5))
+}
+
+// Les observations du jury restent distinctes de l'énoncé et des consignes de notation.
+#let sujet-jury = exercice(meta: meta, jury: [#metadata("sujet") <jury-test> Observation générale.], contenu: (
+  partie("I", "Partie avec jury", jury: [#metadata("partie") <jury-test> Observation de partie.], contenu: (
+    question([Énoncé.], jury: [#metadata("question") <jury-test> Observation de question.], solution: [Solution.]),
+  )),
+))
+#afficher-exercice(sujet-jury, corrige: false)
+#afficher-exercice(sujet-jury, corrige: true)
+#context {
+  assert(query(<jury-test>).map(it => it.value) == ("sujet", "partie", "question"))
 }

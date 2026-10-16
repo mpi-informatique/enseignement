@@ -17,7 +17,7 @@
     - Question 8, corrigé : corriger l'initialisation d'une suppression vide et le sens des transitions dans les minima.
     - Questions 9 et 10, corrigé : corriger les indices des distances, expliciter leur prétraitement et la reconstruction.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (
@@ -124,7 +124,7 @@
       [
         Modifier l'algorithme de la question 7 pour produire une suppression minimale, toujours en temps linéaire en $w$.
       ],
-      commentaire: [Préciser les valeurs calculées, leur ordre de calcul et leur occupation mémoire.],
+      jury: [Préciser les valeurs calculées, leur ordre de calcul et leur occupation mémoire.],
       solution: [
         Remplacer $D_u$ et $R_u$ par des tableaux de coûts $d_u(q)$ et $r_u(q)$, égaux à $0$ sur $I$ et à $∞$ ailleurs au départ.
         Garder $P_u$ pour les lectures sans suppression. Les récurrences sont

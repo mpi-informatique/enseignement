@@ -119,7 +119,7 @@
     duree: (4, 0),
     concours: (nom: "Centrale", annee: 2017, filiere: "MP", oral: false),
   ),
-  remarques: [
+  jury: [
     - Lire les hypothèses et les représentations avant de répondre.
     - Respecter la syntaxe OCaml, les filtrages et le déréférencement. Éviter les références inutiles.
     - Réutiliser les fonctions précédentes, limiter les auxiliaires, commenter et indenter le code. Numéroter les réponses et conserver les notations.
@@ -192,7 +192,7 @@
     partie(
       "I",
       "Considérations générales",
-      commentaire: [Respecter les types : un mot est une liste, et ```ocaml n_etats``` un entier non mutable. Vérifier les bornes des tableaux.],
+      jury: [Respecter les types : un mot est une liste, et ```ocaml n_etats``` un entier non mutable. Vérifier les bornes des tableaux.],
       contenu: (
         question(
           [Que dire des mots synchronisants pour une machine ayant un seul état ?],
@@ -223,7 +223,7 @@
             ```ocaml
             val est_synchronisant : machine -> mot -> bool
             ```],
-          commentaire: [Lors du test, s'arrêter dès qu'un état aboutit à une image différente de celle du premier état, et éviter de recalculer cette première image.],
+          jury: [Lors du test, s'arrêter dès qu'un état aboutit à une image différente de celle du premier état, et éviter de recalculer cette première image.],
           solution: [#code("est_synchronisant")],
         ),
         question(
@@ -242,7 +242,7 @@
         ),
         question(
           [Déterminer la machine des parties associée à la machine $M_0$, puis donner une expression régulière du langage $L S(M_0)$.],
-          commentaire: [Donner un automate déterministe et une expression régulière concise.],
+          jury: [Donner un automate déterministe et une expression régulière concise.],
           solution: [Voici les états accessibles depuis $Q={0,1,2}$, avec les singletons marqués comme états finaux :
             #parties-m0
             Pour compléter la machine des parties, ajouter les états inaccessibles $∅$ et ${0,2}$ : $∅$ boucle sur $0$ et $1$, tandis que ${0,2}$ mène à ${0,1}$ par $0$ et à ${1,2}$ par $1$.
@@ -263,7 +263,7 @@
     partie(
       "II",
       "Algorithmes classiques",
-      commentaire: [Respecter les enregistrements et distinguer listes et tableaux. Les opérations doivent être cohérentes : implémenter une file FIFO, pas une pile.],
+      jury: [Respecter les enregistrements et distinguer listes et tableaux. Les opérations doivent être cohérentes : implémenter une file FIFO, pas une pile.],
       contenu: (
         [On appellera *graphe d'automate* tout couple $(S,A)$ où $S$ est un ensemble dont les éléments sont appelés *sommets* et $A$ une partie de $S × Σ × S$ dont les éléments sont appelés *arcs*. Pour un arc $(q,x,q')$, $x$ est l'*étiquette* de l'arc, $q$ son *origine* et $q'$ son *extrémité*. Un graphe d'automate correspond donc à un automate non déterministe sans notion d'état initial ou final.
 
@@ -324,7 +324,7 @@
         ),
         question(
           [Quelle est la complexité de ces fonctions ?],
-          commentaire: [```ocaml Array.length``` coûte $O(1)$, contrairement à la longueur d'une liste.],
+          jury: [```ocaml Array.length``` coûte $O(1)$, contrairement à la longueur d'une liste.],
           solution: [Les deux fonctions effectuent un nombre constant d'accès au tableau, de tests et d'opérations arithmétiques : leur complexité est $O(1)$.],
         ),
         [On considère l'algorithme 1 suivant s'appliquant à un graphe d'automate $G=(S,A)$ et à un ensemble de sommets $X$ (on note $n=abs(S)$ et $∞$, « vide » et « rien » des valeurs particulières).
@@ -352,7 +352,7 @@
           ]],
         question(
           [Justifier que l'algorithme 1 termine toujours.],
-          commentaire: [Identifier un parcours en largeur ne remplace pas sa justification.],
+          jury: [Identifier un parcours en largeur ne remplace pas sa justification.],
           solution: [Un sommet est ajouté à la file seulement quand sa distance vaut $∞$, puis sa distance devient finie et ne change plus. Chaque sommet est donc ajouté au plus une fois. Chaque tour retire un sommet de la file : il y a au plus $abs(S)$ tours.],
         ),
         question(
@@ -405,7 +405,7 @@
     partie(
       "III",
       "Réduction SAT",
-      commentaire: [Rédiger des preuves précises, avec toutes les implications nécessaires.],
+      jury: [Rédiger des preuves précises, avec toutes les implications nécessaires.],
       contenu: (
         [On s'intéresse à la satisfiabilité d'une formule logique portant sur des variables propositionnelles $x_1,…,x_m$. On note $∧$ le connecteur logique « et », $∨$ le connecteur « ou » et $overline(f)$ la négation d'une formule $f$.
           On appelle *littéral* une formule constituée d'une variable $x_i$ ou de sa négation $overline(x_i)$, et *clause* une disjonction de littéraux.
@@ -464,7 +464,7 @@
     partie(
       "IV",
       "Existence",
-      commentaire: [Respecter notamment la représentation par tableau de listes d'adjacence.],
+      jury: [Respecter notamment la représentation par tableau de listes d'adjacence.],
       contenu: (
         [On reprend le problème de l'existence d'un mot synchronisant pour une machine $M=(Q,Σ,δ)$. Pour toute partie $E$ de $Q$ et tout mot $u$ de $Σ^*$, on note $E.u={q.u | q ∈ E}$.],
         question(

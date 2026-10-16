@@ -13,7 +13,7 @@
   corrections: [
     - Question 6, corrigé : justifier l'unicité des chemins acceptants du produit, sans supposer ce produit déterministe ; distinguer opérations arithmétiques et coût binaire.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (
@@ -68,7 +68,7 @@
       [
         On note $Π_"pair"=⋃_(n∈NN)Π_(2n)$. Proposer un algorithme déterminant si $L(A)∩Π_"pair"$ est vide, fini ou infini. Discuter ses complexités en temps et en espace.
       ],
-      commentaire: [Les parcours doivent être décrits avec leur structure de données et leur complexité.],
+      jury: [Les parcours doivent être décrits avec leur structure de données et leur complexité.],
       solution: [
         La fonction $u↦u overline(u)$ est une bijection de $L(B)$ vers $L(A)∩Π_"pair"$.
         Dans $B$, calculer les états accessibles et coaccessibles par deux parcours, puis conserver leur intersection.

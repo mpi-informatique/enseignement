@@ -57,7 +57,7 @@
     - Question 4 : préciser $i<j$ et le sens du sous-mot dans le lemme de Higman ; sans cette condition, l'énoncé serait trivial.
     - Question 5 : préciser l'indexation des lettres des monômes et compléter la preuve sur le complémentaire.
   ],
-  remarques: [
+  jury: [
     - Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.
   ],
   contenu: (
@@ -96,7 +96,7 @@
         Montrer la stabilité par union et intersection des langages reconnus par des automates partiellement ordonnés.
         Ces stabilités restent-elles vraies pour les automates déterministes partiellement ordonnés ?
       ],
-      commentaire: [Le jury attend la maîtrise de la construction du produit pour l'intersection.],
+      jury: [Le jury attend la maîtrise de la construction du produit pour l'intersection.],
       solution: [
         Pour l'union non déterministe, prendre la réunion disjointe des automates, de leurs initiaux et de leurs finaux.
         Pour l'intersection, prendre le produit synchrone, avec initiaux $I_1×I_2$ et finaux $F_1×F_2$.
