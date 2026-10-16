@@ -51,16 +51,17 @@ La dernière commande installe une copie pour Tinymist et les outils hors de Nix
 
 ## Tests des codes de copies
 
-Un sujet conserve `corrige.ml` et `test.ml`. Le second lance les tests du corrigé et peut aussi déclarer les tests des copies, exécutés par le script commun `scripts/test_copies.py` du dépôt privé. Aucun lanceur Python propre au sujet n'est nécessaire.
+Un sujet conserve son code et tous ses tests dans `corrige.ml`. Ce fichier est exécuté par `just check` et peut aussi déclarer les tests des copies, exécutés par le script commun `scripts/test_copies.py` du dépôt privé. Aucun lanceur Python propre au sujet n'est nécessaire.
 
-Placer les vérifications OCaml réutilisables dans la région `(* BEGIN verifications *)` / `(* END verifications *)` de `test.ml`. Ajouter un commentaire JSON, par exemple :
+Placer les vérifications OCaml réutilisables dans un module `Tests`, extrait par nom. Garder les appels aux tests du corrigé en dehors de ce module. Ajouter un commentaire JSON, par exemple :
 
 ```ocaml
 (* TESTS COPIES
 {
+  "verifications": "Tests",
   "tests": {
-    "1.6": {"code": "{1.6}", "appel": "test_numero numero"},
-    "1.8": {"code": "{1.6}\n{1.7}\n{1.8}", "appel": "test_partie_accessible partie_accessible"}
+    "1.6": {"code": "{1.6}", "appel": "Tests.test_numero numero"},
+    "1.8": {"code": "{1.6}\n{1.7}\n{1.8}", "appel": "Tests.test_partie_accessible partie_accessible"}
   },
   "references": {"1.7": "etats_accessibles"}
 }
@@ -69,4 +70,4 @@ Placer les vérifications OCaml réutilisables dans la région `(* BEGIN verific
 
 Chaque clé désigne une question. `code` assemble les régions de la copie, indiquées entre accolades, dans l'ordre nécessaire à leur compilation ; il doit inclure la question testée. Il peut aussi ajouter une liaison, par exemple `let a2 = {1.5}`, pour une réponse qui est une expression. `appel` exécute la vérification OCaml commune au corrigé et à la copie.
 
-`references`, facultatif, autorise explicitement le remplacement d'une dépendance absente par une région de `corrige.ml`. Le lanceur annonce ce remplacement ; une réponse présente est toujours utilisée telle quelle. Il compile et exécute chaque question séparément et vérifie les attentes `TEST` des copies, sans modifier leur code. Ces résultats ne constituent pas une notation automatique.
+`references`, facultatif, autorise explicitement le remplacement d'une dépendance absente par une déclaration nommée de `corrige.ml`. Le lanceur annonce ce remplacement ; une réponse présente est toujours utilisée telle quelle. Il compile et exécute chaque question séparément et vérifie les attentes `TEST` des copies, sans modifier leur code. Ces résultats ne constituent pas une notation automatique.

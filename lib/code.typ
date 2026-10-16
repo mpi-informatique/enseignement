@@ -24,4 +24,4 @@
 }
 
 // L'analyse et l'affichage sont fournis directement par le package externe.
-#import "@local/code-extract:0.1.0": extract as code-extrait, extract-text as code-texte
+#import "@local/code-extract:0.2.0": extract as code-extrait, extract-text as code-texte

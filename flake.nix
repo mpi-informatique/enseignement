@@ -42,8 +42,8 @@
           default = package;
           typst-package = package;
           typst-packages = pkgs.linkFarm "exercices-typst-packages" (previews ++ [{
-            name = "local/code-extract/0.1.0";
-            path = "${code-extract.packages.${system}.default}/local/code-extract/0.1.0";
+            name = "local/code-extract/0.2.0";
+            path = "${code-extract.packages.${system}.default}/local/code-extract/0.2.0";
           } {
             name = "mpi-informatique/${manifest.name}/${manifest.version}";
             path = "${package}/mpi-informatique/${manifest.name}/${manifest.version}";

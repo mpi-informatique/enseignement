@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792139193,
-        "narHash": "sha256-IzMEy6ppNrp5mKSX1Yc5AEHcx4FAGIfxm9c5dvYB3f0=",
+        "lastModified": 1792143824,
+        "narHash": "sha256-YShexFbKHZkbpkKybLGCKoHVNBjF+b8PAfSBQ0X8+0Q=",
         "owner": "mpi-informatique",
         "repo": "typst-code-extract",
-        "rev": "d820f11139a90e4e05c43f90d14d4b407fb8454f",
+        "rev": "ac658ecf2cc270ca5a9263861515cd5dbe76e865",
         "type": "github"
       },
       "original": {

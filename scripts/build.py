@@ -84,7 +84,7 @@ def tests(signature):
         suffixe = '-cor' if inputs else ''
         compiler(f'lib/tests/{source}.typ', f'build/lib/tests/{source}{suffixe}.pdf', signature, *inputs)
     # Les tests restent à côté du code publié, sans liste de chemins à maintenir.
-    for test in sorted(test for dossier in ('chapitres', 'devoirs') for test in (ROOT / dossier).rglob('test.ml')):
+    for test in sorted(test for dossier in ('chapitres', 'devoirs') for test in (ROOT / dossier).rglob('corrige.ml')):
         run([OCAML, '-I', test.parent, test])
     for test in sorted(test for dossier in ('chapitres', 'devoirs') for test in (ROOT / dossier).rglob('test.py')):
         run([sys.executable, test])

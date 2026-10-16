@@ -16,7 +16,7 @@ with TemporaryDirectory() as dossier:
         (racine / 'packages/preview').symlink_to(Path(previews) / 'preview', target_is_directory=True)
     assert not (package / 'lib/tests').exists()
     assert not (package / 'ressources').exists()
-    assert (racine / 'packages/local/code-extract/0.1.0/dist/code-extract.wasm').is_file()
+    assert (racine / 'packages/local/code-extract/0.2.0/dist/code-extract.wasm').is_file()
     # Une réinstallation élimine aussi les anciens tests et ressources installés.
     (package / 'lib/tests').mkdir()
     (package / 'lib/tests/ancien.typ').write_text('Ancien test')

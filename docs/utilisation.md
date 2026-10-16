@@ -239,8 +239,10 @@ Lancer `just check` avant livraison. Utiliser `just w <chemin> corrige` pour tra
 
 Conserver les exercices simples dans un fichier `.typ`. Pour un exercice ou sujet avec des fichiers associés, créer un dossier `<identifiant>/` dans `chapitres/<chapitre>/exercices/` ou `devoirs/concours/`, en conservant le nom `<identifiant>.typ` : son nom reste l'identifiant de l'exercice. Placer le code et ses tests à côté et afficher ce même code dans le corrigé. Ajouter une vérification ciblée à `just check` si les lanceurs habituels ne la couvrent pas. Une dizaine de tests ciblés suffit.
 
-Lorsqu'un sujet sert aussi à corriger des copies, placer les oracles réutilisables dans `tests.ml` et faire appeler ces groupes par `test.ml`. Un lanceur de copies peut alors extraire chaque région de code élève et exécuter le même groupe de test, sans recopier les oracles dans le dépôt des corrections.
+Placer le code OCaml et tous ses tests dans `corrige.ml`, exécuté directement par `just check`. Regrouper les vérifications dans un module `Tests` pour éviter de masquer les noms du corrigé. L'extraction par nom affiche uniquement les déclarations demandées.
 
-Nommer les lanceurs de tests `test.ml` ou `test.py`. Placer les tests généraux de l'API, de la découverte et de l'installation dans `lib/tests/`. Ne pas ajouter de `test.typ` aux sujets de
+Pour tester aussi les copies, ajouter la configuration `TESTS COPIES` dans ce même fichier, avec `"verifications": "Tests"` et des appels `Tests.test_…`. Le lanceur extrait le module et les fonctions de référence par leur nom, sans balises `BEGIN` / `END` dans le corrigé.
+
+Nommer les lanceurs Python `test.py`. Placer les tests généraux de l'API, de la découverte et de l'installation dans `lib/tests/`. Ne pas ajouter de `test.typ` aux sujets de
 concours : conserver les tests OCaml ou Python qui vérifient le code publié dans
 leurs corrigés.
