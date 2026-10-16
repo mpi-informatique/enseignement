@@ -194,6 +194,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible, [role="separator"]
 .source-filename { display: flex; min-width: 0; gap: 5px; align-items: center; font: 10px ui-monospace, SFMono-Regular, monospace; color: var(--muted); }
 .source-filename > span:first-of-type { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .source-filename svg { flex-shrink: 0; color: var(--accent); }
+.source-filename select { min-width: 0; max-width: 100%; padding: 3px 0; background: var(--surface); color: var(--ink); text-overflow: ellipsis; }
+.code-readonly { padding: 3px 12px; color: var(--muted); font-size: 10px; border-bottom: 1px solid var(--border-color); }
 .pane-toolbar > div { display: flex; }
 .editor-panel .pane-toolbar > div { flex-shrink: 0; }
 .modified-dot { width: 5px; height: 5px; background: #c59a45; border-radius: 50%; flex-shrink: 0; }

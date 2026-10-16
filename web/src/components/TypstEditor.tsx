@@ -3,13 +3,17 @@ import { basicSetup } from 'codemirror';
 import { EditorView, keymap } from '@codemirror/view';
 import { EditorState, Compartment } from '@codemirror/state';
 import { indentWithTab } from '@codemirror/commands';
-import { HighlightStyle, LanguageSupport, syntaxHighlighting } from '@codemirror/language';
+import { HighlightStyle, LanguageSupport, StreamLanguage, syntaxHighlighting } from '@codemirror/language';
+import { c, cpp, java } from '@codemirror/legacy-modes/mode/clike';
+import { oCaml } from '@codemirror/legacy-modes/mode/mllike';
+import { python } from '@codemirror/legacy-modes/mode/python';
+import { standardSQL } from '@codemirror/legacy-modes/mode/sql';
 import { tags } from '@lezer/highlight';
 import { typst_lezer, typstTags, typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter } from 'codemirror-lang-typst/lezer';
 import type { Resource } from '@mpi-informatique/exercices-core';
 import { fileLinks } from '../editor/fileLinks';
 
-interface Props { sourcePath: string; resources: Resource[]; privateResource?: boolean; onNavigate: (resource: Resource) => void; source: string; dark: boolean; onChange: (source: string) => void; onReady: () => void }
+interface Props { sourcePath: string; resources: Resource[]; availableFiles: ReadonlySet<string>; privateResource?: boolean; onNavigate: (resource: Resource) => void; onOpenCode: (path: string) => void; source: string; readOnly?: boolean; dark: boolean; onChange: (source: string) => void; onReady: () => void }
 
 const theme = (dark: boolean) => EditorView.theme({
   '&': { height: '100%', backgroundColor: 'var(--editor-bg)', color: 'var(--ink)' },
@@ -37,25 +41,30 @@ const highlighting = (dark: boolean) => syntaxHighlighting(HighlightStyle.define
   { tag: tags.invalid, textDecoration: 'underline wavy #bf4a4a' },
 ]));
 
-export default function TypstEditor({ source, sourcePath, resources, privateResource, onNavigate, dark, onChange, onReady }: Props) {
+export default function TypstEditor({ source, sourcePath, resources, availableFiles, privateResource, onNavigate, onOpenCode, readOnly = false, dark, onChange, onReady }: Props) {
   const container = useRef<HTMLDivElement>(null);
   const editor = useRef<EditorView | undefined>(undefined);
   const onChangeRef = useRef(onChange);
   const navigateRef = useRef(onNavigate);
   navigateRef.current = onNavigate;
+  const openCodeRef = useRef(onOpenCode);
+  openCodeRef.current = onOpenCode;
   const themeSlot = useRef(new Compartment());
   onChangeRef.current = onChange;
 
   useEffect(() => {
     // Le package ajoute deux palettes claires : garder ses services et fournir
     // une seule palette adaptée au thème de l'application.
-    const language = new LanguageSupport(typst_lezer().language, [typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter]);
+    const typst = sourcePath.endsWith('.typ');
+    const extension = sourcePath.split('.').at(-1)!.toLowerCase();
+    const mode = { c, h: c, cc: cpp, cpp, hpp: cpp, ml: oCaml, mli: oCaml, py: python, sql: standardSQL, java }[extension];
+    const language = typst ? new LanguageSupport(typst_lezer().language, [typstLezerIndentService, typstLezerListKeymap, typstLezerFoldService, typstLezerLinter]) : mode ? StreamLanguage.define(mode) : [];
     const view = new EditorView({
       parent: container.current!,
       state: EditorState.create({
         doc: source,
-        extensions: [basicSetup, language, fileLinks(sourcePath, resources, resource => navigateRef.current(resource), privateResource), keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
-          EditorView.contentAttributes.of({ 'aria-label': 'Code source Typst', spellcheck: 'false' }),
+        extensions: [basicSetup, language, EditorView.lineWrapping, EditorState.readOnly.of(readOnly), typst ? fileLinks(sourcePath, resources, availableFiles, resource => navigateRef.current(resource), path => openCodeRef.current(path), privateResource) : [], keymap.of([indentWithTab]), themeSlot.current.of([theme(dark), highlighting(dark)]),
+          EditorView.contentAttributes.of({ 'aria-label': typst ? 'Code source Typst' : `Code source ${sourcePath.split('/').at(-1)}`, spellcheck: 'false', ...(readOnly ? { 'aria-readonly': 'true' } : {}) }),
           EditorView.updateListener.of(update => { if (update.docChanged) onChangeRef.current(update.state.doc.toString()); })],
       }),
     });

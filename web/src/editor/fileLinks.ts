@@ -2,25 +2,23 @@ import type { Range } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
 import { Decoration, EditorView, ViewPlugin, keymap, type DecorationSet, type ViewUpdate } from '@codemirror/view';
 import type { Resource } from '@mpi-informatique/exercices-core';
-import files from '../generated/files.json';
-import { resolveSourcePath } from '../lib/source-links';
+import { isCodeFile, resolveSourcePath } from '../lib/source-links';
 import { assetUrl, exerciseUrl } from '../lib/urls';
 
-const available = new Set(files);
-
-export function fileLinks(source: string, resources: Resource[], navigate: (resource: Resource) => void, privateResource = false) {
+export function fileLinks(source: string, resources: Resource[], availableFiles: ReadonlySet<string>, navigate: (resource: Resource) => void, openCode: (path: string) => void, privateResource = false) {
   const indexed = new Map(resources.map(resource => [resource.fichier, resource]));
-  const availableFiles = privateResource ? new Set(indexed.keys()) : available;
   function link(raw: string) {
     let target: string;
     try { target = JSON.parse(raw); } catch { return; }
     const path = resolveSourcePath(source, target, availableFiles);
     if (!path) return;
     const resource = indexed.get(path);
+    if (privateResource && !resource && !isCodeFile(path)) return;
     return { path, resource, href: resource ? exerciseUrl(resource.id) : assetUrl(`banque/${path}`) };
   }
   function follow(value: NonNullable<ReturnType<typeof link>>) {
-    if (value.resource) navigate(value.resource);
+    if (isCodeFile(value.path)) openCode(value.path);
+    else if (value.resource) navigate(value.resource);
     else window.open(value.href, '_blank', 'noopener,noreferrer');
   }
   function decorations(view: EditorView): DecorationSet {
@@ -29,7 +27,7 @@ export function fileLinks(source: string, resources: Resource[], navigate: (reso
       syntaxTree(view.state).iterate({ from, to, enter(node) {
         if (node.name !== 'Str') return;
         const value = link(view.state.sliceDoc(node.from, node.to));
-        if (value) ranges.push(Decoration.mark({ tagName: 'a', class: 'cm-file-link', attributes: { href: value.href, 'data-source-path': value.path, tabindex: '-1', title: `${value.path} — Ctrl/Cmd+clic ou Alt+Entrée`, target: '_blank', rel: 'noopener noreferrer' } }).range(node.from + 1, node.to - 1));
+        if (value) ranges.push(Decoration.mark({ tagName: 'a', class: 'cm-file-link', attributes: { href: value.href, 'data-source-path': value.path, tabindex: '-1', title: `${value.path} — ${isCodeFile(value.path) ? 'Clic' : 'Ctrl/Cmd+clic'} ou Alt+Entrée`, target: '_blank', rel: 'noopener noreferrer' } }).range(node.from + 1, node.to - 1));
       } });
     }
     return Decoration.set(ranges, true);
@@ -44,9 +42,9 @@ export function fileLinks(source: string, resources: Resource[], navigate: (reso
     click(event) {
       const anchor = (event.target as HTMLElement).closest<HTMLAnchorElement>('.cm-file-link');
       if (!anchor) return false;
-      // Un clic simple garde sa fonction de placement du curseur dans le code.
+      // Les chemins de code s'ouvrent aussi au clic simple.
       event.preventDefault();
-      if (event.ctrlKey || event.metaKey) {
+      if (isCodeFile(anchor.dataset.sourcePath!) || event.ctrlKey || event.metaKey) {
         const path = anchor.dataset.sourcePath!;
         follow({ path, resource: indexed.get(path), href: anchor.href });
         return true;

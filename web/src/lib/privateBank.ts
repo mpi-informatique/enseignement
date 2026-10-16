@@ -1,5 +1,6 @@
 import type { Resource } from '@mpi-informatique/exercices-core';
 import { encodeSource, type Contribution } from './github.ts';
+import { isCodeFile } from './source-links.ts';
 
 export interface PrivateRepository { full_name: string; default_branch: string; private: boolean }
 export interface PrivateBank {
@@ -40,7 +41,7 @@ export async function privateRepositories(token: string, signal: AbortSignal, re
 const ignored = new Set(['node_modules', 'web', 'worker', 'shared', 'build', 'dist', 'tests', 'scripts', 'docs', 'tmp', 'corrections']);
 export function bankFile(path: string): boolean {
   return !path.split('/').some(part => !part || part === '..' || part.startsWith('.') || ignored.has(part))
-    && !path.includes('\\') && /\.(typ|json|csv|svg|png|jpe?g|gif|webp|toml|ya?ml|txt|bib)$/i.test(path);
+    && !path.includes('\\') && (/\.(typ|json|csv|svg|png|jpe?g|gif|webp|toml|ya?ml|txt|bib)$/i.test(path) || isCodeFile(path));
 }
 
 /** Repérage seulement ; les métadonnées seront évaluées par Typst. */

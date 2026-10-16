@@ -31,17 +31,18 @@ test('le chargement lit uniquement le dépôt choisi, fige un commit et conserve
     assert.equal(init?.method, undefined);
     calls.push(path);
     if (path.endsWith('/commits/cours%2F2026')) return Response.json({ sha: 'revision', commit: { tree: { sha: 'tree' } } });
-    if (path.endsWith('/git/trees/tree')) return Response.json({ truncated: false, tree: [entry, { ...entry, path: '.env' }, { ...entry, path: 'web/token.json' }, { ...entry, path: 'image.svg', sha: 'b'.repeat(40) }, { ...entry, path: 'symlink.typ', mode: '120000' }] });
+    if (path.endsWith('/git/trees/tree')) return Response.json({ truncated: false, tree: [entry, { ...entry, path: '.env' }, { ...entry, path: 'web/token.json' }, { ...entry, path: 'image.svg', sha: 'b'.repeat(40) }, { ...entry, path: 'chapitres/corrige.ml', sha: 'c'.repeat(40) }, { ...entry, path: 'symlink.typ', mode: '120000' }] });
     assert.ok(path.startsWith('/repos/alice/banque-privee/git/blobs/'));
-    return Response.json({ encoding: 'base64', content: Buffer.from(path.endsWith(sha) ? source : '<svg/>').toString('base64') });
+    return Response.json({ encoding: 'base64', content: Buffer.from(path.endsWith(sha) ? source : path.endsWith('c'.repeat(40)) ? 'let réponse = 42' : '<svg/>').toString('base64') });
   };
   const bank = await loadPrivateFiles(repo, 'test-token', signal, () => {}, request);
   assert.equal(bank.sources[entry.path], source);
   assert.equal(bank.revision, 'revision');
   assert.equal(bank.branch, repo.default_branch);
-  assert.equal(Object.keys(bank.bundle).length, 2);
+  assert.equal(Object.keys(bank.bundle).length, 3);
+  assert.equal(Buffer.from(bank.bundle['/@memory/workspace/chapitres/corrige.ml'], 'base64').toString(), 'let réponse = 42');
   assert.equal(bank.drafts.size, 0);
-  assert.equal(calls.length, 4);
+  assert.equal(calls.length, 5);
 });
 
 const originalSource = '#let ex = [Énoncé Σ]\n';

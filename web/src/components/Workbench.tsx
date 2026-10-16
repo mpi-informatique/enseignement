@@ -1,10 +1,11 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
-import { Download, FileCode, RotateCcw, CircleAlert, GitPullRequest, GitCommitHorizontal, X } from 'lucide-react';
+import { Download, FileCode, CodeXml, RotateCcw, CircleAlert, GitPullRequest, GitCommitHorizontal, X } from 'lucide-react';
 import { availableVariants, outputVariant, variantLabels, duration, pdfFilename, type Resource, type Variant } from '@mpi-informatique/exercices-core';
 import SearchSidebar from './SearchSidebar';
 import { ResizeHandle } from './ResizeHandle';
 import { useCompiler } from '../hooks/useCompiler';
 import { useSource } from '../hooks/useSource';
+import { useCodeFiles } from '../hooks/useCodeFiles';
 import { Navbar } from './Navbar';
 import { VariantTabs } from './VariantTabs';
 import CommandPalette, { type Command } from './CommandPalette';
@@ -50,6 +51,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   const [dark, setDark] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [editorOpen, setEditorOpen] = useState(true);
+  const [openedCode, setOpenedCode] = useState<{ id: string; path: string }>();
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(280);
   const [editorWidth, setEditorWidth] = useState(440);
@@ -60,6 +62,11 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   const focusTarget = useRef<'search' | 'editor' | 'pdf' | undefined>(undefined);
   const search = useMemo(() => createSearch(resources), [resources]);
   const { code, loadError, notice, modified, changeSource, reload, reset, dismissNotice } = useSource(resource, privateResource ? library.bank : undefined);
+  const codePath = openedCode && openedCode.id === resource?.id ? openedCode.path : undefined;
+  const codeFiles = useCodeFiles(resource?.fichier, code?.source, codePath, privateResource ? library.bank : undefined);
+  const editorPath = codePath ?? resource?.fichier;
+  const editorSource = codePath ? codeFiles.file?.source : code?.source;
+  const associatedFiles = codePath && !codeFiles.associated.includes(codePath) ? [...codeFiles.associated, codePath] : codeFiles.associated;
   const compilation = useCompiler(resource, code?.source, variant, retry, privateResource ? library.bank?.bundle : undefined);
 
   useEffect(() => {
@@ -112,6 +119,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   function navigate(resource: Resource, nextVariant: Variant = variant) {
     if (!availableVariants(resource.type).includes(nextVariant)) nextVariant = 'enonce';
     history.pushState({}, '', exerciseUrl(resource.id, nextVariant));
+    if (resource.id !== selected) setOpenedCode(undefined);
     setSelected(resource.id); setVariant(nextVariant);
     if (window.innerWidth <= 900) {
       if (app.current?.querySelector('#search-sidebar')?.contains(document.activeElement)) focusPanel('pdf');
@@ -126,6 +134,14 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   function toggleEditor() {
     setEditorOpen(!editorOpen); store('editor-open', String(!editorOpen));
     if (editorOpen && app.current?.querySelector('#editor-panel')?.contains(document.activeElement)) focusPanel('pdf');
+  }
+  function openCode(path: string) {
+    setOpenedCode({ id: selected, path });
+    focusPanel('editor');
+  }
+  function showTypst() {
+    setOpenedCode(undefined);
+    focusPanel('editor');
   }
   function closeSidebar() {
     setSidebarOpen(false);
@@ -144,6 +160,7 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
     requestAnimationFrame(focusPending);
   }
   function downloadSource() { if (code && resource) download(code.source, resource.fichier.split('/').at(-1)!, 'text/plain;charset=utf-8'); }
+  function downloadEditor() { if (editorSource !== undefined && editorPath) download(editorSource, editorPath.split('/').at(-1)!, 'text/plain;charset=utf-8'); }
   async function copyContribution() {
     if (!code || !modified || privateResource) return;
     try {
@@ -186,7 +203,8 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
   }
   const commands: Command[] = [
     { id: 'search', label: 'Rechercher un exercice', shortcut: '/', keywords: 'banque filtre', run: () => focusPanel('search') },
-    { id: 'editor-focus', label: 'Modifier le code Typst', keywords: 'éditeur source focus', disabled: !code, run: () => focusPanel('editor') },
+    { id: 'editor-focus', label: 'Modifier le code Typst', keywords: 'éditeur source focus', disabled: !code, run: showTypst },
+    ...codeFiles.associated.map(path => ({ id: `code:${path}`, label: `Voir le code : ${path.split('/').at(-1)}`, keywords: path, run: () => openCode(path) })),
     { id: 'pdf-focus', label: 'Afficher l’aperçu PDF', keywords: 'document focus', run: () => focusPanel('pdf') },
     { id: 'sidebar', label: sidebarOpen ? 'Masquer la recherche' : 'Afficher la recherche', keywords: 'panneau latéral', run: () => sidebarOpen ? closeSidebar() : focusPanel('search') },
     { id: 'editor', label: editorOpen ? 'Masquer le code Typst' : 'Afficher le code Typst', keywords: 'panneau éditeur source', run: toggleEditor },
@@ -209,27 +227,34 @@ export default function Workbench({ resources: publicResources, initialId }: Pro
       {sidebarOpen && <ResizeHandle label="Largeur de la recherche" value={sidebarWidth} min={240} max={520} onChange={value => { setSidebarWidth(value); store('sidebar-width', String(value)); }} />}
       <main className="main-panel" id="main" tabIndex={-1}>
         <div className="document-workspace">
-          {editorOpen && <section className="editor-panel" id="editor-panel" aria-label="Éditeur Typst">
+          {editorOpen && <section className="editor-panel" id="editor-panel" aria-label={codePath ? 'Code associé' : 'Éditeur Typst'}>
             <div className="pane-toolbar">
-              <span className="source-filename" title={resource?.fichier}><FileCode size={14} /><span>{resource?.fichier.split('/').at(-1)}</span>{privateResource && <span className="private-badge">Privé</span>}{modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title={privateResource ? 'Brouillon privé, conservé dans cet onglet' : 'Brouillon modifié, enregistré localement'} />}</span>
+              <span className="source-filename" title={editorPath}><FileCode size={14} />{associatedFiles.length ? <select aria-label="Fichier affiché dans l’éditeur" value={editorPath} onChange={event => event.target.value === resource?.fichier ? showTypst() : openCode(event.target.value)}>
+                <option value={resource?.fichier}>{resource?.fichier.split('/').at(-1)}</option>
+                {associatedFiles.map(path => <option key={path} value={path}>{path.slice(0, path.lastIndexOf('/')) === resource?.fichier.slice(0, resource.fichier.lastIndexOf('/')) ? path.split('/').at(-1) : path}</option>)}
+              </select> : <span>{editorPath?.split('/').at(-1)}</span>}{privateResource && <span className="private-badge">Privé</span>}{!codePath && modified && <span className="modified-dot" role="img" aria-label="Brouillon modifié" title={privateResource ? 'Brouillon privé, conservé dans cet onglet' : 'Brouillon modifié, enregistré localement'} />}</span>
               <div>
-                {privateResource && library.account && <button className="btn btn-ghost btn-xs btn-square" aria-label="Créer un commit sur GitHub" title={`Enregistrer les modifications dans ${library.bank?.repository}, branche ${library.bank?.branch}`} disabled={!modified || library.commitPending || library.busy} onClick={commitPrivate}>{library.commitPending ? <span className="loading loading-spinner loading-xs" /> : <GitCommitHorizontal size={14} />}</button>}
-                {resource && !privateResource && (authUrl && modified
+                {!codePath && privateResource && library.account && <button className="btn btn-ghost btn-xs btn-square" aria-label="Créer un commit sur GitHub" title={`Enregistrer les modifications dans ${library.bank?.repository}, branche ${library.bank?.branch}`} disabled={!modified || library.commitPending || library.busy} onClick={commitPrivate}>{library.commitPending ? <span className="loading loading-spinner loading-xs" /> : <GitCommitHorizontal size={14} />}</button>}
+                {!codePath && resource && !privateResource && (authUrl && modified
                   ? <button className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title="Se connecter à GitHub et proposer le brouillon modifié" disabled={contributionPending} onClick={proposeContribution}>{contributionPending ? <span className="loading loading-spinner loading-xs" /> : <GitPullRequest size={14} />}</button>
                   : <a className="btn btn-ghost btn-xs btn-square" aria-label="Ouvrir une pull request sur GitHub" title={modified ? 'Copier le brouillon et ouvrir GitHub pour proposer une pull request' : 'Modifier le fichier sur GitHub pour proposer une pull request'} href={githubEditUrl(resource.fichier)} target="_blank" rel="noreferrer" onClick={copyContribution}><GitPullRequest size={14} /></a>)}
-                <button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le fichier Typst" title="Télécharger le fichier Typst" disabled={!code} onClick={downloadSource}><Download size={14} /></button>
-                <button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button>
+                <button className="btn btn-ghost btn-xs btn-square" aria-label={codePath ? 'Télécharger le fichier de code' : 'Télécharger le fichier Typst'} title={codePath ? 'Télécharger le fichier de code' : 'Télécharger le fichier Typst'} disabled={editorSource === undefined} onClick={downloadEditor}><Download size={14} /></button>
+                {codePath ? <button className="btn btn-ghost btn-xs btn-square" aria-label="Revenir au fichier Typst" title="Revenir au fichier Typst" onClick={showTypst}><X size={14} /></button> : <button className="btn btn-ghost btn-xs btn-square" aria-label="Réinitialiser le code" title="Réinitialiser le code (annulable dans l’éditeur)" disabled={!modified} onClick={reset}><RotateCcw size={14} /></button>}
               </div>
             </div>
             {contributionNotice && <div className="draft-notice" role="status"><span>{contributionNotice}</span><button className="btn btn-ghost btn-xs btn-square" aria-label="Fermer le message GitHub" title="Fermer" onClick={() => setContributionNotice('')}><X size={13} /></button></div>}
-            {code ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={selected} source={code.source} sourcePath={resource!.fichier} resources={privateResource ? library.bank!.resources : publicResources} privateResource={privateResource} onNavigate={navigate} dark={dark} onChange={changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading">{loadError || 'Chargement de la source…'}</div>}
+            {codePath && <div className="code-readonly">Lecture seule</div>}
+            {editorSource !== undefined && editorPath ? <Suspense fallback={<div className="pane-loading">Chargement de l’éditeur…</div>}><TypstEditor key={`${selected}:${editorPath}`} source={editorSource} sourcePath={editorPath} resources={privateResource ? library.bank!.resources : publicResources} availableFiles={codeFiles.available} privateResource={privateResource} onNavigate={navigate} onOpenCode={openCode} readOnly={!!codePath} dark={dark} onChange={codePath ? () => {} : changeSource} onReady={focusPending} /></Suspense> : <div className="pane-loading" role={codeFiles.file?.error ? 'alert' : undefined}>{codePath ? codeFiles.file?.error || 'Chargement du code…' : loadError || 'Chargement de la source…'}{codePath && codeFiles.file?.error && <button className="btn btn-sm" onClick={codeFiles.reload}>Réessayer</button>}</div>}
           </section>}
           {editorOpen && <ResizeHandle label="Largeur de l’éditeur" value={editorWidth} min={280} max={900} onChange={value => { setEditorWidth(value); store('editor-width', String(value)); }} />}
           <section className="preview-panel" aria-label="Document PDF">
             <Suspense fallback={<div className="pane-loading">Chargement de l’aperçu…</div>}><PdfViewer dark={dark} pdf={compilation.pdf} pending={compilation.pending} onReady={focusPending} toolbar={<>
               <VariantTabs documentType={resource?.type} variant={variant} onChange={value => resource && navigate(resource, value)} />
               <span className={`compilation-status ${compilation.error || loadError ? 'has-error' : ''}`} title={status} role="status">{compilation.pending ? <span className="loading loading-spinner loading-xs" /> : compilation.error || loadError ? <CircleAlert size={13} /> : <span className="status-dot" />}<span className="sr-only">{status}</span></span>
-            </>} actions={<button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le PDF" title="Télécharger le PDF" disabled={!canDownloadPdf} onClick={downloadPdf}><Download size={14} /></button>} /></Suspense>
+            </>} actions={<>
+              {!!codeFiles.associated.length && <button className="btn btn-ghost btn-xs" aria-label="Voir les codes associés" title="Voir les codes associés dans CodeMirror" onClick={() => openCode(codeFiles.associated[0]!)}><CodeXml size={14} />Codes associés{codeFiles.associated.length > 1 ? ` (${codeFiles.associated.length})` : ''}</button>}
+              <button className="btn btn-ghost btn-xs btn-square" aria-label="Télécharger le PDF" title="Télécharger le PDF" disabled={!canDownloadPdf} onClick={downloadPdf}><Download size={14} /></button>
+            </>} /></Suspense>
           </section>
         </div>
         {(loadError || compilation.error) && <div className="diagnostic alert alert-error" role="alert"><CircleAlert size={18} /><pre>{loadError || compilation.error}</pre><button className="btn btn-sm" onClick={() => loadError ? reload() : setRetry(n => n + 1)}>Réessayer</button></div>}
