@@ -191,7 +191,6 @@ let reduit aut =
 *)
 
 module Tests = struct
-  (* Vérifications communes au corrigé et aux copies. *)
   let verifie message condition = if not condition then failwith message
   let a1 = (2, [|(1, 1); (0, 0)|], [|false; true|])
   let a2_reference = (2, [|(0, 1); (1, 0)|], [|false; true|])

@@ -216,13 +216,13 @@
         notation: [100 % pour un nombre impair de $b$, sans restriction sur les $a$ ; 0 % sinon.],
       ),
       question(
-        [Donner, sans preuve, une expression régulière de $L(cal(A)_1)$.],
+        [Donner, sans preuve, une expression régulière qui dénote $L(cal(A)_1)$.],
         solution: [$ (a|b)((a|b)(a|b))^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec longueur impaire, ou pour exactement les longueurs paires ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
       ),
       question(
-        [Donner, sans preuve, une expression régulière de $L(cal(A)_2)$.],
+        [Donner, sans preuve, une expression régulière qui dénote $L(cal(A)_2)$.],
         solution: [$ a^* b a^* (b a^* b a^*)^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec un nombre impair de $b$ ($a^*$ manquant, $b b$ consécutifs imposés…), ou pour exactement les nombres pairs de $b$ ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
