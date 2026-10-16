@@ -18,7 +18,7 @@
     [
       On présente une alternative à la méthode d'élimination des états pour convertir un automate en expression régulière, avec un algorithme par programmation dynamique similaire à Floyd-Warshall.
 
-      Soit $A = (Σ, Q, 0, F, δ)$ un automate déterministe tel que $Q = {0, …, n - 1}$. Pour $i, j ∈ Q$ et $k ∈ {0, …, n}$, on note $L(i, j, k)$ le langage des étiquettes des chemins de $i$ à $j$ dont tous les états intermédiaires sont strictement inférieurs à $k$. Seules les occurrences initiale et finale sont exemptées de cette condition : un retour en $i$ ou en $j$ au milieu du chemin compte comme un état intermédiaire.
+      Soit $A = (Σ, Q, 0, F, δ)$ un automate déterministe tel que $Q = {0, …, n - 1}$. Pour $i, j ∈ Q$ et $k ∈ {0, …, n}$, on note $L(i, j, k)$ le langage des étiquettes des chemins de $i$ à $j$ dont tous les états intermédiaires -- sauf les extrémités -- sont strictement inférieurs à $k$.
     ],
     question([Montrer que $L(i, j, 0)$ est régulier, pour tout $i, j ∈ Q$.], solution: [
       Soient $i, j ∈ Q$ deux états.
@@ -26,7 +26,7 @@
       - Si $i = j$, $L(i, i, 0) = {a ∈ Σ | delta(i, a) = i} ∪ {ε}$.
       Dans les deux cas, le langage est fini donc régulier.
     ]),
-    question([Donner une équation de récurrence sur $L(i, j, k)$ pour $0 ≤ k < n$, en la démontrant.], solution: [
+    question([Donner une équation de récurrence sur $L(i, j, k)$.], solution: [
       Soit $u ∈ L(i, j, k + 1)$ l'étiquette d'un chemin $C$ de $i$ à $j$ avec des états intermédiaires inférieurs ou égaux à $k$.
       - Si $C$ n'utilise pas l'état $k$ comme état intermédiaire : $u ∈ L(i, j, k)$
       - Sinon, en coupant à chaque passage intermédiaire par $k$, on décompose $C$ en un chemin de $i$ à $k$, zéro ou plusieurs chemins de $k$ à $k$, puis un chemin de $k$ à $j$. Chacun n'a que des états intermédiaires strictement inférieurs à $k$.
