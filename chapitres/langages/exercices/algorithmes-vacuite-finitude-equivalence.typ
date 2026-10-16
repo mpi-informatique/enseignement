@@ -13,7 +13,7 @@
     [Soit $A = (Sigma, Q, I, F, E)$ un automate à $n = |Q|$ états et $p = |E|$ transitions. \
       Décrire un algorithme pour résoudre chacun des problèmes suivants en précisant représentation et complexité.],
     question(
-        [$L(A) = emptyset$ ?],
+        [$cal(L)(A) = emptyset$ ?],
       solution: [
         Il est vide si et seulement s'il n'existe aucun chemin de $I$ vers $F$.
         Faire un parcours (profondeur ou largeur) depuis $I$ et tester si un état final est atteint. 
@@ -21,19 +21,19 @@
       ],
     ),
     question(
-      [$L(A)$ fini ?],
+      [$cal(L)(A)$ fini ?],
       solution: [
-        $L(A)$ est infini exactement lorsqu'il existe un cycle accessible et coaccessible.
+        $cal(L)(A)$ est infini exactement lorsqu'il existe un cycle accessible et coaccessible.
 
         Émonder $A$ puis réaliser parcours en profondeur depuis $I$ : $A$ possède un cycle orienté si est seulement si un arc arrière (revenant sur un sommet en cours d'appel récursif) est trouvé. 
         Avec une représentation par liste d'adjacence, le temps et l'espace total, émondage compris, sont $O(n+p)$.
       ],
     ),
-    question([Pour deux automates $A_1, A_2$ : $L(A_1) = L(A_2)$ ?], 
+    question([Pour deux automates $A_1, A_2$ : $cal(L)(A_1) = cal(L)(A_2)$ ?],
     solution: [
       - Déterminiser et compléter les automates : $O(|Sigma| 2^(n_1))$ + $O(|Sigma| 2^(n_2))$.
       - Construire l'automate produit $A_1 times A_2$ pour reconnaître la différence symétrique $L_1 Delta L_2 = L_1 union L_2 \\ L_1 inter L_2$ (avec $F = F_1 times (Q_2 \\ F_2) union (Q_1 \\ F_1) times F_2$) : $O(n_1 n_2)$.
-      - Tester si $L(A_1 times A_2) = emptyset$ avec Q1 : $O(n_1 n_2 + p_1 p_2)$.
+      - Tester si $cal(L)(A_1 times A_2) = emptyset$ avec Q1 : $O(n_1 n_2 + p_1 p_2)$.
     ]),
   ),
 )

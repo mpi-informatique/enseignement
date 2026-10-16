@@ -115,6 +115,8 @@ let f x = (* f x renvoie ... *)
 
 ## Syntaxe
 
+- Noter `cal(L)(A)` le langage reconnu par un automate $A$ et `cal(L)(e)` le langage dénoté par une expression régulière $e$. Appliquer cette convention dans les cours, énoncés, corrigés et commentaires.
+
 - Noter les compositions de fonctions ou d'endomorphismes avec `∘`, par exemple `$g ∘ f = f ∘ g$`, plutôt que par juxtaposition.
 - `RR_n[X]` met `[X]` en indice : utiliser plutôt `RR_n [X]`.
 - Dans toutes les formules mathématiques, toujours insérer des espaces autour des opérateurs binaires et après les virgules, y compris dans les arguments et les indices : `$k + 1$`, `$n - 1$`, `$j > i$`, `$L(i, j, k + 1)$`, `$a_(i, j)$`. Cette règle concerne aussi les formules des légendes et des étiquettes de schémas. Préserver la syntaxe des exposants et des indices (`$n^3$`, `$a_i$`).

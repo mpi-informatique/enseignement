@@ -72,7 +72,7 @@
     ),
     question(
       [
-        Étant donné un automate $A$, décider si $L(A)$ est continuable. Justifier l'algorithme et ses complexités en temps et en espace.
+        Étant donné un automate $A$, décider si $cal(L)(A)$ est continuable. Justifier l'algorithme et ses complexités en temps et en espace.
       ],
       solution: [
         La condition équivaut à ce que tout état accessible soit coaccessible.

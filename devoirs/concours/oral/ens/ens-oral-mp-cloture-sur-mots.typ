@@ -16,7 +16,7 @@
       $ overline(L)={w' in Sigma^* | exists w in L, w ≼ w'}. $],
     question(
       [
-        On pose $L_0=L(a b^* a)$ et $L_1=L((a b)^*)$, sur un alphabet contenant $a$ et $b$.
+        On pose $L_0=cal(L)(a b^* a)$ et $L_1=cal(L)((a b)^*)$, sur un alphabet contenant $a$ et $b$.
         Donner une expression régulière pour $overline(L_0)$ et $overline(L_1)$.
       ],
       solution: [
@@ -61,7 +61,7 @@
 
         Si $u$ est accepté par $A$ et $u ≼ u'$, un chemin acceptant pour $u'$ suit les transitions de $A$ aux positions correspondant aux lettres de $u$, et les boucles ajoutées aux autres positions.
         Réciproquement, d'un chemin acceptant dans $A'$, on retire les passages par les boucles ajoutées : les transitions restantes forment un chemin acceptant dans $A$, portant un sous-mot du mot initial.
-        Ainsi $L(A')=overline(L)$.
+        Ainsi $cal(L)(A')=overline(L)$.
 
         Une autre preuve procède par induction structurelle avec les identités
         $

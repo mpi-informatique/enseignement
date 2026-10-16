@@ -29,7 +29,7 @@
       $ cal(H)(L)={u in Sigma^* | exists v in L, abs(u)=abs(v) " et " d(u,v)<=1}. $],
     question(
       [
-        Sur l'alphabet ${0,1}$, donner une expression régulière pour $cal(H)(L(0^* 1^*))$.
+        Sur l'alphabet ${0,1}$, donner une expression régulière pour $cal(H)(cal(L)(0^* 1^*))$.
       ],
       solution: [
         On peut conserver le mot, changer un $0$ en $1$, ou changer un $1$ en $0$.

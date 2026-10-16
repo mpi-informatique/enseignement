@@ -49,7 +49,7 @@
         Proposer un index de taille $O(n^2)$ permettant de répondre en temps $O(1)$.
       ],
       solution: [
-        Stocker dans un tableau à deux entrées le booléen $T[i,j]=(w[i,j]∈L(A))$. Les $n(n+1)/2$ cases utiles donnent la taille annoncée et chaque requête est un accès direct.
+        Stocker dans un tableau à deux entrées le booléen $T[i,j]=(w[i,j]∈cal(L)(A))$. Les $n(n+1)/2$ cases utiles donnent la taille annoncée et chaque requête est un accès direct.
       ],
     ),
     question(

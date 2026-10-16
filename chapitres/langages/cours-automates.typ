@@ -104,7 +104,7 @@ type automate = {
 #slides-only[== Langage reconnu]
 #definition[
   Un mot est accepté par $A$ s'il est l'étiquette d'un chemin acceptant.
-  Le langage $L(A)$ reconnu par $A$ est l'ensemble des mots acceptés.
+  Le langage $cal(L)(A)$ reconnu par $A$ est l'ensemble des mots acceptés.
   Un langage est reconnaissable s'il est reconnu par un automate.
 ]
 Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F ≠ ∅$.
@@ -127,7 +127,7 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
 #slides-only[== Ensemble des états atteints]
 Pour lire $m = m_1 … m_n$, calculer :
 $ Q_0 = I, quad Q_k = union.big_(q ∈ Q_(k - 1)) δ(q, m_k). $
-Alors $m ∈ L(A)$ si et seulement si $Q_n ∩ F ≠ ∅$.
+Alors $m ∈ cal(L)(A)$ si et seulement si $Q_n ∩ F ≠ ∅$.
 Cette méthode traite aussi le mot vide.
 
 #slides-only[== Programmation de la reconnaissance]
@@ -199,7 +199,7 @@ S'il est aussi complet, sa fonction de transition est $δ : Q × Σ → Q$.
   - $δ^*(q, ε) = q$
   - $δ^*(q, a v) = δ^*(δ(q, a), v)$
 ]
-On a $u ∈ L(A) ⇔ δ^*(q_i, u) ∈ F$.
+On a $u ∈ cal(L)(A) ⇔ δ^*(q_i, u) ∈ F$.
 #slides-only[== Lecture d'une concaténation]
 #theorem[$δ^*(q, u v) = δ^*(δ^*(q, u), v)$.]
 #article-only[*Preuve* :]

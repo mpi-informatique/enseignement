@@ -311,24 +311,24 @@ type 'a regexp = (* 'a est le type des lettres de l'alphabet *)
 == Langage d'une expression régulière
 
 #definition[
-  Le langage $L(e)$ d'une expression régulière $e$ est défini récursivement :
-  - $L(a) = {a}$ si $a ∈ Σ$.
-  - $L(∅) = ∅$ et $L(ε) = {ε}$
-  - $L(e | e') = L(e) ∪ L(e')$
-  - $L(e e') = L(e) L(e')$
-  - $L(e^*) = L(e)^*$
+  Le langage $cal(L)(e)$ d'une expression régulière $e$ est défini récursivement :
+  - $cal(L)(a) = {a}$ si $a ∈ Σ$.
+  - $cal(L)(∅) = ∅$ et $cal(L)(ε) = {ε}$
+  - $cal(L)(e | e') = cal(L)(e) ∪ cal(L)(e')$
+  - $cal(L)(e e') = cal(L)(e) cal(L)(e')$
+  - $cal(L)(e^*) = cal(L)(e)^*$
 ]
 
 #slides-only[== Langages réguliers et expressions régulières]
 
-Par abus de langage, on confond souvent $e$ et $L(e)$.
+Par abus de langage, on confond souvent $e$ et $cal(L)(e)$.
 Ainsi, suivant le contexte, $a$ peut désigner une lettre, un mot de taille $1$ ou un langage singleton.\
 Une expression régulière décrit de façon compacte la construction d'un langage régulier à l'aide de l'union, de la concaténation et de l'étoile de Kleene.
 Cette notation est à la base des moteurs d'expressions régulières utilisés dans les éditeurs de texte.
 
 #pause
 #theorem[
-  Un langage $L$ est régulier si et seulement s'il existe une expression régulière $e$ telle que $L = L(e)$.
+  Un langage $L$ est régulier si et seulement s'il existe une expression régulière $e$ telle que $L = cal(L)(e)$.
 ]
 
 #slides-only[== Exemples de langages associés]
@@ -356,7 +356,7 @@ Sur $Σ = {a, b}$ :
 #slides-only[== Définition de l'équivalence]
 
 #definition[
-  Deux expressions régulières $e_1$ et $e_2$ sont dites équivalentes, ce que l'on note $e_1 ≡ e_2$, si elles définissent le même langage, c'est-à-dire si $L(e_1) = L(e_2)$.
+  Deux expressions régulières $e_1$ et $e_2$ sont dites équivalentes, ce que l'on note $e_1 ≡ e_2$, si elles définissent le même langage, c'est-à-dire si $cal(L)(e_1) = cal(L)(e_2)$.
 ]
 
 #underline[Exemple] : $(a b)^* a ≡ a (b a)^*$.

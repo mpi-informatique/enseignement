@@ -182,7 +182,7 @@
     [
       == Définition mathématique d'un automate
       Dans tout le sujet, le terme _automate_ désigne un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.\
-      On note $L(cal(A))$ le langage reconnu par $cal(A)$ et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
+      On note $cal(L)(cal(A))$ le langage reconnu par $cal(A)$ et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
       $ δ^*(q,ε)=q, #sep δ^*(q,σ w)=δ^*(δ(q,σ),w). $
 
       == Représentation en OCaml
@@ -204,25 +204,25 @@
     ],
     partie("I", "Premiers exemples", contenu: (
       question(
-        [Donner, sans preuve, une description courte en langue française de $L(cal(A)_1)$.],
+        [Donner, sans preuve, une description courte en langue française de $cal(L)(cal(A)_1)$.],
         solution: [Les mots de longueur impaire sur ${a,b}$.],
         bareme: 0.5,
         notation: [100 % pour les longueurs impaires ; 0 % sinon.],
       ),
       question(
-        [Donner, sans preuve, une description courte en langue française de $L(cal(A)_2)$.],
+        [Donner, sans preuve, une description courte en langue française de $cal(L)(cal(A)_2)$.],
         solution: [Les mots contenant un nombre impair de $b$.],
         bareme: 0.5,
         notation: [100 % pour un nombre impair de $b$, sans restriction sur les $a$ ; 0 % sinon.],
       ),
       question(
-        [Donner, sans preuve, une expression régulière qui dénote $L(cal(A)_1)$.],
+        [Donner, sans preuve, une expression régulière qui dénote $cal(L)(cal(A)_1)$.],
         solution: [$ (a|b)((a|b)(a|b))^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec longueur impaire, ou pour exactement les longueurs paires ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
       ),
       question(
-        [Donner, sans preuve, une expression régulière qui dénote $L(cal(A)_2)$.],
+        [Donner, sans preuve, une expression régulière qui dénote $cal(L)(cal(A)_2)$.],
         solution: [$ a^* b a^* (b a^* b a^*)^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec un nombre impair de $b$ ($a^*$ manquant, $b b$ consécutifs imposés…), ou pour exactement les nombres pairs de $b$ ; 0 % si deux erreurs cumulées ou parité non maîtrisée.],
@@ -329,7 +329,7 @@
       )),
       partie("III.B", "Propriétés des morphismes d'automates", contenu: (
         question(
-          [Montrer que s'il existe un morphisme de $cal(A)$ vers $cal(B)$ alors $L(cal(A)) = L(cal(B))$.],
+          [Montrer que s'il existe un morphisme de $cal(A)$ vers $cal(B)$ alors $cal(L)(cal(A)) = cal(L)(cal(B))$.],
           jury: [« On doit citer les propriétés d'un morphisme utilisées, à chaque étape du raisonnement. »],
           solution: [
             Pour un morphisme $φ: cal(A) → cal(B)$, montrons par récurrence sur $abs(w)$ que
@@ -343,7 +343,7 @@
                                     & = δ_cal(B)^*(φ(q),σ w').
             $
             Par (2) et (4), $δ_cal(A)^*(i_cal(A),w) ∈ F_cal(A) ⇔ δ_cal(B)^*(i_cal(B),w) ∈ F_cal(B)$.
-            Donc $L(cal(A)) = L(cal(B))$.
+            Donc $cal(L)(cal(A)) = cal(L)(cal(B))$.
           ],
           bareme: 2,
           notation: [50 % pour la compatibilité avec la lecture d'un mot, dont 25 % pour une récurrence détaillée, 25 % pour la première inclusion, 25 % pour la réciproque. Accepter une preuve directe par équivalence. Repères : 50 % pour la seule première inclusion avec récurrence non détaillée, 75 % pour le chemin image établi sans réciproque justifiée.],
@@ -446,7 +446,7 @@
             Par récurrence sur $abs(w)$,
             $ δ_(cal(A) × cal(A)')^*((q,q'),w)=(δ_cal(A)^*(q,w),δ_(cal(A)')^*(q',w)). $
             L'accessibilité fournit donc un même mot $w$ tel que $q=δ_cal(A)^*(i_cal(A),w)$ et $q'=δ_(cal(A)')^*(i_(cal(A)'),w)$.
-            Alors $q ∈ F_cal(A) ⇔ w ∈ L(cal(A)) ⇔ w ∈ L(cal(A)') ⇔ q' ∈ F_(cal(A)')$.
+            Alors $q ∈ F_cal(A) ⇔ w ∈ cal(L)(cal(A)) ⇔ w ∈ cal(L)(cal(A)') ⇔ q' ∈ F_(cal(A)')$.
           ],
           bareme: 1.5,
           notation: [50 % pour un même mot menant aux deux composantes, 50 % pour l'équivalence de leurs caractères finaux par égalité des langages. L'accessibilité du couple doit être utilisée.],

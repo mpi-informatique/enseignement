@@ -87,7 +87,7 @@
     ),
     question(
       [
-        Montrer que l'existence d'un morphisme $A→A'$ implique $L(A)=L(A')$. La réciproque est-elle vraie ?
+        Montrer que l'existence d'un morphisme $A→A'$ implique $cal(L)(A)=cal(L)(A')$. La réciproque est-elle vraie ?
       ],
       solution: [
         Par récurrence sur $abs(u)$, les propriétés (i) et (ii) donnent
@@ -129,7 +129,7 @@
     ],
     question(
       [
-        Si $A×A'$ est accessible et $L(A)=L(A')$, montrer qu'il existe un morphisme $A×A'→A$, et de même vers $A'$.
+        Si $A×A'$ est accessible et $cal(L)(A)=cal(L)(A')$, montrer qu'il existe un morphisme $A×A'→A$, et de même vers $A'$.
       ],
       solution: [
         Prendre la première projection $(q,q')↦q$. Elle conserve l'état initial et les transitions.

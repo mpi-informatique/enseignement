@@ -21,12 +21,12 @@
       ],
     ),
     question(
-      [Soit $A$ un automate à $n$ états et de langage $L(A)$.
-        Montrer que $L(A)=∅$ si et seulement si $L(A)$ ne contient aucun mot de longueur strictement inférieure à $n$.],
+      [Soit $A$ un automate à $n$ états et de langage $cal(L)(A)$.
+        Montrer que $cal(L)(A)=∅$ si et seulement si $cal(L)(A)$ ne contient aucun mot de longueur strictement inférieure à $n$.],
       solution: [
         $==>$ : immédiat.
 
-        $⇐$ : supposons $L(A)≠∅$ et choisissons un mot accepté $u$ de longueur minimale.
+        $⇐$ : supposons $cal(L)(A)≠∅$ et choisissons un mot accepté $u$ de longueur minimale.
         Si $abs(u)≥n$, son chemin acceptant passe par au moins $n+1$ occurrences d'états.
         Deux sont égales par le principe des tiroirs. Supprimer le cycle entre elles donne un chemin acceptant de longueur strictement plus petite, contradiction.
         Ainsi $abs(u)<n$. Si $n=0$, il n'existe aucun chemin acceptant et le résultat reste valable.

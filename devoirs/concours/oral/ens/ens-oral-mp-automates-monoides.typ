@@ -70,7 +70,7 @@
           [Donner un algorithme testant si une fonction $f:Q→Q$ appartient à ce monoïde et sa complexité.],
           [En déduire un algorithme énumérant les fonctions de transition et donner sa complexité en fonction de $abs(Q)$.],
           [Proposer une énumération polynomiale en $abs(Q)$ et $N$, à alphabet fixé.],
-          [Un langage $L⊂A^*$ est reconnu par un monoïde $M$ s'il existe un morphisme $φ:A^*→M$ tel que $L=φ^(-1)(φ(L))$. Montrer que le monoïde des transitions reconnaît $L(cal(A))$.],
+          [Un langage $L⊂A^*$ est reconnu par un monoïde $M$ s'il existe un morphisme $φ:A^*→M$ tel que $L=φ^(-1)(φ(L))$. Montrer que le monoïde des transitions reconnaît $cal(L)(cal(A))$.],
         )
       ],
       solution: [
@@ -99,7 +99,7 @@
         d) Une exploration complète de b), poursuivie jusqu'à ce que la file soit vide, énumère directement les $N$ fonctions : $O(k n N^2)$ en temps et $O(n N+k n)$ en espace, polynomiaux dans les paramètres demandés.
         On peut accélérer la détection des doublons par une table de hachage de tableaux, à condition d'avoir aucun coût de hachage constant pour une fonction entière.
 
-        e) Noter $M$ le monoïde des transitions et $L=L(cal(A))$.
+        e) Noter $M$ le monoïde des transitions et $L=cal(L)(cal(A))$.
         Définir $φ:A^*→M$ par $φ(u)=f_(u)$.
         D'après a), $φ(ε)="id"$ et $φ(u v)=φ(u) · φ(v)$ : $φ$ est donc un morphisme de monoïdes.
 

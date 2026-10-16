@@ -107,7 +107,7 @@ $ L ∖ {ε} = (P(L) Σ^* ∩ Σ^* S(L)) ∖ Σ^* N(L) Σ^*. $
 L'hypothèse d'alphabets disjoints est essentielle pour les deux premières opérations, comme le montre $a^* ∪ (a b)^*$.
 
 #slides-only[== Expression linéaire et langage local]
-#theorem[Si $e$ est une expression régulière linéaire, $L(e)$ est local.]
+#theorem[Si $e$ est une expression régulière linéaire, $cal(L)(e)$ est local.]
 #article-only[*Preuve* :]
 #slides-only[#pause Procéder par induction structurelle. Les deux sous-expressions d'une union ou d'une concaténation utilisent des alphabets disjoints.]
 
@@ -144,13 +144,13 @@ Pour reconnaître un langage local $L$, utiliser $Q = Σ ∪ {q_0}$, avec $q_0 �
 == Algorithme de Berry-Sethi
 #algorithm(coeur: true)[
   #underline[Entrée] : une expression régulière $e$.\
-  #underline[Sortie] : un automate de Glushkov reconnaissant $L(e)$.
+  #underline[Sortie] : un automate de Glushkov reconnaissant $cal(L)(e)$.
   + Linéariser $e$ en $e'$ en remplaçant chaque lettre $a$ par une nouvelle lettre $phi(a)$.
-  + Calculer $P(L(e'))$, $S(L(e'))$ et $F(L(e'))$, et tester $ε ∈ L(e')$.
-  + Construire l'automate local reconnaissant $L(e')$.
+  + Calculer $P(cal(L)(e'))$, $S(cal(L)(e'))$ et $F(cal(L)(e'))$, et tester $ε ∈ cal(L)(e')$.
+  + Construire l'automate local reconnaissant $cal(L)(e')$.
   + Remplacer chaque étiquette $a' ∈ Σ'$ par $π(a')$.
 ]
-Tout mot reconnu après projection est l'image d'un mot de $L(e')$, et réciproquement. Le langage reconnu est donc $L(e)$.
+Tout mot reconnu après projection est l'image d'un mot de $cal(L)(e')$, et réciproquement. Le langage reconnu est donc $cal(L)(e)$.
 
 #slides-only[== Application de Berry-Sethi]
 #exercise[Appliquer l'algorithme à $e = a (a | b)^*$.]

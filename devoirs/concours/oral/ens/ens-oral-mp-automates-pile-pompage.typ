@@ -101,19 +101,19 @@
     [
       Pour $η∈NN^*$, une configuration $η$-tronquée est un couple $(q,z)$ avec $1≤abs(z)≤η$.
       Un calcul $η$-tronqué suit les mêmes règles, mais remplace toute nouvelle pile de longueur supérieure à $η$ par son suffixe de longueur $η$ ; une pile vide reste interdite.
-      On note $L_(≤η)(A)$ le langage des calculs $η$-tronqués acceptants.
+      On note $cal(L)_(≤η)(A)$ le langage des calculs $η$-tronqués acceptants.
     ],
     question(
       [
-        Quelle est la relation entre $L_(≤η)(A)$ et $L(A)$ ? Montrer que le premier langage est régulier et construire un automate fini qui le reconnaît.
+        Quelle est la relation entre $cal(L)_(≤η)(A)$ et $cal(L)(A)$ ? Montrer que le premier langage est régulier et construire un automate fini qui le reconnaît.
       ],
       solution: [
-        On a $L_(≤η)(A)⊂L(A)$ : reproduire un calcul tronqué avec la pile entière.
+        On a $cal(L)_(≤η)(A)⊂cal(L)(A)$ : reproduire un calcul tronqué avec la pile entière.
         À chaque instant, la pile tronquée est un suffixe non vide de la pile entière et possède donc le même sommet. Chaque transition choisie reste légale dans le calcul entier et conduit au même état.
         L'inclusion peut être stricte : dans l'automate de la question 2, le mot $a a b b$ ne peut être accepté pour $η=1$, car le premier $b$ viderait la pile tronquée.
 
         Prendre comme états les configurations tronquées, initial $(q_0,γ_0)$, finaux celles dont l'état appartient à $F$, et les transitions définies ci-dessus.
-        Leur nombre est $abs(Q)∑_(j=1)^η abs(Γ)^j$, donc fini. Cet automate reconnaît précisément $L_(≤η)(A)$.
+        Leur nombre est $abs(Q)∑_(j=1)^η abs(Γ)^j$, donc fini. Cet automate reconnaît précisément $cal(L)_(≤η)(A)$.
       ],
     ),
     [
@@ -124,7 +124,7 @@
     ],
     question(
       [
-        Montrer que, si $η>G$ et $w∈L(A)∖L_(≤η)(A)$, tout calcul acceptant de $w$ possède une $(η-G)$-montagne.
+        Montrer que, si $η>G$ et $w∈cal(L)(A)∖cal(L)_(≤η)(A)$, tout calcul acceptant de $w$ possède une $(η-G)$-montagne.
       ],
       solution: [
         Fixons un calcul acceptant. Sa simulation tronquée doit se bloquer en tentant de dépiler son dernier symbole ; sinon elle accepterait aussi $w$.
@@ -165,7 +165,7 @@
       ],
       solution: [
         Prendre $η=η_0+G$ et comme $p$ le nombre d'états de l'automate fini de la question 4.
-        Si $w∈L_(≤η)(A)$, le lemme de l'étoile fournit $w=u v z$, avec $v≠ε$ et $u v^n z∈L_(≤η)(A)⊂L$. Poser $x=y=ε$.
+        Si $w∈cal(L)_(≤η)(A)$, le lemme de l'étoile fournit $w=u v z$, avec $v≠ε$ et $u v^n z∈cal(L)_(≤η)(A)⊂L$. Poser $x=y=ε$.
 
         Sinon, les questions 5 et 6 donnent deux montagnes imbriquées avec mêmes états d'entrée et de sortie, mêmes sommets d'entrée $γ$ et mêmes sommets de sortie $ρ$.
         Découper $w$ aux positions $l',l'',r'',r'$ en $u,v,x,y,z$.
