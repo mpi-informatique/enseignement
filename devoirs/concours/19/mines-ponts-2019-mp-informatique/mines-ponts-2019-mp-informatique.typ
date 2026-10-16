@@ -527,7 +527,7 @@
           $ S_0={(E,H),(F,H),(F,I)}, #sep S_1={(G,J),(G,K)}. $
           En effet, $(E,H) ≡ (F,H) ≡ (F,I)$ (état initial) et $(G,J) ≡ (G,K)$ (états finaux).
           
-          L'automate est isomorphe à $cal(A)_2$ :
+          L'automate $cal(C)$ obtenu est isomorphe à $cal(A)_2$ :
           #quotient
           On a $φ'(E)=φ'(F)=S_0$, $φ'(G)=S_1$, $ψ'(H)=ψ'(I)=S_0$ et $ψ'(J)=ψ'(K)=S_1$.
         ],
