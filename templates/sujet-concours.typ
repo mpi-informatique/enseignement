@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, feuille, partie
+#import "/load.typ": exercice, feuille, partie, question
 
 #let ex = exercice(
   meta: (
@@ -22,7 +22,7 @@
         "Langages finis",
         contexte: ([On fixe un alphabet $Σ$.],),
         contenu: (
-          Q(
+          question(
             [Montrer qu'un langage fini sur $Σ$ est régulier.],
             commentaire: none, // Observation du jury, affichée en italique avant la solution.
             solution: [Un mot est décrit par la concaténation de ses lettres
@@ -38,7 +38,7 @@
         "Miroir",
         contexte: ([On fixe un alphabet $Σ$.],),
         contenu: (
-          Q([Le miroir d'un langage fini est-il régulier ?], solution: [Il est fini, donc régulier.]),
+          question([Le miroir d'un langage fini est-il régulier ?], solution: [Il est fini, donc régulier.]),
         ),
       ),
     )),

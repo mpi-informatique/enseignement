@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #let ex = exercice(
   meta: (
     titre: "Automates et monoïdes",
@@ -29,7 +29,7 @@
       Un morphisme de monoïdes conserve la multiplication et l'élément neutre.
       Pour des transformations, on utilisera le produit $f · g=g∘f$, qui correspond à leur application de gauche à droite.
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -43,7 +43,7 @@
         b) Le mot vide est neutre. Les deux concaténations $(u v)w$ et $u(v w)$ ont même longueur et les mêmes lettres à chaque position : d'abord celles de $u$, puis celles de $v$, puis celles de $w$. La concaténation est associative.
       ],
     ),
-    Q(
+    question(
       [
         Soit $Q$ un ensemble fini. Montrer que les fonctions $Q→Q$ forment un monoïde, appelé monoïde des transformations.
         Un monoïde $N$ est un sous-monoïde de $M$ s'il existe un morphisme injectif de $N$ vers $M$.
@@ -62,7 +62,7 @@
       Une fonction de transition est une fonction $f_u:q↦q · u$, pour un mot $u∈A^*$.
       Dans les complexités, $n=abs(Q)≥1$, $k=abs(A)≥1$ et $N$ est le nombre de fonctions de transition distinctes.
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -117,7 +117,7 @@
         Ainsi $L=φ^(-1)(φ(L))$ : le monoïde des transitions reconnaît bien le langage de l'automate.
       ],
     ),
-    Q(
+    question(
       [
         Un langage est reconnaissable par monoïde s'il est reconnu par un monoïde fini. Montrer que cela équivaut à être reconnu par un automate fini.
       ],
@@ -131,7 +131,7 @@
       Une relation sur $Q$ est une partie de $Q×Q$. On définit
       $ R_1∘R_2={(x,y) | ∃z∈Q, (x,z)∈R_1 " et " (z,y)∈R_2}. $
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -150,7 +150,7 @@
       Pour $u∈A^*$, $q · u$ désigne l'ensemble des états atteignables en lisant $u$ depuis $q$.
       La relation de transition de $u$ est $R_u={(q,r)∈Q×Q | r∈q · u}$.
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -171,7 +171,7 @@
         La terminaison et l'exhaustivité se prouvent comme pour les transformations.
       ],
     ),
-    Q(
+    question(
       [
         On appelle ici taille du monoïde syntaxique de $L$ la plus petite cardinalité d'un monoïde fini reconnaissant $L$.
         Si cette taille vaut $n$, montrer que tout automate fini non déterministe reconnaissant $L$ a au moins $sqrt(log_2 n)$ états.

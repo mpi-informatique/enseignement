@@ -34,7 +34,7 @@ Les sujets de colle sont conservés dans le dépôt privé `exercices-prive`, so
 
 ## Imports et déplacement entre dépôts
 
-Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/load.typ": exercice, feuille, Q` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/exercices:0.1.0` à ce relais dans le dépôt privé.
+Dans les sujets, exercices, cours et modèles, importer l'API commune avec `#import "/load.typ": exercice, feuille, question` (en choisissant les noms utiles). Le dépôt public expose directement son API à ce chemin ; le dépôt privé possède un relais vers le package public verrouillé par Nix. Réserver l'import `@mpi-informatique/exercices:0.1.0` à ce relais dans le dépôt privé.
 
 Pour les modules spécialisés, écrire par exemple :
 
@@ -129,7 +129,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 - Nommer les exercices oraux `<concours>-oral-<filiere>-<theme>.typ`, par exemple `ens-oral-mp-automates-monoides.typ`. La filière peut être omise pour la MPI, par exemple `ccinp-oral-langages-automates.typ`. Conserver l'année dans les métadonnées. Pour un exercice avec des ressources associées, utiliser un sous-dossier du même nom sans extension.
 - Comparer le corrigé au sujet original, notamment les figures et les hypothèses. Corriger directement les erreurs importantes de l'énoncé, consigner les parties/questions corrigées dans le champ `corrections` du `.typ` et expliquer brièvement le problème et/ou le changement pour chacune. Ne pas conserver deux versions contradictoires du code.
 - Placer les commentaires généraux du jury dans `remarques`, sous forme de liste, sans ajouter de titre ni de référence. Associer les observations locales au paramètre `commentaire` de la partie ou de la question concernée.
-- Placer les consignes destinées au correcteur dans `notation` : celles communes à l'épreuve dans `exercice(...)`, celles propres à une question dans `Q(...)`. Rester concis et préciser surtout les pourcentages de réussite, les pénalités selon les erreurs et les tolérances. Ne pas résumer le corrigé ni répéter les règles générales ; omettre ce champ sans consigne particulière. Garder les décisions nominatives dans les copies privées.
+- Placer les consignes destinées au correcteur dans `notation` : celles communes à l'épreuve dans `exercice(...)`, celles propres à une question dans `question(...)`. Rester concis et préciser surtout les pourcentages de réussite, les pénalités selon les erreurs et les tolérances. Ne pas résumer le corrigé ni répéter les règles générales ; omettre ce champ sans consigne particulière. Garder les décisions nominatives dans les copies privées.
 - Regrouper le sujet `<identifiant>.typ`, le code du corrigé et ses tests dans un même dossier `<identifiant>/` sous `devoirs/concours/`. Afficher le code depuis ces mêmes fichiers pour tester exactement le code publié.
 
 
@@ -164,7 +164,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 
 ### Code Typst
 
-- Utiliser `Q([...], solution: [...], bareme: ..., notation: [...])` pour les questions.
+- Utiliser `question([...], solution: [...], bareme: ..., notation: [...])` pour les questions.
 - Formater les sources avec Typstyle via Tinymist. La configuration VS Code du dépôt active le formatage à l'enregistrement, avec une indentation de deux espaces et sans redistribution des lignes de prose. Laisser Typstyle disposer les appels et les crochets ; ne pas fixer de largeur de ligne dans la configuration.
 - Dans les fichiers `.typ`, revenir à la ligne lorsque cela facilite la lecture ou marque une articulation logique du paragraphe. Préserver les retours structurels (paragraphes, listes, titres, code et formules).
 - Préférer la syntaxe Typst native pour le contenu fixe (`== Titre`, listes…) ; réserver les appels de fonctions aux éléments calculés ou réutilisables.
@@ -216,7 +216,7 @@ Utiliser les environnements de [lib/theoremes.typ](../lib/theoremes.typ). Dans l
 Dans les devoirs et concours, ordonner les champs des questions ainsi : énoncé, `commentaire`, `solution`, `bareme`, `notation`. Placer les points dans `bareme` et détailler leur attribution en pourcentages dans `notation` lorsque la question s'y prête. Les questions ouvertes peuvent conserver des repères plus libres. Adapter les parts au nombre et au poids des critères, sans imposer des multiples de 25 % : par exemple un tiers pour chacune des trois propriétés d'une relation d'équivalence. Dans les copies, conserver les réussites en pourcentage et utiliser une expression telle que `100 / 3` pour un tiers.
 
 ```typst
-Q([Justifier la complexité.], solution: [ ... ], bareme: 1.5)
+question([Justifier la complexité.], solution: [ ... ], bareme: 1.5)
 ```
 
 Échelle pédagogique : évidence 0.25, facile 0.5, moyen 1, assez difficile 2, difficile 3, très difficile 4. Tenir aussi compte de la longueur de la preuve ou du code ;

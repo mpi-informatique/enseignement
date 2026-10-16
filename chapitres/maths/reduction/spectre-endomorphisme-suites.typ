@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, sep
+#import "/load.typ": exercice, question, sep
 
 #let ex = exercice(
   meta: (
@@ -11,7 +11,7 @@
   contenu: (
     [Sur $E = CC^NN$, on considère l'endomorphisme $φ$ qui à $u = (u_n)_(n ∈ NN)$ associe la suite $v$ définie par
       $ v_0 = u_0, #sep ∀n ≥ 1, #sep v_n = (u_n + u_(n - 1))/2. $],
-    Q(
+    question(
       [Déterminer les valeurs propres de $φ$ et les sous-espaces propres associés.],
       solution: [L'équation $φ(u) = λ u$ équivaut à
         $ (1 - λ)u_0 = 0, #sep ∀n ≥ 1, #sep (2λ - 1)u_n = u_(n - 1). $

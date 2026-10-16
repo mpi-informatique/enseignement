@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -68,19 +68,19 @@
   ],
   contenu: (
     [On considère la grammaire non-contextuelle $G$ sur $Σ = {a,b}$, d'axiome $S$, donnée par $S → S a S ∣ b$.],
-    Q([Cette grammaire est-elle ambiguë ? Justifier.], solution: [
+    question([Cette grammaire est-elle ambiguë ? Justifier.], solution: [
       Oui : le mot $b a b a b$ possède les deux arbres d'analyse distincts suivants.
       #arbres
       Ils correspondent aux regroupements $(b a b) a b$ et $b a (b a b)$.
     ]),
-    Q(
+    question(
       [
         Déterminer, sans preuve pour cette question, le langage $L$ engendré par $G$.
         Quelle est la plus petite classe, parmi les langages réguliers et non-contextuels, à laquelle $L$ appartient ?
       ],
       solution: [Le langage est $L = (b a)^* b$ : il est régulier.],
     ),
-    Q([Prouver que $L = L(G)$.], solution: [
+    question([Prouver que $L = L(G)$.], solution: [
       Pour $n=0$, $S ⇒ b$ engendre $(b a)^0 b$.
       Si $(b a)^n b$ est engendré, alors
       $ S ⇒ S a S ⇒ b a S ⇒^* b a (b a)^n b = (b a)^(n+1) b. $
@@ -91,13 +91,13 @@
       Pour $S → S a S$, les deux sous-arbres produisent par hypothèse $(b a)^r b$ et $(b a)^s b$, et leur assemblage produit $(b a)^r b a (b a)^s b = (b a)^(r+s+1) b ∈ L$.
       Ainsi $L(G) ⊂ L$.
     ]),
-    Q([Donner une grammaire non ambiguë engendrant $L$ et justifier sa non-ambiguïté.], solution: [
+    question([Donner une grammaire non ambiguë engendrant $L$ et justifier sa non-ambiguïté.], solution: [
       Prendre $S → b a S ∣ b$.
       Pour produire $(b a)^n b$, il faut appliquer $n$ fois la première règle, puis la seconde. Aucun autre choix ne peut produire ce mot : il a un unique arbre d'analyse.
       Cette justification utilise le caractère forcé des choix :
       contenir au plus une variable dans chaque forme ne suffit pas en général à exclure l'ambiguïté.
     ]),
-    Q(
+    question(
       [
         Montrer que tout langage régulier peut être engendré par une grammaire non-contextuelle non ambiguë.
       ],

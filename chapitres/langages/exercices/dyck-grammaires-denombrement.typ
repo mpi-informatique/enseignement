@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -22,13 +22,13 @@
 
       On note $D$ le langage de ces mots et $h(u)=abs(u)_a-abs(u)_b$ la hauteur d'un mot $u$.
       La lettre $a$ représente une parenthèse ouvrante et $b$ une parenthèse fermante.],
-    Q([Montrer que $D$ n'est pas régulier.], solution: [
+    question([Montrer que $D$ n'est pas régulier.], solution: [
       Supposer $D$ régulier et prendre $p ≥ 1$ donné par le lemme de l'étoile.
       Le mot $a^p b^p ∈ D$ s'écrit $x y z$, avec $abs(x y) ≤ p$, $y ≠ ε$ et $x y^i z ∈ D$ pour tout $i ∈ ℕ$.
       Le facteur $y$ ne contient que des $a$ et au moins un.
       Ainsi $x y^2 z$ possède plus de $a$ que de $b$ : contradiction.
     ]),
-    Q(
+    question(
       [
         Montrer que tout mot de Dyck non vide se décompose de manière unique sous la forme $a u b v$, où $u,v ∈ D$.
       ],
@@ -44,7 +44,7 @@
         Le $b$ séparateur se trouve donc au premier retour à zéro : sa position est imposée, ce qui impose $u$ et $v$.
       ],
     ),
-    Q(
+    question(
       [
         Soit $G$ la grammaire $S → S S ∣ a S b ∣ ε$. Montrer que $L(G)=D$.
       ],
@@ -58,16 +58,16 @@
         Ainsi $D ⊂ L(G)$.
       ],
     ),
-    Q([Montrer que $G$ est ambiguë.], solution: [
+    question([Montrer que $G$ est ambiguë.], solution: [
       Le mot vide possède les deux dérivations gauches $S ⇒ ε$ et $S ⇒ S S ⇒ S ⇒ ε$.
       Leurs arbres sont différents : la racine a respectivement une règle d'effacement et une règle de concaténation. Cela suffit à établir l'ambiguïté.
     ]),
-    Q([Donner une grammaire non ambiguë engendrant $D$.], solution: [
+    question([Donner une grammaire non ambiguë engendrant $D$.], solution: [
       Prendre $S → a S b S ∣ ε$.
       La décomposition unique établie précédemment montre par récurrence sur la longueur que chaque mot non vide possède un unique arbre, dont les deux sous-arbres engendrent $u$ et $v$. Le mot vide utilise nécessairement $S → ε$.
       La même décomposition montre que tous les mots de Dyck sont engendrés, et l'induction sur les arbres prouve l'inclusion réciproque.
     ]),
-    Q(
+    question(
       [
         Donner une bijection entre les mots de Dyck et les arbres binaires stricts ordonnés, dont chaque nœud possède zéro ou deux fils. Préciser le lien entre la longueur du mot et les nombres de nœuds internes et de feuilles.
       ],
@@ -83,7 +83,7 @@
         Le mot vide correspond à une feuille, et non à un arbre vide.
       ],
     ),
-    Q(
+    question(
       [
         Soit $C_n$ le nombre de mots de Dyck de longueur $2n$.
         Donner $C_0$ et une relation de récurrence. Calculer $C_1,C_2,C_3,C_4$.
@@ -95,7 +95,7 @@
         On obtient $C_1=1$, $C_2=2$, $C_3=5$ et $C_4=14$.
       ],
     ),
-    Q(
+    question(
       [
         Après le cours de mathématiques sur les séries entières, montrer que $C_n=1/(n+1) binom(2n, n)$ en utilisant la série génératrice $F(x)=sum_(n=0)^∞ C_n x^n$.
       ],
@@ -120,7 +120,7 @@
         $ C_n=(2n)!/(n!(n+1)!)=1/(n+1) binom(2n, n). $
       ],
     ),
-    Q(
+    question(
       [
         Variante sans séries entières : parmi les mots contenant $n$ lettres $a$ et $n$ lettres $b$, transformer ceux qui ne sont pas de Dyck en échangeant $a$ et $b$ dans leur premier préfixe de hauteur $-1$.
         Montrer que cette transformation est une bijection avec les mots contenant $n+1$ lettres $a$ et $n-1$ lettres $b$, puis retrouver la formule de $C_n$.
@@ -140,7 +140,7 @@
         Pour $n=0$, la formule donne également $C_0=1$.
       ],
     ),
-    Q(
+    question(
       [
         On autorise plusieurs sortes de parenthèses, par exemple `()`, `[]` et `{}`.
         Décrire un algorithme en temps linéaire pour reconnaître les mots bien parenthésés.
@@ -158,7 +158,7 @@
         Un compteur perd les types : `([)]` ne devient jamais négatif et finit à zéro, mais n'est pas bien parenthésé.
       ],
     ),
-    Q(
+    question(
       [
         Décrire un algorithme en temps linéaire pour trouver la longueur du plus long facteur bien parenthésé d'un mot sur ${a,b}$. La réponse vaut zéro si aucun facteur non vide ne convient.
       ],

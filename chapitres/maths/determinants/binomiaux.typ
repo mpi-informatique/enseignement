@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -21,7 +21,7 @@
           binom(n, 0), binom(n, 1), binom(n, 2), dots.h, binom(n, n - 1)
         )
       $],
-    Q(
+    question(
       [Calculer $D_(n)$.],
       solution: [Pour $n >= 2$, effectuer $L_(i) arrow.l L_(i) - L_(i - 1)$ dans l'ordre $i = n, n - 1, dots, 2$.
         La formule de Pascal donne $binom(i, j) - binom(i - 1, j) = binom(i - 1, j - 1)$.

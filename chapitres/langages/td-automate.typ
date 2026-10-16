@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: dist-lettre, rayon-etat, rayon-grand-etat, style-automates, unite-automates
-#import "/load.typ": Q, exercice, feuille
+#import "/load.typ": exercice, feuille, question
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 #import "/chapitres/langages/exercices/cloture-miroir-prefixes-suffixes-facteurs.typ": ex as cloture
@@ -19,7 +19,7 @@
     niveaux: ("MPI",),
   ),
   contenu: (
-    Q(
+    question(
       [
         Déterminiser l'automate suivant en utilisant l'algorithme du cours :
         #align(center, cetz.canvas(length: unite-automates, {

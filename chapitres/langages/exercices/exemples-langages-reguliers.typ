@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -8,7 +8,7 @@
     niveaux: ("MPI",),
   ),
   contenu: (
-    Q(
+    question(
       [
         Donner une expression régulière dont le langage est l'ensemble des mots sur ${a,b,c}$ contenant exactement un $a$ et un $b$ (et un nombre quelconque de $c$).
       ],
@@ -17,7 +17,7 @@
         $ c^* a c^* b c^* | c^* b c^* a c^*. $
       ],
     ),
-    Q(
+    question(
       [
         Donner une expression régulière dont le langage est l'ensemble des mots sur ${a,b,c}$ ne contenant pas de $a$ consécutifs ($a a$ ne doit pas apparaître).
       ],
@@ -25,7 +25,7 @@
         L'expression $(a(b|c)|b|c)^*(a|epsilon)$ convient : un $a$ qui n'est pas en dernière position doit être suivi d'un $b$ ou d'un $c$.
       ],
     ),
-    Q(
+    question(
       [
         Donner une expression régulière dont le langage est l'ensemble des mots sur ${a,b,c}$ contenant exactement deux $a$ et tels que tout $c$ est immédiatement précédé d'un $b$.
       ],
@@ -38,7 +38,7 @@
       On utilise le développement décimal qui ne se termine pas par une infinité de $9$.
       Par exemple,
       $ L(pi)={epsilon,1,14,141,1415,dots}. $],
-    Q(
+    question(
       [
         En sachant que $1/6=0.1666 dots$ et $1/7=0.142857142857 dots$, montrer que $L(1/6)$ et $L(1/7)$ sont réguliers.
       ],
@@ -48,7 +48,7 @@
         $ (142857)^*(epsilon | 1 | 14 | 142 | 1428 | 14285 | 142857). $
       ],
     ),
-    Q(
+    question(
       [
         Montrer plus généralement que $L(x)$ est régulier si $x in QQ$
         (on montrera plus tard que c'est en fait une équivalence).
@@ -62,7 +62,7 @@
         Ce langage est régulier par stabilité par union, concaténation et étoile.
       ],
     ),
-    Q(
+    question(
       [
         Donner une expression régulière dont le langage est ${a^n b^p | n,p in NN, n equiv p (mod 2)}$.
       ],

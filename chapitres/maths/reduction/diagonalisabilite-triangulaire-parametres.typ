@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -11,7 +11,7 @@
   ),
   contenu: (
     [Pour $a, b, c ∈ RR$, on considère $A = mat(1, a, b; 0, 1, c; 0, 0, 2)$.],
-    Q(
+    question(
       [Déterminer les valeurs propres de $A$ avec leurs multiplicités, puis les sous-espaces propres.],
       solution: [La matrice étant triangulaire, $χ_A (X) = (X - 1)^2 (X - 2)$.
         Pour la valeur propre $1$, les équations sont $z = 0$ et $a y = 0$.
@@ -19,7 +19,7 @@
         Pour la valeur propre $2$, on obtient $y = c z$ puis $x = (a c + b)z$, donc
         $E_2 (A) = "Vect"((a c + b, c, 1))$.],
     ),
-    Q(
+    question(
       [Déterminer pour quels triplets $(a, b, c)$ la matrice $A$ est diagonalisable. Dans ce cas, donner une base de vecteurs propres.],
       solution: [La somme des dimensions des sous-espaces propres vaut $3$ exactement lorsque $a = 0$.
         Dans ce cas, $((1, 0, 0), (0, 1, 0), (b, c, 1))$ est une base de vecteurs propres.

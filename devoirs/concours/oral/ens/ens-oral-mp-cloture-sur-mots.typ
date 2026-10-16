@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -14,7 +14,7 @@
       Étant donnés deux mots $w,w' in Sigma^*$, on dit que $w'$ est un *sur-mot* de $w$, noté $w ≼ w'$, s'il existe une fonction strictement croissante $phi$ de ${1,dots,abs(w)}$ dans ${1,dots,abs(w')}$ telle que $w_i=w'_(phi(i))$ pour tout $1<=i<=abs(w)$.
       Étant donné un langage $L$, on note $overline(L)$ le langage des sur-mots de mots de $L$ :
       $ overline(L)={w' in Sigma^* | exists w in L, w ≼ w'}. $],
-    Q(
+    question(
       [
         On pose $L_0=L(a b^* a)$ et $L_1=L((a b)^*)$, sur un alphabet contenant $a$ et $b$.
         Donner une expression régulière pour $overline(L_0)$ et $overline(L_1)$.
@@ -25,7 +25,7 @@
         On a $overline(L_1)=Sigma^*$ puisque $epsilon in L_1$.
       ],
     ),
-    Q(
+    question(
       [
         Montrer que, pour tout langage $L$, on a $overline(overline(L))=overline(L)$.
       ],
@@ -38,7 +38,7 @@
         Par transitivité, $u ≼ u''$, donc $u'' in overline(L)$.
       ],
     ),
-    Q(
+    question(
       [
         Existe-t-il des langages $L'$ pour lesquels il n'existe aucun langage $L$ tel que $overline(L)=L'$ ?
       ],
@@ -50,7 +50,7 @@
         On peut aussi prendre $L'=L_0$ : si $overline(L)=L_0$, l'idempotence donnerait $L_0=overline(L_0)$, ce qui est faux d'après la question 1.
       ],
     ),
-    Q(
+    question(
       [
         Montrer que, pour tout langage régulier $L$, le langage $overline(L)$ est régulier.
       ],
@@ -76,7 +76,7 @@
         La dernière identité vient de $epsilon in L^*$ ; en revanche, $overline(L^*)=overline(L)^*$ est faux en général (prendre $Sigma={a,b}$ et $L={a}$).
       ],
     ),
-    Q(
+    question(
       [
         On admet pour cette question le résultat suivant : pour toute suite $(w_n)_(n in NN)$ de mots de $Sigma^*$, il existe $i<j$ tels que $w_i ≼ w_j$.
 
@@ -97,7 +97,7 @@
         Ainsi $L subset.eq overline(F)$ et, par monotonie et par la question 2, $overline(L) subset.eq overline(overline(F))=overline(F)$.
       ],
     ),
-    Q(
+    question(
       [
         Un langage $L$ est *clos par sur-mots* si, pour tout $u in L$ et tout $v in Sigma^*$ tel que $u ≼ v$, on a $v in L$.
         Déduire de la question précédente que tout langage clos par sur-mots est régulier.
@@ -108,7 +108,7 @@
         Le langage $F$ est régulier car fini ; sa clôture est régulière par la question 4.
       ],
     ),
-    Q(
+    question(
       [
         On admet que les langages réguliers sont stables par complémentaire.
         Un langage $L$ est *clos par sous-mots* si, pour tout $u in L$ et tout $v in Sigma^*$ tel que $v ≼ u$, on a $v in L$.
@@ -121,7 +121,7 @@
         Son complémentaire $L$ est donc régulier.
       ],
     ),
-    Q(
+    question(
       [
         Démontrer le résultat admis à la question 5.
       ],

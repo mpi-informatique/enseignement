@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep, widetilde
 
 #let ex = exercice(
@@ -14,7 +14,7 @@
   contenu: (
     [Si $m=m_1 … m_n$ est un mot, son miroir est $widetilde(m)=m_n … m_1$.
       Le miroir d'un langage $L$ est $widetilde(L)={widetilde(m) | m∈L}$.],
-    Q([Montrer que le miroir d'un langage reconnaissable est reconnaissable.], solution: [
+    question([Montrer que le miroir d'un langage reconnaissable est reconnaissable.], solution: [
       Si $A=(Σ,Q,I,F,E)$ reconnaît $L$, l'automate $widetilde(A)=(Σ,Q,F,I,widetilde(E))$, où $widetilde(E)={(p,a,q) | (q,a,p)∈E}$, reconnaît $widetilde(L)$.
       En effet, inverser un chemin acceptant étiqueté $m$ donne un chemin acceptant étiqueté $widetilde(m)$ dans $widetilde(A)$, et réciproquement.
     ]),
@@ -23,23 +23,26 @@
       - $"Suff"(L)={u∈Σ^* | ∃v∈Σ^*, v u∈L}$, l'ensemble des suffixes ;
       - $"Fact"(L)={u∈Σ^* | ∃v,w∈Σ^*, v u w∈L}$, l'ensemble des facteurs.
     ],
-    Q([Donner des expressions régulières pour $"Pref"(a^* b)$ et $"Pref"((a b)^*)$.], solution: [
+    question([Donner des expressions régulières pour $"Pref"(a^* b)$ et $"Pref"((a b)^*)$.], solution: [
       $"Pref"(a^* b)$ est dénoté par $a^*(ε|b)$ et $"Pref"((a b)^*)$ par $(a b)^*(ε|a)$.
     ]),
-    Q([Montrer que si $L$ est reconnaissable, alors $"Pref"(L)$, $"Suff"(L)$ et $"Fact"(L)$ le sont aussi.], solution: [
-      Soit $A=(Σ,Q,I,F,E)$ reconnaissant $L$. Notons $Q'$ les états coaccessibles et $Q''$ les états accessibles.
-      Un mot est préfixe d'un mot de $L$ exactement lorsqu'il étiquette un chemin de $I$ vers $Q'$.
-      Donc $(Σ,Q,I,Q',E)$ reconnaît $"Pref"(L)$.
-      De même, $(Σ,Q,Q'',F,E)$ reconnaît $"Suff"(L)$ et $(Σ,Q,Q'',Q',E)$ reconnaît $"Fact"(L)$ :
-      le chemin étiqueté par le suffixe ou le facteur se prolonge en un chemin acceptant de $A$.
+    question(
+      [Montrer que si $L$ est reconnaissable, alors $"Pref"(L)$, $"Suff"(L)$ et $"Fact"(L)$ le sont aussi.],
+      solution: [
+        Soit $A=(Σ,Q,I,F,E)$ reconnaissant $L$. Notons $Q'$ les états coaccessibles et $Q''$ les états accessibles.
+        Un mot est préfixe d'un mot de $L$ exactement lorsqu'il étiquette un chemin de $I$ vers $Q'$.
+        Donc $(Σ,Q,I,Q',E)$ reconnaît $"Pref"(L)$.
+        De même, $(Σ,Q,Q'',F,E)$ reconnaît $"Suff"(L)$ et $(Σ,Q,Q'',Q',E)$ reconnaît $"Fact"(L)$ :
+        le chemin étiqueté par le suffixe ou le facteur se prolonge en un chemin acceptant de $A$.
 
-      Autre solution : $"Suff"(L)=widetilde("Pref"(widetilde(L)))$ puisque $widetilde(x y)=widetilde(y)widetilde(x)$.
-      En effet,
-      $ m∈widetilde("Pref"(widetilde(L))) ⇔ ∃v, widetilde(m)v∈widetilde(L) ⇔ ∃v, widetilde(v)m∈L ⇔ m∈"Suff"(L). $
-      Enfin $"Fact"(L)="Suff"("Pref"(L))="Pref"("Suff"(L))$ :
-      $ m∈"Suff"("Pref"(L)) ⇔ ∃u, u m∈"Pref"(L) ⇔ ∃u,v, u m v∈L ⇔ m∈"Fact"(L). $
-    ]),
-    Q(
+        Autre solution : $"Suff"(L)=widetilde("Pref"(widetilde(L)))$ puisque $widetilde(x y)=widetilde(y)widetilde(x)$.
+        En effet,
+        $ m∈widetilde("Pref"(widetilde(L))) ⇔ ∃v, widetilde(m)v∈widetilde(L) ⇔ ∃v, widetilde(v)m∈L ⇔ m∈"Suff"(L). $
+        Enfin $"Fact"(L)="Suff"("Pref"(L))="Pref"("Suff"(L))$ :
+        $ m∈"Suff"("Pref"(L)) ⇔ ∃u, u m∈"Pref"(L) ⇔ ∃u,v, u m v∈L ⇔ m∈"Fact"(L). $
+      ],
+    ),
+    question(
       [
         Montrer que si $L$ est régulier, alors $"Pref"(L)$, $"Suff"(L)$ et $"Fact"(L)$ le sont aussi.
         Puisqu'on montrera que régulier et reconnaissable sont équivalents, il s'agit d'une preuve alternative.

@@ -1,6 +1,6 @@
 #import "/load.typ": code
 #import code: code-extrait
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let code = code-extrait.with(read("corrige.ml"))
@@ -25,7 +25,7 @@
       On cherche à comprendre ce que cette restriction apporte à la reconnaissance des mots.
       Toutes les réponses doivent être justifiées.
     ],
-    Q(
+    question(
       [
         Montrer que les langages engendrés par les grammaires dont les règles sont uniquement de la forme $X → a Y$ ou $X → ε$, avec $a ∈ Σ$, sont exactement les langages réguliers.
       ],
@@ -40,7 +40,7 @@
         La même correspondance prouve que cette grammaire engendre le langage voulu.
       ],
     ),
-    Q(
+    question(
       [
         Sur $Σ = {a, b}$, on considère la grammaire d'axiome $S$ donnée par
         $ S → a T ∣ ε, #sep T → S b $
@@ -61,7 +61,7 @@
         Autoriser les deux orientations dans une même grammaire permet donc d'engendrer des langages non réguliers, même si chaque règle n'ajoute qu'une lettre.
       ],
     ),
-    Q(
+    question(
       [
         Montrer que toute forme obtenue par dérivation depuis l'axiome d'une grammaire linéaire contient au plus une variable.
         Un élève en déduit qu'une grammaire linéaire est nécessairement non ambiguë.
@@ -89,7 +89,7 @@
       On définit le booléen $D(X,i,j)$ par
       $ D(X,i,j) = "vrai" quad ⇔ quad X ⇒^* w[i:j]. $
     ],
-    Q(
+    question(
       [
         Exprimer $D(X,i,i)$, puis donner une relation de récurrence pour $D(X,i,j)$ lorsque $i < j$.
         En déduire un ordre de calcul permettant de décider si $w ∈ L(G)$.
@@ -128,7 +128,7 @@
       pour $0 ≤ i < k$.
       Des appels distincts à ```ocaml Array.make``` créent des tableaux indépendants.
     ],
-    Q(
+    question(
       [
         Écrire une fonction ```ocaml reconnait : grammaire -> int -> string -> bool```
         qui reçoit la grammaire, l'indice de son axiome et un mot, et applique la méthode précédente.
@@ -143,7 +143,7 @@
         Le remplissage suit exactement l'ordre démontré à la question précédente, y compris pour $n = 0$.
       ],
     ),
-    Q(
+    question(
       [
         Justifier les complexités temporelle et spatiale en fonction de $m$, $r$ et $n$.
         Si l'on veut seulement une réponse booléenne, expliquer comment ramener l'espace de stockage de la table à $O(m(n+1))$, sans changer l'ordre de grandeur du temps.
@@ -166,7 +166,7 @@
         Après la longueur $n$, la réponse se lit à l'axiome, à l'indice $0$.
       ],
     ),
-    Q(
+    question(
       [
         Pour conclure, montrer que toute grammaire linéaire peut être transformée en une grammaire engendrant le même langage et n'utilisant que les trois formes précédentes.
         On pourra commencer par supprimer les règles $X → Y$, appelées règles unitaires, en tenant compte des chaînes et des cycles de telles règles.

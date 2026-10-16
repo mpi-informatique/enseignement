@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: rayon-etat, rayon-grand-etat, style-automates, unite-automates
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
@@ -14,7 +14,7 @@
     niveaux: ("MPI",),
   ),
   contenu: (
-    Q([Construire l'automate de Glushkov reconnaissant $(a b | b)^* b$.], solution: [
+    question([Construire l'automate de Glushkov reconnaissant $(a b | b)^* b$.], solution: [
       On linéarise l'expression en $(a_1 b_2 | b_3)^* b_4$.
       On obtient
       $ P = {a_1,b_3,b_4}, $
@@ -41,7 +41,7 @@
         transition("b3", "b4", label: $b$, curve: 0)
       }))
     ]),
-    Q(
+    question(
       [
         Montrer que si $L_1$ et $L_2$ sont locaux alors $L_1 ∩ L_2$ est local
         (même si les alphabets ne sont pas disjoints, contrairement à l'union
@@ -68,7 +68,7 @@
         $ε ∈ L_2$. Le langage $L = L_1 ∩ L_2$ est donc local.
       ],
     ),
-    Q(
+    question(
       [
         Montrer qu'il existe un nombre fini de langages locaux sur un alphabet fixé.
       ],
@@ -80,7 +80,7 @@
         Il y a donc au plus $2^n × 2^n × 2^(n^2)$ valeurs différentes pour l'ensemble $(P Σ^* ∩ Σ^* S) ∖ Σ^* N Σ^*$, et au plus $2^(n^2 + 2n + 1)$ langages locaux en tenant compte du choix d'ajouter $ε$.
       ],
     ),
-    Q(
+    question(
       [
         Soient $cal(L)_"reg"$, $cal(L)_"loc"$, $cal(L)_"lin"$ les ensembles des langages réguliers, locaux et linéaires (c'est-à-dire décrits par une expression régulière linéaire). Quelles sont les inclusions entre ces trois ensembles ? Ces inclusions sont-elles strictes ?
       ],

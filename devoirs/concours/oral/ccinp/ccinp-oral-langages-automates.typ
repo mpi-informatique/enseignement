@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: rayon-etat, rayon-grand-etat, style-automates, unite-automates
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -14,10 +14,10 @@
     concours: (nom: "CCINP", annee: 2022, filiere: "MPI", oral: true),
   ),
   contenu: (
-    Q([Rappeler la définition d'un langage régulier.], solution: [
+    question([Rappeler la définition d'un langage régulier.], solution: [
       Sur un alphabet $Σ$, les langages réguliers forment la plus petite famille contenant les langages finis et stable par union, concaténation et étoile de Kleende.
     ]),
-    Q(
+    question(
       [
         Les langages suivants sont-ils réguliers ?
         Justifier.
@@ -56,7 +56,7 @@
         )
       ],
     ),
-    Q(
+    question(
       [
         On considère l'automate non déterministe suivant :
         #align(center, cetz.canvas(length: unite-automates, {

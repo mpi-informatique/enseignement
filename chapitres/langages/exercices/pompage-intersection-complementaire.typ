@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -16,11 +16,11 @@
       - $∀i ∈ ℕ, #sep u v^i w x^i y ∈ L$
 
       On considère $L_1 = {a^n b^n c^k | n,k ∈ ℕ}$ et $L_2 = {a^n b^n c^n | n ∈ ℕ}$.],
-    Q([Montrer que $L_1$ est non-contextuel.], solution: [
+    question([Montrer que $L_1$ est non-contextuel.], solution: [
       Prendre $S → A C$, $A → a A b ∣ ε$ et $C → c C ∣ ε$.
       $A$ engendre exactement les $a^n b^n$ et $C$ les $c^k$ : leur concaténation est $L_1$.
     ]),
-    Q([Montrer que $L_2$ n'est pas non-contextuel.], solution: [
+    question([Montrer que $L_2$ n'est pas non-contextuel.], solution: [
       Supposer $L_2$ non-contextuel et prendre $p$ fourni par le lemme.
       Le mot $a^p b^p c^p$ possède alors une décomposition satisfaisant ses conditions.
       Puisque $abs(v w x) ≤ p$, ce facteur ne peut contenir à la fois un $a$ et un $c$ :
@@ -29,7 +29,7 @@
       Pour $i=0$, on retire au moins une lettre puisque $v x ≠ ε$, tandis que le nombre d'occurrences de la lettre absente reste $p$.
       Les trois nombres ne sont plus égaux, donc $u w y ∉ L_2$ : contradiction.
     ]),
-    Q(
+    question(
       [
         Montrer que les langages non-contextuels sont stables par union.
         En déduire qu'ils ne sont stables ni par intersection ni par passage au complémentaire.

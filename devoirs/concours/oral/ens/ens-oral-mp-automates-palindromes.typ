@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #let ex = exercice(
   meta: (
     titre: "Automates et palindromes",
@@ -22,7 +22,7 @@
       On note $Π$ le langage des palindromes et $L(A)$ le langage reconnu par un automate fini $A$ sur $Σ$.
       Les automates sont sans transitions $ε$.
     ],
-    Q(
+    question(
       [
         Soit $Π_n=Π∩Σ^n$. Montrer que, pour tout automate fini déterministe complet $A$ et tout $n∈NN$, si $L(A)∩Σ^(2n)=Π_(2n)$, alors $A$ a au moins $abs(Σ)^n$ états.
       ],
@@ -33,7 +33,7 @@
         Ainsi $f$ est injective, d'où la borne, également valable pour $n=0$.
       ],
     ),
-    Q(
+    question(
       [
         En déduire que $Π$ n'est pas régulier.
       ],
@@ -41,7 +41,7 @@
         Si un automate déterministe complet à $N$ états reconnaissait $Π$, la question 1 donnerait $N≥abs(Σ)^N≥2^N>N$, contradiction.
       ],
     ),
-    Q(
+    question(
       [
         Étant donné un automate fini $A$, peut-on calculer un automate $A_Π$ reconnaissant $L(A)∩Π$ ?
       ],
@@ -49,7 +49,7 @@
         Non en général : pour $L(A)=Σ^*$, ce langage serait $Π$, qui n'est pas régulier.
       ],
     ),
-    Q(
+    question(
       [
         Pour $u=b_1 … b_m$, on note $overline(u)=b_m … b_1$ son miroir.
         Étant donné $A$, peut-on calculer un automate $A'_Π$ reconnaissant ${u∈Σ^* | u overline(u)∈L(A)}$ ?
@@ -64,7 +64,7 @@
         Ainsi $L(B)={u∈Σ^* | u overline(u)∈L(A)}$ : prendre $A'_Π=B$.
       ],
     ),
-    Q(
+    question(
       [
         On note $Π_"pair"=⋃_(n∈NN)Π_(2n)$. Proposer un algorithme déterminant si $L(A)∩Π_"pair"$ est vide, fini ou infini. Discuter ses complexités en temps et en espace.
       ],
@@ -81,7 +81,7 @@
         Pour un automate déterministe, $m_a≤N$, d'où $O((1+abs(Σ))N^2)$.
       ],
     ),
-    Q(
+    question(
       [
         Modifier l'algorithme de la question 5 pour calculer la cardinalité de $L(A)∩Π_"pair"$ lorsqu'elle est finie, en supposant $A$ déterministe. Comment la complexité est-elle affectée ?
       ],
@@ -96,7 +96,7 @@
         En coût binaire, si les compteurs ont au plus $b$ bits, les additions coûtent $O(b)$ et les compteurs $O(N^2 b)$ bits ; on peut prendre $b=O(1+N^2 log(1+abs(Σ)))$, puisque les mots acceptés ont longueur inférieure à $N^2$.
       ],
     ),
-    Q(
+    question(
       [
         Modifier les algorithmes des questions 5 et 6 pour traiter $L(A)∩Π$.
       ],

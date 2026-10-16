@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -11,7 +11,7 @@
   ),
   contenu: (
     [Déterminer les langages engendrés par les grammaires suivantes, d'axiome $S$, en prouvant les deux inclusions. On note $abs(w)_a$ le nombre d'occurrences de $a$ dans $w$.],
-    Q(
+    question(
       [
         $
           S → X ∣ Y \
@@ -29,7 +29,7 @@
         Ainsi $L(G_1) = {a^n b^p | n,p ∈ ℕ, n ≠ p}$.
       ],
     ),
-    Q(
+    question(
       [
         $
           S → 0 A 1 ∣ ε \
@@ -44,7 +44,7 @@
         par récurrence sur $n$. Ainsi $L(G_2) = (01)^*$.
       ],
     ),
-    Q(
+    question(
       [
         $
           S → X ∣ X a S \
@@ -71,7 +71,7 @@
         En particulier, $S → X$ permet les mots équilibrés et $ε$.
       ],
     ),
-    Q(
+    question(
       [
         $
           S → X ∣ Y \

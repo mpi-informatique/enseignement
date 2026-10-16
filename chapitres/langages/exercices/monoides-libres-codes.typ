@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -24,7 +24,7 @@
 
       On cherche à comprendre quand un message obtenu en concaténant des mots d'un dictionnaire peut être décodé sans ambiguïté. ],
     partie("I", "Engendrer et décomposer", contenu: (
-      Q(
+      question(
         [
           Montrer qu'un langage $M$ est un sous-monoïde si et seulement si $M = M^*$.
           Donner un langage stable par concaténation qui n'est pas un sous-monoïde.
@@ -39,7 +39,7 @@
         ],
       ),
       [Pour un sous-monoïde $M$, on note $M_+ = M ∖ {ε}$ et on appelle *indécomposable* un mot de $M_+$ qui ne s'écrit pas comme concaténation de deux mots de $M_+$. On note $B(M)$ l'ensemble de ces mots.],
-      Q(
+      question(
         [
           Exprimer $B(M)$ à l'aide de $M_+$ et des opérations sur les langages. Montrer que $B(M)$ engendre $M$.
         ],
@@ -55,7 +55,7 @@
           Les tailles de $u$ et $v$ sont strictement inférieures à celle de $w$. L'hypothèse de récurrence permet de décomposer chacun en mots de $B(M)$, puis de concaténer ces décompositions.
         ],
       ),
-      Q(
+      question(
         [
           Soit $X ⊂ Σ^+$ tel que $X^* = M$. Montrer que $B(M) ⊂ X$.
           Montrer ensuite que, si $X$ est un code, $X = B(M)$.
@@ -75,7 +75,7 @@
           $B(M)$ est donc l'unique ensemble générateur minimal de $M$ : une base de $M$.
         ],
       ),
-      Q(
+      question(
         [
           Sur $Σ = {a}$, on considère $M = {ε} ∪ {a^n ∣ n ≥ 2}$.
           Vérifier que $M$ est un sous-monoïde et déterminer $B(M)$. Est-il libre ?
@@ -95,7 +95,7 @@
     partie("II", "Codes préfixes et décodage", contenu: (
       [Un mot $u$ est un *préfixe propre* de $v$ s'il existe $t ∈ Σ^+$ tel que $v = u t$.
         Un langage $C ⊂ Σ^+$ est dit *préfixe* si aucun de ses mots n'est préfixe propre d'un autre.],
-      Q(
+      question(
         [
           Montrer que tout langage préfixe est un code.
           Pour un langage préfixe fini, proposer une méthode de décodage d'un mot de $C^*$ lu de gauche à droite, puis justifier sa correction.
@@ -112,7 +112,7 @@
           Le même raisonnement s'applique au reste du message, ce qui prouve la correction par récurrence sur le nombre de facteurs. Le mot vide produit la suite vide.
         ],
       ),
-      Q(
+      question(
         [
           Sur $Σ = {a, b}$, montrer que ${a, a b}$ est un code qui n'est pas préfixe.
           La méthode de décodage précédente fonctionne-t-elle encore pour ce code ?
@@ -125,7 +125,7 @@
           Le décodage glouton de gauche à droite échoue sur $a b$ : il émet $a$, puis reste bloqué sur $b$.
         ],
       ),
-      Q(
+      question(
         [
           Montrer que $B(M)$ est préfixe si et seulement si $M$ vérifie la propriété suivante :
           $ ∀u, v ∈ Σ^*, #sep (u ∈ M " et " u v ∈ M) ==> v ∈ M. $
@@ -141,7 +141,7 @@
           L'égalité $c = b v$ contredit alors l'indécomposabilité de $c$. Donc $B(M)$ est préfixe.
         ],
       ),
-      Q(
+      question(
         [
           Sur $Σ = {a, b}$, soit $M$ le langage des mots contenant un nombre pair d'occurrences de $b$.
           Montrer que $M$ est un sous-monoïde libre et déterminer $B(M)$.
@@ -161,7 +161,7 @@
           Cet ensemble est infini et contenu dans tout langage engendrant $M$. Aucun langage fini ne peut donc engendrer $M$.
         ],
       ),
-      Q(
+      question(
         [
           Montrer qu'un sous-monoïde $M$ est régulier si et seulement si $B(M)$ est régulier.
           Un sous-monoïde régulier est-il nécessairement engendré par un langage fini ?
@@ -194,7 +194,7 @@
         Aucun arc ne part de $ε$. Les sommets de départ forment l'ensemble :
         $ R = {r ∈ Σ^+ ∣ ∃x, y ∈ C, #sep x ≠ y " et " x r = y}. $
         Un chemin peut avoir une longueur nulle.],
-      Q(
+      question(
         [
           Justifier que $R ⊂ S$ et que, pour $r ∈ S ∖ {ε}$ et $c ∈ C$, tout mot $s$ vérifiant $r s = c$ ou $c s = r$ appartient à $S$.
           Majorer $abs(S)$ en fonction de $N$, puis $abs(A)$ en fonction de $abs(S)$ et $abs(C)$.
@@ -212,7 +212,7 @@
           $ abs(A) ≤ 2 abs(C) (abs(S) - 1). $
         ],
       ),
-      Q(
+      question(
         [
           Sur $Σ = {a, b}$, déterminer $R$ et les sommets accessibles depuis $R$ pour $C_1 = {a, a b, b b}$, puis pour $C_2 = {a, a b, b b, b a}$.
           Donner deux décompositions distinctes d'un même mot sur $C_2$.
@@ -227,7 +227,7 @@
           Le mot $a b a$ a les deux décompositions $(a b)(a)$ et $(a)(b a)$.
         ],
       ),
-      Q(
+      question(
         [
           Montrer que si $ε$ est accessible depuis $R$, alors $C$ n'est pas un code.
           On pourra associer à chaque sommet $r$ rencontré deux suites de mots de $C$, de premiers facteurs distincts, dont les concaténations $U$ et $V$ vérifient $U r = V$.
@@ -243,7 +243,7 @@
           Si l'on atteint $r = ε$, on obtient $U = V$ avec deux suites de facteurs distinctes, puisque leurs premiers facteurs diffèrent. Ainsi $C$ n'est pas un code.
         ],
       ),
-      Q(
+      question(
         [
           Montrer réciproquement que si $C$ n'est pas un code, alors $ε$ est accessible depuis $R$.
           On pourra supprimer les facteurs initiaux communs de deux décompositions distinctes, puis suivre leurs coupures dans le message.
@@ -265,7 +265,7 @@
           On atteint donc deux coupures au même endroit, au plus tard à la fin du message, ce qui correspond au sommet $ε$.
         ],
       ),
-      Q(
+      question(
         [
           En déduire un algorithme qui décide si un langage fini $C ⊂ Σ^+$ est un code.
           Justifier sa terminaison. Une fois $G$ et $R$ construits, donner sa complexité avec des listes d'adjacence.

@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -19,7 +19,7 @@
           -1, -1, dots.h, 0
         ) brace.r
       ) n $.],
-    Q(
+    question(
       [Calculer $D_(n)$ en établissant une relation de récurrence.],
       solution: [Pour $n >= 3$, effectuer $C_(1) arrow.l C_(1) + C_(n)$, puis $L_(1) arrow.l L_(1) + L_(n)$.
         Ces opérations conservent le déterminant et donnent

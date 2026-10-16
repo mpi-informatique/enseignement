@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -8,7 +8,7 @@
     niveaux: ("MPI",),
   ),
   contenu: (
-    Q(
+    question(
       [
         Soient $u$ et $v$ deux mots *non vides*.
         Montrer que les trois conditions suivantes sont équivalentes :

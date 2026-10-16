@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #let ex = exercice(
   meta: (
     titre: "Langages continuables et mots primitifs",
@@ -24,7 +24,7 @@
       On fixe un alphabet fini $Σ$ avec $abs(Σ)>1$. Tous les automates de ce sujet sont déterministes complets.
       Un mot non vide $w∈Σ^*$ est primitif s'il n'existe pas de mot $u∈Σ^*$ et d'entier $p>1$ tels que $w=u^p$.
     ],
-    Q(
+    question(
       [
         Le mot $a b a a a b a a$ est-il primitif ? Le mot $a b a b b a a b b b a b a b b a b$, de longueur 17, est-il primitif ?
       ],
@@ -33,7 +33,7 @@
         Si le second était $u^p$ avec $p>1$, alors $17=p abs(u)$ imposerait $p=17$ et $abs(u)=1$ ; ses lettres seraient toutes identiques. Il est donc primitif.
       ],
     ),
-    Q(
+    question(
       [
         Proposer un algorithme naïf testant si un mot est primitif. Discuter ses complexités en temps et en espace.
       ],
@@ -44,7 +44,7 @@
         Au plus $abs(w)$ tests de divisibilité et $abs(w)$ comparaisons par candidat donnent $O(abs(w)^2)$ en temps et $O(1)$ en espace auxiliaire, sans copier les facteurs.
       ],
     ),
-    Q(
+    question(
       [
         Donner un langage régulier infini ne contenant aucun mot primitif.
       ],
@@ -52,7 +52,7 @@
         Le langage décrit par $(a a)^*$ convient : le mot vide n'est pas primitif et chaque mot non vide est $a^(2k)$, avec $k≥1$.
       ],
     ),
-    Q(
+    question(
       [
         Donner un langage régulier infini ne contenant que des mots primitifs.
       ],
@@ -60,7 +60,7 @@
         Le langage décrit par $a b b^*$ convient. Dans une puissance $u^p$, le nombre de $a$ serait un multiple de $p$, alors qu'il vaut ici 1.
       ],
     ),
-    Q(
+    question(
       [
         Un langage régulier $L$ est continuable si, pour tout $u∈Σ^*$, il existe $v∈Σ^*$ tel que $u v∈L$.
         Donner un langage régulier infini non continuable. Existe-t-il un langage régulier continuable dont le complémentaire soit infini ?
@@ -70,7 +70,7 @@
         Le langage des mots de longueur paire est continuable (ajouter au besoin une lettre) et son complémentaire, celui des mots de longueur impaire, est infini.
       ],
     ),
-    Q(
+    question(
       [
         Étant donné un automate $A$, décider si $L(A)$ est continuable. Justifier l'algorithme et ses complexités en temps et en espace.
       ],
@@ -82,7 +82,7 @@
         Ici $m=N abs(Σ)$ ; il faut compter les transitions, et pas seulement la taille de l'alphabet.
       ],
     ),
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",

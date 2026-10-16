@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 #let ex = exercice(
   meta: (
@@ -26,7 +26,7 @@
       L'objectif est de répondre efficacement aux requêtes : « $w[i,j]$ est-il accepté par $A$ ? ».
       Les transitions, le mot et l'appartenance aux états finaux sont accessibles par tableaux en temps constant.
     ],
-    Q(
+    question(
       [
         Donner le pseudocode d'un algorithme répondant à une requête. Préciser ses complexités en temps et en espace.
       ],
@@ -44,7 +44,7 @@
     [
       On cherche maintenant une structure de données, appelée index, construite à partir de $A$ et $w$, qui accélère les requêtes.
     ],
-    Q(
+    question(
       [
         Proposer un index de taille $O(n^2)$ permettant de répondre en temps $O(1)$.
       ],
@@ -52,7 +52,7 @@
         Stocker dans un tableau à deux entrées le booléen $T[i,j]=(w[i,j]∈L(A))$. Les $n(n+1)/2$ cases utiles donnent la taille annoncée et chaque requête est un accès direct.
       ],
     ),
-    Q(
+    question(
       [
         Quelle est la complexité en temps du calcul de cet index ?
       ],
@@ -67,7 +67,7 @@
       $ δ^*(q,ε)=q, #sep δ^*(q,a u)=δ^*(δ(q,a),u). $
       L'effet de transition de $u$ est la fonction $f_u:Q→Q$ donnée par $f_u(q)=δ^*(q,u)$.
     ],
-    Q(
+    question(
       [
         Décrire $f_ε$ et exprimer $f_(u v)$ en fonction de $f_u$ et $f_v$.
       ],
@@ -75,7 +75,7 @@
         On a $f_ε="id"_Q$ et $f_(u v)=f_v∘f_u$, car on lit $u$ avant $v$. Chaque fonction se représente par un tableau de $abs(Q)$ images.
       ],
     ),
-    Q(
+    question(
       [
         Supposons $n$ puissance de 2. Deux indices $i<j$ sont des multiples consécutifs d'une même puissance de 2 si $j-i$ est une puissance de 2 divisant $i$ et $j$.
         Proposer un algorithme « diviser pour régner » calculant $f_(w[i,j])$ pour tous ces intervalles. Analyser son temps de calcul.
@@ -88,7 +88,7 @@
         L'arbre a $2n-1$ nœuds : temps et espace $O(n abs(Q))$.
       ],
     ),
-    Q(
+    question(
       [
         Répondre à une requête avec l'index précédent ; préciser la complexité et conclure.
       ],
@@ -101,7 +101,7 @@
         L'index échange donc un prétraitement $O(n abs(Q))$ contre des requêtes logarithmiques, au lieu des requêtes linéaires sans index ou du stockage quadratique de toutes les réponses.
       ],
     ),
-    Q(
+    question(
       [
         On autorise maintenant la substitution de la $i$-ème lettre, $1≤i≤n$, par $a∈Σ$.
         Adapter l'index et donner la complexité de mise à jour.
@@ -111,7 +111,7 @@
         Il y a $1+log_2 n$ tableaux, chacun recalculé en $O(abs(Q))$, soit $O(abs(Q)(1+log n))$ en temps. Les requêtes restent inchangées.
       ],
     ),
-    Q(
+    question(
       [
         Pourrait-on autoriser insertions et suppressions de lettres ? Quelles seraient les difficultés ?
       ],

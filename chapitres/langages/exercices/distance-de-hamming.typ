@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -12,7 +12,7 @@
     [On fixe un alphabet fini $Sigma$.
       Si $u=u_1 dots u_n$ et $v=v_1 dots v_n$ sont deux mots de même longueur, leur distance de Hamming est
       $ d(u,v)=abs({i in {1,dots,n} | u_i != v_i}). $],
-    Q(
+    question(
       [
         Montrer que, pour tout $n in NN$, la distance de Hamming est une distance sur $Sigma^n$.
       ],
@@ -27,7 +27,7 @@
     ),
     [Étant donné un langage $L$ sur $Sigma$, on définit son voisinage de Hamming par
       $ cal(H)(L)={u in Sigma^* | exists v in L, abs(u)=abs(v) " et " d(u,v)<=1}. $],
-    Q(
+    question(
       [
         Sur l'alphabet ${0,1}$, donner une expression régulière pour $cal(H)(L(0^* 1^*))$.
       ],
@@ -37,7 +37,7 @@
         $ 0^* 1^* | 0^* 1 0^* 1^* | 0^* 1^* 0 1^*. $
       ],
     ),
-    Q(
+    question(
       [
         Montrer que si $L$ est un langage régulier, alors $cal(H)(L)$ est régulier.
       ],
@@ -58,7 +58,7 @@
         Cette identité reste vraie pour $L=emptyset$ et achève l'induction.
       ],
     ),
-    Q(
+    question(
       [
         Sur l'alphabet $Sigma={0,1}$, écrire une fonction `f : int regexp -> int regexp` renvoyant une expression régulière du voisinage de Hamming d'un langage, en utilisant le type suivant.
         Les lettres de l'expression d'entrée valent $0$ ou $1$.

@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: dessiner-automate as dessiner
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 #let anbn = dessiner(
   (
@@ -59,7 +59,7 @@
       Un mot est accepté s'il existe un calcul qui lit toutes ses lettres et termine dans une configuration acceptante.
       Ces notions sont introduites par le sujet ; aucune théorie préalable des automates à pile n'est supposée.
     ],
-    Q(
+    question(
       [
         Étant donné un automate fini sans pile sur $Σ$, construire un automate à pile reconnaissant le même langage.
       ],
@@ -70,7 +70,7 @@
         La pile reste toujours $γ_0$ ; les calculs et les acceptations sont exactement ceux de l'automate fini.
       ],
     ),
-    Q(
+    question(
       [
         Sur $Σ={a,b}$, proposer un automate à pile reconnaissant ${a^n b^n | n≥2}$. Qu'en déduire ?
       ],
@@ -85,7 +85,7 @@
         Les automates à pile reconnaissent donc strictement plus de langages que les automates finis.
       ],
     ),
-    Q(
+    question(
       [
         Toujours sur $Σ={a,b}$, reconnaître ${w | abs(w)_a=abs(w)_b}$ par un automate à pile.
       ],
@@ -103,7 +103,7 @@
       Un calcul $η$-tronqué suit les mêmes règles, mais remplace toute nouvelle pile de longueur supérieure à $η$ par son suffixe de longueur $η$ ; une pile vide reste interdite.
       On note $L_(≤η)(A)$ le langage des calculs $η$-tronqués acceptants.
     ],
-    Q(
+    question(
       [
         Quelle est la relation entre $L_(≤η)(A)$ et $L(A)$ ? Montrer que le premier langage est régulier et construire un automate fini qui le reconnaît.
       ],
@@ -122,7 +122,7 @@
       Une montagne est une $η$-montagne pour un $η≥1$.
       Soit $G$ la longueur maximale d'un mot de pile figurant dans une transition, avec $G=0$ s'il n'y a aucune transition.
     ],
-    Q(
+    question(
       [
         Montrer que, si $η>G$ et $w∈L(A)∖L_(≤η)(A)$, tout calcul acceptant de $w$ possède une $(η-G)$-montagne.
       ],
@@ -139,7 +139,7 @@
     [
       L'état de base d'une montagne est le triplet $β(l,r)=(q_l,q_r,γ)$, où $γ$ est le sommet de $z_l$.
     ],
-    Q(
+    question(
       [
         Montrer qu'il existe $η_0≥1$, ne dépendant que de $A$, tel que toute $η_0$-montagne $(l,m,r)$ contienne deux montagnes $(l',m,r')$ et $(l'',m,r'')$ vérifiant
         $ l<l'<l''<m<r''<r'<r, #sep β(l',r')=β(l'',r''). $
@@ -158,7 +158,7 @@
         Deux ont le même quadruplet, par le principe des tiroirs ; elles ont notamment le même $β$, comme demandé.
       ],
     ),
-    Q(
+    question(
       [
         Déduire des trois questions précédentes le lemme de pompage affaibli : pour tout langage $L$ reconnu par un automate à pile, il existe $p∈NN$ tel que tout $w∈L$ avec $abs(w)>p$ s'écrive $w=u v x y z$, avec $abs(v y)≥1$ et
         $ ∀n∈NN, #sep u v^n x y^n z∈L. $

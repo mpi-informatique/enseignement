@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 #let ex = exercice(
   meta: (
@@ -28,7 +28,7 @@
       $ "CCl"(L)={w∈Σ^* | ∃w'∈L, abs(w)_a=abs(w')_a " et " abs(w)_b=abs(w')_b}. $
       On admet le théorème de Kleene : les langages décrits par une expression régulière sont exactement ceux reconnus par un automate fini. Ils sont appelés réguliers.
     ],
-    Q(
+    question(
       [
         Calculer la clôture commutative du langage $L_0$ décrit par $a^* | b^*$.
       ],
@@ -36,7 +36,7 @@
         Chaque mot ne contient qu'une sorte de lettre : le permuter ne le change pas. Ainsi $"CCl"(L_0)=L_0$.
       ],
     ),
-    Q(
+    question(
       [
         Soit $L_1$ décrit par $b(a a)^*$. Donner une expression régulière de $"CCl"(L_1)$.
         Existe-t-il un langage régulier $L'_1$ tel que $"CCl"(L'_1)=L_1$ ?
@@ -47,7 +47,7 @@
         Non pour la seconde question : toute clôture commutative est stable par permutation, tandis que $b a a∈L_1$ et $a a b∉L_1$.
       ],
     ),
-    Q(
+    question(
       [
         Trouver un langage régulier $L_2$ tel que $"CCl"(L_2)={w | abs(w)_a=abs(w)_b}$.
         En déduire que la clôture commutative d'un langage régulier n'est pas nécessairement régulière.
@@ -58,7 +58,7 @@
         Pomper cette boucle changerait le nombre de $a$ sans changer celui des $b$, contradiction.
       ],
     ),
-    Q(
+    question(
       [
         Un langage est $a$-borné s'il existe $k∈NN$ tel que $abs(w)_a≤k$ pour tout $w∈L$.
         Montrer que, si $L$ est régulier et $a$-borné, $"CCl"(L)$ est régulier.
@@ -76,7 +76,7 @@
         Appliquer la preuve précédente et sa version symétrique, puis la stabilité par union.
       ],
     ),
-    Q(
+    question(
       [
         Proposer des algorithmes décidant si un langage régulier donné est $a$-borné, puis s'il est $a b$-borné.
       ],
@@ -94,7 +94,7 @@
         Un automate vide après émondage est borné dans les deux sens.
       ],
     ),
-    Q(
+    question(
       [
         Donner un langage régulier qui n'est pas $a b$-borné mais dont la clôture commutative est régulière. Que déduire par rapport à la question 4 ?
       ],
@@ -102,7 +102,7 @@
         Le langage $Σ^*$ convient : il est sa propre clôture commutative et contient $a^n b^n$ pour tout $n$. Être $a b$-borné est donc une condition suffisante mais non nécessaire.
       ],
     ),
-    Q(
+    question(
       [
         Un langage $L$ est ultimement périodique s'il existe $t∈NN$ et $p∈NN^*$ tels que, pour tous $k,l≥t$, l'existence dans $L$ d'un mot de comptes $(k,l)$ implique l'existence de mots de comptes $(k+p,l)$ et $(k,l+p)$.
         Montrer que, si $L$ est régulier et ultimement périodique, $"CCl"(L)$ est régulier. Comparer à la question 4.
@@ -125,7 +125,7 @@
         Tout langage $a b$-borné est ultimement périodique en choisissant $t$ strictement supérieur à sa borne : l'implication devient vide. Le résultat généralise donc la question 4.
       ],
     ),
-    Q(
+    question(
       [
         Montrer réciproquement que, si $L$ est régulier et $"CCl"(L)$ est régulier, alors $L$ est ultimement périodique. Conclure.
         Indication : le quotient à gauche est $w^(-1)K={v | w v∈K}$. On pourra utiliser, puis démontrer, que ${w^(-1)K | w∈Σ^*}$ est fini lorsque $K$ est régulier.

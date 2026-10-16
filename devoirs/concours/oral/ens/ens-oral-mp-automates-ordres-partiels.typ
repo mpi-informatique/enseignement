@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: dessiner-automate, rayon-etat, rayon-grand-etat
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #let dessiner = dessiner-automate.with(
   echelle: (1.5, 1.3),
   rayon: nom => if nom.len() > 5 { 1.1 } else if nom.len() > 2 { rayon-grand-etat } else { rayon-etat },
@@ -67,7 +67,7 @@
       L'automate est partiellement ordonné si tous ses cycles ne visitent qu'un état : si $q'∈q · u$ et $q∈q' · v$, alors $q=q'$.
       Les automates peuvent être incomplets.
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -91,7 +91,7 @@
         #exemple-k
       ],
     ),
-    Q(
+    question(
       [
         Montrer la stabilité par union et intersection des langages reconnus par des automates partiellement ordonnés.
         Ces stabilités restent-elles vraies pour les automates déterministes partiellement ordonnés ?
@@ -105,7 +105,7 @@
         Le produit reste déterministe ; choisir les finaux $F_1×F_2$ pour l'intersection, et $(F_1×Q_2)∪(Q_1×F_2)$ pour l'union.
       ],
     ),
-    Q(
+    question(
       [
         Un automate est strictement partiellement ordonné s'il est partiellement ordonné et n'a aucune boucle : $q∉δ(q,a)$ pour tous $q,a$.
         #enum(
@@ -127,7 +127,7 @@
       On veut prouver qu'un tel langage est régulier et reconnu par un automate déterministe partiellement ordonné.
       On admet le lemme de Higman : pour toute suite infinie $(w_i)_(i∈NN)$ sur un alphabet fini, il existe $i<j$ tels que $w_j∈↑w_i$.
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -153,7 +153,7 @@
     [
       Un monôme est un langage de la forme $B_0^* a_0 B_1^* a_1 … a_(n-1) B_n^*$, avec $B_i⊂A$ et $a_i∈A$. On autorise $n=0$ et on pose $∅^*={ε}$.
     ],
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",

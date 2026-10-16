@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -14,7 +14,7 @@
     [Cet exercice introduit un prolongement du cours.
       Une grammaire $G = (Σ,V,R,S)$ est en forme normale de Chomsky si ses règles sont $X → Y Z$, avec $Y,Z ∈ V$, ou $X → a$, avec $a ∈ Σ$.
       On autorise aussi $S → ε$, à condition que $S$ n'apparaisse dans aucun membre droit.],
-    Q(
+    question(
       [
         Soit $G$ une grammaire non-contextuelle telle que $ε ∉ L(G)$.
         Montrer qu'il existe une grammaire en forme normale de Chomsky engendrant $L(G)$.
@@ -46,7 +46,7 @@
         Il ne reste que les deux formes requises.
       ],
     ),
-    Q(
+    question(
       [
         Donner une grammaire en forme normale de Chomsky pour ${a^n b^n | n ≥ 1}$.
         Combien d'applications de règles comporte une dérivation terminale d'un mot de longueur $n ≥ 1$ dans une grammaire en forme normale de Chomsky sans règle d'effacement ?
@@ -61,7 +61,7 @@
         Il y a donc $n-1$ règles binaires et $2n-1$ applications au total.
       ],
     ),
-    Q(
+    question(
       [
         On fixe une grammaire en forme normale de Chomsky sans règle d'effacement, et un mot $w=w_0 … w_(n-1)$, avec $n ≥ 1$.
         Pour $0 ≤ i < j ≤ n$, noter $T(i,j)$ l'ensemble des variables engendrant le facteur $w[i:j]$.
@@ -87,7 +87,7 @@
         Le mot vide est rejeté immédiatement dans ce cas.
       ],
     ),
-    Q(
+    question(
       [
         Prolongement : montrer que l'intersection d'un langage non-contextuel avec un langage régulier
         est non-contextuel. Utiliser un automate déterministe et une grammaire en forme normale de Chomsky pour les mots non vides. Une variable $(p,X,q)$ devra engendrer les mots produits par $X$ qui mènent l'automate de $p$ à $q$.

@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -20,7 +20,7 @@
           0, dots.h, 0, a, a + b
         ) brace.r
       ) n $.],
-    Q([Calculer $D_(n)$.], solution: [On a $D_(1) = a + b$.
+    question([Calculer $D_(n)$.], solution: [On a $D_(1) = a + b$.
       Pour $n >= 2$, développer suivant la première colonne. Le terme en $a + b$ vaut $(a + b) D_(n - 1)$.
       Le terme en $a$ a un signe négatif, et son mineur a pour première ligne $(b, 0, dots, 0)$ : un second développement donne $b D_(n - 2)$.
       Ainsi

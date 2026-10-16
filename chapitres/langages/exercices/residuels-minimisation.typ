@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: rayon-etat, rayon-grand-etat, style-automates, unite-automates
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -19,7 +19,7 @@
       avec lesquels on peut compléter $u$ pour obtenir un mot de $L$.
       L'ensemble des résiduels de $L$ est noté $cal(R)_L = {u^(-1)L | u ∈ Σ^*}$.
     ],
-    Q(
+    question(
       [
         Si $L$ est un langage, quel est le résiduel de $L$ par rapport à $ε$ ?
       ],
@@ -27,7 +27,7 @@
         $ε^(-1)L = L$. En effet, si $m ∈ Σ^*$, $m ∈ ε^(-1)L ⇔ ε m = m ∈ L$.
       ],
     ),
-    Q(
+    question(
       [
         Montrer que pour tout langage $L$ sur $Σ$ et tous mots $u,v ∈ Σ^*$, $u^(-1)(v^(-1)L) = (v u)^(-1)L$.
       ],
@@ -36,7 +36,7 @@
         $ m ∈ u^(-1)(v^(-1)L) ⇔ u m ∈ v^(-1)L ⇔ v u m ∈ L ⇔ m ∈ (v u)^(-1)L. $
       ],
     ),
-    Q(
+    question(
       [
         #enum(
           numbering: "a)",
@@ -63,7 +63,7 @@
       ],
     ),
     [On veut montrer qu'un langage $L$ est reconnaissable si et seulement s'il admet un nombre fini de résiduels.],
-    Q(
+    question(
       [
         Soit $L$ un langage reconnaissable par un automate $A = (Σ,Q,q_0,F,δ)$ qu'on peut supposer déterministe, complet et dont tous les états sont accessibles sans perte de généralité.
         #enum(
@@ -104,7 +104,7 @@
         )
       ],
     ),
-    Q(
+    question(
       [
         Soit à présent $L$ un langage ayant un nombre fini de résiduels.
         On définit alors un automate $M(L) = (Σ,Q,I,F,δ)$, appelé automate des résiduels associé à $L$, où :
@@ -148,7 +148,7 @@
         )
       ],
     ),
-    Q(
+    question(
       [
         À l'aide des questions précédentes, déterminer l'automate des résiduels associé au langage $L_1$.
       ],
@@ -173,7 +173,7 @@
       déterministe, complet et possède le plus petit nombre d'états possible
       parmi les automates déterministes et complets reconnaissant $L$.
     ],
-    Q([Montrer que l'automate des résiduels est un automate minimal.], solution: [
+    question([Montrer que l'automate des résiduels est un automate minimal.], solution: [
       D'après la question 5, $M(L)$ est déterministe, complet et reconnaît $L$.
       Il possède exactement $abs(cal(R)_L)$ états.
 

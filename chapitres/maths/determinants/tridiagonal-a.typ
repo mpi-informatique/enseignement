@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -20,7 +20,7 @@
           0, dots.h, 0, a, 2a
         ) brace.r
       ) n $.],
-    Q([Calculer $D_(n)$.], solution: [On a $D_(1) = 2a$.
+    question([Calculer $D_(n)$.], solution: [On a $D_(1) = 2a$.
       Pour $n >= 2$, développer suivant la première colonne.
       Le terme diagonal vaut $2a D_(n - 1)$.
       L'autre terme porte le signe $-1$ : son mineur a pour première ligne $(a, 0, dots, 0)$ et son développement donne $a D_(n - 2)$.

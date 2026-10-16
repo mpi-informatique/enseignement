@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -9,7 +9,7 @@
     matiere: "mathématiques",
   ),
   contenu: (
-    Q(
+    question(
       [Soit $E$ un espace vectoriel réel de dimension finie et $f in cal(L)(E)$ tel que $f^2 = -"Id"_(E)$. Montrer que $dim E$ est pair.],
       solution: [En posant $n = dim E$ et en prenant les déterminants, on obtient
         $det(f)^2 = det(-"Id"_(E)) = (-1)^n$.

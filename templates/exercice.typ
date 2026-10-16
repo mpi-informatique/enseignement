@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -14,14 +14,14 @@
   ),
   contenu: (
     [On considère un graphe orienté fini $G = (S, A)$.],
-    Q(
+    question(
       [Proposer un algorithme qui détecte un cycle dans $G$.],
       solution: [Effectuer un parcours en profondeur avec trois couleurs.
         Une arête vers un sommet gris révèle un cycle.
         La complexité est $O(abs(S) + abs(A))$ avec des listes d'adjacence.],
     ),
     [On suppose désormais que le graphe est représenté par des listes d'adjacence.],
-    Q(
+    question(
       [Quel est l'espace auxiliaire utilisé par cet algorithme ?],
       solution: [Les couleurs et la pile du parcours occupent $O(abs(S))$ cases.],
     ),

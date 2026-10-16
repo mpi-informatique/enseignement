@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, sep
+#import "/load.typ": exercice, question, sep
 
 #let ex = exercice(
   meta: (
@@ -11,7 +11,7 @@
   contenu: (
     [On considère
       $ A = mat(3, 0, -1; 2, 4, 2; -1, 0, 3). $],
-    Q(
+    question(
       [Diagonaliser $A$ en donnant une matrice inversible $P$ et une matrice diagonale $D$ telles que $A = P D P^(-1)$. En déduire $A^n$ pour tout $n ∈ NN$.],
       solution: [On calcule $χ_A (X) = (X - 2)(X - 4)^2$, puis
         $ E_2 (A) = "Vect"((1, -2, 1)), #sep E_4 (A) = "Vect"((0, 1, 0), (1, 0, -1)). $

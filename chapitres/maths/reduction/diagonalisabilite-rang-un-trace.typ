@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, sep
+#import "/load.typ": exercice, question, sep
 
 #let ex = exercice(
   meta: (
@@ -10,7 +10,7 @@
   ),
   contenu: (
     [Soient $n ≥ 2$ et $A ∈ cal(M)_n (KK)$ de rang $1$.],
-    Q(
+    question(
       [Montrer que $A$ est diagonalisable si et seulement si $"Tr"(A) ≠ 0$.],
       solution: [Le théorème du rang donne $dim ker A = n - 1$. Ainsi, $0$ est racine de $χ_A$ de multiplicité au moins $n - 1$, donc
         $ χ_A (X) = X^(n - 1)(X - c). $

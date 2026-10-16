@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -11,12 +11,12 @@
   ),
   contenu: (
     [On considère $A = mat(2, 1; 1, 2) ∈ M_2 (RR)$.],
-    Q(
+    question(
       [Déterminer le polynôme caractéristique, les valeurs propres et les sous-espaces propres de $A$.],
       solution: [On trouve $χ_A (X) = (X - 2)^2 - 1 = (X - 1)(X - 3)$.
         Les équations donnent $E_1 (A) = "Vect"((1, -1))$ et $E_3 (A) = "Vect"((1, 1))$.],
     ),
-    Q(
+    question(
       [Donner une matrice inversible $P$ et une matrice diagonale $D$ telles que $A = P D P^(-1)$, puis calculer $A^k$ pour $k ∈ NN$.],
       solution: [Les deux vecteurs propres forment une base. On peut prendre
         $ P = mat(1, 1; -1, 1), #sep D = mat(1, 0; 0, 3), #sep P^(-1) = 1/2 mat(1, -1; 1, 1). $

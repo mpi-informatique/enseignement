@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, partie
+#import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 #let ex = exercice(
   meta: (
@@ -29,7 +29,7 @@
       On peut conserver des listes inverses, de taille $O(N+m)$, et représenter les ensembles d'états par des tableaux booléens.
       Le mot est stocké dans un tableau ; $w[i,j]$ désigne son facteur d'indices $i$ inclus à $j$ exclu.
     ],
-    Q(
+    question(
       [
         Soit $L_0$ décrit par $(a b)^*$. Proposer une réparation par insertion de $w_0=a a b$, puis de $w'_0=a b a b$.
         Le mot $w''_0=a a$ en admet-il une ?
@@ -40,7 +40,7 @@
         Pour $a a$, toute insertion ailleurs qu'à la fin laisse un $a$ final ; une insertion à la fin laisse le préfixe $a a$. Aucun de ces mots n'appartient à $(a b)^*$.
       ],
     ),
-    Q(
+    question(
       [
         Une réparation par insertion finale de $w$ est un mot $z$ tel que $w z∈L$. Proposer un algorithme décidant son existence et donner ses complexités en temps et en espace.
       ],
@@ -58,7 +58,7 @@
         Temps $O((n+1)(N+m))$, espace auxiliaire $O(N+m)$, dont $O(N)$ pour les marques et la file.
       ],
     ),
-    Q(
+    question(
       [
         Modifier l'algorithme de la question 2 pour produire une insertion finale de longueur minimale ; préciser les complexités.
       ],
@@ -70,7 +70,7 @@
         Les complexités de la question 2 restent valables, production du témoin comprise.
       ],
     ),
-    Q(
+    question(
       [
         Décider l'existence d'une réparation par insertion quelconque ; donner les complexités en temps et en espace.
       ],
@@ -82,7 +82,7 @@
         Les $n+1$ parcours et les calculs des ensembles prennent $O((n+1)(N+m))$ en temps ; stocker les ensembles de suffixes prend $O((n+1)N)$, et les listes inverses $O(N+m)$.
       ],
     ),
-    Q(
+    question(
       [
         Modifier l'algorithme de la question 4 pour produire une décomposition et une insertion $z$ de longueur minimale.
       ],
@@ -93,7 +93,7 @@
         Temps $O((n+1)(N+m))$ et espace $O((n+1)N+m)$, comme précédemment.
       ],
     ),
-    Q(
+    question(
       [
         Une réparation par suppression de $w$ est une décomposition $w=u z v$ telle que $u v∈L$.
         Proposer un algorithme naïf décidant son existence et produisant une suppression de longueur minimale. Préciser ses complexités.
@@ -104,7 +104,7 @@
         D'où $O((n+1)^3(N+m))$ en temps et $O(N)$ en espace auxiliaire hors automate ; on lit les deux facteurs sans les copier et on renvoie leurs indices.
       ],
     ),
-    Q(
+    question(
       [
         Décider l'existence d'une réparation par suppression avec une complexité linéaire en $w$.
       ],
@@ -120,7 +120,7 @@
         Un nombre constant de tableaux et de parcours de transitions par lettre donne $O((n+1)(N+m))$ en temps et $O(N)$ en espace auxiliaire hors automate.
       ],
     ),
-    Q(
+    question(
       [
         Modifier l'algorithme de la question 7 pour produire une suppression minimale, toujours en temps linéaire en $w$.
       ],
@@ -137,7 +137,7 @@
         Le temps reste $O((n+1)(N+m))$ ; la reconstruction utilise $O((n+1)N+m)$ en espace, contre $O(N)$ auxiliaire pour le seul coût.
       ],
     ),
-    Q(
+    question(
       [
         Une réparation par insertions de $w$ est un mot $w'∈L$ dont $w$ est un sous-mot : il existe une application strictement croissante $φ:{1,…,abs(w)}→{1,…,abs(w')}$ telle que $w_i=w'_(φ(i))$.
         Décider s'il en existe une et produire un $w'$ de longueur minimale ; préciser les complexités.
@@ -155,7 +155,7 @@
         Les chemins insérés ont longueur au plus $N-1$, donc la sortie a longueur $O((n+1)N)$.
       ],
     ),
-    Q(
+    question(
       [
         On autorise la suppression de $k_1$ caractères, puis l'insertion de $k_2$ caractères pour obtenir un mot de $L$, au coût $k_1+k_2$.
         Calculer le coût minimal et une réparation qui l'atteint.

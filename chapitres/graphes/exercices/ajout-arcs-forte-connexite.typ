@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let ex = exercice(
   meta: (
@@ -18,7 +18,7 @@
       On cherche le nombre minimal $a(G)$ d'arcs à ajouter pour rendre $G$ fortement connexe.
       Les chemins de longueur nulle sont autorisés : un graphe réduit à un sommet est donc fortement connexe.],
 
-    Q(
+    question(
       [
         On appelle graphe condensé de $G$ le graphe $D$ dont les sommets sont les composantes fortement connexes de $G$, avec un arc $C -> C'$ lorsque $C != C'$ et qu'un arc de $G$ va de $C$ vers $C'$.
         Montrer que $D$ est acyclique et que $a(G) = a(D)$.
@@ -43,7 +43,7 @@
       On note $s$ le nombre de sources et $t$ le nombre de puits.
       Un sommet isolé est à la fois une source et un puits.],
 
-    Q(
+    question(
       [
         Montrer que chaque sommet de $D$ est accessible depuis une source et peut atteindre un puits.
         En déduire que $s >= 1$, $t >= 1$, puis établir $a(G) >= max(s, t)$.
@@ -59,7 +59,7 @@
       ],
     ),
 
-    Q(
+    question(
       [
         Montrer que cette borne est atteinte.
         On pourra choisir une famille de couples $(S_1, T_1), dots, (S_r, T_r)$, où les $S_i$ sont des sources distinctes, les $T_i$ des puits distincts et $S_i$ peut atteindre $T_i$, telle qu'on ne puisse plus ajouter un couple de source et de puits encore inutilisés.
@@ -91,7 +91,7 @@
       ],
     ),
 
-    Q(
+    question(
       [
         Rappeler les deux parcours de l'algorithme de Kosaraju.
         En déduire un algorithme calculant $a(G)$ en temps $O(n+m)$, sans construire explicitement les arcs à ajouter.
@@ -118,7 +118,7 @@
       ],
     ),
 
-    Q(
+    question(
       [
         On dispose d'une fonction OCaml `kosaraju : int list array -> int * int array` renvoyant le nombre $k$ de composantes et le tableau de leurs numéros, compris entre $0$ et $k-1$.
         Écrire `nombre_arcs : int list array -> int`.

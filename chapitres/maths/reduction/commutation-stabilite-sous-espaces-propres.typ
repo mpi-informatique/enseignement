@@ -1,4 +1,4 @@
-#import "/load.typ": Q, exercice, sep
+#import "/load.typ": exercice, question, sep
 
 #let ex = exercice(
   meta: (
@@ -10,7 +10,7 @@
   ),
   contenu: (
     [Soient $f, g ∈ cal(L)(E)$, où $E$ est un $KK$-espace vectoriel de dimension finie. On suppose $f$ diagonalisable.],
-    Q(
+    question(
       [Montrer que $f ∘ g = g ∘ f$ si et seulement si chaque sous-espace propre de $f$ est stable par $g$.],
       solution: [Si $f ∘ g = g ∘ f$ et $x ∈ E_λ (f)$, alors
         $ f(g(x)) = g(f(x)) = λ g(x), $

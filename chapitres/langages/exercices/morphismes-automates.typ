@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: dessiner-automate as dessiner
-#import "/load.typ": Q, exercice
+#import "/load.typ": exercice, question
 
 #let a1 = dessiner(
   (("0", (0, 0), true, false), ("1", (3, 0), false, true)),
@@ -69,7 +69,7 @@
       #align(center)[$A_3$]
       #a3
     ],
-    Q(
+    question(
       [
         Expliciter un morphisme de $A_2$ vers $A_1$.
       ],
@@ -77,7 +77,7 @@
         L'application $f(0)=f(1)=0$, $f(2)=1$ conserve l'état initial et les états finaux. Les transitions sur $a$ ont des images inchangées et celles sur $b$ échangent les deux images : les six transitions vérifient (ii).
       ],
     ),
-    Q(
+    question(
       [
         Montrer qu'il n'existe pas de morphisme de $A_3$ vers $A_1$.
       ],
@@ -85,7 +85,7 @@
         Les seuls états non finaux de $A_3$ sont 0 et 2, et le seul de $A_1$ est 0. Donc $f(0)=f(2)=0$. Mais $f(δ_(A_3)(2,b))=f(0)=0$, tandis que $δ_(A_1)(f(2),b)=δ_(A_1)(0,b)=1$, contradiction.
       ],
     ),
-    Q(
+    question(
       [
         Montrer que l'existence d'un morphisme $A→A'$ implique $L(A)=L(A')$. La réciproque est-elle vraie ?
       ],
@@ -100,7 +100,7 @@
       À partir de maintenant, on suppose $A$ et $A'$ accessibles : tout état est atteint depuis l'état initial par un mot.
       On conserve ces hypothèses dans la suite.
     ],
-    Q(
+    question(
       [
         Si $f:A→A'$ est un morphisme, montrer qu'il est surjectif.
       ],
@@ -108,7 +108,7 @@
         Pour $q'∈Q_(A')$, l'accessibilité fournit $u$ avec $δ_(A')^*(i_(A'),u)=q'$. L'identité précédente donne $q'=f(δ_A^*(i_A,u))$. Ici l'accessibilité de $A'$ seule suffit.
       ],
     ),
-    Q(
+    question(
       [
         Décrire un algorithme décidant l'existence d'un morphisme $A→A'$ et le calculant s'il existe. Préciser structures et complexité.
       ],
@@ -127,7 +127,7 @@
       On définit le produit $A×A'$ d'états $Q_A×Q_(A')$, initial $(i_A,i_(A'))$, finaux $F_A×F_(A')$, avec
       $ δ_(A×A')((q,q'),x)=(δ_A(q,x),δ_(A')(q',x)). $
     ],
-    Q(
+    question(
       [
         Si $A×A'$ est accessible et $L(A)=L(A')$, montrer qu'il existe un morphisme $A×A'→A$, et de même vers $A'$.
       ],
@@ -146,7 +146,7 @@
       où, pour chaque $0≤i<k$, $f(q_i)=f(q_(i+1))$ ou $g(q_i)=g(q_(i+1))$.
       Les suites de longueur nulle, leur renversement et leur concaténation montrent respectivement réflexivité, symétrie et transitivité.
     ],
-    Q(
+    question(
       [
         Montrer que $p≡q$ implique $δ_B(p,x)≡δ_B(q,x)$ pour toute lettre $x$.
       ],
@@ -157,7 +157,7 @@
         L'image de la chaîne par $δ_B( · ,x)$ est donc une chaîne admissible, ce qui prouve le résultat.
       ],
     ),
-    Q(
+    question(
       [
         Montrer que $p≡q$ implique $p∈F_B⇔q∈F_B$.
       ],
@@ -168,7 +168,7 @@
     [
       On note $[q]$ la classe de $q$ modulo $≡$ et $Q_C$ l'ensemble de ces classes.
     ],
-    Q(
+    question(
       [
         Décrire un algorithme calculant $Q_C$, avec ses structures de données et sa complexité.
       ],
@@ -182,7 +182,7 @@
         D'où $O(N log(N+1))$ en temps et $O(N)$ en espace, collecte des classes comprise.
       ],
     ),
-    Q(
+    question(
       [
         Définir un automate $C$ d'états $Q_C$ tel que $h:q↦[q]$ soit un morphisme $B→C$.
       ],
@@ -192,7 +192,7 @@
         Les trois propriétés de morphisme sont alors immédiates. Tout état $[q]$ est accessible en lisant un mot atteignant $q$ dans $B$.
       ],
     ),
-    Q(
+    question(
       [
         Définir $f':A→C$ et $g':A'→C$ tels que $f'∘f=h=g'∘g$.
       ],
@@ -209,7 +209,7 @@
     [
       Soit $L$ un langage régulier et $n$ le plus petit nombre d'états d'un automate déterministe complet reconnaissant $L$.
     ],
-    Q(
+    question(
       [
         Montrer que deux automates à $n$ états reconnaissant $L$ sont isomorphes, c'est-à-dire reliés par un morphisme bijectif.
       ],
