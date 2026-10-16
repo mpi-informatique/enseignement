@@ -18,14 +18,11 @@ let nb_to_set n q =
     if k < taille then Deux (i, i + 1 + k) else ligne (i + 1) (k - taille)
   in ligne 0 (q - n)
 
-(* BEGIN Q4 *)
 let rec delta_etoile m q w =
   match w with
   | [] -> q
   | x :: xs -> delta_etoile m (m.delta q x) xs
-(* END Q4 *)
 
-(* BEGIN Q5 *)
 let est_synchronisant m w =
   let candidat = delta_etoile m 0 w in
   let q = ref 1 in
@@ -33,26 +30,20 @@ let est_synchronisant m w =
     incr q
   done;
   !q = m.n_etats
-(* END Q5 *)
 
-(* BEGIN Q12 *)
 let ajoute f x =
   if Array.length f.tab = 0 || (f.deb = f.fin && not f.vide) then failwith "file pleine";
   f.tab.(f.fin) <- x;
   f.fin <- (f.fin + 1) mod (Array.length f.tab);
   f.vide <- false
-(* END Q12 *)
 
-(* BEGIN Q13 *)
 let retire f =
   if f.vide then failwith "file vide";
   let resultat = f.tab.(f.deb) in
   f.deb <- (f.deb + 1) mod (Array.length f.tab);
   if f.deb = f.fin then f.vide <- true;
   resultat
-(* END Q13 *)
 
-(* BEGIN Q20 *)
 let accessibles graphe ens =
   (* initialisation *)
   let n = Array.length graphe in
@@ -84,9 +75,7 @@ let accessibles graphe ens =
   done;
 
   !c, d, p
-(* END Q20 *)
 
-(* BEGIN Q21 *)
 let chemin s p =
   let rec aux s chemin =
   match p.(s) with
@@ -94,9 +83,7 @@ let chemin s p =
   | Rien -> chemin
   | Arc (s', x) -> aux s' (x :: chemin) in
   aux s []
-(* END Q21 *)
 
-(* BEGIN Q30 *)
 let delta2 m e x =
   let n = m.n_etats in
   match nb_to_set n e with
@@ -106,9 +93,7 @@ let delta2 m e x =
     let ej = m.delta j x in
     if ei = ej then set_to_nb n (Un ei)
     else set_to_nb n (Deux (min ei ej, max ei ej))
-(* END Q30 *)
 
-(* BEGIN Q31 *)
 let retourne_machine m =
   let n = m.n_etats in
   let ntilde = n * (n + 1) / 2 in
@@ -120,9 +105,7 @@ let retourne_machine m =
     done
   done;
   v
-(* END Q31 *)
 
-(* BEGIN Q33 *)
 let singletons n =
   let rec aux k =
     if k = n then []
@@ -132,4 +115,3 @@ let singletons n =
 let existe_synchronisant m =
   let c, _, _ = accessibles (retourne_machine m) (singletons m.n_etats) in
   c = 0
-(* END Q33 *)

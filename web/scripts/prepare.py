@@ -95,7 +95,7 @@ def prepare():
     if not package_path:
         raise RuntimeError("TYPST_PACKAGE_PATH absent : lancer depuis nix develop ..#web.")
     for dependency in json.loads((ROOT / "nix/typst-packages.json").read_text()):
-        name = f"preview/{dependency['name']}/{dependency['version']}"
+        name = f"{dependency.get('namespace', 'preview')}/{dependency['name']}/{dependency['version']}"
         source = Path(package_path) / name
         if not source.is_dir():
             raise FileNotFoundError(f"Package Typst manquant : {source}")

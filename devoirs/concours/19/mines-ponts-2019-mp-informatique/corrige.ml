@@ -1,13 +1,8 @@
-(* BEGIN types *)
 type automate = int * (int * int) array * bool array
 type morphisme = int array
-(* END types *)
 
-(* BEGIN a2 *)
 let a2 : automate = (2, [|(0, 1); (1, 0)|], [|false; true|])
-(* END a2 *)
 
-(* BEGIN numero *)
 let numero n liste =
   let t = Array.make n (-1) in
   let rec aux position = function
@@ -18,7 +13,6 @@ let numero n liste =
   in
   aux 0 liste;
   t
-(* END numero *)
 
 (* BEGIN etats_accessibles *)
 let etats_accessibles (n, delta, f) =
@@ -41,7 +35,6 @@ let etats_accessibles (n, delta, f) =
   renverser [] !resultat
 (* END etats_accessibles *)
 
-(* BEGIN partie_accessible *)
 let partie_accessible ((n, delta, f) as aut) =
   let accessibles = etats_accessibles aut in
   let num = numero n accessibles in
@@ -55,9 +48,7 @@ let partie_accessible ((n, delta, f) as aut) =
   in
   List.iter copier accessibles;
   (n', delta', f')
-(* END partie_accessible *)
 
-(* BEGIN existe_morphisme *)
 let existe_morphisme (n, delta, f) (n', delta', f') =
   let phi = Array.make n (-1) in
   let possible = ref true in
@@ -78,9 +69,7 @@ let existe_morphisme (n, delta, f) (n', delta', f') =
   in
   visiter 0 0;
   (!possible, phi)
-(* END existe_morphisme *)
 
-(* BEGIN produit *)
 let produit (n, delta, f) (n', delta', f') =
   let delta_prod = Array.make (n * n') (0, 0) in
   let f_prod = Array.make (n * n') false in
@@ -94,9 +83,7 @@ let produit (n, delta, f) (n', delta', f') =
     done
   done;
   (n * n', delta_prod, f_prod)
-(* END produit *)
 
-(* BEGIN renomme *)
 let renomme t =
   let n = Array.length t in
   if n = 0 then [||]
@@ -118,9 +105,7 @@ let renomme t =
     done;
     resultat
   end
-(* END renomme *)
 
-(* BEGIN relation *)
 let relation phi psi =
   let n = Array.length phi in
   let eta = Array.make n (-1) in
@@ -141,9 +126,7 @@ let relation phi psi =
     end
   done;
   eta
-(* END relation *)
 
-(* BEGIN table_de_predecesseurs *)
 let table_de_predecesseurs (n, delta, f) =
   let pred = Array.make_matrix n n [] in
   for p = 0 to n - 1 do
@@ -167,9 +150,7 @@ let table_de_predecesseurs (n, delta, f) =
     done
   done;
   d
-(* END table_de_predecesseurs *)
 
-(* BEGIN reduit *)
 let reduit aut =
   let ((n, delta, f) as accessible) = partie_accessible aut in
   let d = table_de_predecesseurs accessible in
@@ -194,4 +175,3 @@ let reduit aut =
     f'.(k) <- f.(p)
   done;
   (!nombre, delta', f')
-(* END reduit *)

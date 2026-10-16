@@ -19,6 +19,16 @@ class CopyTreeTests(unittest.TestCase):
             self.assertEqual(copy_tree(source, root / "bank"), ["exercice.typ"])
             self.assertIn("test.typ", copy_tree(source, root / "package", exclude_tests=False))
 
+    def test_preserve_wasm_plugins_in_packages(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "source"
+            (source / "dist").mkdir(parents=True)
+            wasm = b"\0asm\x01\0\0\0"
+            (source / "dist/code-extract.wasm").write_bytes(wasm)
+            self.assertEqual(copy_tree(source, root / "package", exclude_tests=False), ["dist/code-extract.wasm"])
+            self.assertEqual((root / "package/dist/code-extract.wasm").read_bytes(), wasm)
+
     def test_reject_files_outside_public_root(self):
         with TemporaryDirectory() as temporary:
             root = Path(temporary)

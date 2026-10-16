@@ -1,9 +1,6 @@
-(* BEGIN types *)
 type regle = Vide | Prefixe of char * int | Suffixe of int * char
 type grammaire = regle list array
-(* END types *)
 
-(* BEGIN reconnait *)
 let reconnait (g : grammaire) s w =
   let m = Array.length g and n = String.length w in
   let d = Array.init m (fun _ ->
@@ -30,4 +27,3 @@ let reconnait (g : grammaire) s w =
     done
   done;
   d.(s).(0).(n)
-(* END reconnait *)

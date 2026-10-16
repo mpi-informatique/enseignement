@@ -1,12 +1,9 @@
-#import "/load.typ": exercice, question, automate
+#import "/load.typ": exercice, question, automate, code
+#import code: code-extrait
 
 #import automate: dessiner-automate
 
-#let source = read("corrige.ml")
-#let extrait(debut, fin) = {
-  assert(source.split(debut).len() == 2 and source.split(fin).len() == 2, message: "Déclarations absentes ou dupliquées")
-  raw((debut + source.split(debut).at(1).split(fin).first()).trim(), lang: "ocaml", block: true)
-}
+#let code = code-extrait.with(read("corrige.ml"))
 
 #let ex = exercice(
   meta: (
@@ -64,11 +61,11 @@
       Implémenter cet algorithme avec une fonction ```ocaml kleene : 'a automate -> 'a regexp```.
       Préciser la complexité.
       #grid(columns: (1fr, 1fr), column-gutter: 1.5em, align: top,
-        extrait("type 'a regexp", "type 'a automate"),
-        extrait("type 'a automate", "let kleene"),
+        code("regexp"),
+        code("automate"),
       )
     ], solution: [
-      #block(breakable: false)[#extrait("let kleene", "let accepte_regexp")]
+      #block(breakable: false)[#code("kleene")]
 
       Avant le tour $k$, ```ocaml l.(i).(j)``` dénote $L(i,j,k)$. Les copies de la ligne et de la colonne $k$ permettent d'appliquer la récurrence sans mélanger les niveaux.
 

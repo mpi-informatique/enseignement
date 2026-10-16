@@ -1,10 +1,9 @@
 #import "/load.typ": code
-#import code: code-region
+#import code: code-extrait
 #import "/load.typ": exercice, question
 #import "/load.typ": sep
 
-#let source = read("corrige.ml")
-#let code = code-region.with(source)
+#let code = code-extrait.with(read("corrige.ml"))
 
 #let ex = exercice(
   meta: (
@@ -104,7 +103,7 @@
     [
       En OCaml, les variables sont numérotées de $0$ à $m-1$ et la grammaire est un tableau de listes : la case d'indice $x$ contient les règles de membre gauche $x$.
       On utilise les types suivants :
-      #code("types")
+      #code(("regle", "grammaire"))
       Dans la liste de $x$, ```ocaml Vide``` représente $X → ε$,
       ```ocaml Prefixe (a, y)``` représente $X → a Y$ et
       ```ocaml Suffixe (y, a)``` représente $X → Y a$.

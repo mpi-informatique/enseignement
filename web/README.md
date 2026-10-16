@@ -73,6 +73,8 @@ BASE_PATH=/exercices SITE_URL=https://mpi-informatique.github.io nix develop ..#
 
 Le premier aperçu charge le compilateur WASM (environ 27 Mo non compressés), les polices et la banque. Les éditions suivantes réutilisent le moteur et les ressources en mémoire. Le site n'utilise aucun CDN, compte ou service externe pour compiler. Une nouvelle dépendance Typst doit être ajoutée au manifeste Nix de la banque puis réexportée.
 
+Le package `code-extract`, fourni par le dépôt public `mpi-informatique/typst-code-extract`, est verrouillé dans `flake.lock`. L'export inclut son namespace `local`, son interface Typst et son module WASM. L'extraction des déclarations C et OCaml s'exécute ainsi dans le navigateur, avec les mêmes appels que les PDF compilés en ligne de commande.
+
 Le compilateur typst.ts est fixé à `0.8.0-rc3` : cette préversion intègre Typst 0.15, nécessaire aux imports de l'API commune et à Touying 0.8. L'export inclut le point d'entrée `load.typ` ; le test WASM compile toute la banque pour vérifier sa compatibilité.
 
 ## Organisation

@@ -1,5 +1,5 @@
 #import "/load.typ": code
-#import code: code-region
+#import code: code-extrait
 #import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
 #import "/load.typ": exercice, question, partie
@@ -8,8 +8,7 @@
 #import "@preview/finite:0.5.1" as finite
 
 // Le code affiché est exactement celui compilé et testé.
-#let source = read("corrige.ml")
-#let code = code-region.with(source)
+#let code = code-extrait.with(read("corrige.ml"))
 
 #let automate-a1(miroir: false) = align(center, cetz.canvas(length: unite-automates, {
   import finite.draw: state, transition
@@ -132,7 +131,7 @@
     [Soit $w ∈ Σ^*$.
       Le mot $w$ est un palindrome si $widetilde(w)=w$.],
     question([Écrire une fonction ```ocaml palindrome``` de signature ```ocaml string -> bool``` qui teste, en temps linéaire, si un mot est un palindrome.], solution: [
-      #code("Q6")
+      #code("palindrome")
       On compare les lettres symétriques jusqu'au milieu du mot.
       L'appel d'indice $i$ vérifie les paires restantes ; $floor(n/2)-i$ décroît tant qu'un appel récursif est effectué.
       Le mot vide est accepté.
@@ -303,7 +302,7 @@
           Un chemin de $i ∈ I$ à $f ∈ F$ étiqueté $w$ devient un chemin de $f$ à $i$ étiqueté $widetilde(w)$, et réciproquement.
           Cela inclut $ε$ : il est accepté dans les deux automates exactement lorsque $I ∩ F ≠ ∅$.
         ]),
-        question([Écrire une fonction ```ocaml transpose``` de signature ```ocaml automate -> automate``` qui renvoie un automate reconnaissant le miroir du langage de l'automate d'entrée.], solution: [#code("Q4")]),
+        question([Écrire une fonction ```ocaml transpose``` de signature ```ocaml automate -> automate``` qui renvoie un automate reconnaissant le miroir du langage de l'automate d'entrée.], solution: [#code("transpose")]),
         question([Quelle est la complexité de cette fonction ?], solution: [
           Chaque transition est parcourue une fois.
           Le coût est $O(1+abs(T))$ en temps et en espace supplémentaire ; les listes d'états sont partagées.
@@ -316,7 +315,7 @@
         [Pour tout automate non déterministe $A=(Q,I,F,T)$, on définit le déterminisé accessible $A_"det"=(Y,{I},F',δ)$, où $Y ⊂ cal(P)(Q)$ est l'ensemble des états accessibles depuis l'état initial $I$ dans l'automate des parties.
           Il reconnaît le même langage que $A$.],
         question([Écrire un automate $cal(A)_2$ non déterministe à quatre états reconnaissant $L_2=(b | a b)^* b a$, avec un unique état initial et un unique état final.], solution: [
-          #code("Q13")
+          #code("a2")
           Depuis $0$, on peut lire les blocs $b$ ou $a b$ pour revenir à $0$.
           On termine par le chemin $0$ vers $2$ vers $3$, étiqueté $b a$.
         ]),
@@ -347,7 +346,7 @@
           Une représentation naïve des parties de $Q$ utilise des listes d'états.
           Lors des réunions, la concaténation de listes crée des doublons qu'il faut supprimer.],
         question([Écrire ```ocaml supprimer : 'a list -> 'a list``` qui supprime toutes les occurrences multiples des éléments d'une liste.], solution: [
-          #code("Q17")
+          #code("supprimer")
           On conserve la dernière occurrence de chaque élément.
           L'induction sur la liste montre que le résultat a les mêmes éléments et aucun doublon.
           Comme avec ```ocaml List.mem```, l'égalité doit être définie pour les éléments considérés ; ici ce sont des entiers.
@@ -365,17 +364,17 @@
           Soient $q ∈ ⟦0,n-1⟧$ et $k="numero"(X) ∈ ⟦0,2^n-1⟧$.],
         question([Écrire ```ocaml est_dans : int -> int -> bool``` qui teste, à l'aide d'opérations arithmétiques, si $q ∈ X$ en $O(1)$ opérations.],
           commentaire: [Le codage binaire permet un test en temps constant.],
-          solution: [#code("Q19") Le quotient par $2^q$, modulo $2$, est le bit d'indice $q$.]),
+          solution: [#code("est_dans") Le quotient par $2^q$, modulo $2$, est le bit d'indice $q$.]),
         [Soit $ℓ$ une liste d'états pouvant contenir des doublons, représentant $X$.],
         question([Écrire ```ocaml numero : int list -> int``` qui calcule le numéro de $X$.
           Par exemple, ```ocaml [1; 5; 2; 5; 2; 5; 2; 2; 1; 2; 1]``` représente ${1,2,5}$, de numéro $38=2^1+2^2+2^5$.],
           solution: [
-          #code("Q20")
+          #code("numero")
           On ajoute $2^q$ seulement si le bit correspondant n'est pas déjà présent.
           Le coût est linéaire dans la longueur de la liste.
         ]),
         [Soit $ℓ$ une liste d'états et $X$ un ensemble représenté par $k$.],
-        question([Écrire ```ocaml intersecte : int list -> int -> bool``` qui vérifie si un élément de $ℓ$ appartient à $X$.], solution: [#code("Q21")]),
+        question([Écrire ```ocaml intersecte : int list -> int -> bool``` qui vérifie si un élément de $ℓ$ appartient à $X$.], solution: [#code("intersecte")]),
         [On suppose désormais $Σ={a,b}$.
           Pour $X ⊂ Q$ et $c ∈ Σ$, la transition du déterminisé est
           $ δ(X,c)=union_(q ∈ X) {q' ∈ Q | (q,c,q') ∈ T}. $
@@ -383,7 +382,7 @@
         question([Écrire ```ocaml etat_suivant : int -> (int * char * int) list -> int * int``` qui, à partir de $k="numero"(X)$ et de $T$, renvoie $(k_a,k_b)=("numero"(δ(X,a)),"numero"(δ(X,b)))$.],
           commentaire: [Éviter les parcours répétés de toutes les transitions et les conversions en listes.],
           solution: [
-          #code("Q22")
+          #code("etat_suivant")
           Chaque transition issue de $X$ ajoute son arrivée à l'accumulateur de sa lettre.
           Les doublons ne changent pas le résultat.
           Coût : $O(1+abs(T))$.
@@ -391,11 +390,11 @@
         [Pour obtenir un ensemble d'états $Y=⟦0,N-1⟧$, on renumérote les parties accessibles avec une liste de couples $(k,v)$ : $k$ code une partie, $v$ est son nouveau numéro.
           Par exemple, $(6,2)$ renumérote la partie ${1,2}$, de code $6$, en l'état $2$.],
         question([Écrire ```ocaml cherche : int -> (int * int) list -> int``` qui renvoie le nouveau numéro associé à $k$, ou $-1$ si $k$ est absent.],
-          solution: [#code("Q23")]),
+          solution: [#code("cherche")]),
         question([Écrire ```ocaml determinise : automate -> automate``` qui calcule le déterminisé accessible.
           Expliquer brièvement la démarche.],
           solution: [
-          #code("Q24")
+          #code("determinise")
           La liste ```ocaml attente``` est une pile des parties découvertes et non encore traitées.
           Chaque partie reçoit son nom lors de sa découverte et n'est empilée qu'une fois.
           Le traitement ajoute ses deux transitions et marque l'état final exactement si la partie rencontre les états finaux.
@@ -447,7 +446,7 @@
         ]),
         question([Écrire ```ocaml minimal : automate -> automate``` appliquant cette construction.
           On fera abstraction de la taille des automates générés, possiblement problématique.], solution: [
-          #code("Q29")
+          #code("minimal")
           Cette composition suppose, comme demandé, que les représentations intermédiaires sont disponibles.
           Le code avec ```ocaml pow``` ne fonctionne effectivement que si chaque appel à ```ocaml determinise``` reçoit au plus $20$ états.
           Cette limite peut être dépassée dès la première déterminisation ; il faudrait alors changer la représentation des ensembles pour appliquer la construction sans cette restriction.
@@ -461,10 +460,10 @@
         partie("II.A.1", "Parcours d'une expression", contenu: (
           question([Écrire ```ocaml lettre : exprat -> int``` qui renvoie le nombre de lettres présentes dans une expression régulière.
             Par exemple, pour $E=(a^* b) | a b b a(a | ε)^* | ∅$, la fonction doit renvoyer $7$.],
-            solution: [#code("Q30")
+            solution: [#code("lettre")
               La preuve suit l'induction structurelle : seuls les nœuds ```ocaml Lettre``` contribuent, chacun pour une unité.
             ]),
-          question([Écrire ```ocaml est_vide : exprat -> bool``` qui teste si le langage représenté est vide.], solution: [#code("Q31") Une union est vide si ses deux termes le sont ; une concaténation est vide si au moins un terme l'est.
+          question([Écrire ```ocaml est_vide : exprat -> bool``` qui teste si le langage représenté est vide.], solution: [#code("est_vide") Une union est vide si ses deux termes le sont ; une concaténation est vide si au moins un terme l'est.
             Une étoile contient toujours $ε$.
             Ces règles donnent la correction par induction structurelle.
             ]),
@@ -477,7 +476,7 @@
             La notation $E ≡ E'$ signifie $cal(L)(E)=cal(L)(E')$.
             La fonction suivante simplifie à la racine une union : #code("su") On suppose aussi codée ```ocaml sc : exprat -> exprat```, qui simplifie à la racine une concaténation en utilisant les règles données.],
           question([Écrire ```ocaml se : exprat -> exprat``` qui simplifie à la racine une expression de type ```ocaml Etoile``` selon ces règles.],
-            solution: [#code("Q32")]),
+            solution: [#code("se")]),
           [Considérons $E_n=a | (b dot (b dot (… (b dot ∅)…)))$, où $n$ lettres $b$ concaténées se succèdent.
             #arbre-e4()
             #align(center)[Figure 2 — Arbre syntaxique de $E_4$.]
@@ -489,7 +488,7 @@
           question([Écrire ```ocaml simplifie : exprat -> exprat``` qui simplifie une expression selon ces règles.],
             commentaire: [Simplifier toute l'expression en profondeur.],
             solution: [
-            #code("Q34")
+            #code(("sc", "simplifie"))
             On simplifie les fils avant la racine.
             Par induction, les fils sont irréductibles ; la règle appliquée à la racine renvoie alors soit un fils déjà simplifié, soit un constructeur auquel plus aucune règle ne s'applique.
             Un parcours suffit.
@@ -510,13 +509,13 @@
         partie("II.B.1", "Somme et produit", contenu: (
           question([Écrire ```ocaml somme : mat -> mat -> mat``` qui effectue la somme de matrices de même taille $n × p$.
             Quelle est sa complexité ?],
-            solution: [#code("Q35")
+            solution: [#code("somme")
               Chaque coefficient crée une union en temps constant : coût $Θ(n p)$.
             ]),
           question([Écrire ```ocaml produit : mat -> mat -> mat``` qui effectue le produit de deux matrices de tailles compatibles $n × p$ et $p × q$.
             On ne vérifiera pas cette compatibilité.
             Quelle est sa complexité ?],
-            solution: [#code("Q36")
+            solution: [#code("produit")
               Après $k$ itérations de la boucle intérieure, le coefficient calculé représente l'union des $k$ premiers produits.
               Il y a $n p q$ itérations, chacune en temps constant, donc un coût $Θ(n p q)$, initialisation comprise.
             ]),
@@ -599,7 +598,7 @@
           ]),
           question([Écrire ```ocaml etoile : mat -> mat``` qui renvoie l'étoile d'une matrice avec l'algorithme récursif le plus adéquat.],
             solution: [
-            #code("Q41")
+            #code("etoile")
             Chaque sous-matrice carrée passée récursivement est strictement plus petite.
             Les formules de l'énoncé donnent la correction par récurrence sur $n$.
             Les quatre résultats récursifs sont calculés une seule fois chacun, comme requis pour le coût cubique.
@@ -621,7 +620,7 @@
         question([Écrire ```ocaml langage : automate -> exprat``` renvoyant une expression régulière du langage de l'automate.
           Quelle est sa complexité ?],
           solution: [
-            #code("Q43")
+            #code("langage")
             Le calcul final sélectionne directement les coefficients d'indices initial-final, ce qui donne le même langage que $X M_A^* Y$.
             La construction de $M_A$ coûte $O(n^2+abs(T))$, l'étoile $O(n^3)$ et l'union finale $O(abs(I) abs(F))$.
             Le coût total est donc $O(1+n^3+abs(T))$, soit $O(n^3)$ pour $n ≥ 1$ sur un alphabet fixé.

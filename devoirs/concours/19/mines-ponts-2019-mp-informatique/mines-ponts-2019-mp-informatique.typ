@@ -1,13 +1,12 @@
 #import "/load.typ": code
-#import code: code-region
+#import code: code-extrait
 #import "/load.typ": automate
 #import automate: dessiner-automate, rayon-etat, rayon-grand-etat
 #import "/load.typ": exercice, question, partie
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
-#let source = read("corrige.ml")
-#let code = code-region.with(source)
+#let code = code-extrait.with(read("corrige.ml"))
 
 #let dessiner = dessiner-automate.with(
   rayon: nom => if nom.contains(",") { rayon-grand-etat } else { rayon-etat },
@@ -141,7 +140,7 @@
       - ```ocaml delta : (int * int) array``` contient les couples $(δ(q,a),δ(q,b))$.
       - ```ocaml f : bool array``` indique les états finaux.
       Les deux tableaux sont de longueur $n$.
-      #code("types")
+      #code(("automate", "morphisme"))
       Ainsi, ```ocaml let (n, delta, f) = aut in ...``` extrait les composantes,
       ```ocaml let (succ_a, succ_b) = delta.(q) in ...``` les successeurs de $q$,
       et ```ocaml if f.(q) then ...``` teste si $q$ est final.

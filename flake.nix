@@ -1,8 +1,12 @@
 {
   description = "Ressources pédagogiques mpi-informatique/exercices";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.code-extract = {
+    url = "github:mpi-informatique/typst-code-extract";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, code-extract }:
     let
       systems = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -22,6 +26,7 @@
           pkgs = packagesFor system;
           package = pkgs.runCommand "exercices-typst-${manifest.version}" {
             nativeBuildInputs = [ pkgs.python3 ];
+            TYPST_PACKAGE_PATH = code-extract.packages.${system}.default;
           } ''
             python3 ${source}/scripts/package.py --path "$out"
           '';
@@ -32,11 +37,14 @@
               hash = dependency.hash;
               stripRoot = false;
             };
-          }) dependencies;
+          }) (builtins.filter (dependency: (dependency.namespace or "preview") == "preview") dependencies);
         in {
           default = package;
           typst-package = package;
           typst-packages = pkgs.linkFarm "exercices-typst-packages" (previews ++ [{
+            name = "local/code-extract/0.1.0";
+            path = "${code-extract.packages.${system}.default}/local/code-extract/0.1.0";
+          } {
             name = "mpi-informatique/${manifest.name}/${manifest.version}";
             path = "${package}/mpi-informatique/${manifest.name}/${manifest.version}";
           }]);

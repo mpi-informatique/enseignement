@@ -72,11 +72,13 @@
   assert(query(<notation-test>).len() == 0)
 }
 
-// L'extraction conserve exactement le code entre les marqueurs et sa présentation.
-#import "/lib/code.typ": code-texte, code-region
-#let source-code = "avant\n(* BEGIN test *)\nlet x = 1\n(* END test *)\naprès"
-#let extrait = code-region(source-code, "test")
-#assert(code-texte(source-code, "test") == "let x = 1")
+// L'extraction par nom conserve le code et la présentation, sans balises.
+#import "/lib/code.typ": code-texte, code-extrait
+#let source-code = "let y = 2\nlet x = 1"
+#let extrait = code-extrait(source-code, "x")
+#assert(code-texte(source-code, "x") == "let x = 1")
+#assert(code-texte(source-code, ("x", "y")) == "let x = 1\n\nlet y = 2")
+#assert(code-texte("int f(int x) { return x; }", "f", language: "c") == "int f(int x) { return x; }")
 #assert(extrait.text == "let x = 1" and extrait.lang == "ocaml" and extrait.block)
 
 // Seuls les corrigés de devoirs de concours écrits masquent les introductions.

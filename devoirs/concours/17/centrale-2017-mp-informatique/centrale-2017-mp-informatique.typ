@@ -1,11 +1,11 @@
 #import "/load.typ": exercice, question, partie, feuille
 #import "/load.typ": sep, widetilde
 #import "/load.typ": code
-#import code: code-region
+#import code: code-extrait
 #import "/load.typ": automate
 #import automate: dessiner-automate, rayon-etat, rayon-grand-etat
 
-#let code = code-region.with(read("corrige.ml"))
+#let code = code-extrait.with(read("corrige.ml"))
 #let m0 = dessiner-automate(
   (("0",(0,2),false,false),("1",(4,2),false,false),("2",(2,-1),false,false)),
   (("0","1","0,1",(curve: 0.3)),("1","0","0",(curve: 0.3)),
@@ -154,13 +154,13 @@
       question([Écrire une fonction ```ocaml delta_etoile``` qui, prenant en entrée une machine $M$, un état $q$ et un mot $u$, renvoie l'état atteint par la machine $M$ en partant de l'état $q$ et en lisant le mot $u$.
         ```ocaml
         val delta_etoile : machine -> etat -> mot -> etat
-        ```], solution: [#code("Q4")]),
+        ```], solution: [#code("delta_etoile")]),
       question([Écrire une fonction ```ocaml est_synchronisant``` qui, prenant en entrée une machine $M$ et un mot $u$, dit si le mot est synchronisant pour $M$.
         ```ocaml
         val est_synchronisant : machine -> mot -> bool
         ```],
         commentaire: [Lors du test, s'arrêter dès qu'un état aboutit à une image différente de celle du premier état, et éviter de recalculer cette première image.],
-        solution: [#code("Q5")]),
+        solution: [#code("est_synchronisant")]),
       question([Montrer que pour qu'une machine ait un mot synchronisant, il faut qu'il existe une lettre $x$ et deux états distincts de $Q$, $q$ et $q'$, tels que $q.x=q'.x$.],
         solution: [Soient $r ≠ r'$ et $u=x_1…x_k$ un mot synchronisant. Il existe un premier indice $j ≥ 1$ auquel les images de $r$ et $r'$ par le préfixe de longueur $j$ coïncident. Juste avant cette lettre, les états $q=r.(x_1…x_(j-1))$ et $q'=r'.(x_1…x_(j-1))$ sont distincts, et $q.x_j=q'.x_j$.]),
       [Soit $L S(M)$ le langage des mots synchronisants d'une machine $M=(Q,Σ,δ)$. On introduit la machine des parties $hat(M)=(hat(Q),Σ,hat(δ))$ où $hat(Q)$ est l'ensemble des parties de $Q$ et où $hat(δ)$ est définie par
@@ -227,11 +227,11 @@
       question([Écrire une fonction ```ocaml ajoute``` telle que ```ocaml ajoute f x``` ajoute ```ocaml x``` à la fin de la file d'attente ```ocaml f```. Si c'est impossible, la fonction lèvera une exception.
         ```ocaml
         val ajoute : 'a file -> 'a -> unit
-        ```], solution: [#code("Q12")]),
+        ```], solution: [#code("ajoute")]),
       question([Écrire une fonction ```ocaml retire``` telle que ```ocaml retire f``` retire l'élément en tête de la file d'attente et le renvoie. Si c'est impossible, la fonction lèvera une exception.
         ```ocaml
         val retire : 'a file -> 'a
-        ```], solution: [#code("Q13")]),
+        ```], solution: [#code("retire")]),
       question([Quelle est la complexité de ces fonctions ?],
         commentaire: [```ocaml Array.length``` coûte $O(1)$, contrairement à la longueur d'une liste.],
         solution: [Les deux fonctions effectuent un nombre constant d'accès au tableau, de tests et d'opérations arithmétiques : leur complexité est $O(1)$.]),
@@ -286,12 +286,12 @@
         val accessibles : ((etat * lettre) list) array -> etat list
                           -> int * int array * arc array
         ```], solution: [La liste représentant un ensemble ne contient pas de doublons. La file de capacité $n$ suffit, puisqu'un sommet est ajouté au plus une fois.
-          #code("Q20")]),
+          #code("accessibles")]),
       question([Écrire une fonction ```ocaml chemin``` qui, prenant en entrée un sommet ```ocaml s``` et le tableau ```ocaml p``` calculé à l'aide de la fonction ```ocaml accessibles``` sur un graphe $G$ et un ensemble $X$, renvoie un mot de longueur minimale qui est l'étiquette d'un chemin d'un sommet de $X$ à $s$ (ou lèvera une exception s'il n'en existe pas).
         ```ocaml
         val chemin : etat -> arc array -> mot
         ```], solution: [Remonter les prédécesseurs en ajoutant chaque lettre en tête de l'accumulateur remet les lettres dans l'ordre du chemin.
-          #code("Q21")]),
+          #code("chemin")]),
     )),
     partie("III", "Réduction SAT",
       commentaire: [Rédiger des preuves précises, avec toutes les implications nécessaires.], contenu: (
@@ -354,16 +354,16 @@
         Pour ne pas confondre un état de $widetilde(Q)$ avec sa représentation informatique par un entier, on notera $overline(q)$ l'entier associé à l'état $q$.],
       question([Écrire une fonction ```ocaml delta2``` de signature ```ocaml machine -> etat -> lettre -> etat``` qui, prenant en entrée une machine $M$, un état $overline(q)$ de $widetilde(Q)$ et une lettre $x$, renvoie l'état de $widetilde(Q)$ atteint en lisant la lettre $x$ depuis l'état $q$ dans $widetilde(M)$.],
         solution: [Un singleton reste un singleton. Les images d'une paire peuvent coïncider : sinon, les ranger par ordre croissant pour respecter le contrat de ```ocaml set_to_nb```.
-          #code("Q30")]),
+          #code("delta2")]),
       question([À la machine $widetilde(M)$, on associe un graphe d'automate $widetilde(G)$ dont l'ensemble des sommets est $widetilde(Q)$ et dont l'ensemble des arcs est ${ (q,x,widetilde(δ)(q,x)) | (q,x) ∈ widetilde(Q) × Σ }$. On associe à $widetilde(G)$ le graphe retourné $widetilde(G)_R$ qui a les mêmes sommets mais dont les arcs sont retournés : $(q,x,q')$ est un arc de $widetilde(G)_R$ si et seulement si $(q',x,q)$ est un arc de $widetilde(G)$.
         Écrire une fonction ```ocaml retourne_machine``` de signature ```ocaml machine -> (etat * lettre) list array``` qui, à partir d'une machine $M$, calcule le tableau ```ocaml v``` des listes d'adjacence du graphe $widetilde(G)_R$.],
         solution: [Pour chaque arc $q → q'$ étiqueté par $x$, ajouter $(q,x)$ à la liste d'adjacence de $q'$.
-          #code("Q31")]),
+          #code("retourne_machine")]),
       question([Justifier qu'il suffit d'appliquer la fonction ```ocaml accessibles``` de la partie II au graphe $widetilde(G)_R$ et à l'ensemble des sommets correspondant à des singletons pour déterminer si la machine $M$ possède un mot synchronisant.],
         solution: [D'après la question 28, il suffit que toute paire ${q,q'}$ puisse atteindre un singleton dans $widetilde(G)$. En retournant les arcs, cela équivaut à ce que toute paire soit accessible depuis au moins un singleton dans $widetilde(G)_R$.
           Les singletons sont eux-mêmes dans l'ensemble de départ. Ainsi la condition est satisfaite si et seulement si le parcours atteint tous les sommets, c'est-à-dire si le compteur $c$ renvoyé vaut $0$.]),
       question([Écrire une fonction ```ocaml existe_synchronisant``` de signature ```ocaml machine -> bool``` qui dit si une machine possède un mot synchronisant.],
-        solution: [#code("Q33")]),
+        solution: [#code(("singletons", "existe_synchronisant"))]),
     )),
   ),
 )

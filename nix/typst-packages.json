@@ -68,5 +68,10 @@
     "name": "valkyrie",
     "version": "0.2.1",
     "hash": "sha256-jUkFhI7PXqPzKNhlfu5AjNVv9r1OFGj7fuqPoZ+8OmA="
+  },
+  {
+    "namespace": "local",
+    "name": "code-extract",
+    "version": "0.1.0"
   }
 ]

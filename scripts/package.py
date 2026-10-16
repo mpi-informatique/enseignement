@@ -2,6 +2,7 @@
 """Installer le package Typst @mpi-informatique/exercices."""
 
 import argparse
+import json
 from pathlib import Path
 import os
 import shutil
@@ -37,6 +38,19 @@ def installer(destination):
         if cible.exists():
             shutil.rmtree(cible)
         copie.rename(cible)
+    # Les packages hors de Typst Universe doivent aussi fonctionner hors de Nix.
+    for dependance in json.loads((ROOT / 'nix/typst-packages.json').read_text()):
+        espace = dependance.get('namespace', 'preview')
+        if espace == 'preview':
+            continue
+        relatif = Path(espace) / dependance['name'] / dependance['version']
+        source = Path(os.environ['TYPST_PACKAGE_PATH']) / relatif
+        paquet = Path(destination) / relatif
+        shutil.copytree(source, paquet, dirs_exist_ok=True, copy_function=shutil.copyfile)
+        # Le store Nix est en lecture seule, mais la copie doit rester réinstallable.
+        for dossier in (paquet, *paquet.rglob('*')):
+            if dossier.is_dir():
+                dossier.chmod(dossier.stat().st_mode | 0o200)
     return cible
 
 

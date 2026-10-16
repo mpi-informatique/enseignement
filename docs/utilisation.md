@@ -41,9 +41,11 @@ Pour les modules spécialisés, écrire par exemple :
 ```typst
 #import "/load.typ": automate, code, theoremes
 #import automate: dessiner-automate
-#import code: code-region
+#import code: code-extrait
 #import theoremes: definition, theorem
 ```
+
+Pour afficher du code testé, extraire les déclarations par leur nom avec `code-extrait(read("corrige.ml"), "fonction")`. Un tuple de noms réunit plusieurs déclarations dans le même bloc, par exemple `code-extrait(read("corrige.ml"), ("regle", "grammaire"))`. Pour le C, ajouter `language: "c"`. `code-texte` renvoie uniquement le texte. Le package externe `code-extract` est verrouillé dans `flake.lock` et fourni par l'environnement Nix, l'installation locale et le site.
 
 Conserver les ressources propres au sujet (images, code, tests) à côté de celui-ci et les référencer par des chemins relatifs. Lors d'un passage du privé au public demandé par l'utilisateur, déplacer le fichier ou son dossier complet : l'import de l'API commune reste identique. Vérifier les autres imports de contenus, adapter les chemins des feuilles qui réutilisent le sujet, puis lancer `just check` dans les deux dépôts. Les copies nominatives, évaluations et scans restent privés.
 
