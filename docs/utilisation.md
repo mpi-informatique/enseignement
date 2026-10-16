@@ -159,6 +159,8 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 
 ## Présentation du code
 
+- Dans les structures de données du code (tuples, listes, tableaux, etc.), toujours mettre un espace après chaque virgule ou point-virgule séparant des éléments sur une même ligne. Préserver les retours à la ligne structurels.
+
 - Dans tout le dépôt, ne pas imposer de longueur maximale aux lignes de code, quel que soit le langage, notamment Typst. Ne pas couper une ligne uniquement pour respecter un nombre de colonnes ou de caractères (80, 100, 120, etc.), ni ajouter une telle contrainte à un outil de formatage ou de vérification.
 - Choisir les retours à la ligne selon la lisibilité et la structure logique. Préserver les retours structurels et les contraintes syntaxiques du langage.
 
