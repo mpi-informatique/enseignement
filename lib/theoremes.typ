@@ -23,7 +23,12 @@
     title-style: (boxed-style: (anchor: (x: start, y: horizon), radius: 0em), color: black, weight: "semibold"),
   )
   let espacement = espacement-cadres.get()
-  if espacement != none { v(espacement, weak: true) }
+  if espacement != none {
+    v(espacement, weak: true)
+  } else if style-cadres.get() == none {
+    // Garder une marge même au début d'un bloc de contenu de Touying en mode article.
+    v(0.6em)
+  }
   if coeur and style-cadres.get() == none {
     grid(
       columns: (0pt, 1fr), column-gutter: 0pt,
