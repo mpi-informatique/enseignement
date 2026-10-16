@@ -26,8 +26,7 @@
 
 = Automate non déterministe
 
-#slides-only[== États et transitions]
-#definition[
+#let definition-automate = definition[
   Un automate est un $5$-uplet $A = (Σ, Q, I, F, E)$ où :
   - $Σ$ est un alphabet.
   - $Q$ est un ensemble fini d'états.
@@ -35,12 +34,30 @@
   - $F ⊂ Q$ est l'ensemble des états finaux, ou acceptants.
   - $E ⊂ Q × Σ × Q$ est l'ensemble des transitions.
 ]
-#slides-only[== Exemple d'automate]
 
-#figure(exemple, numbering: none, caption: [
+#let exemple-automate = figure(exemple, numbering: none, caption: [
   $Σ = {a, b}, Q = {0, 1, 2}, I = {0}, F = {2}$\
   $E = {(0, a, 0), (0, b, 1), (1, a, 0), (1, a, 2), (2, b, 2)}$
 ])
+
+#article-only[
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 1.5em,
+    align: top,
+    definition-automate,
+    [
+      #set text(size: 8pt)
+      #exemple-automate
+    ],
+  )
+]
+#slides-only[
+  == États et transitions
+  #definition-automate
+  == Exemple d'automate
+  #exemple-automate
+]
 
 == Fonction de transition
 #definition[
