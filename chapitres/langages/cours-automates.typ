@@ -60,19 +60,36 @@
 ]
 
 == Fonction de transition
-#definition[
-  On peut remplacer $E$ par la fonction $δ : Q × Σ → cal(P)(Q)$ définie par :
-  $ δ(q, a) = {q' ∈ Q ∣ (q, a, q') ∈ E}. $
+#let definition-transition = [
+  #definition[
+    On peut remplacer $E$ par la fonction $δ : Q × Σ → cal(P)(Q)$ définie par :
+    $ δ(q, a) = {q' ∈ Q ∣ (q, a, q') ∈ E}. $
+  ]
+  Il y a un blocage lorsque $δ(q, a) = ∅$.
 ]
-Il y a un blocage lorsque $δ(q, a) = ∅$.
-#pause
-#exercise[Donner la fonction de transition de l'automate précédent.]
-#table(
-  columns: 4,
-  table.header([$q$], [$0$], [$1$], [$2$]),
-  [$δ(q, a)$], [], [], [],
-  [$δ(q, b)$], [], [], [],
-)
+#let exercice-transition = [
+  #exercise[Donner la fonction de transition de l'automate précédent.]
+  #table(
+    columns: 4,
+    table.header([$q$], [$0$], [$1$], [$2$]),
+    [$δ(q, a)$], [], [], [],
+    [$δ(q, b)$], [], [], [],
+  )
+]
+
+#article-only[
+  #grid(
+    columns: (1.6fr, 1fr),
+    column-gutter: 1.5em,
+    align: top,
+    definition-transition, exercice-transition,
+  )
+]
+#slides-only[
+  #definition-transition
+  #pause
+  #exercice-transition
+]
 
 == Implémentation
 On peut représenter $δ$ par une matrice, une fonction ```ocaml int -> char -> int list``` ou un dictionnaire de clés $(q, a)$.
