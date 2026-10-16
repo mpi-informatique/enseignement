@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, Q, automate, code
+#import "/load.typ": Q, automate, code, exercice
 #import code: code-extrait
 
 #import automate: dessiner-automate
@@ -14,7 +14,8 @@
     difficulte: 3,
     niveaux: ("MPI",),
   ),
-  contenu: ([
+  contenu: (
+    [
       Cet exercice est une alternative à la méthode d'élimination des états pour obtenir une expression régulière à partir d'un automate, avec une méthode similaire à l'algorithme de Floyd-Warshall.
 
       Soit $(Σ,Q,0,F,δ)$ un automate déterministe tel que $Q = {0, …, n-1}$.
@@ -56,20 +57,25 @@
 
       Le langage reconnu est $⋃_(f ∈ F) L(0,f,n)$, une union finie de langages réguliers ; il est donc régulier. Tout langage reconnaissable admet un automate déterministe, ce qui donne le résultat annoncé.
     ]),
-    Q([
-      Implémenter cet algorithme avec une fonction ```ocaml kleene : 'a automate -> 'a regexp```.
-      Préciser la complexité.
-      #grid(columns: (1fr, 1fr), column-gutter: 1.5em, align: top,
-        code("regexp"),
-        code("automate"),
-      )
-    ], solution: [
-      #block(breakable: false)[#code("kleene")]
+    Q(
+      [
+        Implémenter cet algorithme avec une fonction ```ocaml kleene : 'a automate -> 'a regexp```.
+        Préciser la complexité.
+        #grid(
+          columns: (1fr, 1fr),
+          column-gutter: 1.5em,
+          align: top,
+          code("regexp"), code("automate"),
+        )
+      ],
+      solution: [
+        #block(breakable: false)[#code("kleene")]
 
-      Avant le tour $k$, ```ocaml l.(i).(j)``` dénote $L(i,j,k)$. Les copies de la ligne et de la colonne $k$ permettent d'appliquer la récurrence sans mélanger les niveaux.
+        Avant le tour $k$, ```ocaml l.(i).(j)``` dénote $L(i,j,k)$. Les copies de la ligne et de la colonne $k$ permettent d'appliquer la récurrence sans mélanger les niveaux.
 
-      Pour $m$ transitions, le temps est $O(n^3 + m)$ : chaque constructeur partage ses sous-expressions en $O(1)$.
-      La matrice occupe $O(n^2)$ cases, mais les expressions construites peuvent occuper $O(n^3 + m)$ en mémoire. Leur écriture complète peut être de taille exponentielle.
-    ]),
+        Pour $m$ transitions, le temps est $O(n^3 + m)$ : chaque constructeur partage ses sous-expressions en $O(1)$.
+        La matrice occupe $O(n^2)$ cases, mais les expressions construites peuvent occuper $O(n^3 + m)$ en mémoire. Leur écriture complète peut être de taille exponentielle.
+      ],
+    ),
   ),
 )

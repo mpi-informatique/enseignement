@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, Q
+#import "/load.typ": Q, exercice
 
 #let ex = exercice(
   meta: (
@@ -8,7 +8,6 @@
     niveaux: ("MPI",),
   ),
   contenu: (
-
     [Pour chacune des propositions suivantes sur des expressions régulières quelconques, donner une preuve ou un contre-exemple.
       Le symbole $equiv$ signifie que les expressions décrivent le même langage.],
     Q([$ (e^2)^* equiv (e^*)^2 quad ("où " e^2=e e). $], solution: [

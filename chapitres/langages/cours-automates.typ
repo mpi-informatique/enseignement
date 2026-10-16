@@ -1,13 +1,19 @@
-#import "/load.typ": cours-et-presentation, pause, article-only, slides-only, sep, theoremes, automate
-#import theoremes: definition, theorem, lemma, exercise, algorithm
-#import automate: dessiner-automate, cetz, finite, unite-automates, style-automates
+#import "/load.typ": article-only, automate, cours-et-presentation, pause, sep, slides-only, theoremes
+#import theoremes: algorithm, definition, exercise, lemma, theorem
+#import automate: cetz, dessiner-automate, finite, style-automates, unite-automates
 #import "@preview/touying:0.8.0": touying-reducer
 
 #show: cours-et-presentation.with(titre: "Automates", niveau: "MPI")
 
 #let exemple = dessiner-automate(
   (("0", (0, 0), true, false), ("1", (3, 0), false, false), ("2", (6, 0), false, true)),
-  (("0", "0", "a", (:)), ("0", "1", "b", (curve: 0.4)), ("1", "0", "a", (curve: 0.4)), ("1", "2", "a", (:)), ("2", "2", "b", (:))),
+  (
+    ("0", "0", "a", (:)),
+    ("0", "1", "b", (curve: 0.4)),
+    ("1", "0", "a", (curve: 0.4)),
+    ("1", "2", "a", (:)),
+    ("2", "2", "b", (:)),
+  ),
 )
 #let impair = dessiner-automate(
   (("0", (0, 0), true, false), ("1", (3, 0), false, true)),
@@ -44,7 +50,12 @@
 Il y a un blocage lorsque $δ(q, a) = ∅$.
 #pause
 #exercise[Donner la fonction de transition de l'automate précédent.]
-#table(columns: 4, table.header([$q$], [$0$], [$1$], [$2$]), [$δ(q, a)$], [], [], [], [$δ(q, b)$], [], [], [])
+#table(
+  columns: 4,
+  table.header([$q$], [$0$], [$1$], [$2$]),
+  [$δ(q, a)$], [], [], [],
+  [$δ(q, b)$], [], [], [],
+)
 
 == Implémentation
 On peut représenter $δ$ par une matrice, une fonction ```ocaml int -> char -> int list``` ou un dictionnaire de clés $(q, a)$.
@@ -70,7 +81,9 @@ type automate = {
 ]
 
 #slides-only[== Module Hashtbl (non exigible)]
-#table(columns: (auto, 1fr), inset: 0.4em,
+#table(
+  columns: (auto, 1fr),
+  inset: 0.4em,
   table.header([*Fonction*], [*Utilisation*]),
   [```ocaml create n```], [Créer une table.],
   [```ocaml add t k v```], [Ajouter une liaison.],
@@ -245,40 +258,45 @@ L'automate des parties possède $2^(abs(Q))$ états. En pratique, ne construire 
   #text(size: 0.6em)[
     #facteur
     #v(0.5em)
-    #align(center, touying-reducer(reduce: cetz.canvas, cover: cetz.draw.hide.with(bounds: true), length: unite-automates, {
-      import finite.draw: state, transition
-      cetz.draw.set-style(..style-automates, state: (radius: 0.9))
-      state((0, 2), "0", label: ${0}$, initial: (label: none))
-      (pause,)
-      state((3, 2), "1", label: ${0, 1}$)
-      transition("0", "1", label: (text: $a$))
-      (pause,)
-      transition("0", "0", label: (text: $b$))
-      (pause,)
-      transition("1", "1", label: (text: $a$))
-      (pause,)
-      state((6, 2), "2", label: ${0, 2}$)
-      transition("1", "2", label: (text: $b$), curve: 0.4)
-      (pause,)
-      transition("2", "1", label: (text: $a$), curve: 0.4)
-      (pause,)
-      state((6, -2), "3", label: ${0, 3}$, final: true)
-      transition("2", "3", label: (text: $b$))
-      (pause,)
-      state((3, -2), "4", label: ${0, 1, 3}$, final: true)
-      transition("3", "4", label: (text: $a$))
-      (pause,)
-      transition("3", "3", label: (text: $b$), anchor: bottom)
-      (pause,)
-      transition("4", "4", label: (text: $a$), anchor: bottom)
-      (pause,)
-      state((0, -2), "5", label: ${0, 2, 3}$, final: true)
-      transition("4", "5", label: (text: $b$), curve: 0.4)
-      (pause,)
-      transition("5", "4", label: (text: $a$), curve: 0.4)
-      (pause,)
-      transition("5", "3", label: (text: $b$, dist: -style-automates.transition.label.dist), curve: -3)
-    }))
+    #align(center, touying-reducer(
+      reduce: cetz.canvas,
+      cover: cetz.draw.hide.with(bounds: true),
+      length: unite-automates,
+      {
+        import finite.draw: state, transition
+        cetz.draw.set-style(..style-automates, state: (radius: 0.9))
+        state((0, 2), "0", label: ${0}$, initial: (label: none))
+        (pause,)
+        state((3, 2), "1", label: ${0, 1}$)
+        transition("0", "1", label: (text: $a$))
+        (pause,)
+        transition("0", "0", label: (text: $b$))
+        (pause,)
+        transition("1", "1", label: (text: $a$))
+        (pause,)
+        state((6, 2), "2", label: ${0, 2}$)
+        transition("1", "2", label: (text: $b$), curve: 0.4)
+        (pause,)
+        transition("2", "1", label: (text: $a$), curve: 0.4)
+        (pause,)
+        state((6, -2), "3", label: ${0, 3}$, final: true)
+        transition("2", "3", label: (text: $b$))
+        (pause,)
+        state((3, -2), "4", label: ${0, 1, 3}$, final: true)
+        transition("3", "4", label: (text: $a$))
+        (pause,)
+        transition("3", "3", label: (text: $b$), anchor: bottom)
+        (pause,)
+        transition("4", "4", label: (text: $a$), anchor: bottom)
+        (pause,)
+        state((0, -2), "5", label: ${0, 2, 3}$, final: true)
+        transition("4", "5", label: (text: $b$), curve: 0.4)
+        (pause,)
+        transition("5", "4", label: (text: $a$), curve: 0.4)
+        (pause,)
+        transition("5", "3", label: (text: $b$, dist: -style-automates.transition.label.dist), curve: -3)
+      },
+    ))
   ]
 ]
 
@@ -307,7 +325,9 @@ L'automate des parties possède $2^(abs(Q))$ états. En pratique, ne construire 
 ]
 
 == Automate produit
-#theorem(coeur: true)[Les langages reconnaissables sur un même alphabet sont stables par intersection, union et différence.]
+#theorem(
+  coeur: true,
+)[Les langages reconnaissables sur un même alphabet sont stables par intersection, union et différence.]
 Pour deux automates déterministes complets $A_1$, $A_2$, utiliser les états $Q_1 × Q_2$, l'état initial $(i_1, i_2)$ et :
 $ δ((q_1, q_2), a) = (δ_1(q_1, a), δ_2(q_2, a)). $
 
@@ -396,6 +416,6 @@ Pour montrer que $L$ n'est pas reconnaissable :
   Si $L_2$ était reconnaissable, $a^* b^* ∖ L_2 = L_1$ le serait aussi par stabilité par différence.
 ]
 
-#underline[Remarque] : 
-- Les automates sont sans mémoire : le choix d'une transition dépend uniquement de l'état actuel et de la lettre lue, pas du chemin déjà parcouru. Ils ne peuvent donc pas compter. 
+#underline[Remarque] :
+- Les automates sont sans mémoire : le choix d'une transition dépend uniquement de l'état actuel et de la lettre lue, pas du chemin déjà parcouru. Ils ne peuvent donc pas compter.
 - ${a^n b^p | n ≡ p mod 2}$ est reconnaissable car il suffit de mémoriser la parité du nombre de $a$ et de $b$ lus (2 états suffisent) et pas une infinité de valeurs possibles.

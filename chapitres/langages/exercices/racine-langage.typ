@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, Q
+#import "/load.typ": Q, exercice
 
 #let ex = exercice(
   meta: (
@@ -7,7 +7,8 @@
     difficulte: 3,
     niveaux: ("MPI",),
   ),
-  contenu: ([Soit $L$ un langage régulier sur un alphabet $Σ$.
+  contenu: (
+    [Soit $L$ un langage régulier sur un alphabet $Σ$.
       On définit $sqrt(L)={u ∈ Σ^* | u^2 ∈ L}$ et $L_2={u^2 | u ∈ L}$.],
     Q([Est-il toujours vrai que $L^2=L_2$ ?], solution: [
       Non. Pour $L = {a, b}$ sur $Σ = {a, b}$, on a $L^2 = {a a, a b, b a, b b}$, tandis que $L_2 = {a a, b b}$.

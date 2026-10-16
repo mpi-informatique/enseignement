@@ -1,0 +1,11 @@
+{
+  "tinymist.formatterMode": "typstyle",
+  "tinymist.formatterIndentSize": 2,
+  "tinymist.formatterProseWrap": false,
+  "[typst]": {
+    "editor.defaultFormatter": "myriad-dreamin.tinymist",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  }
+}

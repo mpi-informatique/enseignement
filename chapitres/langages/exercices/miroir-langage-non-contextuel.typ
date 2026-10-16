@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, Q
+#import "/load.typ": Q, exercice
 #import "/load.typ": widetilde
 
 #let ex = exercice(
@@ -8,7 +8,8 @@
     difficulte: 2,
     niveaux: ("MPI",),
   ),
-  contenu: ([On note $widetilde(u) = u_n … u_1$ le miroir d'un mot $u = u_1 … u_n$ et $widetilde(L) = {widetilde(u) | u ∈ L}$ le miroir d'un langage $L$.],
+  contenu: (
+    [On note $widetilde(u) = u_n … u_1$ le miroir d'un mot $u = u_1 … u_n$ et $widetilde(L) = {widetilde(u) | u ∈ L}$ le miroir d'un langage $L$.],
     Q([Soit $L$ un langage non-contextuel. Montrer que $widetilde(L)$ est non-contextuel.], solution: [
       Soit $G = (Σ, V, R, S)$ une grammaire engendrant $L$.
       Remplacer chaque règle $X → α$ par $X → widetilde(α)$ donne une grammaire $G'$.

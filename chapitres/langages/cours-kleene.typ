@@ -1,16 +1,41 @@
-#import "/load.typ": cours-et-presentation, pause, article-only, slides-only, sep, theoremes, automate
-#import theoremes: definition, theorem, lemma, exercise, algorithm
+#import "/load.typ": article-only, automate, cours-et-presentation, pause, sep, slides-only, theoremes
+#import theoremes: algorithm, definition, exercise, lemma, theorem
 #import automate: dessiner-automate
 
 #show: cours-et-presentation.with(titre: "Théorème de Kleene", niveau: "MPI")
 
 #let epsilon = dessiner-automate(
-  (("0", (0, 0), true, false), ("1", (3, 0), false, false), ("2", (6, 2), false, false), ("3", (6, -2), false, false), ("4", (9, 0), false, true)),
-  (("0", "1", "a", (:)), ("0", "3", "ε", (curve: -0.5)), ("1", "2", "ε", (:)), ("1", "3", "a", (:)),
-   ("2", "4", "c", (:)), ("3", "4", "b", (curve: 0.4)), ("3", "4", "ε", (curve: -0.4))),
+  (
+    ("0", (0, 0), true, false),
+    ("1", (3, 0), false, false),
+    ("2", (6, 2), false, false),
+    ("3", (6, -2), false, false),
+    ("4", (9, 0), false, true),
+  ),
+  (
+    ("0", "1", "a", (:)),
+    ("0", "3", "ε", (curve: -0.5)),
+    ("1", "2", "ε", (:)),
+    ("1", "3", "a", (:)),
+    ("2", "4", "c", (:)),
+    ("3", "4", "b", (curve: 0.4)),
+    ("3", "4", "ε", (curve: -0.4)),
+  ),
 )
-#let elimination-etats = (("1", (0, 1.5), true, false), ("2", (3, 1.5), false, true), ("3", (0, -1.5), false, false), ("4", (3, -1.5), false, false))
-#let elimination-arcs = (("1", "2", "a", (:)), ("1", "3", "a", (:)), ("2", "4", "a", (:)), ("3", "4", "b", (:)), ("4", "1", "b", (:)), ("4", "4", "b", (:)))
+#let elimination-etats = (
+  ("1", (0, 1.5), true, false),
+  ("2", (3, 1.5), false, true),
+  ("3", (0, -1.5), false, false),
+  ("4", (3, -1.5), false, false),
+)
+#let elimination-arcs = (
+  ("1", "2", "a", (:)),
+  ("1", "3", "a", (:)),
+  ("2", "4", "a", (:)),
+  ("3", "4", "b", (:)),
+  ("4", "1", "b", (:)),
+  ("4", "4", "b", (:)),
+)
 
 #slides-only[== Objectif]
 Montrer qu'un langage est régulier si et seulement s'il est reconnaissable.
@@ -106,7 +131,13 @@ Pour reconnaître un langage local $L$, utiliser $Q = Σ ∪ {q_0}$, avec $q_0 �
   #pause
   #dessiner-automate(
     (("q_0", (0, 0), true, false), ("a", (3, 0), false, true), ("b", (6, 0), false, true)),
-    (("q_0", "a", "a", (:)), ("a", "a", "a", (:)), ("b", "b", "b", (:)), ("a", "b", "b", (curve: 0.5)), ("b", "a", "a", (curve: 0.5))),
+    (
+      ("q_0", "a", "a", (:)),
+      ("a", "a", "a", (:)),
+      ("b", "b", "b", (:)),
+      ("a", "b", "b", (curve: 0.5)),
+      ("b", "a", "a", (curve: 0.5)),
+    ),
   )
 ]
 
@@ -131,9 +162,21 @@ Tout mot reconnu après projection est l'image d'un mot de $L(e')$, et réciproq
 
   == Automate de Glushkov
   #dessiner-automate(
-    (("q_0", (0, 0), true, false), ("a_0", (3, 0), false, true), ("a_1", (6, 1.5), false, true), ("b_0", (6, -1.5), false, true)),
-    (("q_0", "a_0", "a", (:)), ("a_0", "a_1", "a", (:)), ("a_0", "b_0", "b", (:)), ("a_1", "a_1", "a", (:)), ("b_0", "b_0", "b", (:)),
-     ("a_1", "b_0", "b", (curve: 0.5)), ("b_0", "a_1", "a", (curve: 0.5))),
+    (
+      ("q_0", (0, 0), true, false),
+      ("a_0", (3, 0), false, true),
+      ("a_1", (6, 1.5), false, true),
+      ("b_0", (6, -1.5), false, true),
+    ),
+    (
+      ("q_0", "a_0", "a", (:)),
+      ("a_0", "a_1", "a", (:)),
+      ("a_0", "b_0", "b", (:)),
+      ("a_1", "a_1", "a", (:)),
+      ("b_0", "b_0", "b", (:)),
+      ("a_1", "b_0", "b", (curve: 0.5)),
+      ("b_0", "a_1", "a", (curve: 0.5)),
+    ),
   )
 ]
 
@@ -227,24 +270,56 @@ Chaque élimination conserve le langage. À la fin, l'étiquette restante décri
 #slides-only[
   == Normaliser l'exemple
   #dessiner-automate(
-    (("q_i", (-3, 1.5), true, false), ("1", (0, 1.5), false, false), ("2", (3, 1.5), false, false),
-     ("q_f", (6, 1.5), false, true), ("3", (0, -1.5), false, false), ("4", (3, -1.5), false, false)),
+    (
+      ("q_i", (-3, 1.5), true, false),
+      ("1", (0, 1.5), false, false),
+      ("2", (3, 1.5), false, false),
+      ("q_f", (6, 1.5), false, true),
+      ("3", (0, -1.5), false, false),
+      ("4", (3, -1.5), false, false),
+    ),
     (..elimination-arcs, ("q_i", "1", "ε", (:)), ("2", "q_f", "ε", (:))),
   )
 
   == Supprimer l'état 1
   #dessiner-automate(
-    (("q_i", (-3, 1.5), true, false), ("2", (3, 1.5), false, false), ("q_f", (6, 1.5), false, true), ("3", (0, -1.5), false, false), ("4", (3, -1.5), false, false)),
-    (("q_i", "2", "a", (:)), ("q_i", "3", "a", (:)), ("2", "4", "a", (curve: 0.4)), ("4", "2", "b a", (curve: 0.4)),
-     ("3", "4", "b", (curve: 0.4)), ("4", "3", "b a", (curve: 0.4)), ("4", "4", "b", (:)), ("2", "q_f", "ε", (:))),
+    (
+      ("q_i", (-3, 1.5), true, false),
+      ("2", (3, 1.5), false, false),
+      ("q_f", (6, 1.5), false, true),
+      ("3", (0, -1.5), false, false),
+      ("4", (3, -1.5), false, false),
+    ),
+    (
+      ("q_i", "2", "a", (:)),
+      ("q_i", "3", "a", (:)),
+      ("2", "4", "a", (curve: 0.4)),
+      ("4", "2", "b a", (curve: 0.4)),
+      ("3", "4", "b", (curve: 0.4)),
+      ("4", "3", "b a", (curve: 0.4)),
+      ("4", "4", "b", (:)),
+      ("2", "q_f", "ε", (:)),
+    ),
   )
 
   == Supprimer l'état 4
   Poser $u = b^* b a$.
   #dessiner-automate(
-    (("q_i", (-3, 1), true, false), ("2", (3, 1), false, false), ("q_f", (6, 1), false, true), ("3", (0, -2), false, false)),
-    (("q_i", "2", "a", (:)), ("q_i", "3", "a", (:)), ("2", "3", "a u", (curve: 0.4)), ("3", "2", "b u", (curve: 0.4)),
-     ("2", "2", "a u", (:)), ("3", "3", "b u", (:)), ("2", "q_f", "ε", (:))),
+    (
+      ("q_i", (-3, 1), true, false),
+      ("2", (3, 1), false, false),
+      ("q_f", (6, 1), false, true),
+      ("3", (0, -2), false, false),
+    ),
+    (
+      ("q_i", "2", "a", (:)),
+      ("q_i", "3", "a", (:)),
+      ("2", "3", "a u", (curve: 0.4)),
+      ("3", "2", "b u", (curve: 0.4)),
+      ("2", "2", "a u", (:)),
+      ("3", "3", "b u", (:)),
+      ("2", "q_f", "ε", (:)),
+    ),
   )
 
   == Supprimer l'état 3

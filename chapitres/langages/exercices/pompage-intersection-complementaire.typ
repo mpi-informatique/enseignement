@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, Q
+#import "/load.typ": Q, exercice
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -8,7 +8,8 @@
     difficulte: 3,
     niveaux: ("MPI",),
   ),
-  contenu: ([On admet le lemme de pompage suivant pour les langages non-contextuels :
+  contenu: (
+    [On admet le lemme de pompage suivant pour les langages non-contextuels :
       si $L$ est non-contextuel, il existe un entier $p ≥ 1$ tel que tout mot $t ∈ L$ de longueur au moins $p$ s'écrit $t = u v w x y$, avec :
       - $abs(v w x) ≤ p$
       - $v x ≠ ε$
@@ -28,21 +29,24 @@
       Pour $i=0$, on retire au moins une lettre puisque $v x ≠ ε$, tandis que le nombre d'occurrences de la lettre absente reste $p$.
       Les trois nombres ne sont plus égaux, donc $u w y ∉ L_2$ : contradiction.
     ]),
-    Q([
-      Montrer que les langages non-contextuels sont stables par union.
-      En déduire qu'ils ne sont stables ni par intersection ni par passage au complémentaire.
-      Les complémentaires sont pris dans ${a,b,c}^*$.
-    ], solution: [
-      Pour l'union, renommer les variables de deux grammaires afin qu'elles soient disjointes, puis ajouter un nouvel axiome $S$ et les règles $S → S_1 ∣ S_2$.
-      Les dérivations choisissent l'une des deux grammaires, d'où exactement l'union.
+    Q(
+      [
+        Montrer que les langages non-contextuels sont stables par union.
+        En déduire qu'ils ne sont stables ni par intersection ni par passage au complémentaire.
+        Les complémentaires sont pris dans ${a,b,c}^*$.
+      ],
+      solution: [
+        Pour l'union, renommer les variables de deux grammaires afin qu'elles soient disjointes, puis ajouter un nouvel axiome $S$ et les règles $S → S_1 ∣ S_2$.
+        Les dérivations choisissent l'une des deux grammaires, d'où exactement l'union.
 
-      Le langage $K = {a^k b^n c^n | k,n ∈ ℕ}$ est non-contextuel :
-      prendre $S → A B$, $A → a A ∣ ε$, $B → b B c ∣ ε$.
-      Or $L_1 ∩ K = L_2$, qui n'est pas non-contextuel.
+        Le langage $K = {a^k b^n c^n | k,n ∈ ℕ}$ est non-contextuel :
+        prendre $S → A B$, $A → a A ∣ ε$, $B → b B c ∣ ε$.
+        Or $L_1 ∩ K = L_2$, qui n'est pas non-contextuel.
 
-      Si le passage au complémentaire préservait les langages non-contextuels, la stabilité par union et l'identité de De Morgan
-      $ L_1 ∩ K = overline(overline(L_1) ∪ overline(K)) $
-      impliqueraient la stabilité par intersection : contradiction.
-    ]),
+        Si le passage au complémentaire préservait les langages non-contextuels, la stabilité par union et l'identité de De Morgan
+        $ L_1 ∩ K = overline(overline(L_1) ∪ overline(K)) $
+        impliqueraient la stabilité par intersection : contradiction.
+      ],
+    ),
   ),
 )

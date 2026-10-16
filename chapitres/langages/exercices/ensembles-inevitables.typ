@@ -1,10 +1,10 @@
-#import "/load.typ": exercice, Q
+#import "/load.typ": Q, exercice
 #import "/load.typ": sep
 
 #let ex = exercice(
   meta: (
     titre: "Ensembles inévitables de mots",
-    chapitres: ("langages-reguliers", "automates-finis", "graphes",),
+    chapitres: ("langages-reguliers", "automates-finis", "graphes"),
     algorithmes: ("parcours-en-profondeur", "determinisation"),
     structures: ("graphe-oriente",),
     difficulte: 4,
@@ -12,203 +12,240 @@
     duree: none,
     concours: (nom: "ENS", annee: 2019, filiere: "MP"),
   ),
-  contenu: ([
-    On fixe l'alphabet $Sigma = {a, b}$.
-    Pour $w in Sigma^*$, on note $w = w_1 dots w_n$, où $n = abs(w)$ est sa longueur.
-    Le mot vide est noté $epsilon$.
-    Un mot $s in Sigma^*$ est un *facteur* de $w$ s'il existe deux mots $u, v in Sigma^*$ tels que $w = u s v$.
-    Autrement dit, $s$ apparaît dans $w$ en un bloc de lettres consécutives.
-    En particulier, $epsilon$ et $w$ sont des facteurs de $w$.
-
-    Un mot $w$ *évite* un mot $s$ si $s$ n'est pas un facteur de $w$.
-    Il évite un ensemble $S subset.eq Sigma^*$ s'il évite chacun de ses éléments.
-    ],
-    Q([
-      Donner un mot de longueur au moins $12$ qui évite
-      $ S_0 = {a a a a, a a a b, a b a, b a a a, b a b, b b b b}. $
-    ], solution: [
-      Le mot $(a a b b)^3 = a a b b a a b b a a b b$ convient.
-      Ses facteurs de longueur $3$ sont $a a b$, $a b b$, $b b a$ et $b a a$ ; ceux de longueur $4$ sont $a a b b$, $a b b a$, $b b a a$ et $b a a b$.
-      Aucun ne figure dans $S_0$.
-    ]),
-    Q([
-      Donner le pseudocode d'un algorithme simple qui détermine si un mot $w$ évite un ensemble fini $S$.
-      Analyser son coût en temps et en espace lorsque les $m$ mots de $S$ ont tous la même longueur $ell$.
-    ], solution: [
-      On compare chaque motif à chaque position possible, sans extraire de sous-chaîne.
-      Le pseudocode utilise des indices commençant à $0$.
-
-      ```text
-      évite(w, S):
-          n ← longueur(w)
-          pour chaque s dans S:
-              ℓ ← longueur(s)
-              si ℓ = 0: renvoyer faux
-              si ℓ ≤ n:
-                  pour i de 0 à n − ℓ inclus:
-                      j ← 0
-                      tant que j < ℓ et w[i + j] = s[j]:
-                          j ← j + 1
-                      si j = ℓ: renvoyer faux
-          renvoyer vrai
-      ```
-
-      Les tests du « tant que » sont évalués de gauche à droite, avec court-circuit.
-      Pour $1 <= ell <= n$, le temps au pire est $O(1 + m + m (n - ell + 1) ell)$, donc $O(n m ell)$ si $m >= 1$.
-      L'espace auxiliaire est $O(1)$ : seuls des indices sont conservés, sans compter les entrées.
-      Si $ell > n$, le temps est $O(1 + m)$.
-      L'ensemble vide est toujours évité ; si $epsilon in S$, aucun mot ne l'évite.
-    ]),
+  contenu: (
     [
-    On pose
-    $ "Av"(S) = {w in Sigma^* | w " évite " S}. $
-    L'ensemble $S$ est *inévitable* si $"Av"(S)$ est fini, et *évitable* sinon.
-    Sur un alphabet fini, être évitable équivaut à admettre des mots évitants de longueurs arbitrairement grandes.
+      On fixe l'alphabet $Sigma = {a, b}$.
+      Pour $w in Sigma^*$, on note $w = w_1 dots w_n$, où $n = abs(w)$ est sa longueur.
+      Le mot vide est noté $epsilon$.
+      Un mot $s in Sigma^*$ est un *facteur* de $w$ s'il existe deux mots $u, v in Sigma^*$ tels que $w = u s v$.
+      Autrement dit, $s$ apparaît dans $w$ en un bloc de lettres consécutives.
+      En particulier, $epsilon$ et $w$ sont des facteurs de $w$.
+
+      Un mot $w$ *évite* un mot $s$ si $s$ n'est pas un facteur de $w$.
+      Il évite un ensemble $S subset.eq Sigma^*$ s'il évite chacun de ses éléments.
     ],
-    Q([
-      L'ensemble $S_0$ de la question 1 est-il inévitable ?
-      Même question pour $S_1 = {a a a, a b b, b a a, a b a b}$.
-    ], solution: [
-      Ils sont tous deux évitables.
-      Pour tout $t in NN$, $(a a b b)^t$ évite $S_0$, comme le montre la liste de facteurs de la question 1.
-      De même, $b^t$ évite $S_1$, dont chaque élément contient au moins un $a$.
-    ]),
-    Q([
-      Montrer que $S_2 = {a a a, b a b, b a a b, b b b}$ est inévitable.
-      On pourra donner une borne sur la longueur des mots qui l'évitent.
-    ], solution: [
-      Supposons qu'un mot de longueur $7$ évite $S_2$.
-      Ses cinq premières lettres contiennent $b a$ : sinon ce préfixe serait de la forme $a^i b^j$, avec $i <= 2$ et $j <= 2$ pour éviter $a a a$ et $b b b$, donc de longueur au plus $4$.
+    Q(
+      [
+        Donner un mot de longueur au moins $12$ qui évite
+        $ S_0 = {a a a a, a a a b, a b a, b a a a, b a b, b b b b}. $
+      ],
+      solution: [
+        Le mot $(a a b b)^3 = a a b b a a b b a a b b$ convient.
+        Ses facteurs de longueur $3$ sont $a a b$, $a b b$, $b b a$ et $b a a$ ; ceux de longueur $4$ sont $a a b b$, $a b b a$, $b b a a$ et $b a a b$.
+        Aucun ne figure dans $S_0$.
+      ],
+    ),
+    Q(
+      [
+        Donner le pseudocode d'un algorithme simple qui détermine si un mot $w$ évite un ensemble fini $S$.
+        Analyser son coût en temps et en espace lorsque les $m$ mots de $S$ ont tous la même longueur $ell$.
+      ],
+      solution: [
+        On compare chaque motif à chaque position possible, sans extraire de sous-chaîne.
+        Le pseudocode utilise des indices commençant à $0$.
 
-      Cette occurrence de $b a$ commence à une position $p <= 4$ ; elle est donc suivie d'au moins deux lettres.
-      La première doit être $a$, pour éviter $b a b$.
-      La suivante ne peut être ni $a$ (facteur $a a a$), ni $b$
-      (facteur $b a a b$).
-      C'est impossible.
-      Tout mot de longueur au moins $7$ contient donc un facteur dans $S_2$.
-      La borne est optimale : $a a b b a a$, de longueur $6$, évite $S_2$.
-    ]),
-    Q([
-      Soient maintenant un alphabet fini non vide $Sigma$, de cardinal $r$, et un entier $k >= 1$.
-      Montrer que tout mot de longueur au moins $r^k + k$ possède deux occurrences distinctes d'un même facteur de longueur $k$.
-      Autrement dit, il existe $1 <= p < q <= abs(w) - k + 1$ tels que $w_(p+j) = w_(q+j)$ pour tout $0 <= j < k$.
-    ], solution: [
-      Un mot de longueur $n$ possède $n-k+1$ positions où commence un facteur de longueur $k$, alors qu'il n'existe que $r^k$ mots de cette longueur.
-      Si $n >= r^k+k$, le principe des tiroirs donne deux positions distinctes portant le même facteur.
-      Les deux occurrences peuvent se chevaucher.
-    ]),
-    Q([
-      En déduire un algorithme qui détermine si un ensemble fini $S$ est inévitable.
-      Justifier sa terminaison et sa correction, puis donner sa complexité en temps et en espace.
-      On ne demande pas un algorithme efficace.
-    ], solution: [
-      Si $S$ est vide, il est évitable puisque l'alphabet est non vide.
-      Si $epsilon in S$, il est inévitable.
-      On suppose désormais $S$ non vide et formé de mots non vides.
-      Posons
-      $ k = max_(s in S) abs(s), #sep L = sum_(s in S) abs(s), #sep N = r^k + k. $
+        ```text
+        évite(w, S):
+            n ← longueur(w)
+            pour chaque s dans S:
+                ℓ ← longueur(s)
+                si ℓ = 0: renvoyer faux
+                si ℓ ≤ n:
+                    pour i de 0 à n − ℓ inclus:
+                        j ← 0
+                        tant que j < ℓ et w[i + j] = s[j]:
+                            j ← j + 1
+                        si j = ℓ: renvoyer faux
+            renvoyer vrai
+        ```
 
-      *Répétition et cycle.* Considérons le graphe dont les sommets sont les mots
-      de longueur $k$ qui évitent $S$.
-      Il existe une arête de $u$ vers $v$ si $v$ s'obtient en supprimant la première lettre de $u$ et en ajoutant une lettre à sa fin.
-      Les facteurs successifs de longueur $k$ d'un mot évitant $S$ décrivent un chemin dans ce graphe.
+        Les tests du « tant que » sont évalués de gauche à droite, avec court-circuit.
+        Pour $1 <= ell <= n$, le temps au pire est $O(1 + m + m (n - ell + 1) ell)$, donc $O(n m ell)$ si $m >= 1$.
+        L'espace auxiliaire est $O(1)$ : seuls des indices sont conservés, sans compter les entrées.
+        Si $ell > n$, le temps est $O(1 + m)$.
+        L'ensemble vide est toujours évité ; si $epsilon in S$, aucun mot ne l'évite.
+      ],
+    ),
+    [
+      On pose
+      $ "Av"(S) = {w in Sigma^* | w " évite " S}. $
+      L'ensemble $S$ est *inévitable* si $"Av"(S)$ est fini, et *évitable* sinon.
+      Sur un alphabet fini, être évitable équivaut à admettre des mots évitants de longueurs arbitrairement grandes.
+    ],
+    Q(
+      [
+        L'ensemble $S_0$ de la question 1 est-il inévitable ?
+        Même question pour $S_1 = {a a a, a b b, b a a, a b a b}$.
+      ],
+      solution: [
+        Ils sont tous deux évitables.
+        Pour tout $t in NN$, $(a a b b)^t$ évite $S_0$, comme le montre la liste de facteurs de la question 1.
+        De même, $b^t$ évite $S_1$, dont chaque élément contient au moins un $a$.
+      ],
+    ),
+    Q(
+      [
+        Montrer que $S_2 = {a a a, b a b, b a a b, b b b}$ est inévitable.
+        On pourra donner une borne sur la longueur des mots qui l'évitent.
+      ],
+      solution: [
+        Supposons qu'un mot de longueur $7$ évite $S_2$.
+        Ses cinq premières lettres contiennent $b a$ : sinon ce préfixe serait de la forme $a^i b^j$, avec $i <= 2$ et $j <= 2$ pour éviter $a a a$ et $b b b$, donc de longueur au plus $4$.
 
-      Réciproquement, un chemin donne un mot évitant $S$ : tout facteur interdit, de longueur au plus $k$, serait contenu dans l'une de ses fenêtres de longueur $k$.
-      Un chemin qui répète un sommet contient un cycle ; en parcourant ce cycle autant de fois que voulu, on obtient des mots évitants arbitrairement longs.
-      Cet argument vaut aussi lorsque les deux occurrences se chevauchent.
+        Cette occurrence de $b a$ commence à une position $p <= 4$ ; elle est donc suivie d'au moins deux lettres.
+        La première doit être $a$, pour éviter $b a b$.
+        La suivante ne peut être ni $a$ (facteur $a a a$), ni $b$
+        (facteur $b a a b$).
+        C'est impossible.
+        Tout mot de longueur au moins $7$ contient donc un facteur dans $S_2$.
+        La borne est optimale : $a a b b a a$, de longueur $6$, évite $S_2$.
+      ],
+    ),
+    Q(
+      [
+        Soient maintenant un alphabet fini non vide $Sigma$, de cardinal $r$, et un entier $k >= 1$.
+        Montrer que tout mot de longueur au moins $r^k + k$ possède deux occurrences distinctes d'un même facteur de longueur $k$.
+        Autrement dit, il existe $1 <= p < q <= abs(w) - k + 1$ tels que $w_(p+j) = w_(q+j)$ pour tout $0 <= j < k$.
+      ],
+      solution: [
+        Un mot de longueur $n$ possède $n-k+1$ positions où commence un facteur de longueur $k$, alors qu'il n'existe que $r^k$ mots de cette longueur.
+        Si $n >= r^k+k$, le principe des tiroirs donne deux positions distinctes portant le même facteur.
+        Les deux occurrences peuvent se chevaucher.
+      ],
+    ),
+    Q(
+      [
+        En déduire un algorithme qui détermine si un ensemble fini $S$ est inévitable.
+        Justifier sa terminaison et sa correction, puis donner sa complexité en temps et en espace.
+        On ne demande pas un algorithme efficace.
+      ],
+      solution: [
+        Si $S$ est vide, il est évitable puisque l'alphabet est non vide.
+        Si $epsilon in S$, il est inévitable.
+        On suppose désormais $S$ non vide et formé de mots non vides.
+        Posons
+        $ k = max_(s in S) abs(s), #sep L = sum_(s in S) abs(s), #sep N = r^k + k. $
 
-      Par la question 5, un mot évitant de longueur $N$ fournit un tel cycle.
-      Ainsi,
-      $ S " est inévitable " <==> " aucun mot de longueur " N " n'évite " S. $
-      Il suffit donc d'énumérer les $r^N$ mots de longueur *exactement* $N$ et de les tester avec l'algorithme de la question 2.
-      Un seul témoin évitant suffit pour répondre « évitable ».
+        *Répétition et cycle.* Considérons le graphe dont les sommets sont les mots
+        de longueur $k$ qui évitent $S$.
+        Il existe une arête de $u$ vers $v$ si $v$ s'obtient en supprimant la première lettre de $u$ et en ajoutant une lettre à sa fin.
+        Les facteurs successifs de longueur $k$ d'un mot évitant $S$ décrivent un chemin dans ce graphe.
 
-      Le coût au pire est $O(r^N N L)$ en temps et $O(N)$ en espace auxiliaire, en générant un seul mot à la fois.
-      Pour $r >= 2$ fixé, cette borne en temps est doublement exponentielle en $k$.
-      Le stockage des entrées est exclu.
+        Réciproquement, un chemin donne un mot évitant $S$ : tout facteur interdit, de longueur au plus $k$, serait contenu dans l'une de ses fenêtres de longueur $k$.
+        Un chemin qui répète un sommet contient un cycle ; en parcourant ce cycle autant de fois que voulu, on obtient des mots évitants arbitrairement longs.
+        Cet argument vaut aussi lorsque les deux occurrences se chevauchent.
 
-      *Amélioration.* On peut construire directement le graphe précédent et y
-      chercher un cycle par parcours en profondeur.
-      Il possède au plus $r^k$ sommets et $r^(k+1)$ arêtes ; une fois le graphe construit, ce parcours coûte $O(r^k + r^(k+1))$.
-      Il faut aussi compter la construction, notamment les tests d'évitement des sommets, qui coûtent $O(r^k k L)$ avec la méthode naïve.
-    ]),
-    Q([
-      Une expression régulière $e$ est dite *inévitable* si son langage $L(e)$ est un ensemble inévitable.
-      Donner un exemple dont le langage ne contient pas le mot vide.
-    ], solution: [
-      L'expression $e = a a a | b a b | b a a b | b b b$ convient, d'après la question 4.
-      Il n'est pas nécessaire d'ajouter une étoile : celle-ci ferait appartenir $epsilon$ au langage et rendrait l'inévitabilité immédiate.
-    ]),
-    Q([
-      Une expression régulière $e$ est *bornée* s'il existe $n in NN$ tel que tout mot de $L(e)$ soit de longueur au plus $n$.
-      Si $e$ est bornée, comment déterminer si elle est inévitable ?
-    ], solution: [
-      Sur un alphabet fini, un langage borné est fini.
-      On peut donc énumérer $L(e)$ puis appliquer la question 6.
+        Par la question 5, un mot évitant de longueur $N$ fournit un tel cycle.
+        Ainsi,
+        $ S " est inévitable " <==> " aucun mot de longueur " N " n'évite " S. $
+        Il suffit donc d'énumérer les $r^N$ mots de longueur *exactement* $N$ et de les tester avec l'algorithme de la question 2.
+        Un seul témoin évitant suffit pour répondre « évitable ».
 
-      Pour rendre cette énumération effective sans connaître de borne à l'avance, on construit un automate déterministe pour $L(e)$ et on ne conserve que les états *utiles*, accessibles depuis l'état initial et depuis lesquels un état final est accessible.
-      Le graphe utile est acyclique puisque le langage est fini.
-      On énumère ses chemins acceptants et les mots qu'ils portent.
-      Si aucun état final n'est accessible, le langage est vide.
-    ]),
-    Q([
-      Expliquer comment déterminer si une expression régulière quelconque $e$ est inévitable.
-    ], solution: [
-      Les mots qui contiennent un facteur de $L(e)$ forment le langage régulier
-      $ B = Sigma^* L(e) Sigma^*. $
-      On construit un automate pour $B$, on le déterminise, puis on le complète sur $Sigma$ avant d'échanger états finaux et non finaux.
-      On obtient un automate déterministe complet $A$ reconnaissant
-      $ "Av"(L(e)) = Sigma^* without B. $
+        Le coût au pire est $O(r^N N L)$ en temps et $O(N)$ en espace auxiliaire, en générant un seul mot à la fois.
+        Pour $r >= 2$ fixé, cette borne en temps est doublement exponentielle en $k$.
+        Le stockage des entrées est exclu.
 
-      On conserve les états utiles de $A$.
-      Son langage est infini si et seulement si ce graphe utile contient un cycle : un cycle utile peut être répété sur un chemin acceptant ; réciproquement, un chemin acceptant assez long répète un état.
-      Chaque arête consomme ici une lettre.
+        *Amélioration.* On peut construire directement le graphe précédent et y
+        chercher un cycle par parcours en profondeur.
+        Il possède au plus $r^k$ sommets et $r^(k+1)$ arêtes ; une fois le graphe construit, ce parcours coûte $O(r^k + r^(k+1))$.
+        Il faut aussi compter la construction, notamment les tests d'évitement des sommets, qui coûtent $O(r^k k L)$ avec la méthode naïve.
+      ],
+    ),
+    Q(
+      [
+        Une expression régulière $e$ est dite *inévitable* si son langage $L(e)$ est un ensemble inévitable.
+        Donner un exemple dont le langage ne contient pas le mot vide.
+      ],
+      solution: [
+        L'expression $e = a a a | b a b | b a a b | b b b$ convient, d'après la question 4.
+        Il n'est pas nécessaire d'ajouter une étoile : celle-ci ferait appartenir $epsilon$ au langage et rendrait l'inévitabilité immédiate.
+      ],
+    ),
+    Q(
+      [
+        Une expression régulière $e$ est *bornée* s'il existe $n in NN$ tel que tout mot de $L(e)$ soit de longueur au plus $n$.
+        Si $e$ est bornée, comment déterminer si elle est inévitable ?
+      ],
+      solution: [
+        Sur un alphabet fini, un langage borné est fini.
+        On peut donc énumérer $L(e)$ puis appliquer la question 6.
 
-      L'expression $e$ est donc inévitable si et seulement si le graphe utile est acyclique.
-      Les recherches d'accessibilité et de cycle sont linéaires dans la taille de l'automate obtenu ; la déterminisation peut produire un nombre d'états exponentiel dans la taille de l'automate initial.
-    ]),
-    Q([
-      On dit que $S$ est *inévitable relativement à* $e$ si seuls un nombre fini de mots de $L(e)$ évitent $S$, c'est-à-dire si
-      $ L(e) ∩ "Av"(S) $
-      est fini.
-      Étant donnés $e$ et un ensemble fini $S$, expliquer comment décider cette propriété, ainsi que la propriété opposée.
-    ], solution: [
-      On construit un automate déterministe pour $L(e)$ et un automate déterministe complet pour $"Av"(S)$, comme à la question 9 en remplaçant $L(e)$ par l'union finie des mots de $S$.
+        Pour rendre cette énumération effective sans connaître de borne à l'avance, on construit un automate déterministe pour $L(e)$ et on ne conserve que les états *utiles*, accessibles depuis l'état initial et depuis lesquels un état final est accessible.
+        Le graphe utile est acyclique puisque le langage est fini.
+        On énumère ses chemins acceptants et les mots qu'ils portent.
+        Si aucun état final n'est accessible, le langage est vide.
+      ],
+    ),
+    Q(
+      [
+        Expliquer comment déterminer si une expression régulière quelconque $e$ est inévitable.
+      ],
+      solution: [
+        Les mots qui contiennent un facteur de $L(e)$ forment le langage régulier
+        $ B = Sigma^* L(e) Sigma^*. $
+        On construit un automate pour $B$, on le déterminise, puis on le complète sur $Sigma$ avant d'échanger états finaux et non finaux.
+        On obtient un automate déterministe complet $A$ reconnaissant
+        $ "Av"(L(e)) = Sigma^* without B. $
 
-      Leur automate produit reconnaît $L(e) ∩ "Av"(S)$ : une paire d'états est finale lorsque ses deux composantes le sont.
-      Après suppression des états inutiles, un cycle existe si et seulement si cette intersection est infinie.
-      Son absence caractérise donc l'inévitabilité relative.
+        On conserve les états utiles de $A$.
+        Son langage est infini si et seulement si ce graphe utile contient un cycle : un cycle utile peut être répété sur un chemin acceptant ; réciproquement, un chemin acceptant assez long répète un état.
+        Chaque arête consomme ici une lettre.
 
-      La propriété opposée signifie qu'une infinité de mots de $L(e)$ évitent $S$.
-      Si $L(e)$ est fini, tout ensemble $S$ est inévitable relativement à $e$ selon la définition retenue ici.
-    ]),
-    Q([
-      Montrer que tout ensemble inévitable $S subset.eq Sigma^*$, même infini, contient un sous-ensemble fini inévitable.
-    ], solution: [
-      Si $epsilon in S$, on prend $S' = {epsilon}$.
-      Sinon, $epsilon$ évite $S$ ; l'ensemble fini $"Av"(S)$ est donc non vide.
-      Notons $n$ la longueur maximale de ses éléments.
+        L'expression $e$ est donc inévitable si et seulement si le graphe utile est acyclique.
+        Les recherches d'accessibilité et de cycle sont linéaires dans la taille de l'automate obtenu ; la déterminisation peut produire un nombre d'états exponentiel dans la taille de l'automate initial.
+      ],
+    ),
+    Q(
+      [
+        On dit que $S$ est *inévitable relativement à* $e$ si seuls un nombre fini de mots de $L(e)$ évitent $S$, c'est-à-dire si
+        $ L(e) ∩ "Av"(S) $
+        est fini.
+        Étant donnés $e$ et un ensemble fini $S$, expliquer comment décider cette propriété, ainsi que la propriété opposée.
+      ],
+      solution: [
+        On construit un automate déterministe pour $L(e)$ et un automate déterministe complet pour $"Av"(S)$, comme à la question 9 en remplaçant $L(e)$ par l'union finie des mots de $S$.
 
-      Chaque mot $u$ de longueur $n+1$ possède un facteur $s_u in S$.
-      On choisit un tel facteur pour chacun de ces mots et on pose
-      $ S' = {s_u | u in Sigma^(n+1)}. $
-      Cet ensemble est fini, inclus dans $S$ et inévitable : tout mot de longueur au moins $n+1$ possède un préfixe de longueur $n+1$, qui contient l'un des facteurs choisis.
-      Il ne reste qu'un nombre fini de mots plus courts.
-    ]),
-    Q([
-      Étant donnée une expression régulière inévitable $e$, expliquer comment calculer un sous-ensemble fini inévitable de $L(e)$.
-    ], solution: [
-      On commence par tester si $epsilon in L(e)$ ; dans ce cas, ${epsilon}$ est une réponse.
-      Sinon, l'automate de la question 9 reconnaît un langage fini non vide, celui des mots évitant $L(e)$.
+        Leur automate produit reconnaît $L(e) ∩ "Av"(S)$ : une paire d'états est finale lorsque ses deux composantes le sont.
+        Après suppression des états inutiles, un cycle existe si et seulement si cette intersection est infinie.
+        Son absence caractérise donc l'inévitabilité relative.
 
-      Son graphe utile est un graphe orienté acyclique.
-      Un calcul de plus long chemin dans un ordre topologique donne la longueur maximale $n$ d'un mot accepté.
-      On énumère alors les mots $u$ de longueur $n+1$ ; pour chacun, on énumère ses facteurs et on en retient un accepté par un automate de $L(e)$.
-      Un tel facteur existe par définition de $n$.
+        La propriété opposée signifie qu'une infinité de mots de $L(e)$ évitent $S$.
+        Si $L(e)$ est fini, tout ensemble $S$ est inévitable relativement à $e$ selon la définition retenue ici.
+      ],
+    ),
+    Q(
+      [
+        Montrer que tout ensemble inévitable $S subset.eq Sigma^*$, même infini, contient un sous-ensemble fini inévitable.
+      ],
+      solution: [
+        Si $epsilon in S$, on prend $S' = {epsilon}$.
+        Sinon, $epsilon$ évite $S$ ; l'ensemble fini $"Av"(S)$ est donc non vide.
+        Notons $n$ la longueur maximale de ses éléments.
 
-      L'ensemble des facteurs retenus, après suppression des doublons, est une réponse par la question 11.
-      Toutes les énumérations sont finies ; l'algorithme termine, même si son coût peut être très élevé.
-      Le sous-ensemble obtenu n'est pas nécessairement de cardinal minimal.
-    ]),
+        Chaque mot $u$ de longueur $n+1$ possède un facteur $s_u in S$.
+        On choisit un tel facteur pour chacun de ces mots et on pose
+        $ S' = {s_u | u in Sigma^(n+1)}. $
+        Cet ensemble est fini, inclus dans $S$ et inévitable : tout mot de longueur au moins $n+1$ possède un préfixe de longueur $n+1$, qui contient l'un des facteurs choisis.
+        Il ne reste qu'un nombre fini de mots plus courts.
+      ],
+    ),
+    Q(
+      [
+        Étant donnée une expression régulière inévitable $e$, expliquer comment calculer un sous-ensemble fini inévitable de $L(e)$.
+      ],
+      solution: [
+        On commence par tester si $epsilon in L(e)$ ; dans ce cas, ${epsilon}$ est une réponse.
+        Sinon, l'automate de la question 9 reconnaît un langage fini non vide, celui des mots évitant $L(e)$.
+
+        Son graphe utile est un graphe orienté acyclique.
+        Un calcul de plus long chemin dans un ordre topologique donne la longueur maximale $n$ d'un mot accepté.
+        On énumère alors les mots $u$ de longueur $n+1$ ; pour chacun, on énumère ses facteurs et on en retient un accepté par un automate de $L(e)$.
+        Un tel facteur existe par définition de $n$.
+
+        L'ensemble des facteurs retenus, après suppression des doublons, est une réponse par la question 11.
+        Toutes les énumérations sont finies ; l'algorithme termine, même si son coût peut être très élevé.
+        Le sous-ensemble obtenu n'est pas nécessairement de cardinal minimal.
+      ],
+    ),
   ),
 )

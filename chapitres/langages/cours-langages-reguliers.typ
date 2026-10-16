@@ -1,6 +1,6 @@
-#import "/load.typ": cours-et-presentation, pause, only, article-only, slides-only
+#import "/load.typ": article-only, cours-et-presentation, only, pause, slides-only
 #import "/load.typ": theoremes
-#import theoremes: definition, theorem, lemma, property, exercise, problem, corollary
+#import theoremes: corollary, definition, exercise, lemma, problem, property, theorem
 #import "/load.typ": sep, widetilde
 
 #show: cours-et-presentation.with(titre: "Langages réguliers", niveau: "MPI")
@@ -180,8 +180,10 @@ $ L_1 (L_2 ∪ L_3) = L_1 L_2 ∪ L_1 L_3. $
 
 #definition[
   On définit la puissance $L^n$ du langage $L$ par récurrence :
-  $ L^0 &= {ε}, \
-    L^n &= L^(n - 1) L " pour " n ≥ 1. $
+  $
+    L^0 & = {ε}, \
+    L^n & = L^(n - 1) L " pour " n ≥ 1.
+  $
 ]
 Dit autrement :
 $ L^n = underbrace(L … L, n " facteurs") = {m_1 … m_n ∣ m_1 ∈ L, …, m_n ∈ L}. $
@@ -234,8 +236,8 @@ $L^*$ contient toujours $ε$, car $L^0 = {ε}$.
 ]
 
 #underline[Attention] :
-  - Une union infinie de langages réguliers n'est pas forcément régulière.
-  - Un langage particulier n'est pas forcément stable par concaténation.
+- Une union infinie de langages réguliers n'est pas forcément régulière.
+- Un langage particulier n'est pas forcément stable par concaténation.
 
 #slides-only[== Exemples de langages réguliers]
 
@@ -344,7 +346,7 @@ Sur $Σ = {a, b}$ :
   + Mots dont la taille est congrue à $1$ modulo $3$.
   + Mots contenant un nombre pair de $a$.
   + Mots contenant un nombre impair de $a$.
-  
+
   Sur $Σ = {0, 1}$ :
   #enum(start: 5)[Écritures en base $2$ des entiers divisibles par $4$.]
 ]
@@ -363,7 +365,10 @@ Sur $Σ = {a, b}$ :
 
 #property[
   Pour des expressions régulières $e$, $e_1$, $e_2$ et $e_3$, compléter :
-  #grid(columns: (1fr, 1fr), column-gutter: 2em, align: top,
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 2em,
+    align: top,
     [
       + $e ∅ ≡$
       + $e ε ≡$
@@ -415,7 +420,7 @@ Sur $Σ = {a, b}$ :
 
 #exercise[
   On note $widetilde(m) = m_n … m_1$ le miroir d'un mot $m = m_1 … m_n$ et $widetilde(L) = {widetilde(m) ∣ m ∈ L}$ celui d'un langage $L$.
-  
+
   + Donner une expression régulière du miroir de $a (a | b)^* b$.
   + Soit $L$ un langage régulier. Montrer que $widetilde(L)$ est régulier.
   + Écrire une fonction OCaml ```ocaml miroir : 'a regexp -> 'a regexp``` renvoyant le miroir d'une expression régulière.
@@ -439,7 +444,8 @@ Sur $Σ = {a, b}$ :
   ```sh grep -E``` est une commande qui permet de chercher des motifs dans un texte en utilisant des expressions régulières étendues :
 
   #table(
-    columns: (auto, 1fr), inset: 0.5em,
+    columns: (auto, 1fr),
+    inset: 0.5em,
     table.header([*Expression*], [*Signification*]),
     [`.`], [N'importe quel caractère.],
     [`[aei]`], [Un caractère parmi `a`, `e`, `i`.],

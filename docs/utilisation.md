@@ -165,7 +165,7 @@ Consulter le [résumé du programme](programme.md) pour choisir les étiquettes 
 ### Code Typst
 
 - Utiliser `Q([...], solution: [...], bareme: ..., notation: [...])` pour les questions.
-- Garder le crochet ouvrant sur la même ligne que l'appel ou le champ qui l'introduit : `Q([`, `solution: [` et `contenu: ([`.
+- Formater les sources avec Typstyle via Tinymist. La configuration VS Code du dépôt active le formatage à l'enregistrement, avec une indentation de deux espaces et sans redistribution des lignes de prose. Laisser Typstyle disposer les appels et les crochets ; ne pas fixer de largeur de ligne dans la configuration.
 - Dans les fichiers `.typ`, revenir à la ligne lorsque cela facilite la lecture ou marque une articulation logique du paragraphe. Préserver les retours structurels (paragraphes, listes, titres, code et formules).
 - Préférer la syntaxe Typst native pour le contenu fixe (`== Titre`, listes…) ; réserver les appels de fonctions aux éléments calculés ou réutilisables.
 - Délimiter les extraits de code Typst, inline ou en bloc, par des accents graves avec le langage adéquat, par exemple ```ocaml arbre_a_mot``` ; ne pas les entourer d'apostrophes.

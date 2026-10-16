@@ -1,6 +1,6 @@
 // Aperçu autonome d'un exercice exportant ex, quel que soit son emplacement.
-#import "/load.typ": feuille, auteur-par-defaut
-#let chemin = sys.inputs.at("exercice",  default: "/templates/exercice.typ")
+#import "/load.typ": auteur-par-defaut, feuille
+#let chemin = sys.inputs.at("exercice", default: "/templates/exercice.typ")
 #import chemin: ex
 #show: feuille.with(
   type: "exercice",
