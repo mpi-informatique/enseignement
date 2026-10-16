@@ -134,7 +134,7 @@ type automate = {
 #slides-only[== Chemin acceptant]
 #definition[
   Un chemin est une suite de transitions consécutives :
-  $ q_0 arrow(a_1) q_1 arrow(a_2) … arrow(a_n) q_n. $
+  $ q_0 limits(arrow.r.long)^(a_1) q_1 limits(arrow.r.long)^(a_2) … limits(arrow.r.long)^(a_n) q_n. $
   Son étiquette est le mot $a_1 … a_n$.
   Il est acceptant si $q_0 ∈ I$ et $q_n ∈ F$.
 ]
