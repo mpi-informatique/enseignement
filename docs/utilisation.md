@@ -190,7 +190,8 @@ let f x = (* f x renvoie ... *)
 ## Syntaxe
 
 - Noter les compositions de fonctions ou d'endomorphismes avec `∘`, par exemple `$g ∘ f = f ∘ g$`, plutôt que par juxtaposition.
-- `RR_n[X]` met `[X]` en indice : utiliser plutôt `RR_n [X]`. Insérer des espaces autour des opérateurs et après les virgules : `$j > i$`, `$a_(i, j)$`.
+- `RR_n[X]` met `[X]` en indice : utiliser plutôt `RR_n [X]`.
+- Dans toutes les formules mathématiques, toujours insérer des espaces autour des opérateurs binaires et après les virgules, y compris dans les arguments et les indices : `$k + 1$`, `$n - 1$`, `$j > i$`, `$L(i, j, k + 1)$`, `$a_(i, j)$`. Cette règle concerne aussi les formules des légendes et des étiquettes de schémas. Préserver la syntaxe des exposants et des indices (`$n^3$`, `$a_i$`).
 - Indiquer le nombre de colonnes d'un déterminant dessiné seulement lorsque cela clarifie sa taille : préférer une accolade à droite, par exemple `lr(mat(delim: "|", ...) brace.r) n`. Omettre cette indication si les indices rendent déjà la taille explicite ou si elle répète une indication précédente. Noter les combinaisons avec `binom(n, k)`, lu « k parmi n ».
 - Noter un graphe `G = (S, A)`, où `S` est l'ensemble des sommets et `A` l'ensemble des arcs (ou des arêtes pour un graphe non orienté). Utiliser ces notations de façon cohérente dans les énoncés, corrigés et modèles.
 - Pour la programmation en MP2I ou MPI, utiliser C, OCaml, Python ou SQL, dans les questions comme dans les solutions. Le pseudocode reste possible lorsqu'une question demande seulement de décrire un algorithme.
