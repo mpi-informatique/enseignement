@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,16 +7,14 @@
     difficulte: 3, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Soient $a, b in RR$. On pose $D_(0) = 1$ et, pour $n >= 1$ :
+  contenu: ([Soient $a, b in RR$. On pose $D_(0) = 1$ et, pour $n >= 1$ :
     $ D_(n) = lr(mat(delim: "|",
       a + b, b, 0, dots.h, 0;
       a, a + b, b, dots.down, dots.v;
       0, a, dots.down, dots.down, 0;
       dots.v, dots.down, dots.down, a + b, b;
       0, dots.h, 0, a, a + b) brace.r) n $.],
-    question(
-      [Calculer $D_(n)$.],
+    Q([Calculer $D_(n)$.],
       solution: [On a $D_(1) = a + b$.
       Pour $n >= 2$, développer suivant la première colonne. Le terme en $a + b$ vaut $(a + b) D_(n - 1)$.
       Le terme en $a$ a un signe négatif, et son mineur a pour première ligne $(b, 0, dots, 0)$ : un second développement donne $b D_(n - 2)$.

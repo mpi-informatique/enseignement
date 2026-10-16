@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -12,8 +12,7 @@
     niveaux: ("MPI",),
     duree: (2, 30),
   ),
-  contenu: (
-    [On fixe un alphabet fini non vide $Σ$. 
+  contenu: ([On fixe un alphabet fini non vide $Σ$.
 
       Un *sous-monoïde* de $Σ^*$ est un langage $M$ contenant $ε$ et stable par concaténation :
       $ ∀u, v ∈ M, #sep u v ∈ M. $
@@ -24,7 +23,7 @@
 
       On cherche à comprendre quand un message obtenu en concaténant des mots d'un dictionnaire peut être décodé sans ambiguïté. ],
     partie("I", "Engendrer et décomposer", contenu: (
-      question([
+      Q([
         Montrer qu'un langage $M$ est un sous-monoïde si et seulement si $M = M^*$.
         Donner un langage stable par concaténation qui n'est pas un sous-monoïde.
       ], solution: [
@@ -36,7 +35,7 @@
         Pour une lettre $a ∈ Σ$, le langage ${a^n ∣ n ≥ 1}$ est stable par concaténation, mais ne contient pas $ε$.
       ]),
       [Pour un sous-monoïde $M$, on note $M_+ = M ∖ {ε}$ et on appelle *indécomposable* un mot de $M_+$ qui ne s'écrit pas comme concaténation de deux mots de $M_+$. On note $B(M)$ l'ensemble de ces mots.],
-      question([
+      Q([
         Exprimer $B(M)$ à l'aide de $M_+$ et des opérations sur les langages. Montrer que $B(M)$ engendre $M$.
       ], solution: [
         Par définition :
@@ -49,7 +48,7 @@
         Sinon, $w = u v$ avec $u, v ∈ M_+$.
         Les tailles de $u$ et $v$ sont strictement inférieures à celle de $w$. L'hypothèse de récurrence permet de décomposer chacun en mots de $B(M)$, puis de concaténer ces décompositions.
       ]),
-      question([
+      Q([
         Soit $X ⊂ Σ^+$ tel que $X^* = M$. Montrer que $B(M) ⊂ X$.
         Montrer ensuite que, si $X$ est un code, $X = B(M)$.
         En déduire une condition nécessaire et suffisante portant sur $B(M)$ pour que $M$ soit libre.
@@ -66,7 +65,7 @@
 
         $B(M)$ est donc l'unique ensemble générateur minimal de $M$ : une base de $M$.
       ]),
-      question([
+      Q([
         Sur $Σ = {a}$, on considère $M = {ε} ∪ {a^n ∣ n ≥ 2}$.
         Vérifier que $M$ est un sous-monoïde et déterminer $B(M)$. Est-il libre ?
       ], solution: [
@@ -80,10 +79,9 @@
         Celui-ci n'est pas un code, donc $M$ n'est pas libre. Un sous-monoïde de mots n'est donc pas nécessairement libre.
       ]),
     )),
-    partie("II", "Codes préfixes et décodage", contenu: (
-      [Un mot $u$ est un *préfixe propre* de $v$ s'il existe $t ∈ Σ^+$ tel que $v = u t$.
+    partie("II", "Codes préfixes et décodage", contenu: ([Un mot $u$ est un *préfixe propre* de $v$ s'il existe $t ∈ Σ^+$ tel que $v = u t$.
         Un langage $C ⊂ Σ^+$ est dit *préfixe* si aucun de ses mots n'est préfixe propre d'un autre.],
-      question([
+      Q([
         Montrer que tout langage préfixe est un code.
         Pour un langage préfixe fini, proposer une méthode de décodage d'un mot de $C^*$ lu de gauche à droite, puis justifier sa correction.
       ], solution: [
@@ -97,7 +95,7 @@
         Si le message commence par un facteur $c ∈ C$, aucun préfixe propre de $c$ ne peut être dans $C$. La première coupure a donc lieu exactement à la fin de $c$.
         Le même raisonnement s'applique au reste du message, ce qui prouve la correction par récurrence sur le nombre de facteurs. Le mot vide produit la suite vide.
       ]),
-      question([
+      Q([
         Sur $Σ = {a, b}$, montrer que ${a, a b}$ est un code qui n'est pas préfixe.
         La méthode de décodage précédente fonctionne-t-elle encore pour ce code ?
       ], solution: [
@@ -107,7 +105,7 @@
 
         Le décodage glouton de gauche à droite échoue sur $a b$ : il émet $a$, puis reste bloqué sur $b$.
       ]),
-      question([
+      Q([
         Montrer que $B(M)$ est préfixe si et seulement si $M$ vérifie la propriété suivante :
         $ ∀u, v ∈ Σ^*, #sep (u ∈ M " et " u v ∈ M) ==> v ∈ M. $
       ], solution: [
@@ -120,7 +118,7 @@
         Réciproquement, supposons la propriété vérifiée. Si $b, c ∈ B(M)$ et $c = b v$ avec $v ≠ ε$, elle impose $v ∈ M_+$.
         L'égalité $c = b v$ contredit alors l'indécomposabilité de $c$. Donc $B(M)$ est préfixe.
       ]),
-      question([
+      Q([
         Sur $Σ = {a, b}$, soit $M$ le langage des mots contenant un nombre pair d'occurrences de $b$.
         Montrer que $M$ est un sous-monoïde libre et déterminer $B(M)$.
         Ce sous-monoïde peut-il être engendré par un langage fini ?
@@ -137,7 +135,7 @@
         $ B(M) = {a} ∪ {b a^k b ∣ k ∈ ℕ}. $
         Cet ensemble est infini et contenu dans tout langage engendrant $M$. Aucun langage fini ne peut donc engendrer $M$.
       ]),
-      question([
+      Q([
         Montrer qu'un sous-monoïde $M$ est régulier si et seulement si $B(M)$ est régulier.
         Un sous-monoïde régulier est-il nécessairement engendré par un langage fini ?
       ], solution: [
@@ -150,8 +148,7 @@
         Donc $M$ est régulier, mais n'est engendré par aucun langage fini.
       ]),
     )),
-    partie("III", "Tester un dictionnaire fini", contenu: (
-      [On considère désormais un langage fini non vide $C ⊂ Σ^+$, qui n'est pas supposé préfixe. On pose $N = ∑_(c ∈ C) abs(c)$.
+    partie("III", "Tester un dictionnaire fini", contenu: ([On considère désormais un langage fini non vide $C ⊂ Σ^+$, qui n'est pas supposé préfixe. On pose $N = ∑_(c ∈ C) abs(c)$.
 
         Dans une décomposition d'un message en mots de $C$, on appelle *coupure* une position située à la fin d'un facteur.
         Par exemple, pour $C = {a b, c d e, a b c, d e}$, le message $a b c d e$ admet les décompositions $a b | c d e$ et $a b c | d e$, où les barres indiquent les coupures entre les facteurs.
@@ -167,7 +164,7 @@
         Aucun arc ne part de $ε$. Les sommets de départ forment l'ensemble :
         $ R = {r ∈ Σ^+ ∣ ∃x, y ∈ C, #sep x ≠ y " et " x r = y}. $
         Un chemin peut avoir une longueur nulle.],
-      question([
+      Q([
         Justifier que $R ⊂ S$ et que, pour $r ∈ S ∖ {ε}$ et $c ∈ C$, tout mot $s$ vérifiant $r s = c$ ou $c s = r$ appartient à $S$.
         Majorer $abs(S)$ en fonction de $N$, puis $abs(A)$ en fonction de $abs(S)$ et $abs(C)$.
       ], solution: [
@@ -182,7 +179,7 @@
         Pour chaque couple $(r, c)$, chacune des deux égalités détermine au plus un mot $s$. Ainsi :
         $ abs(A) ≤ 2 abs(C) (abs(S) - 1). $
       ]),
-      question([
+      Q([
         Sur $Σ = {a, b}$, déterminer $R$ et les sommets accessibles depuis $R$ pour $C_1 = {a, a b, b b}$, puis pour $C_2 = {a, a b, b b, b a}$.
         Donner deux décompositions distinctes d'un même mot sur $C_2$.
       ], solution: [
@@ -194,7 +191,7 @@
         Tous les sommets sont accessibles, en particulier par le chemin $b → a → ε$.
         Le mot $a b a$ a les deux décompositions $(a b)(a)$ et $(a)(b a)$.
       ]),
-      question([
+      Q([
         Montrer que si $ε$ est accessible depuis $R$, alors $C$ n'est pas un code.
         On pourra associer à chaque sommet $r$ rencontré deux suites de mots de $C$, de premiers facteurs distincts, dont les concaténations $U$ et $V$ vérifient $U r = V$.
       ], solution: [
@@ -207,7 +204,7 @@
         Dans chaque cas, les premiers facteurs restent distincts. Par récurrence sur la longueur du chemin, la propriété est préservée.
         Si l'on atteint $r = ε$, on obtient $U = V$ avec deux suites de facteurs distinctes, puisque leurs premiers facteurs diffèrent. Ainsi $C$ n'est pas un code.
       ]),
-      question([
+      Q([
         Montrer réciproquement que si $C$ n'est pas un code, alors $ε$ est accessible depuis $R$.
         On pourra supprimer les facteurs initiaux communs de deux décompositions distinctes, puis suivre leurs coupures dans le message.
       ], solution: [
@@ -226,7 +223,7 @@
         Chaque étape consomme un facteur supplémentaire de l'une des deux décompositions fixées. Le nombre de facteurs restant à lire décroît strictement.
         On atteint donc deux coupures au même endroit, au plus tard à la fin du message, ce qui correspond au sommet $ε$.
       ]),
-      question([
+      Q([
         En déduire un algorithme qui décide si un langage fini $C ⊂ Σ^+$ est un code.
         Justifier sa terminaison. Une fois $G$ et $R$ construits, donner sa complexité avec des listes d'adjacence.
         Conclure pour $C_1$. Expliquer comment produire deux décompositions distinctes lorsque $C$ n'est pas un code.

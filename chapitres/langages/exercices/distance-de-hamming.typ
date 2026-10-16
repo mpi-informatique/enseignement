@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -13,7 +13,7 @@
     [On fixe un alphabet fini $Sigma$.
       Si $u=u_1 dots u_n$ et $v=v_1 dots v_n$ sont deux mots de même longueur, leur distance de Hamming est
       $ d(u,v)=abs({i in {1,dots,n} | u_i != v_i}). $],
-    question([
+    Q([
       Montrer que, pour tout $n in NN$, la distance de Hamming est une distance sur $Sigma^n$.
     ], solution: [
       La distance est positive ou nulle, symétrique, et $d(u,v)=0$ si et seulement si $u=v$.
@@ -25,14 +25,14 @@
     ]),
     [Étant donné un langage $L$ sur $Sigma$, on définit son voisinage de Hamming par
       $ cal(H)(L)={u in Sigma^* | exists v in L, abs(u)=abs(v) " et " d(u,v)<=1}. $],
-    question([
+    Q([
       Sur l'alphabet ${0,1}$, donner une expression régulière pour $cal(H)(L(0^* 1^*))$.
     ], solution: [
       On peut conserver le mot, changer un $0$ en $1$, ou changer un $1$ en $0$.
       On obtient l'expression
       $ 0^* 1^* | 0^* 1 0^* 1^* | 0^* 1^* 0 1^*. $
     ]),
-    question([
+    Q([
       Montrer que si $L$ est un langage régulier, alors $cal(H)(L)$ est régulier.
     ], solution: [
       On raisonne par induction structurelle sur les expressions régulières.
@@ -50,7 +50,7 @@
       Pour une concaténation non vide de facteurs de $L$, on peut modifier au plus une lettre dans l'un d'entre eux, ou ne rien modifier.
       Cette identité reste vraie pour $L=emptyset$ et achève l'induction.
     ]),
-    question([
+    Q([
       Sur l'alphabet $Sigma={0,1}$, écrire une fonction `f : int regexp -> int regexp` renvoyant une expression régulière du voisinage de Hamming d'un langage, en utilisant le type suivant.
       Les lettres de l'expression d'entrée valent $0$ ou $1$.
       #block(breakable: false)[

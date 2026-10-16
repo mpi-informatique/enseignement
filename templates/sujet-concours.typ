@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie, feuille
+#import "/load.typ": exercice, Q, partie, feuille
 
 #let ex = exercice(
   meta: (
@@ -11,12 +11,11 @@
   corrections: none, // Exemple : [- Question 1 : ajouter l'hypothèse de finitude.]
   remarques: none,
   notation: none, // Consignes globales pour le correcteur, sans affichage.
-  contenu: (
-    [Les réponses doivent être justifiées.
+  contenu: ([Les réponses doivent être justifiées.
       On fixe un alphabet $Σ$.],
     partie("I", "Langages", commentaire: none, contenu: (
       partie("I.A", "Langages finis", contexte: ([On fixe un alphabet $Σ$.],), contenu: (
-        question([Montrer qu'un langage fini sur $Σ$ est régulier.],
+        Q([Montrer qu'un langage fini sur $Σ$ est régulier.],
           commentaire: none, // Observation du jury, affichée en italique avant la solution.
           solution: [Un mot est décrit par la concaténation de ses lettres
             (par $ε$ pour le mot vide).
@@ -26,7 +25,7 @@
         ),
       )),
       partie("I.B", "Miroir", contexte: ([On fixe un alphabet $Σ$.],), contenu: (
-        question([Le miroir d'un langage fini est-il régulier ?],
+        Q([Le miroir d'un langage fini est-il régulier ?],
           solution: [Il est fini, donc régulier.]),
       )),
     )),

@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: dessiner-automate, rayon-etat, rayon-grand-etat
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #let dessiner = dessiner-automate.with(
   echelle: (1.5, 1.3),
   rayon: nom => if nom.len() > 5 { 1.1 } else if nom.len() > 2 { rayon-grand-etat } else { rayon-etat },
@@ -35,14 +35,13 @@
     - Question 5 : préciser l'indexation des lettres des monômes et compléter la preuve sur le complémentaire.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       Soit $cal(A)=(Q,A,δ,I,F)$ un automate fini sans transitions $ε$, non nécessairement déterministe.
       On note $q · u$ l'ensemble des états atteints depuis $q$ en lisant $u$ ; dans le cas déterministe, on désigne aussi ainsi l'unique état atteint lorsqu'il existe.
       L'automate est partiellement ordonné si tous ses cycles ne visitent qu'un état : si $q'∈q · u$ et $q∈q' · v$, alors $q=q'$.
       Les automates peuvent être incomplets.
     ],
-    question([
+    Q([
       #enum(numbering: "a)", [Justifier le nom « partiellement ordonné ».],
         [Reconnaître ${a b a a,b a a a,a b b}$ par un automate déterministe partiellement ordonné.],
         [Donner un langage infini reconnu par un tel automate.],
@@ -60,7 +59,7 @@
       d) L'automate suivant reconnaît $K$. Les seules transitions entre états distincts vont de gauche à droite.
       #exemple-k
     ]),
-    question([
+    Q([
       Montrer la stabilité par union et intersection des langages reconnus par des automates partiellement ordonnés.
       Ces stabilités restent-elles vraies pour les automates déterministes partiellement ordonnés ?
     ],
@@ -71,7 +70,7 @@
       Dans le cas déterministe, compléter d'abord par un puits non final muni de boucles : cela préserve l'ordre partiel.
       Le produit reste déterministe ; choisir les finaux $F_1×F_2$ pour l'intersection, et $(F_1×Q_2)∪(Q_1×F_2)$ pour l'union.
     ]),
-    question([
+    Q([
       Un automate est strictement partiellement ordonné s'il est partiellement ordonné et n'a aucune boucle : $q∉δ(q,a)$ pour tous $q,a$.
       #enum(numbering: "a)", [Montrer qu'un langage est reconnu par un tel automate si et seulement s'il est fini.],
         [Montrer par un exemple que la taille de l'automate peut être bien inférieure au cardinal du langage.])
@@ -87,7 +86,7 @@
       On veut prouver qu'un tel langage est régulier et reconnu par un automate déterministe partiellement ordonné.
       On admet le lemme de Higman : pour toute suite infinie $(w_i)_(i∈NN)$ sur un alphabet fini, il existe $i<j$ tels que $w_j∈↑w_i$.
     ],
-    question([
+    Q([
       #enum(numbering: "a)", [Montrer que l'intersection de deux langages clos par sur-mots est close par sur-mots.],
         [Pour $F⊂A^*$ fini, reconnaître $⋃_(u∈F)↑u$ par un automate déterministe partiellement ordonné.],
         [Montrer qu'un langage $L$ est clos par sur-mots si et seulement s'il existe un ensemble fini $F$ tel que $L=⋃_(u∈F)↑u$. Conclure.])
@@ -107,7 +106,7 @@
     [
       Un monôme est un langage de la forme $B_0^* a_0 B_1^* a_1 … a_(n-1) B_n^*$, avec $B_i⊂A$ et $a_i∈A$. On autorise $n=0$ et on pose $∅^*={ε}$.
     ],
-    question([
+    Q([
       #enum(numbering: "a)", [Montrer qu'un langage est reconnu par un automate non déterministe partiellement ordonné si et seulement s'il est une union finie de monômes.],
         [Montrer que l'intersection de deux monômes est une union finie de monômes.],
         [Montrer que $T=(a b)^*$ n'est pas reconnu par un automate non déterministe partiellement ordonné.],

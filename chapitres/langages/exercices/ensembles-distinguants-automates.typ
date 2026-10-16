@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -18,12 +18,12 @@
     [Soient $L$ un langage sur un alphabet $Σ$ et $u,v∈Σ^*$.
       Un mot $w∈Σ^*$ est un #emph[suffixe distinguant] pour $u$ et $v$ si exactement l'un des mots $u w$ et $v w$ appartient à $L$.
       Un ensemble de mots $D$ est #emph[distinguant] pour $L$ si toute paire de mots distincts de $D$ a un suffixe distinguant.],
-    question([Soit $L_1$ le langage dénoté par $(a b)^*$. Montrer que ${ε,a,b}$ est un ensemble distinguant pour $L_1$.], solution: [
+    Q([Soit $L_1$ le langage dénoté par $(a b)^*$. Montrer que ${ε,a,b}$ est un ensemble distinguant pour $L_1$.], solution: [
       - $b$ distingue $ε$ et $a$ : $b∉L_1$ mais $a b∈L_1$.
       - $a b$ distingue $ε$ et $b$ : $a b∈L_1$ mais $b a b∉L_1$.
       - $b$ distingue $a$ et $b$ : $a b∈L_1$ mais $b b∉L_1$.
     ]),
-    question([
+    Q([
       On note $"ind"(L)$ le nombre minimum d'états d'un automate déterministe complet reconnaissant $L$, avec $"ind"(L)=∞$ si aucun n'existe.
       Montrer que si $L$ a un ensemble distinguant de taille $n$, alors $"ind"(L)≥n$.
     ], solution: [
@@ -31,7 +31,7 @@
       Pour tout suffixe $w$, $u w$ et $v w$ mènent alors au même état et ont le même statut d'acceptation, ce qui contredit l'existence d'un suffixe distinguant.
       Si aucun automate n'existe, l'inégalité est immédiate avec la convention donnée.
     ]),
-    question([Que vaut $"ind"(L_1)$ ?], solution: [
+    Q([Que vaut $"ind"(L_1)$ ?], solution: [
       La question 1 donne $"ind"(L_1)≥3$. L'automate déterministe complet suivant reconnaît $L_1$ :
       #align(center, cetz.canvas(length: unite-automates, {
         import finite.draw: state, transition
@@ -48,16 +48,16 @@
       L'état $0$ suit les mots de $(a b)^*$, l'état $1$ ceux de $(a b)^* a$, et l'état $2$ ceux qui ne peuvent plus être complétés en un mot de $L_1$.
       Donc $"ind"(L_1)=3$.
     ]),
-    question([On suppose que $L$ a un ensemble distinguant infini. Montrer que $L$ n'est pas régulier.], solution: [
+    Q([On suppose que $L$ a un ensemble distinguant infini. Montrer que $L$ n'est pas régulier.], solution: [
       Un ensemble distinguant infini possède des sous-ensembles distinguants de toute taille finie.
       La question 2 imposerait donc un nombre d'états supérieur à tout entier à un automate déterministe complet reconnaissant $L$.
       Aucun tel automate n'existe ; par le théorème de Kleene, $L$ n'est pas régulier.
     ]),
-    question([En déduire que ${a^n b^n | n∈NN}$ n'est pas régulier.], solution: [
+    Q([En déduire que ${a^n b^n | n∈NN}$ n'est pas régulier.], solution: [
       L'ensemble $a^*$ est distinguant : si $i≠j$, le suffixe $b^i$ distingue $a^i$ et $a^j$.
       Il est infini, donc la question 4 s'applique.
     ]),
-    question([Soit $L_2$ l'ensemble des mots sur ${a,b}$ contenant un nombre pair de $a$ et un nombre pair de $b$.
+    Q([Soit $L_2$ l'ensemble des mots sur ${a,b}$ contenant un nombre pair de $a$ et un nombre pair de $b$.
       Déterminer $"ind"(L_2)$.], solution: [
       L'ensemble ${ε,a,b,a b}$ est distinguant : ses quatre mots ont quatre couples de parités distincts.
       Pour distinguer deux d'entre eux $u,v$, prendre le suffixe $u$ : $u u$ a ses deux nombres de lettres pairs, alors que $v u$ a au moins une parité impaire. D'où $"ind"(L_2)≥4$.

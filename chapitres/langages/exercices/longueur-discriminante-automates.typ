@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -12,13 +12,13 @@
   contenu: (
 
     [Les automates sont sans transitions $ε$.],
-    question([Soit $A$ un automate. Décrire un algorithme pour déterminer la plus petite longueur d'un mot reconnu par $A$ et préciser sa complexité.], solution: [
+    Q([Soit $A$ un automate. Décrire un algorithme pour déterminer la plus petite longueur d'un mot reconnu par $A$ et préciser sa complexité.], solution: [
       Effectuer un parcours en largeur depuis tous les états initiaux, à distance $0$.
       La première distance d'un état final est la longueur cherchée ; si aucun n'est atteint, le langage est vide.
       Avec des listes d'adjacence, chaque état et chaque transition sont traités au plus une fois :
       temps $O(n+p)$ pour $n$ états et $p$ transitions, espace auxiliaire $O(n)$.
     ]),
-    question([Soit $A$ un automate à $n$ états et de langage $L(A)$.
+    Q([Soit $A$ un automate à $n$ états et de langage $L(A)$.
       Montrer que $L(A)=∅$ si et seulement si $L(A)$ ne contient aucun mot de longueur strictement inférieure à $n$.], solution: [
       $==>$ : immédiat.
 
@@ -27,7 +27,7 @@
       Deux sont égales par le principe des tiroirs. Supprimer le cycle entre elles donne un chemin acceptant de longueur strictement plus petite, contradiction.
       Ainsi $abs(u)<n$. Si $n=0$, il n'existe aucun chemin acceptant et le résultat reste valable.
     ]),
-    question([
+    Q([
       Soient $A_1=(Σ,Q_1,i_1,F_1,δ_1)$ et $A_2=(Σ,Q_2,i_2,F_2,δ_2)$ deux automates déterministes complets à $n_1$ et $n_2$ états, de langages $L_1≠L_2$.
       Notons $l(L_1,L_2)$ la plus petite longueur d'un mot appartenant à l'un des deux langages mais pas à l'autre.
       Montrer que $l(L_1,L_2)<n_1 n_2$.

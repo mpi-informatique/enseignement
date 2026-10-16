@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #let ex = exercice(
   meta: (
     titre: "Automates et palindromes",
@@ -11,13 +11,12 @@
     - Question 6, corrigé : justifier l'unicité des chemins acceptants du produit, sans supposer ce produit déterministe ; distinguer opérations arithmétiques et coût binaire.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       On fixe un alphabet fini $Σ$ avec $abs(Σ)>1$. Un mot $w=a_1 … a_n$ est un palindrome si $a_i=a_(n-i+1)$ pour tout $1≤i≤n$.
       On note $Π$ le langage des palindromes et $L(A)$ le langage reconnu par un automate fini $A$ sur $Σ$.
       Les automates sont sans transitions $ε$.
     ],
-    question([
+    Q([
       Soit $Π_n=Π∩Σ^n$. Montrer que, pour tout automate fini déterministe complet $A$ et tout $n∈NN$, si $L(A)∩Σ^(2n)=Π_(2n)$, alors $A$ a au moins $abs(Σ)^n$ états.
     ], solution: [
       Associons à $u∈Σ^n$ l'état $f(u)$ atteint après sa lecture.
@@ -25,17 +24,17 @@
       Ce dernier mot n'est pas un palindrome : ses deux moitiés imposeraient $u=v$.
       Ainsi $f$ est injective, d'où la borne, également valable pour $n=0$.
     ]),
-    question([
+    Q([
       En déduire que $Π$ n'est pas régulier.
     ], solution: [
       Si un automate déterministe complet à $N$ états reconnaissait $Π$, la question 1 donnerait $N≥abs(Σ)^N≥2^N>N$, contradiction.
     ]),
-    question([
+    Q([
       Étant donné un automate fini $A$, peut-on calculer un automate $A_Π$ reconnaissant $L(A)∩Π$ ?
     ], solution: [
       Non en général : pour $L(A)=Σ^*$, ce langage serait $Π$, qui n'est pas régulier.
     ]),
-    question([
+    Q([
       Pour $u=b_1 … b_m$, on note $overline(u)=b_m … b_1$ son miroir.
       Étant donné $A$, peut-on calculer un automate $A'_Π$ reconnaissant ${u∈Σ^* | u overline(u)∈L(A)}$ ?
     ], solution: [
@@ -47,7 +46,7 @@
       Réciproquement, scinder un chemin acceptant de $A$ étiqueté $u overline(u)$ après la lecture de $u$ donne un tel chemin acceptant de $B$.
       Ainsi $L(B)={u∈Σ^* | u overline(u)∈L(A)}$ : prendre $A'_Π=B$.
     ]),
-    question([
+    Q([
       On note $Π_"pair"=⋃_(n∈NN)Π_(2n)$. Proposer un algorithme déterminant si $L(A)∩Π_"pair"$ est vide, fini ou infini. Discuter ses complexités en temps et en espace.
     ],
       commentaire: [Les parcours doivent être décrits avec leur structure de données et leur complexité.], solution: [
@@ -61,7 +60,7 @@
       Construction et parcours coûtent $O(N^2+M)$ en temps et en espace, donc $O((N+abs(δ))^2)$.
       Pour un automate déterministe, $m_a≤N$, d'où $O((1+abs(Σ))N^2)$.
     ]),
-    question([
+    Q([
       Modifier l'algorithme de la question 5 pour calculer la cardinalité de $L(A)∩Π_"pair"$ lorsqu'elle est finie, en supposant $A$ déterministe. Comment la complexité est-elle affectée ?
     ], solution: [
       Même si $A$ est déterministe, $B$ ne l'est pas nécessairement. En revanche, chaque chemin acceptant de $B$ étiqueté $u$ correspond bijectivement à un chemin acceptant de $A$ étiqueté $u overline(u)$ : il est unique.
@@ -73,7 +72,7 @@
       Il y a $O(N^2+M)$ opérations arithmétiques et autant de mémoire structurelle.
       En coût binaire, si les compteurs ont au plus $b$ bits, les additions coûtent $O(b)$ et les compteurs $O(N^2 b)$ bits ; on peut prendre $b=O(1+N^2 log(1+abs(Σ)))$, puisque les mots acceptés ont longueur inférieure à $N^2$.
     ]),
-    question([
+    Q([
       Modifier les algorithmes des questions 5 et 6 pour traiter $L(A)∩Π$.
     ], solution: [
       Pour chaque $a∈Σ$, garder le même produit et remplacer $D$ par $D_a={(p,r) | (p,a,r)∈δ}$.

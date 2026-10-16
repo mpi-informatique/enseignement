@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,8 +7,7 @@
     difficulte: 2, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Pour $n >= 1$, on note $binom(i, k)$ le nombre de combinaisons de $k$ éléments parmi $i$ :
+  contenu: ([Pour $n >= 1$, on note $binom(i, k)$ le nombre de combinaisons de $k$ éléments parmi $i$ :
     $binom(i, k) = i! / (k! (i - k)!)$ pour $0 <= k <= i$, et $binom(i, k) = 0$ sinon.
     On pose
     $ D_(n) = det ((binom(i, j))_(1 <= i <= n, 0 <= j <= n - 1)) = mat(delim: "|",
@@ -16,8 +15,7 @@
       binom(2, 0), binom(2, 1), binom(2, 2), dots.h, 0;
       dots.v, dots.v, dots.v, dots.down, dots.v;
       binom(n, 0), binom(n, 1), binom(n, 2), dots.h, binom(n, n - 1)) $],
-    question(
-      [Calculer $D_(n)$.],
+    Q([Calculer $D_(n)$.],
       solution: [Pour $n >= 2$, effectuer $L_(i) arrow.l L_(i) - L_(i - 1)$ dans l'ordre $i = n, n - 1, dots, 2$.
       La formule de Pascal donne $binom(i, j) - binom(i - 1, j) = binom(i - 1, j - 1)$.
       On obtient donc

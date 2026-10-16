@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, dist-lettre, style-automates
-#import "/load.typ": feuille, exercice, question
+#import "/load.typ": feuille, exercice, Q
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 #import "/chapitres/langages/exercices/cloture-miroir-prefixes-suffixes-facteurs.typ": ex as cloture
@@ -20,7 +20,7 @@
   ),
   contenu: (
 
-    question([
+    Q([
       Déterminiser l'automate suivant en utilisant l'algorithme du cours :
       #align(center, cetz.canvas(length: unite-automates, {
         import finite.draw: state, transition

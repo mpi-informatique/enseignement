@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep
 #let ex = exercice(
   meta: (
@@ -16,19 +16,18 @@
     - Question 7, corrigé : expliciter la croissance dans chacune des deux coordonnées avant de stabiliser la diagonale.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       On fixe $Σ={a,b}$. Pour $w∈Σ^*$, $abs(w)_a$ et $abs(w)_b$ comptent ses occurrences de $a$ et $b$.
       La clôture commutative de $L⊂Σ^*$ est
       $ "CCl"(L)={w∈Σ^* | ∃w'∈L, abs(w)_a=abs(w')_a " et " abs(w)_b=abs(w')_b}. $
       On admet le théorème de Kleene : les langages décrits par une expression régulière sont exactement ceux reconnus par un automate fini. Ils sont appelés réguliers.
     ],
-    question([
+    Q([
       Calculer la clôture commutative du langage $L_0$ décrit par $a^* | b^*$.
     ], solution: [
       Chaque mot ne contient qu'une sorte de lettre : le permuter ne le change pas. Ainsi $"CCl"(L_0)=L_0$.
     ]),
-    question([
+    Q([
       Soit $L_1$ décrit par $b(a a)^*$. Donner une expression régulière de $"CCl"(L_1)$.
       Existe-t-il un langage régulier $L'_1$ tel que $"CCl"(L'_1)=L_1$ ?
     ], solution: [
@@ -36,7 +35,7 @@
       $ (a a)^*(a b a | b)(a a)^*. $
       Non pour la seconde question : toute clôture commutative est stable par permutation, tandis que $b a a∈L_1$ et $a a b∉L_1$.
     ]),
-    question([
+    Q([
       Trouver un langage régulier $L_2$ tel que $"CCl"(L_2)={w | abs(w)_a=abs(w)_b}$.
       En déduire que la clôture commutative d'un langage régulier n'est pas nécessairement régulière.
     ], solution: [
@@ -44,7 +43,7 @@
       Si sa clôture était régulière, pour une longueur de pompage $p≥1$, le mot $a^p b^p$ aurait une boucle non vide entièrement dans ses $p$ premiers $a$.
       Pomper cette boucle changerait le nombre de $a$ sans changer celui des $b$, contradiction.
     ]),
-    question([
+    Q([
       Un langage est $a$-borné s'il existe $k∈NN$ tel que $abs(w)_a≤k$ pour tout $w∈L$.
       Montrer que, si $L$ est régulier et $a$-borné, $"CCl"(L)$ est régulier.
       Étendre ce résultat aux langages réguliers $a b$-bornés : il existe $k$ tel que chaque $w∈L$ vérifie $abs(w)_a≤k$ ou $abs(w)_b≤k$.
@@ -59,7 +58,7 @@
       Si $L$ est $a b$-borné, le décomposer en l'union de $L∩{w | abs(w)_a≤k}$ et $L∩{w | abs(w)_b≤k}$.
       Appliquer la preuve précédente et sa version symétrique, puis la stabilité par union.
     ]),
-    question([
+    Q([
       Proposer des algorithmes décidant si un langage régulier donné est $a$-borné, puis s'il est $a b$-borné.
     ], solution: [
       Représenter $L$ par un automate sans transitions $ε$ et l'émonder.
@@ -74,12 +73,12 @@
       Deux propagations d'accessibilité, depuis toutes les composantes marquées $a$ puis depuis celles marquées $b$, testent le critère en $O(N+m)$.
       Un automate vide après émondage est borné dans les deux sens.
     ]),
-    question([
+    Q([
       Donner un langage régulier qui n'est pas $a b$-borné mais dont la clôture commutative est régulière. Que déduire par rapport à la question 4 ?
     ], solution: [
       Le langage $Σ^*$ convient : il est sa propre clôture commutative et contient $a^n b^n$ pour tout $n$. Être $a b$-borné est donc une condition suffisante mais non nécessaire.
     ]),
-    question([
+    Q([
       Un langage $L$ est ultimement périodique s'il existe $t∈NN$ et $p∈NN^*$ tels que, pour tous $k,l≥t$, l'existence dans $L$ d'un mot de comptes $(k,l)$ implique l'existence de mots de comptes $(k+p,l)$ et $(k,l+p)$.
       Montrer que, si $L$ est régulier et ultimement périodique, $"CCl"(L)$ est régulier. Comparer à la question 4.
     ], solution: [
@@ -99,7 +98,7 @@
       Une union finie donne la clôture de cette seconde partie, puis celle de $L$.
       Tout langage $a b$-borné est ultimement périodique en choisissant $t$ strictement supérieur à sa borne : l'implication devient vide. Le résultat généralise donc la question 4.
     ]),
-    question([
+    Q([
       Montrer réciproquement que, si $L$ est régulier et $"CCl"(L)$ est régulier, alors $L$ est ultimement périodique. Conclure.
       Indication : le quotient à gauche est $w^(-1)K={v | w v∈K}$. On pourra utiliser, puis démontrer, que ${w^(-1)K | w∈Σ^*}$ est fini lorsque $K$ est régulier.
     ], solution: [

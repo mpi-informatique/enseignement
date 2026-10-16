@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,16 +7,14 @@
     difficulte: 3, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Soit $a in RR^*$. On pose $D_(0) = 1$ et, pour $n >= 1$ :
+  contenu: ([Soit $a in RR^*$. On pose $D_(0) = 1$ et, pour $n >= 1$ :
     $ D_(n) = lr(mat(delim: "|",
       2a, a, 0, dots.h, 0;
       a, 2a, a, dots.down, dots.v;
       0, a, dots.down, dots.down, 0;
       dots.v, dots.down, dots.down, 2a, a;
       0, dots.h, 0, a, 2a) brace.r) n $.],
-    question(
-      [Calculer $D_(n)$.],
+    Q([Calculer $D_(n)$.],
       solution: [On a $D_(1) = 2a$.
       Pour $n >= 2$, développer suivant la première colonne.
       Le terme diagonal vaut $2a D_(n - 1)$.

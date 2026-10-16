@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #let ex = exercice(
   meta: (
     titre: "Langages continuables et mots primitifs",
@@ -14,18 +14,17 @@
     - Question 7, corrigé : inclure $i=0$ lorsque l'automate a un seul état.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       On fixe un alphabet fini $Σ$ avec $abs(Σ)>1$. Tous les automates de ce sujet sont déterministes complets.
       Un mot non vide $w∈Σ^*$ est primitif s'il n'existe pas de mot $u∈Σ^*$ et d'entier $p>1$ tels que $w=u^p$.
     ],
-    question([
+    Q([
       Le mot $a b a a a b a a$ est-il primitif ? Le mot $a b a b b a a b b b a b a b b a b$, de longueur 17, est-il primitif ?
     ], solution: [
       Le premier est $(a b a a)^2$, donc n'est pas primitif.
       Si le second était $u^p$ avec $p>1$, alors $17=p abs(u)$ imposerait $p=17$ et $abs(u)=1$ ; ses lettres seraient toutes identiques. Il est donc primitif.
     ]),
-    question([
+    Q([
       Proposer un algorithme naïf testant si un mot est primitif. Discuter ses complexités en temps et en espace.
     ], solution: [
       Rejeter le mot vide. Pour chaque $1≤d≤floor(abs(w)/2)$ qui divise $abs(w)$, tester $w_i=w_(i+d)$ pour $1≤i≤abs(w)-d$.
@@ -33,24 +32,24 @@
       Toute puissance non triviale possède une telle longueur de bloc, ce qui prouve la correction.
       Au plus $abs(w)$ tests de divisibilité et $abs(w)$ comparaisons par candidat donnent $O(abs(w)^2)$ en temps et $O(1)$ en espace auxiliaire, sans copier les facteurs.
     ]),
-    question([
+    Q([
       Donner un langage régulier infini ne contenant aucun mot primitif.
     ], solution: [
       Le langage décrit par $(a a)^*$ convient : le mot vide n'est pas primitif et chaque mot non vide est $a^(2k)$, avec $k≥1$.
     ]),
-    question([
+    Q([
       Donner un langage régulier infini ne contenant que des mots primitifs.
     ], solution: [
       Le langage décrit par $a b b^*$ convient. Dans une puissance $u^p$, le nombre de $a$ serait un multiple de $p$, alors qu'il vaut ici 1.
     ]),
-    question([
+    Q([
       Un langage régulier $L$ est continuable si, pour tout $u∈Σ^*$, il existe $v∈Σ^*$ tel que $u v∈L$.
       Donner un langage régulier infini non continuable. Existe-t-il un langage régulier continuable dont le complémentaire soit infini ?
     ], solution: [
       Le langage $a b^*$ n'est pas continuable : aucun prolongement de $b$ n'y appartient.
       Le langage des mots de longueur paire est continuable (ajouter au besoin une lettre) et son complémentaire, celui des mots de longueur impaire, est infini.
     ]),
-    question([
+    Q([
       Étant donné un automate $A$, décider si $L(A)$ est continuable. Justifier l'algorithme et ses complexités en temps et en espace.
     ], solution: [
       La condition équivaut à ce que tout état accessible soit coaccessible.
@@ -59,7 +58,7 @@
       Avec $N$ états et $m$ transitions, chaque parcours et la construction du graphe renversé prennent $O(N+m)$ en temps et en espace.
       Ici $m=N abs(Σ)$ ; il faut compter les transitions, et pas seulement la taille de l'alphabet.
     ]),
-    question([
+    Q([
       #enum(numbering: "a)",
         [Montrer que tout langage régulier continuable contient une infinité de mots primitifs.],
         [Donner une borne supérieure sur la longueur de son plus petit mot primitif.],

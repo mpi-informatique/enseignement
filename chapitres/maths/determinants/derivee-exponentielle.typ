@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,16 +7,13 @@
     difficulte: 1, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Soit $n in NN$ et $V = \{x |-> e^x P(x) | P in RR_(n)[X]\}$.],
-    question(
-      [Montrer que $V$ est un sous-espace vectoriel de l'espace des fonctions de $RR$ dans $RR$ et déterminer sa dimension.],
+  contenu: ([Soit $n in NN$ et $V = \{x |-> e^x P(x) | P in RR_(n)[X]\}$.],
+    Q([Montrer que $V$ est un sous-espace vectoriel de l'espace des fonctions de $RR$ dans $RR$ et déterminer sa dimension.],
       solution: [L'application $P mapsto (x mapsto e^x P(x))$, définie sur $RR_(n)[X]$, est linéaire et injective, car $e^x$ ne s'annule jamais. Son image est $V$.
       Ainsi $V$ est un sous-espace de dimension $n + 1$.
       En posant $f_(k)(x) = x^k e^x$, l'image de la base $(1, X, dots, X^n)$ est la base $cal(B) = (f_(0), dots, f_(n))$ de $V$.],
     ),
-    question(
-      [Montrer que $D : f mapsto f'$ est un endomorphisme de $V$ et calculer son déterminant.],
+    Q([Montrer que $D : f mapsto f'$ est un endomorphisme de $V$ et calculer son déterminant.],
       solution: [Si $f(x) = e^x P(x)$, alors $f'(x) = e^x (P(x) + P'(x))$.
       Comme $P + P'$ appartient à $RR_(n)[X]$, la dérivation envoie $V$ dans lui-même. Elle est linéaire, donc $D in cal(L)(V)$.
       De plus, $D(f_(0)) = f_(0)$ et, pour $1 <= k <= n$, $D(f_(k)) = f_(k) + k f_(k - 1)$.

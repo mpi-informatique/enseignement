@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep
 #let ex = exercice(
   meta: (
@@ -14,14 +14,13 @@
     - Question 8, corrigé : conserver le facteur $abs(Q)$ pour les mises à jour et préciser les informations à maintenir.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       On donne un alphabet $Σ$, un automate fini déterministe complet $A$ et un mot $w=a_0 … a_(n-1)$.
       Pour $0≤i<j≤n$, on note $w[i,j]=a_i … a_(j-1)$.
       L'objectif est de répondre efficacement aux requêtes : « $w[i,j]$ est-il accepté par $A$ ? ».
       Les transitions, le mot et l'appartenance aux états finaux sont accessibles par tableaux en temps constant.
     ],
-    question([
+    Q([
       Donner le pseudocode d'un algorithme répondant à une requête. Préciser ses complexités en temps et en espace.
     ], solution: [
       ```text
@@ -36,12 +35,12 @@ renvoyer (q appartient à F)
     [
       On cherche maintenant une structure de données, appelée index, construite à partir de $A$ et $w$, qui accélère les requêtes.
     ],
-    question([
+    Q([
       Proposer un index de taille $O(n^2)$ permettant de répondre en temps $O(1)$.
     ], solution: [
       Stocker dans un tableau à deux entrées le booléen $T[i,j]=(w[i,j]∈L(A))$. Les $n(n+1)/2$ cases utiles donnent la taille annoncée et chaque requête est un accès direct.
     ]),
-    question([
+    Q([
       Quelle est la complexité en temps du calcul de cet index ?
     ], solution: [
       Des simulations indépendantes coûteraient $O(n^3)$.
@@ -53,12 +52,12 @@ renvoyer (q appartient à F)
       $ δ^*(q,ε)=q, #sep δ^*(q,a u)=δ^*(δ(q,a),u). $
       L'effet de transition de $u$ est la fonction $f_u:Q→Q$ donnée par $f_u(q)=δ^*(q,u)$.
     ],
-    question([
+    Q([
       Décrire $f_ε$ et exprimer $f_(u v)$ en fonction de $f_u$ et $f_v$.
     ], solution: [
       On a $f_ε="id"_Q$ et $f_(u v)=f_v∘f_u$, car on lit $u$ avant $v$. Chaque fonction se représente par un tableau de $abs(Q)$ images.
     ]),
-    question([
+    Q([
       Supposons $n$ puissance de 2. Deux indices $i<j$ sont des multiples consécutifs d'une même puissance de 2 si $j-i$ est une puissance de 2 divisant $i$ et $j$.
       Proposer un algorithme « diviser pour régner » calculant $f_(w[i,j])$ pour tous ces intervalles. Analyser son temps de calcul.
     ], solution: [
@@ -68,7 +67,7 @@ renvoyer (q appartient à F)
       Les enfants étant calculés avant leur parent, chaque composition de tableaux coûte $O(abs(Q))$.
       L'arbre a $2n-1$ nœuds : temps et espace $O(n abs(Q))$.
     ]),
-    question([
+    Q([
       Répondre à une requête avec l'index précédent ; préciser la complexité et conclure.
     ], solution: [
       Parcourir l'arbre de gauche à droite : ignorer les intervalles disjoints de $[i,j[$, utiliser directement ceux entièrement inclus et descendre dans les autres.
@@ -78,14 +77,14 @@ renvoyer (q appartient à F)
       Calculer toute la fonction du facteur coûterait $O(abs(Q)(1+log n))$, mais une seule image suffit ici.
       L'index échange donc un prétraitement $O(n abs(Q))$ contre des requêtes logarithmiques, au lieu des requêtes linéaires sans index ou du stockage quadratique de toutes les réponses.
     ]),
-    question([
+    Q([
       On autorise maintenant la substitution de la $i$-ème lettre, $1≤i≤n$, par $a∈Σ$.
       Adapter l'index et donner la complexité de mise à jour.
     ], solution: [
       Modifier la feuille d'indice $i-1$, puis recalculer les tableaux de ses seuls ancêtres, du bas vers le haut.
       Il y a $1+log_2 n$ tableaux, chacun recalculé en $O(abs(Q))$, soit $O(abs(Q)(1+log n))$ en temps. Les requêtes restent inchangées.
     ]),
-    question([
+    Q([
       Pourrait-on autoriser insertions et suppressions de lettres ? Quelles seraient les difficultés ?
     ], solution: [
       Le décalage des indices invalide les intervalles alignés sur les puissances de deux. On représente plutôt les lettres par les feuilles, dans l'ordre, d'un arbre binaire équilibré.

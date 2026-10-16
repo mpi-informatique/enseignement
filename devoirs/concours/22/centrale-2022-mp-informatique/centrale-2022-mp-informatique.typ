@@ -2,7 +2,7 @@
 #import code: code-extrait
 #import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep, widetilde
 #import "@preview/cetz:0.4.2" as cetz
 #import "@preview/finite:0.5.1" as finite
@@ -127,10 +127,9 @@
     chapitres: ("langages-reguliers", "automates-finis"),
     langages: ("OCaml",), difficulte: 3,
   ),
-  contenu: (
-    [Soit $w ∈ Σ^*$.
+  contenu: ([Soit $w ∈ Σ^*$.
       Le mot $w$ est un palindrome si $widetilde(w)=w$.],
-    question([Écrire une fonction ```ocaml palindrome``` de signature ```ocaml string -> bool``` qui teste, en temps linéaire, si un mot est un palindrome.], solution: [
+    Q([Écrire une fonction ```ocaml palindrome``` de signature ```ocaml string -> bool``` qui teste, en temps linéaire, si un mot est un palindrome.], solution: [
       #code("palindrome")
       On compare les lettres symétriques jusqu'au milieu du mot.
       L'appel d'indice $i$ vérifie les paires restantes ; $floor(n/2)-i$ décroît tant qu'un appel récursif est effectué.
@@ -140,11 +139,11 @@
     ]),
     [On rappelle que pour $0 ≤ i < $```ocaml String.length s```, le $i$-ième caractère de la chaîne ```ocaml s``` est obtenu par ```ocaml s.[i]```.
       Pour un alphabet $Σ$, on note $"Pal"(Σ)$ l'ensemble des palindromes de $Σ^*$.],
-    question([Montrer que si $Σ$ est un alphabet à une lettre, alors $"Pal"(Σ)$ est régulier.], solution: [
+    Q([Montrer que si $Σ$ est un alphabet à une lettre, alors $"Pal"(Σ)$ est régulier.], solution: [
       Si $Σ={a}$, tout mot est de la forme $a^n$ et est un palindrome.
       Ainsi $"Pal"(Σ)=a^*$.
     ]),
-    question([Montrer que si $Σ$ contient au moins deux lettres, alors $"Pal"(Σ)$ n'est pas régulier.
+    Q([Montrer que si $Σ$ contient au moins deux lettres, alors $"Pal"(Σ)$ n'est pas régulier.
       On pourra utiliser un automate et un mot de $"Pal"(Σ) ∩ a^* b a^*$.], solution: [
       Choisissons deux lettres distinctes $a,b ∈ Σ$.
       Si $"Pal"(Σ)$ était régulier, son intersection $K$ avec $a^* b a^*$ le serait aussi.
@@ -156,14 +155,14 @@
     ]),
     [Soit $L ⊂ Σ^*$ un langage reconnu par $A=(Q,I,F,T)$.
       Pour $(q,q') ∈ Q^2$, on note $L_(q,q')$ le langage des mots étiquetant un chemin de $q$ à $q'$ dans $A$.],
-    question([Montrer que $L_(q,q')$ est reconnaissable et exprimer $L_A$ en fonction des langages $L_(q,q')$.],
+    Q([Montrer que $L_(q,q')$ est reconnaissable et exprimer $L_A$ en fonction des langages $L_(q,q')$.],
       commentaire: [Distinguer une famille de langages de leur union.],
       solution: [
       L'automate $(Q,{q},{q'},T)$ reconnaît $L_(q,q')$.
       Un chemin est acceptant s'il part d'un état initial et arrive à un état final, d'où
       $ L_A=union_(i ∈ I) union_(f ∈ F) L_(i,f). $
     ]),
-    question([Montrer que $"Pal"(Σ) ∩ (Σ^2)^*={u widetilde(u) | u ∈ Σ^*}$.],
+    Q([Montrer que $"Pal"(Σ) ∩ (Σ^2)^*={u widetilde(u) | u ∈ Σ^*}$.],
       solution: [
         Le langage $(Σ^2)^*$ contient exactement les mots de longueur paire.
         Tout $u widetilde(u)$ est un palindrome de longueur $2 abs(u)$.
@@ -173,14 +172,14 @@
       ]),
     [Soit $L$ un langage régulier reconnu par $A=(Q,I,F,T)$.
       On définit $D(L)={w widetilde(w) | w ∈ L}$ et $R(L)={w ∈ Σ^* | w widetilde(w) ∈ L}$.],
-    question([Décrire simplement $D(a^* b)$ et $R(a^* b^* a^*)$.], solution: [
+    Q([Décrire simplement $D(a^* b)$ et $R(a^* b^* a^*)$.], solution: [
       On a
       $ D(a^* b)={a^n b b a^n | n ∈ NN}, #sep R(a^* b^* a^*)=a^* b^*. $
       Pour la seconde égalité, si $w widetilde(w) ∈ a^* b^* a^*$, son préfixe $w$ appartient à ce même langage et n'utilise que $a,b$.
       Un tel mot $w$ comportant un $b$ puis un $a$ fait apparaître un facteur $b a^+ b$ dans $w widetilde(w)$, impossible dans $a^* b^* a^*$.
       Ainsi $w ∈ a^* b^*$ ; réciproquement $w=a^i b^j$ donne $w widetilde(w)=a^i b^(2j) a^i$.
     ]),
-    question([Les langages $D(L)$ et $R(L)$ sont-ils reconnaissables ?
+    Q([Les langages $D(L)$ et $R(L)$ sont-ils reconnaissables ?
       On pourra faire intervenir les langages $L_(q,q')$ définis ci-dessus.],
       solution: [
         $D(L)$ ne l'est pas toujours : pour $L=a^* b$, le langage ${a^n b b a^n | n ∈ NN}$ ne peut être reconnu par un automate fini.
@@ -218,8 +217,7 @@
     - Lire chaque partie avant de programmer ; les trois parties sont indépendantes.
     - « L'indentation, certes utile pour comprendre le code, n'est pas un délimiteur comme en Python. »
   ],
-  contenu: (
-    [
+  contenu: ([
       Ce sujet aborde différents problèmes autour des automates et des expressions régulières.
       On explore dans une première partie des propriétés sur le miroir d'un langage, sur les palindromes et sur les automates correspondants.
       On implémente ensuite l'algorithme de déterminisation d'un automate, afin de construire de manière effective l'automate de Brzozowski qui a la propriété d'être minimal.
@@ -281,29 +279,28 @@
       Les complexités demandées sont temporelles dans le pire des cas et sont exprimées sous la forme $O(f(n,m))$, où $f$ est une fonction usuelle simple des tailles des objets en entrée.
     ],
     partie("I", "Mots et automates", contenu: (
-      partie("I.A", "Miroir d'un mot et automate transposé", contenu: (
-        [Pour tout mot $w=a_0 a_1 … a_(n-1)$ de longueur $n ∈ NN^*$, son miroir est $widetilde(w)=a_(n-1) … a_1 a_0$.
+      partie("I.A", "Miroir d'un mot et automate transposé", contenu: ([Pour tout mot $w=a_0 a_1 … a_(n-1)$ de longueur $n ∈ NN^*$, son miroir est $widetilde(w)=a_(n-1) … a_1 a_0$.
           Le mot vide $ε$ est son propre miroir.
           Pour tout langage $L ⊂ Σ^*$, on pose $widetilde(L)={widetilde(w) | w ∈ L}$.],
-        question([Décrire le langage $L_1$ de l'automate $cal(A)_1$ de la figure 1 et décrire son langage miroir $widetilde(L)_1$.],
+        Q([Décrire le langage $L_1$ de l'automate $cal(A)_1$ de la figure 1 et décrire son langage miroir $widetilde(L)_1$.],
           commentaire: [Distinguer un langage d'un ensemble de langages.],
           solution: [
           Les chemins acceptants bouclent d'abord sur $0$, lisent $a b$ pour atteindre $2$, puis lisent uniquement des $a$.
           Ainsi
           $ L_1=(a | b)^* a b a^*, #sep widetilde(L)_1=a^* b a (a | b)^*. $
         ]),
-        question([Dessiner un automate $widetilde(cal(A))_1$ reconnaissant $widetilde(L)_1$.],
+        Q([Dessiner un automate $widetilde(cal(A))_1$ reconnaissant $widetilde(L)_1$.],
           solution: [On inverse toutes les transitions et on échange états initiaux et finaux.
             #automate-a1(miroir: true)
           ]),
         [Soit $A=(Q,I,F,T)$ un automate non déterministe et $L=L_A$ son langage.],
-        question([Donner, en justifiant, la construction de l'automate miroir $widetilde(A)=(Q,I',F',T')$ reconnaissant $widetilde(L)$.], solution: [
+        Q([Donner, en justifiant, la construction de l'automate miroir $widetilde(A)=(Q,I',F',T')$ reconnaissant $widetilde(L)$.], solution: [
           On prend $I'=F$, $F'=I$ et $T'={(q',c,q) | (q,c,q') ∈ T}$.
           Un chemin de $i ∈ I$ à $f ∈ F$ étiqueté $w$ devient un chemin de $f$ à $i$ étiqueté $widetilde(w)$, et réciproquement.
           Cela inclut $ε$ : il est accepté dans les deux automates exactement lorsque $I ∩ F ≠ ∅$.
         ]),
-        question([Écrire une fonction ```ocaml transpose``` de signature ```ocaml automate -> automate``` qui renvoie un automate reconnaissant le miroir du langage de l'automate d'entrée.], solution: [#code("transpose")]),
-        question([Quelle est la complexité de cette fonction ?], solution: [
+        Q([Écrire une fonction ```ocaml transpose``` de signature ```ocaml automate -> automate``` qui renvoie un automate reconnaissant le miroir du langage de l'automate d'entrée.], solution: [#code("transpose")]),
+        Q([Quelle est la complexité de cette fonction ?], solution: [
           Chaque transition est parcourue une fois.
           Le coût est $O(1+abs(T))$ en temps et en espace supplémentaire ; les listes d'états sont partagées.
         ]),
@@ -311,15 +308,14 @@
       palindromes,
       partie("I.C", "Déterminisation",
         commentaire: [Pour la représentation binaire, travailler directement sur les entiers : les conversions intermédiaires en listes annulent le gain recherché.],
-        contenu: (
-        [Pour tout automate non déterministe $A=(Q,I,F,T)$, on définit le déterminisé accessible $A_"det"=(Y,{I},F',δ)$, où $Y ⊂ cal(P)(Q)$ est l'ensemble des états accessibles depuis l'état initial $I$ dans l'automate des parties.
+        contenu: ([Pour tout automate non déterministe $A=(Q,I,F,T)$, on définit le déterminisé accessible $A_"det"=(Y,{I},F',δ)$, où $Y ⊂ cal(P)(Q)$ est l'ensemble des états accessibles depuis l'état initial $I$ dans l'automate des parties.
           Il reconnaît le même langage que $A$.],
-        question([Écrire un automate $cal(A)_2$ non déterministe à quatre états reconnaissant $L_2=(b | a b)^* b a$, avec un unique état initial et un unique état final.], solution: [
+        Q([Écrire un automate $cal(A)_2$ non déterministe à quatre états reconnaissant $L_2=(b | a b)^* b a$, avec un unique état initial et un unique état final.], solution: [
           #code("a2")
           Depuis $0$, on peut lire les blocs $b$ ou $a b$ pour revenir à $0$.
           On termine par le chemin $0$ vers $2$ vers $3$, étiqueté $b a$.
         ]),
-        question([Déterminiser l'automate miroir $widetilde(cal(A))_2$ pour obtenir $cal(A)_3=(widetilde(cal(A))_2)_"det"$.
+        Q([Déterminiser l'automate miroir $widetilde(cal(A))_2$ pour obtenir $cal(A)_3=(widetilde(cal(A))_2)_"det"$.
           Renommer ses états $e_0,e_1,…$.],
           commentaire: [Vérifier le déterminisme et les états finaux.],
           solution: [
@@ -328,7 +324,7 @@
             $e_0$ est initial ; $e_3,e_4$ sont finaux.
             #automate-a3()
           ]),
-        question([Déterminiser l'automate miroir $widetilde(cal(A))_3$ pour obtenir $cal(A)_4=(widetilde(cal(A))_3)_"det"$.
+        Q([Déterminiser l'automate miroir $widetilde(cal(A))_3$ pour obtenir $cal(A)_4=(widetilde(cal(A))_3)_"det"$.
           Renommer ses états $q_0,q_1,…$.],
           commentaire: [Vérifier le déterminisme et les états finaux.],
           solution: [
@@ -338,20 +334,20 @@
             L'état initial est $q_0$ ; le seul état final est $q_4$.
             #automate-a4()
           ]),
-        question([Quel doit être le langage reconnu par $cal(A)_4$ ?], solution: [
+        Q([Quel doit être le langage reconnu par $cal(A)_4$ ?], solution: [
           Chaque déterminisation préserve le langage, et les deux transpositions prennent deux fois le miroir.
           Le langage est donc $L_2=(b | a b)^* b a$.
         ]),
         [On souhaite implémenter cette construction.
           Une représentation naïve des parties de $Q$ utilise des listes d'états.
           Lors des réunions, la concaténation de listes crée des doublons qu'il faut supprimer.],
-        question([Écrire ```ocaml supprimer : 'a list -> 'a list``` qui supprime toutes les occurrences multiples des éléments d'une liste.], solution: [
+        Q([Écrire ```ocaml supprimer : 'a list -> 'a list``` qui supprime toutes les occurrences multiples des éléments d'une liste.], solution: [
           #code("supprimer")
           On conserve la dernière occurrence de chaque élément.
           L'induction sur la liste montre que le résultat a les mêmes éléments et aucun doublon.
           Comme avec ```ocaml List.mem```, l'égalité doit être définie pour les éléments considérés ; ici ce sont des entiers.
         ]),
-        question([Donner la complexité en fonction de la taille de la liste.],
+        Q([Donner la complexité en fonction de la taille de la liste.],
           solution: [
             Pour une liste de longueur $m$, les recherches parcourent au plus $(m-1)+…+1=m(m-1)/2$ éléments.
             Le coût est $O(m^2)$ et cette borne est atteinte quand les éléments sont distincts, en comptant une comparaison en temps constant.
@@ -362,11 +358,11 @@
           Le tableau ```ocaml pow``` contient $2^k$ pour $0 ≤ k ≤ 20$.
           #code("pow")
           Soient $q ∈ ⟦0,n-1⟧$ et $k="numero"(X) ∈ ⟦0,2^n-1⟧$.],
-        question([Écrire ```ocaml est_dans : int -> int -> bool``` qui teste, à l'aide d'opérations arithmétiques, si $q ∈ X$ en $O(1)$ opérations.],
+        Q([Écrire ```ocaml est_dans : int -> int -> bool``` qui teste, à l'aide d'opérations arithmétiques, si $q ∈ X$ en $O(1)$ opérations.],
           commentaire: [Le codage binaire permet un test en temps constant.],
           solution: [#code("est_dans") Le quotient par $2^q$, modulo $2$, est le bit d'indice $q$.]),
         [Soit $ℓ$ une liste d'états pouvant contenir des doublons, représentant $X$.],
-        question([Écrire ```ocaml numero : int list -> int``` qui calcule le numéro de $X$.
+        Q([Écrire ```ocaml numero : int list -> int``` qui calcule le numéro de $X$.
           Par exemple, ```ocaml [1; 5; 2; 5; 2; 5; 2; 2; 1; 2; 1]``` représente ${1,2,5}$, de numéro $38=2^1+2^2+2^5$.],
           solution: [
           #code("numero")
@@ -374,12 +370,12 @@
           Le coût est linéaire dans la longueur de la liste.
         ]),
         [Soit $ℓ$ une liste d'états et $X$ un ensemble représenté par $k$.],
-        question([Écrire ```ocaml intersecte : int list -> int -> bool``` qui vérifie si un élément de $ℓ$ appartient à $X$.], solution: [#code("intersecte")]),
+        Q([Écrire ```ocaml intersecte : int list -> int -> bool``` qui vérifie si un élément de $ℓ$ appartient à $X$.], solution: [#code("intersecte")]),
         [On suppose désormais $Σ={a,b}$.
           Pour $X ⊂ Q$ et $c ∈ Σ$, la transition du déterminisé est
           $ δ(X,c)=union_(q ∈ X) {q' ∈ Q | (q,c,q') ∈ T}. $
           En parcourant $T$, on calcule simultanément $δ(X,a)$ et $δ(X,b)$.],
-        question([Écrire ```ocaml etat_suivant : int -> (int * char * int) list -> int * int``` qui, à partir de $k="numero"(X)$ et de $T$, renvoie $(k_a,k_b)=("numero"(δ(X,a)),"numero"(δ(X,b)))$.],
+        Q([Écrire ```ocaml etat_suivant : int -> (int * char * int) list -> int * int``` qui, à partir de $k="numero"(X)$ et de $T$, renvoie $(k_a,k_b)=("numero"(δ(X,a)),"numero"(δ(X,b)))$.],
           commentaire: [Éviter les parcours répétés de toutes les transitions et les conversions en listes.],
           solution: [
           #code("etat_suivant")
@@ -389,9 +385,9 @@
         ]),
         [Pour obtenir un ensemble d'états $Y=⟦0,N-1⟧$, on renumérote les parties accessibles avec une liste de couples $(k,v)$ : $k$ code une partie, $v$ est son nouveau numéro.
           Par exemple, $(6,2)$ renumérote la partie ${1,2}$, de code $6$, en l'état $2$.],
-        question([Écrire ```ocaml cherche : int -> (int * int) list -> int``` qui renvoie le nouveau numéro associé à $k$, ou $-1$ si $k$ est absent.],
+        Q([Écrire ```ocaml cherche : int -> (int * int) list -> int``` qui renvoie le nouveau numéro associé à $k$, ou $-1$ si $k$ est absent.],
           solution: [#code("cherche")]),
-        question([Écrire ```ocaml determinise : automate -> automate``` qui calcule le déterminisé accessible.
+        Q([Écrire ```ocaml determinise : automate -> automate``` qui calcule le déterminisé accessible.
           Expliquer brièvement la démarche.],
           solution: [
           #code("determinise")
@@ -401,7 +397,7 @@
           La partie vide est conservée lorsqu'elle est accessible : elle fournit le puits du déterminisé complet.
           À la fin, tous les états accessibles ont été traités, puisqu'il n'existe que $2^n$ parties possibles.
         ]),
-        question([Quelle est la complexité de ```ocaml determinise``` en fonction du nombre $n$ d'états de $A$ et du nombre $N$ d'états de $A_"det"$ ?],
+        Q([Quelle est la complexité de ```ocaml determinise``` en fonction du nombre $n$ d'états de $A$ et du nombre $N$ d'états de $A_"det"$ ?],
           solution: [
             Chaque partie traitée parcourt $T$, la liste des états finaux et effectue trois recherches dans une liste de longueur au plus $N$.
             Le coût est $O(n+N(abs(T)+n+N))$.
@@ -412,19 +408,18 @@
       )),
       partie("I.D", "Algorithme de Brzozowski",
         commentaire: [Raisonner sur les chemins ; distinguer accessibilité et coaccessibilité.],
-        contenu: (
-        [L'algorithme de Brzozowski donne un automate déterministe complet ayant un nombre minimal d'états parmi les automates déterministes complets reconnaissant le même langage.
+        contenu: ([L'algorithme de Brzozowski donne un automate déterministe complet ayant un nombre minimal d'états parmi les automates déterministes complets reconnaissant le même langage.
           On se donne $A=(Q,I,{f},T)$ reconnaissant $L$, dont le miroir $widetilde(A)$ est déterministe et accessible.
           On note $A_"det"=(Y,{I},F',δ)$ son déterminisé accessible.
           Pour $u ∈ Σ^*$, on pose $u^(-1)L={w ∈ Σ^* | u w ∈ L}$.],
-        question([Soient $q ∈ Q$ et $u ∈ Σ^*$.
+        Q([Soient $q ∈ Q$ et $u ∈ Σ^*$.
           Montrer que si $q ∈ δ^*(I,u)$, alors il existe $w ∈ Σ^*$ tel que $u w ∈ L$.],
           solution: [
           L'accessibilité de $widetilde(A)$ fournit un chemin de $f$ à $q$.
           En le renversant, on obtient dans $A$ un chemin de $q$ à $f$, étiqueté par un mot $w$.
           Comme $q ∈ δ^*(I,u)$, un chemin étiqueté $u$ joint un état initial à $q$ ; leur concaténation accepte $u w$.
         ]),
-        question([Montrer la propriété $(*)$ : si $u^(-1)L=v^(-1)L$, alors $δ^*(I,u)=δ^*(I,v)$.],
+        Q([Montrer la propriété $(*)$ : si $u^(-1)L=v^(-1)L$, alors $δ^*(I,u)=δ^*(I,v)$.],
           solution: [
           Prenons $q ∈ δ^*(I,u)$ et un chemin de $q$ à $f$ étiqueté $w$.
           Alors $u w ∈ L$, donc $v w ∈ L$.
@@ -433,7 +428,7 @@
           Le déterminisme impose $q=q'$.
           Cela prouve une inclusion ; l'autre s'obtient en échangeant $u,v$.
         ]),
-        question([Pour un automate quelconque $A$ reconnaissant $L$, on pose $B=(widetilde(A))_"det"$.
+        Q([Pour un automate quelconque $A$ reconnaissant $L$, on pose $B=(widetilde(A))_"det"$.
           En déduire que $(widetilde(B))_"det"$ reconnaît $L$ et vérifie $(*)$.], solution: [
           $B$ est déterministe, complet et accessible, et reconnaît $widetilde(L)$.
           L'automate $widetilde(B)$ a un unique état final et son miroir $B$ est déterministe accessible : le résultat précédent s'applique.
@@ -444,7 +439,7 @@
           Choisir un mot d'accès à chaque état de $C$ donne ainsi des états distincts dans l'autre automate.
           Celui-ci a au moins autant d'états.
         ]),
-        question([Écrire ```ocaml minimal : automate -> automate``` appliquant cette construction.
+        Q([Écrire ```ocaml minimal : automate -> automate``` appliquant cette construction.
           On fera abstraction de la taille des automates générés, possiblement problématique.], solution: [
           #code("minimal")
           Cette composition suppose, comme demandé, que les représentations intermédiaires sont disponibles.
@@ -453,39 +448,36 @@
         ]),
       )),
     )),
-    partie("II", "Expression régulière associée à un automate", contenu: (
-      [On introduit un algorithme dû à Conway, calculant une expression régulière associée au langage d'un automate à l'aide de matrices d'expressions régulières.],
-      partie("II.A", "Simplification d'expressions régulières équivalentes", contenu: (
-        [On se donne le type OCaml des expressions régulières : #code("exprat")],
+    partie("II", "Expression régulière associée à un automate", contenu: ([On introduit un algorithme dû à Conway, calculant une expression régulière associée au langage d'un automate à l'aide de matrices d'expressions régulières.],
+      partie("II.A", "Simplification d'expressions régulières équivalentes", contenu: ([On se donne le type OCaml des expressions régulières : #code("exprat")],
         partie("II.A.1", "Parcours d'une expression", contenu: (
-          question([Écrire ```ocaml lettre : exprat -> int``` qui renvoie le nombre de lettres présentes dans une expression régulière.
+          Q([Écrire ```ocaml lettre : exprat -> int``` qui renvoie le nombre de lettres présentes dans une expression régulière.
             Par exemple, pour $E=(a^* b) | a b b a(a | ε)^* | ∅$, la fonction doit renvoyer $7$.],
             solution: [#code("lettre")
               La preuve suit l'induction structurelle : seuls les nœuds ```ocaml Lettre``` contribuent, chacun pour une unité.
             ]),
-          question([Écrire ```ocaml est_vide : exprat -> bool``` qui teste si le langage représenté est vide.], solution: [#code("est_vide") Une union est vide si ses deux termes le sont ; une concaténation est vide si au moins un terme l'est.
+          Q([Écrire ```ocaml est_vide : exprat -> bool``` qui teste si le langage représenté est vide.], solution: [#code("est_vide") Une union est vide si ses deux termes le sont ; une concaténation est vide si au moins un terme l'est.
             Une étoile contient toujours $ε$.
             Ces règles donnent la correction par induction structurelle.
             ]),
         )),
-        partie("II.A.2", "Règles de simplification", contenu: (
-          [On travaille sur la syntaxe des expressions et on utilise les équivalences
+        partie("II.A.2", "Règles de simplification", contenu: ([On travaille sur la syntaxe des expressions et on utilise les équivalences
             $ ∅ | E ≡ E | ∅ ≡ E, #sep E dot ε ≡ ε dot E ≡ E, $
             $ E dot ∅ ≡ ∅ dot E ≡ ∅, #sep ∅^* ≡ ε, #sep ε^* ≡ ε,
               #sep (E^*)^* ≡ E^*. $
             La notation $E ≡ E'$ signifie $cal(L)(E)=cal(L)(E')$.
             La fonction suivante simplifie à la racine une union : #code("su") On suppose aussi codée ```ocaml sc : exprat -> exprat```, qui simplifie à la racine une concaténation en utilisant les règles données.],
-          question([Écrire ```ocaml se : exprat -> exprat``` qui simplifie à la racine une expression de type ```ocaml Etoile``` selon ces règles.],
+          Q([Écrire ```ocaml se : exprat -> exprat``` qui simplifie à la racine une expression de type ```ocaml Etoile``` selon ces règles.],
             solution: [#code("se")]),
           [Considérons $E_n=a | (b dot (b dot (… (b dot ∅)…)))$, où $n$ lettres $b$ concaténées se succèdent.
             #arbre-e4()
             #align(center)[Figure 2 — Arbre syntaxique de $E_4$.]
           ],
-          question([Combien d'applications des règles sont nécessaires pour obtenir l'expression $a$ à partir de $E_n$ ?], solution: [
+          Q([Combien d'applications des règles sont nécessaires pour obtenir l'expression $a$ à partir de $E_n$ ?], solution: [
             Il faut $n+1$ applications : les $n$ concaténations avec $∅$ sont supprimées de l'intérieur vers l'extérieur, puis $a | ∅$ devient $a$.
             Aucune concaténation extérieure n'est simplifiable avant que sa sous-expression droite ne soit devenue $∅$.
           ]),
-          question([Écrire ```ocaml simplifie : exprat -> exprat``` qui simplifie une expression selon ces règles.],
+          Q([Écrire ```ocaml simplifie : exprat -> exprat``` qui simplifie une expression selon ces règles.],
             commentaire: [Simplifier toute l'expression en profondeur.],
             solution: [
             #code(("sc", "simplifie"))
@@ -496,8 +488,7 @@
           ]),
         )),
       )),
-      partie("II.B", "Matrices d'expressions régulières", contenu: (
-        [On considère des matrices d'expressions régulières : #code("mat") La matrice nulle de taille $n$ a tous ses coefficients égaux à $∅$.
+      partie("II.B", "Matrices d'expressions régulières", contenu: ([On considère des matrices d'expressions régulières : #code("mat") La matrice nulle de taille $n$ a tous ses coefficients égaux à $∅$.
           La matrice identité a $ε$ sur sa diagonale et $∅$ ailleurs.
           Pour $A,B$ de taille $n × m$, on définit $[A | B]_(i,j)=A_(i,j) | B_(i,j)$, où le signe $|$ désigne l'union, pour $0 ≤ i<n$ et $0 ≤ j<m$.
           Pour $A$ de taille $n × p$ et $B$ de taille $p × q$, le produit de taille $n × q$ est défini comme le produit usuel, en remplaçant la somme par l'union et le produit par la concaténation.
@@ -507,12 +498,12 @@
           On ne développe ni n'imprime les expressions pendant les calculs.
         ],
         partie("II.B.1", "Somme et produit", contenu: (
-          question([Écrire ```ocaml somme : mat -> mat -> mat``` qui effectue la somme de matrices de même taille $n × p$.
+          Q([Écrire ```ocaml somme : mat -> mat -> mat``` qui effectue la somme de matrices de même taille $n × p$.
             Quelle est sa complexité ?],
             solution: [#code("somme")
               Chaque coefficient crée une union en temps constant : coût $Θ(n p)$.
             ]),
-          question([Écrire ```ocaml produit : mat -> mat -> mat``` qui effectue le produit de deux matrices de tailles compatibles $n × p$ et $p × q$.
+          Q([Écrire ```ocaml produit : mat -> mat -> mat``` qui effectue le produit de deux matrices de tailles compatibles $n × p$ et $p × q$.
             On ne vérifiera pas cette compatibilité.
             Quelle est sa complexité ?],
             solution: [#code("produit")
@@ -521,14 +512,13 @@
             ]),
         )),
         [On cherche à définir l'étoile de Kleene d'une matrice carrée.],
-        partie("II.B.2", "Étoile d'une matrice de taille deux", contenu: (
-          [Soit $M=mat(a,b;c,d)$, où $a,b,c,d$ sont quatre lettres.
+        partie("II.B.2", "Étoile d'une matrice de taille deux", contenu: ([Soit $M=mat(a,b;c,d)$, où $a,b,c,d$ sont quatre lettres.
             On associe à $M$ le graphe étiqueté $G=(S,A)$ de la figure 3, avec $S={0,1}$.
             #graphe-matrice()
             #align(center)[Figure 3 — Graphe associé à $M$.]
             On note $L_(i,j)$ le langage de l'automate $cal(A)_(i,j)=({0,1},{i},{j},T)$, où $T={(i,M_(i,j),j) | (i,j) ∈ {0,1}^2}$.
           ],
-          question([Donner une expression régulière sur ${a,b,c,d}$ pour chacun des langages $L_(i,j)$.], solution: [
+          Q([Donner une expression régulière sur ${a,b,c,d}$ pour chacun des langages $L_(i,j)$.], solution: [
             $ L_(0,0)=(a | b d^* c)^*, #sep L_(1,1)=(d | c a^* b)^*, $
             $ L_(0,1)=a^* b(d | c a^* b)^*, #sep
               L_(1,0)=d^* c(a | b d^* c)^*. $
@@ -539,8 +529,7 @@
         )),
         partie("II.B.3", "Étoile d'une matrice de taille quelconque",
         commentaire: [Calculer chaque résultat récursif une seule fois avant de compter les appels et de résoudre la récurrence.],
-        contenu: (
-          [On définit récursivement l'étoile de $M$ : si $M=(e)$ est de taille $1$, alors $M^*=(e^*)$.
+        contenu: ([On définit récursivement l'étoile de $M$ : si $M=(e)$ est de taille $1$, alors $M^*=(e^*)$.
             Sinon, on découpe en blocs
             $ M=mat(A,B;C,D), #sep M^*=mat(A',B';C',D'), $
             où $A,D$ sont carrées de tailles au moins $1$, et
@@ -559,7 +548,7 @@
             $ A'=(a | B D^* C)^*, #sep B'=a^* B(D | C a^* B)^*, $
             $ C'=D^* C(a | B D^* C)^*, #sep D'=(D | C a^* B)^*. $
           ],
-          question([Évaluer les complexités des sommes et produits.
+          Q([Évaluer les complexités des sommes et produits.
             En déduire que le coût $C(n)$ du calcul de l'étoile vérifie $C(n)=2C(n-1)+O(n^2)$.
             En déduire la complexité de cet algorithme.],
             solution: [
@@ -576,7 +565,7 @@
             ]),
           [Supposons maintenant que $n ≥ 2$ est une puissance de $2$.
             On découpe $M=mat(A,B;C,D)$ avec $A,D$ de taille $n/2$.],
-          question([Évaluer les complexités des sommes et produits.
+          Q([Évaluer les complexités des sommes et produits.
             En déduire $C(n)=4C(n/2)+O(n^3)$, puis la complexité de l'algorithme.],
             solution: [
             On conserve les quatre étoiles $A^*$, $D^*$, $A'$ et $D'$ pour les réutiliser.
@@ -586,7 +575,7 @@
             La somme géométrique sur tous les niveaux est $O(n^3)$ ; les $4^(log_2 n)=n^2$ feuilles ne changent pas cette borne.
             Le coût du premier niveau fournit aussi une minoration : $C(n)=Θ(n^3)$.
           ]),
-          question([Comment gérer une taille $n$ quelconque ?
+          Q([Comment gérer une taille $n$ quelconque ?
             Quelle complexité peut-on obtenir pour $M^*$ ?], solution: [
             On peut compléter $M$ par des lignes et colonnes d'expressions vides jusqu'à la puissance de deux $p$ suivante, avec $n ≤ p<2n$.
             Aucun chemin ne passe par les nouveaux sommets, sauf les chemins vides sur eux-mêmes.
@@ -596,7 +585,7 @@
             Au niveau $k$, il y a au plus $4^k$ appels sur des tailles au plus $ceil(n/2^k)$, d'où le même majorant géométrique $O(n^3/2^k)$ avant le dernier niveau.
             Les $O(n^2)$ feuilles donnent encore un coût $O(n^3)$.
           ]),
-          question([Écrire ```ocaml etoile : mat -> mat``` qui renvoie l'étoile d'une matrice avec l'algorithme récursif le plus adéquat.],
+          Q([Écrire ```ocaml etoile : mat -> mat``` qui renvoie l'étoile d'une matrice avec l'algorithme récursif le plus adéquat.],
             solution: [
             #code("etoile")
             Chaque sous-matrice carrée passée récursivement est strictement plus petite.
@@ -605,19 +594,18 @@
           ]),
         )),
       )),
-      partie("II.C", "Algorithme de Conway", contenu: (
-        [Soit $A=(Q,I,F,T)$ avec $Q=⟦0,n-1⟧$.
+      partie("II.C", "Algorithme de Conway", contenu: ([Soit $A=(Q,I,F,T)$ avec $Q=⟦0,n-1⟧$.
           Sa matrice de transition est la matrice d'expressions régulières $M_A$ dont le coefficient $[M_A]_(i,j)$ est l'union, notée $|$, des lettres $c ∈ Σ$ telles que $(i,c,j) ∈ T$.
           L'union vide vaut $∅$.
           On admet que $cal(L)([M_A^*]_(i,j))=L_(i,j)$, langage des chemins défini à la question 9.],
-        question([Montrer que $L_A=cal(L)([X M_A^* Y]_(0,0))$, où $X$ est une matrice ligne $(x_0,…,x_(n-1))$ et $Y$ une matrice colonne de coefficients $y_0,…,y_(n-1)$, avec $x_i,y_j ∈ {∅,ε}$.
+        Q([Montrer que $L_A=cal(L)([X M_A^* Y]_(0,0))$, où $X$ est une matrice ligne $(x_0,…,x_(n-1))$ et $Y$ une matrice colonne de coefficients $y_0,…,y_(n-1)$, avec $x_i,y_j ∈ {∅,ε}$.
           Préciser les coefficients en fonction de l'automate.], solution: [
           On choisit $x_i=ε$ si $i ∈ I$, et $∅$ sinon ; $y_j=ε$ si $j ∈ F$, et $∅$ sinon.
           Le produit représente exactement
           $ union_(i ∈ I) union_(j ∈ F) cal(L)([M_A^*]_(i,j))
             =union_(i ∈ I) union_(j ∈ F) L_(i,j)=L_A. $
         ]),
-        question([Écrire ```ocaml langage : automate -> exprat``` renvoyant une expression régulière du langage de l'automate.
+        Q([Écrire ```ocaml langage : automate -> exprat``` renvoyant une expression régulière du langage de l'automate.
           Quelle est sa complexité ?],
           solution: [
             #code("langage")
@@ -631,8 +619,7 @@
           ]),
       )),
     )),
-    partie("III", "Automate des dérivées d'Antimirov", contenu: (
-      [On propose une méthode construisant, à partir d'une expression régulière, un automate non déterministe ayant peu d'états.
+    partie("III", "Automate des dérivées d'Antimirov", contenu: ([On propose une méthode construisant, à partir d'une expression régulière, un automate non déterministe ayant peu d'états.
         Pour deux ensembles d'expressions $S,S'$, on pose
         $ S dot S'={E dot E' | (E,E') ∈ S × S'}. $
         En particulier, $∅ dot S=∅$ et ${ε} dot S=S$.
@@ -653,7 +640,7 @@
             ={a^*(a | b),ε}, $
         $ ∂_b(E)=∂_b(a^*) dot {a | b} ∪ ∂_b(a | b)={ε}. $
       ],
-      question([Pour $E=(a b | b)^* b a$, calculer $∂_a(E)$ et $∂_b(E)$.],
+      Q([Pour $E=(a b | b)^* b a$, calculer $∂_a(E)$ et $∂_b(E)$.],
         solution: [
           Posons $H=(a b | b)^*$, donc $E=H b a$.
           On a $∂_a(a b | b)={b}$ et $∂_b(a b | b)={ε}$.
@@ -671,7 +658,7 @@
         $ T={(E_1,c,E_2) ∈ Q × Σ × Q | E_2 ∈ ∂_c(E_1)}. $
         Pour tout mot $w$ et tout langage $L ⊂ Σ^*$, on rappelle $w^(-1)L={u ∈ Σ^* | w u ∈ L}$.
       ],
-      question([Dessiner l'automate obtenu à partir de $E=(a b | b)^* b a$.
+      Q([Dessiner l'automate obtenu à partir de $E=(a b | b)^* b a$.
         Indiquer précisément son ensemble d'états $Q$.], solution: [
         On a $Q={E,b E,a,ε}$, $I={E}$ et $F={ε}$.
         En plus des dérivées de $E$, on a $∂_a(b E)=∅$, $∂_b(b E)={E}$, $∂_a(a)={ε}$, $∂_b(a)=∅$ et les deux dérivées de $ε$ sont vides.
@@ -679,7 +666,7 @@
         #antimirov()
         L'état final est représenté par un double cercle.
       ]),
-      question([Montrer que pour tous mots $u,v$ et tout langage $L$, $v^(-1)(u^(-1)L)=(u v)^(-1)L$.], solution: [
+      Q([Montrer que pour tous mots $u,v$ et tout langage $L$, $v^(-1)(u^(-1)L)=(u v)^(-1)L$.], solution: [
         Pour tout $z$, on a successivement
         $ z ∈ v^(-1)(u^(-1)L) ⇔ v z ∈ u^(-1)L ⇔ u v z ∈ L
           ⇔ z ∈ (u v)^(-1)L. $
@@ -688,7 +675,7 @@
         On admet que pour toute expression $E$ et toute lettre $x$,
         $ cal(L)(∂_x(E))=x^(-1)cal(L)(E). $
       ],
-      question([Pour tout ensemble $S$ d'expressions sur $Σ$ et tout $w ∈ Σ^*$, montrer $cal(L)(∂_w(S))=w^(-1)cal(L)(S)$.], solution: [
+      Q([Pour tout ensemble $S$ d'expressions sur $Σ$ et tout $w ∈ Σ^*$, montrer $cal(L)(∂_w(S))=w^(-1)cal(L)(S)$.], solution: [
         Pour une lettre $x$, l'union des identités admises donne
         $ cal(L)(∂_x(S))=union_(E ∈ S) x^(-1)cal(L)(E)
           =x^(-1)cal(L)(S). $
@@ -699,13 +686,13 @@
         $ cal(L)(∂_(u x)(S))=cal(L)(∂_x(∂_u(S)))
           =x^(-1)(u^(-1)cal(L)(S))=(u x)^(-1)cal(L)(S). $
       ]),
-      question([Montrer que pour tout $w ∈ Σ^*$, $∂_w(E)$ est l'ensemble des états accessibles depuis $E$ en lisant $w$.], solution: [
+      Q([Montrer que pour tout $w ∈ Σ^*$, $∂_w(E)$ est l'ensemble des états accessibles depuis $E$ en lisant $w$.], solution: [
         Pour $ε$, le seul état atteint est $E$ et $∂_ε(E)={E}$.
         Si la propriété est vraie pour $u$, les états atteints après $u a$ sont les successeurs par $a$ des états de $∂_u(E)$, soit
         $ union_(H ∈ ∂_u(E)) ∂_a(H)=∂_a(∂_u(E))=∂_(u a)(E). $
         La récurrence conclut.
       ]),
-      question([En déduire que l'automate d'Antimirov reconnaît le langage de $E$.],
+      Q([En déduire que l'automate d'Antimirov reconnaît le langage de $E$.],
         solution: [
           Un mot $w$ est accepté si et seulement si un état $H ∈ ∂_w(E)$ est final, c'est-à-dire si $ε ∈ cal(L)(∂_w(E))$.
           Par la question 47, cela équivaut à $ε ∈ w^(-1)cal(L)(E)$, donc à $w ∈ cal(L)(E)$.
@@ -721,7 +708,7 @@
         On pose
         $ Q(E)=union_(w ∈ Σ^* ∖ {ε}) ∂_w(E). $
       ],
-      question([Montrer que $abs(Q(E))$ est majoré par le nombre de lettres présentes dans l'écriture syntaxique de $E$, noté $norm(E)$.
+      Q([Montrer que $abs(Q(E))$ est majoré par le nombre de lettres présentes dans l'écriture syntaxique de $E$, noté $norm(E)$.
         Qu'en déduit-on sur l'automate d'Antimirov ?], solution: [
         Raisonnons par induction structurelle.
         - Pour $E=∅$ ou $E=ε$, $Q(E)=∅$ et $norm(E)=0$.

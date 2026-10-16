@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #let ex = exercice(
   meta: (
     titre: "Automates et monoïdes",
@@ -16,15 +16,14 @@
     - Question 7 : réparer la phrase incomplète et préciser la base du logarithme ; la borne est $sqrt(log_2 n)$.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       Un semigroupe est un ensemble muni d'une multiplication interne associative : $x · (y · z)=(x · y) · z$.
       Un élément neutre $e$ vérifie $x · e=e · x=x$ pour tout $x$.
       Un monoïde est un semigroupe possédant un neutre. Il est fini si son ensemble sous-jacent est fini.
       Un morphisme de monoïdes conserve la multiplication et l'élément neutre.
       Pour des transformations, on utilisera le produit $f · g=g∘f$, qui correspond à leur application de gauche à droite.
     ],
-    question([
+    Q([
       #enum(numbering: "a)", [Montrer qu'un monoïde possède un unique élément neutre.],
         [Pour un alphabet fini $A$, montrer que $(A^*, · )$, muni de la concaténation, est un monoïde.])
     ], solution: [
@@ -32,7 +31,7 @@
 
       b) Le mot vide est neutre. Les deux concaténations $(u v)w$ et $u(v w)$ ont même longueur et les mêmes lettres à chaque position : d'abord celles de $u$, puis celles de $v$, puis celles de $w$. La concaténation est associative.
     ]),
-    question([
+    Q([
       Soit $Q$ un ensemble fini. Montrer que les fonctions $Q→Q$ forment un monoïde, appelé monoïde des transformations.
       Un monoïde $N$ est un sous-monoïde de $M$ s'il existe un morphisme injectif de $N$ vers $M$.
       Montrer que tout monoïde fini est un sous-monoïde d'un monoïde des transformations.
@@ -48,7 +47,7 @@
       Une fonction de transition est une fonction $f_u:q↦q · u$, pour un mot $u∈A^*$.
       Dans les complexités, $n=abs(Q)≥1$, $k=abs(A)≥1$ et $N$ est le nombre de fonctions de transition distinctes.
     ],
-    question([
+    Q([
       #enum(numbering: "a)",
         [Montrer que les fonctions de transition forment un monoïde fini.],
         [Donner un algorithme testant si une fonction $f:Q→Q$ appartient à ce monoïde et sa complexité.],
@@ -99,7 +98,7 @@
 
       Ainsi $L=φ^(-1)(φ(L))$ : le monoïde des transitions reconnaît bien le langage de l'automate.
     ]),
-    question([
+    Q([
       Un langage est reconnaissable par monoïde s'il est reconnu par un monoïde fini. Montrer que cela équivaut à être reconnu par un automate fini.
     ], solution: [
       Un automate fini peut être déterminisé et complété ; la question 3 donne alors un monoïde fini reconnaissant son langage.
@@ -110,7 +109,7 @@
       Une relation sur $Q$ est une partie de $Q×Q$. On définit
       $ R_1∘R_2={(x,y) | ∃z∈Q, (x,z)∈R_1 " et " (z,y)∈R_2}. $
     ],
-    question([
+    Q([
       #enum(numbering: "a)", [Montrer que les relations sur $Q$, munies de cette composition, forment un monoïde.], [Donner sa taille en fonction de $abs(Q)$.])
     ], solution: [
       a) Les deux parenthésages décrivent les couples reliés par trois étapes successives : ils sont égaux. La diagonale ${(q,q) | q∈Q}$ est neutre.
@@ -122,7 +121,7 @@
       Pour $u∈A^*$, $q · u$ désigne l'ensemble des états atteignables en lisant $u$ depuis $q$.
       La relation de transition de $u$ est $R_u={(q,r)∈Q×Q | r∈q · u}$.
     ],
-    question([
+    Q([
       #enum(numbering: "a)", [Montrer que les relations de transition forment un monoïde fini.],
         [Montrer que ce monoïde reconnaît le langage de l'automate.],
         [Proposer un algorithme calculant ce monoïde et sa complexité.])
@@ -137,7 +136,7 @@
       Le temps est donc $O(k N_R(n^3+N_R n^2))$ et l'espace $O((N_R+k)n^2)$.
       La terminaison et l'exhaustivité se prouvent comme pour les transformations.
     ]),
-    question([
+    Q([
       On appelle ici taille du monoïde syntaxique de $L$ la plus petite cardinalité d'un monoïde fini reconnaissant $L$.
       Si cette taille vaut $n$, montrer que tout automate fini non déterministe reconnaissant $L$ a au moins $sqrt(log_2 n)$ états.
     ], solution: [

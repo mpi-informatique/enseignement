@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -44,18 +44,17 @@
     - Question 4 : justifier l'unicité par les choix de règles, et non par la seule présence d'au plus une variable.
     - Question 5 : utiliser le même nom de variable dans toutes les règles de la construction.
   ],
-  contenu: (
-    [On considère la grammaire non-contextuelle $G$ sur $Σ = {a,b}$, d'axiome $S$, donnée par $S → S a S ∣ b$.],
-    question([Cette grammaire est-elle ambiguë ? Justifier.], solution: [
+  contenu: ([On considère la grammaire non-contextuelle $G$ sur $Σ = {a,b}$, d'axiome $S$, donnée par $S → S a S ∣ b$.],
+    Q([Cette grammaire est-elle ambiguë ? Justifier.], solution: [
       Oui : le mot $b a b a b$ possède les deux arbres d'analyse distincts suivants.
       #arbres
       Ils correspondent aux regroupements $(b a b) a b$ et $b a (b a b)$.
     ]),
-    question([
+    Q([
       Déterminer, sans preuve pour cette question, le langage $L$ engendré par $G$.
       Quelle est la plus petite classe, parmi les langages réguliers et non-contextuels, à laquelle $L$ appartient ?
     ], solution: [Le langage est $L = (b a)^* b$ : il est régulier.]),
-    question([Prouver que $L = L(G)$.], solution: [
+    Q([Prouver que $L = L(G)$.], solution: [
       Pour $n=0$, $S ⇒ b$ engendre $(b a)^0 b$.
       Si $(b a)^n b$ est engendré, alors
       $ S ⇒ S a S ⇒ b a S ⇒^* b a (b a)^n b = (b a)^(n+1) b. $
@@ -66,13 +65,13 @@
       Pour $S → S a S$, les deux sous-arbres produisent par hypothèse $(b a)^r b$ et $(b a)^s b$, et leur assemblage produit $(b a)^r b a (b a)^s b = (b a)^(r+s+1) b ∈ L$.
       Ainsi $L(G) ⊂ L$.
     ]),
-    question([Donner une grammaire non ambiguë engendrant $L$ et justifier sa non-ambiguïté.], solution: [
+    Q([Donner une grammaire non ambiguë engendrant $L$ et justifier sa non-ambiguïté.], solution: [
       Prendre $S → b a S ∣ b$.
       Pour produire $(b a)^n b$, il faut appliquer $n$ fois la première règle, puis la seconde. Aucun autre choix ne peut produire ce mot : il a un unique arbre d'analyse.
       Cette justification utilise le caractère forcé des choix :
       contenir au plus une variable dans chaque forme ne suffit pas en général à exclure l'ambiguïté.
     ]),
-    question([
+    Q([
       Montrer que tout langage régulier peut être engendré par une grammaire non-contextuelle non ambiguë.
     ], solution: [
       Soit un automate fini déterministe reconnaissant le langage, d'état initial $q_0$, d'ensemble d'états $Q$, d'états finaux $F$ et de transition $δ$.

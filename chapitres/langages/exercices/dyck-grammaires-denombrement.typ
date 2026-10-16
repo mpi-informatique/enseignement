@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -9,20 +9,19 @@
     difficulte: 3,
     niveaux: ("MPI",),
   ),
-  contenu: (
-    [Sur $Σ = {a,b}$, un mot $w$ est un mot de Dyck, ou mot bien parenthésé, si :
+  contenu: ([Sur $Σ = {a,b}$, un mot $w$ est un mot de Dyck, ou mot bien parenthésé, si :
       - il contient autant de $a$ que de $b$ ;
       - chacun de ses préfixes contient au moins autant de $a$ que de $b$.
 
       On note $D$ le langage de ces mots et $h(u)=abs(u)_a-abs(u)_b$ la hauteur d'un mot $u$.
       La lettre $a$ représente une parenthèse ouvrante et $b$ une parenthèse fermante.],
-    question([Montrer que $D$ n'est pas régulier.], solution: [
+    Q([Montrer que $D$ n'est pas régulier.], solution: [
       Supposer $D$ régulier et prendre $p ≥ 1$ donné par le lemme de l'étoile.
       Le mot $a^p b^p ∈ D$ s'écrit $x y z$, avec $abs(x y) ≤ p$, $y ≠ ε$ et $x y^i z ∈ D$ pour tout $i ∈ ℕ$.
       Le facteur $y$ ne contient que des $a$ et au moins un.
       Ainsi $x y^2 z$ possède plus de $a$ que de $b$ : contradiction.
     ]),
-    question([
+    Q([
       Montrer que tout mot de Dyck non vide se décompose de manière unique sous la forme $a u b v$, où $u,v ∈ D$.
     ], solution: [
       Soit $k$ le premier indice strictement positif où la hauteur d'un préfixe redevient nulle.
@@ -35,7 +34,7 @@
       Dans toute décomposition $w=a u b v$ avec $u,v ∈ D$, les préfixes non vides stricts de $a u b$ ont hauteur au moins $1$.
       Le $b$ séparateur se trouve donc au premier retour à zéro : sa position est imposée, ce qui impose $u$ et $v$.
     ]),
-    question([
+    Q([
       Soit $G$ la grammaire $S → S S ∣ a S b ∣ ε$. Montrer que $L(G)=D$.
     ], solution: [
       $ε$ est de Dyck, et la concaténation de deux mots de Dyck ainsi que l'ajout d'un $a$ au début et d'un $b$ à la fin préservent cette propriété.
@@ -46,16 +45,16 @@
       $ S ⇒ S S ⇒ a S b S ⇒^* a u b v. $
       Ainsi $D ⊂ L(G)$.
     ]),
-    question([Montrer que $G$ est ambiguë.], solution: [
+    Q([Montrer que $G$ est ambiguë.], solution: [
       Le mot vide possède les deux dérivations gauches $S ⇒ ε$ et $S ⇒ S S ⇒ S ⇒ ε$.
       Leurs arbres sont différents : la racine a respectivement une règle d'effacement et une règle de concaténation. Cela suffit à établir l'ambiguïté.
     ]),
-    question([Donner une grammaire non ambiguë engendrant $D$.], solution: [
+    Q([Donner une grammaire non ambiguë engendrant $D$.], solution: [
       Prendre $S → a S b S ∣ ε$.
       La décomposition unique établie précédemment montre par récurrence sur la longueur que chaque mot non vide possède un unique arbre, dont les deux sous-arbres engendrent $u$ et $v$. Le mot vide utilise nécessairement $S → ε$.
       La même décomposition montre que tous les mots de Dyck sont engendrés, et l'induction sur les arbres prouve l'inclusion réciproque.
     ]),
-    question([
+    Q([
       Donner une bijection entre les mots de Dyck et les arbres binaires stricts ordonnés, dont chaque nœud possède zéro ou deux fils. Préciser le lien entre la longueur du mot et les nombres de nœuds internes et de feuilles.
     ], solution: [
       Noter $F$ une feuille et $N(g,d)$ un nœud interne de sous-arbres gauche $g$ et droit $d$.
@@ -68,7 +67,7 @@
       Une paire de lettres correspond à un nœud interne : un mot de longueur $2n$ correspond à un arbre de $n$ nœuds internes et de $n+1$ feuilles.
       Le mot vide correspond à une feuille, et non à un arbre vide.
     ]),
-    question([
+    Q([
       Soit $C_n$ le nombre de mots de Dyck de longueur $2n$.
       Donner $C_0$ et une relation de récurrence. Calculer $C_1,C_2,C_3,C_4$.
     ], solution: [
@@ -77,7 +76,7 @@
       $ C_(n+1)=sum_(k=0)^n C_k C_(n-k). $
       On obtient $C_1=1$, $C_2=2$, $C_3=5$ et $C_4=14$.
     ]),
-    question([
+    Q([
       Après le cours de mathématiques sur les séries entières, montrer que $C_n=1/(n+1) binom(2n,n)$ en utilisant la série génératrice $F(x)=sum_(n=0)^∞ C_n x^n$.
     ], solution: [
       Comme $C_n ≤ 4^n$, la série converge au moins pour $abs(x)<1/4$.
@@ -95,7 +94,7 @@
       Comme $∏_(j=1)^n(2j-1)=(2n)!/(2^n n!)$, il vient
       $ C_n=(2n)!/(n!(n+1)!)=1/(n+1) binom(2n,n). $
     ]),
-    question([
+    Q([
       Variante sans séries entières : parmi les mots contenant $n$ lettres $a$ et $n$ lettres $b$, transformer ceux qui ne sont pas de Dyck en échangeant $a$ et $b$ dans leur premier préfixe de hauteur $-1$.
       Montrer que cette transformation est une bijection avec les mots contenant $n+1$ lettres $a$ et $n-1$ lettres $b$, puis retrouver la formule de $C_n$.
     ], solution: [
@@ -112,7 +111,7 @@
       $ C_n=binom(2n,n)-binom(2n,n-1)=1/(n+1) binom(2n,n). $
       Pour $n=0$, la formule donne également $C_0=1$.
     ]),
-    question([
+    Q([
       On autorise plusieurs sortes de parenthèses, par exemple `()`, `[]` et `{}`.
       Décrire un algorithme en temps linéaire pour reconnaître les mots bien parenthésés.
       Pourquoi un simple compteur ne suffit-il plus ?
@@ -127,7 +126,7 @@
       Chaque lettre effectue un nombre constant d'opérations de pile, donc le temps est $O(n)$ et l'espace auxiliaire $O(n)$ dans le pire cas.
       Un compteur perd les types : `([)]` ne devient jamais négatif et finit à zéro, mais n'est pas bien parenthésé.
     ]),
-    question([
+    Q([
       Décrire un algorithme en temps linéaire pour trouver la longueur du plus long facteur bien parenthésé d'un mot sur ${a,b}$. La réponse vaut zéro si aucun facteur non vide ne convient.
     ], solution: [
       Numéroter les lettres de $0$ à $n-1$.

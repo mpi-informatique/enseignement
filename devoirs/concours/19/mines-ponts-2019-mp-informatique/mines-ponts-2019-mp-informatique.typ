@@ -2,7 +2,7 @@
 #import code: code-extrait
 #import "/load.typ": automate
 #import automate: dessiner-automate, rayon-etat, rayon-grand-etat
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -109,8 +109,7 @@
   remarques: [
     Le jury demande des preuves argumentées, en citant les propriétés et résultats antérieurs utilisés.
   ],
-  contenu: (
-    [
+  contenu: ([
       == Définition mathématique d'un automate
       Dans tout le sujet, un automate est un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.
       On note $ε$ le mot vide et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
@@ -134,32 +133,27 @@
       On utilisera aussi ```ocaml List.iter f l```, qui applique ```ocaml f``` à chaque élément de ```ocaml l```, dans l'ordre.
     ],
     partie("I", "Premiers exemples", contenu: (
-      question(
-        [Donner, sans preuve, une description courte en langue française de $L(cal(A)_1)$.],
+      Q([Donner, sans preuve, une description courte en langue française de $L(cal(A)_1)$.],
         solution: [Les mots de longueur impaire sur ${a,b}$.],
         bareme: 0.5,
         notation: [100 % pour les longueurs impaires ; 0 % sinon.]
       ),
-      question(
-        [Donner, sans preuve, une description courte en langue française de $L(cal(A)_2)$.],
+      Q([Donner, sans preuve, une description courte en langue française de $L(cal(A)_2)$.],
         solution: [Les mots contenant un nombre impair de $b$.],
         bareme: 0.5,
         notation: [100 % pour un nombre impair de $b$, sans restriction sur les $a$ ; 0 % sinon.]
       ),
-      question(
-        [Donner, sans preuve, une expression régulière de $L(cal(A)_1)$.],
+      Q([Donner, sans preuve, une expression régulière de $L(cal(A)_1)$.],
         solution: [$ (a|b)((a|b)(a|b))^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec longueur impaire, ou pour exactement les longueurs paires ; 0 % si deux erreurs cumulées ou parité non maîtrisée.]
       ),
-      question(
-        [Donner, sans preuve, une expression régulière de $L(cal(A)_2)$.],
+      Q([Donner, sans preuve, une expression régulière de $L(cal(A)_2)$.],
         solution: [$ a^* b a^* (b a^* b a^*)^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec un nombre impair de $b$ ($a^*$ manquant, $b b$ consécutifs imposés…), ou pour exactement les nombres pairs de $b$ ; 0 % si deux erreurs cumulées ou parité non maîtrisée.]
       ),
-      question(
-        [Écrire en OCaml, sans justification, une instance du type ```ocaml automate``` correspondant à $cal(A)_2$.],
+      Q([Écrire en OCaml, sans justification, une instance du type ```ocaml automate``` correspondant à $cal(A)_2$.],
         solution: [On identifie $C$ à $0$ et $D$ à $1$. #code("a2")],
         bareme: 0.5,
         notation: [25 % pour le nombre d'états, 50 % pour les deux transitions de chaque état, 25 % pour les états finaux. Au plus 50 % pour un enregistrement ou des listes à la place du triplet et des tableaux demandés.]
@@ -170,8 +164,7 @@
        #a4 #align(center)[Figure 4 — Automate $cal(A)_4$]],
     )),
     partie("II", "États accessibles d'un automate", contenu: (
-      question(
-        [Écrire une fonction ```ocaml numero : int -> int list -> int array``` qui, à partir d'un entier $n$
+      Q([Écrire une fonction ```ocaml numero : int -> int list -> int array``` qui, à partir d'un entier $n$
         et d'une liste $A$ d'entiers entre $0$ et $n-1$, renvoie un tableau $T$ de taille $n$ :
         $T[i]=-1$ si $i$ est absent de $A$, et $T[i]$ est l'indice de l'une de ses occurrences sinon.
         Par exemple, ```ocaml numero 5 [3;2;0]``` peut renvoyer ```ocaml [|2;-1;1;0;-1|]```.],
@@ -184,8 +177,7 @@
       [Un état $q$ de $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ est accessible s'il existe $w ∈ {a,b}^*$ tel que $δ_cal(A)^*(i_cal(A),w)=q$.
       Si $Q'$ est l'ensemble des états accessibles, la partie accessible de $cal(A)$ est $cal(A)'=⟨ Q',i_cal(A),δ',F_cal(A) ∩ Q' ⟩$, où $δ'$ est la restriction de $δ_cal(A)$ à $Q' × {a,b}$.
       Un automate est accessible si tous ses états le sont.],
-      question(
-        [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles
+      Q([Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles
         dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
         commentaire: [« Une attention toute particulière devait être consacrée à l'ordre exigé du résultat. » Le jury relève aussi des confusions avec le parcours en largeur et des oublis de marquage.],
         solution: [
@@ -197,8 +189,7 @@
         bareme: 2,
         notation: [Retirer 25% pour chaque petite erreur différente, 25% pour complexité quadratique.]
       ),
-      question(
-        [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
+      Q([Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
         de l'automate donné. On pourra réemployer les questions 6 et 7.],
         commentaire: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
         solution: [
@@ -210,8 +201,7 @@
         notation: [Un cinquième pour la détermination des états accessibles, un cinquième pour leur renumérotation avec l'état initial en $0$, un cinquième pour les transitions associées aux bons états sources, un cinquième pour la renumérotation des destinations, un cinquième pour les états finaux.]
       ),
     )),
-    partie("III", "Morphismes d'automates", contenu: (
-      [Soient $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ et $cal(B)=⟨ Q_cal(B),i_cal(B),δ_cal(B),F_cal(B) ⟩$ deux automates.
+    partie("III", "Morphismes d'automates", contenu: ([Soient $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ et $cal(B)=⟨ Q_cal(B),i_cal(B),δ_cal(B),F_cal(B) ⟩$ deux automates.
       Un morphisme $φ: cal(A) → cal(B)$ est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
       $ φ " est surjective," quad "(1)" $
       $ φ(i_cal(A))=i_cal(B), #sep "(2)" $
@@ -222,22 +212,19 @@
       #code("morphisme")
       ],
       partie("III.A", "Exemples de morphismes d'automates", contenu: (
-        question(
-          [Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
+        Q([Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
           de sorte qu'il représente un morphisme $φ: cal(A)_3 → cal(A)_2$.
           #align(center, table(columns: 2, [$q$], [$φ(q)$], [$E$], [], [$F$], [], [$G$], []))],
           solution: [$φ(E)=φ(F)=C$ et $φ(G)=D$.],
           bareme: 0.5,
           notation: [Un tiers pour chacune des trois images correctes.]
         ),
-        question(
-          [Donner, sans justification, un morphisme de $cal(A)_4$ vers $cal(A)_2$.],
+        Q([Donner, sans justification, un morphisme de $cal(A)_4$ vers $cal(A)_2$.],
           solution: [$φ(H)=φ(I)=C$ et $φ(J)=φ(K)=D$.],
           bareme: 0.5,
           notation: [25 % pour chacune des quatre images correctes.]
         ),
-        question(
-          [Montrer qu'il n'existe pas de morphisme de $cal(A)_1$ vers $cal(A)_2$.],
+        Q([Montrer qu'il n'existe pas de morphisme de $cal(A)_1$ vers $cal(A)_2$.],
           solution: [
           La conservation de l'état initial et du caractère final impose $φ(A)=C$ et $φ(B)=D$.
           Mais $φ(δ_(cal(A)_1)(A,a))=D ≠ C=δ_(cal(A)_2)(φ(A),a)$, en contradiction avec (3).
@@ -245,8 +232,7 @@
           bareme: 0.5,
           notation: [50 % pour les images imposées par l'état initial et les finaux, 50 % pour une contradiction explicite avec une transition. Accepter tout autre argument correct.]
         ),
-        question(
-          [Montrer qu'il n'existe pas de morphisme de $cal(A)_5$ (figure 5) vers $cal(A)_2$.],
+        Q([Montrer qu'il n'existe pas de morphisme de $cal(A)_5$ (figure 5) vers $cal(A)_2$.],
           solution: [
           La condition (4) impose $φ(L)=φ(N)=C$ et $φ(M)=D$.
           Or $φ(δ_(cal(A)_5)(N,a))=D ≠ C=δ_(cal(A)_2)(φ(N),a)$, ce qui contredit (3).
@@ -256,8 +242,7 @@
         ),
       )),
       partie("III.B", "Propriétés des morphismes d'automates", contenu: (
-        question(
-          [Montrer que s'il existe un morphisme de $cal(A)$ vers $cal(B)$ alors $L(cal(A)) = L(cal(B))$.],
+        Q([Montrer que s'il existe un morphisme de $cal(A)$ vers $cal(B)$ alors $L(cal(A)) = L(cal(B))$.],
           commentaire: [« On doit citer les propriétés d'un morphisme utilisées, à chaque étape du raisonnement. »],
           solution: [
           Pour un morphisme $φ: cal(A) → cal(B)$, montrons par récurrence sur $abs(w)$ que
@@ -274,8 +259,7 @@
           bareme: 2,
           notation: [50 % pour la compatibilité avec la lecture d'un mot, dont 25 % pour une récurrence détaillée, 25 % pour la première inclusion, 25 % pour la réciproque. Accepter une preuve directe par équivalence. Repères : 50 % pour la seule première inclusion avec récurrence non détaillée, 75 % pour le chemin image établi sans réciproque justifiée.]
         ),
-        question(
-          [Montrer qu'un morphisme $φ$ entre deux automates de même nombre d'états est bijectif
+        Q([Montrer qu'un morphisme $φ$ entre deux automates de même nombre d'états est bijectif
           et que $φ^(-1)$ est encore un morphisme. On dit alors que $φ$ est un isomorphisme.],
           commentaire: [Le jury relève des preuves confuses du caractère bijectif.],
           solution: [
@@ -290,8 +274,7 @@
           bareme: 1.5,
           notation: [Un cinquième pour la bijectivité par égalité des cardinaux, puis un cinquième pour chacune des quatre propriétés de l'inverse : surjectivité, état initial, compatibilité avec les transitions, équivalence sur les finaux. Ne pas pénaliser les seuls lapsus d'indices sans ambiguïté.]
         ),
-        question(
-          [Montrer que la composition de deux morphismes est encore un morphisme.],
+        Q([Montrer que la composition de deux morphismes est encore un morphisme.],
           solution: [
           Soient $φ: cal(A) → cal(B)$ et $ψ: cal(B) → cal(C)$.
           - $ψ ∘ φ$ est surjective comme composée de surjections.
@@ -306,8 +289,7 @@
          #a6 #align(center)[Figure 6 — Automate $cal(A)_6$]],
       )),
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
-        question(
-          [Montrer que (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
+        Q([Montrer que (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
           commentaire: [Pour établir la surjectivité, le jury attend un antécédent explicite pour chaque état.],
           solution: [
           La preuve de (∗) n'utilise que (3). Pour tout $q' ∈ Q_cal(B)$, l'accessibilité donne un mot $w$ avec $q'=δ_cal(B)^*(i_cal(B),w)=φ(δ_cal(A)^*(i_cal(A),w))$, par (2) et (∗).
@@ -316,8 +298,7 @@
           bareme: 1,
           notation: [Un tiers pour un mot atteignant un état arbitraire du but, un tiers pour la construction de son antécédent, un tiers pour la vérification de son image. Une simple évocation des chemins sans construction d'antécédent reçoit au plus un tiers.]
         ),
-        question(
-          [Écrire ```ocaml existe_morphisme : automate -> automate -> bool * morphisme```
+        Q([Écrire ```ocaml existe_morphisme : automate -> automate -> bool * morphisme```
           qui, pour deux automates accessibles, indique s'il existe un morphisme du premier vers le second
           et en renvoie un lorsqu'il existe. Sinon, le tableau renvoyé est quelconque.
           On pourra expliquer le principe de l'algorithme avant le code.],
@@ -337,22 +318,19 @@
       )),
     )),
     partie("IV", "Constructions de morphismes d'automates", contenu: (
-      partie("IV.A", "Automate produit", contenu: (
-        [Pour deux automates $cal(A)$ et $cal(A)'$, on définit l'automate produit
+      partie("IV.A", "Automate produit", contenu: ([Pour deux automates $cal(A)$ et $cal(A)'$, on définit l'automate produit
           $ cal(A) × cal(A)' = ⟨ Q_cal(A) × Q_(cal(A)'), (i_cal(A),i_(cal(A)')),
             δ_(cal(A) × cal(A)'), F_cal(A) × F_(cal(A)') ⟩ $
           avec, pour chaque couple $(q,q')$ et lettre $σ ∈ {a,b}$,
           $ δ_(cal(A) × cal(A)')((q,q'),σ)=(δ_cal(A)(q,σ),δ_(cal(A)')(q',σ)). $
         ],
-        question(
-          [Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
+        Q([Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
           commentaire: [Le jury relève des incompréhensions de la définition du produit d'automates.],
           solution: [#produit-accessible],
           bareme: 1.5,
           notation: [Enlever 25% pour chaque petite erreur.]
         ),
-        question(
-          [Écrire ```ocaml produit : automate -> automate -> automate``` renvoyant le produit des deux automates donnés.],
+        Q([Écrire ```ocaml produit : automate -> automate -> automate``` renvoyant le produit des deux automates donnés.],
           commentaire: [Le jury insiste sur la renumérotation des couples d'états et des transitions associées.],
           solution: [
           On représente $(q,q')$ par $q+n q'$, où $n$ est le nombre d'états du premier automate.
@@ -362,8 +340,7 @@
           bareme: 1.5,
           notation: [Un tiers pour le codage bijectif des couples et les tableaux de tailles adaptées, un tiers pour les transitions vers les couples correctement codés, un tiers pour la conjonction des caractères finaux.]
         ),
-        question(
-          [Soit $(q,q')$ un état accessible du produit de deux automates acceptant le même langage.
+        Q([Soit $(q,q')$ un état accessible du produit de deux automates acceptant le même langage.
           Montrer que $q$ est final dans le premier si et seulement si $q'$ est final dans le second.],
           commentaire: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
@@ -375,8 +352,7 @@
           bareme: 1.5,
           notation: [50 % pour un même mot menant aux deux composantes, 50 % pour l'équivalence de leurs caractères finaux par égalité des langages. L'accessibilité du couple doit être utilisée.]
         ),
-        question(
-          [Montrer qu'il existe toujours un morphisme de la partie accessible du produit
+        Q([Montrer qu'il existe toujours un morphisme de la partie accessible du produit
           de deux automates accessibles acceptant le même langage vers chacun de ces automates.],
           commentaire: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
@@ -395,15 +371,13 @@
       )),
       partie("IV.B", "Diagramme d'automates",
         commentaire: [À chaque pas de la chaîne, l'égalité peut porter sur les images par $φ$ ou sur celles par $ψ$. Ce choix n'est pas nécessairement le même à tous les pas.],
-        contenu: (
-        [Dans toute cette sous-partie, $cal(A)$, $cal(A)'$ et $cal(B)$ sont accessibles, et $φ: cal(B) → cal(A)$ et $ψ: cal(B) → cal(A)'$ sont des morphismes.
+        contenu: ([Dans toute cette sous-partie, $cal(A)$, $cal(A)'$ et $cal(B)$ sont accessibles, et $φ: cal(B) → cal(A)$ et $ψ: cal(B) → cal(A)'$ sont des morphismes.
           On veut construire un automate accessible $cal(C)$ et trois morphismes $φ'$, $ψ'$, $η$ :
           #diagramme
           Pour $(p,q) ∈ Q_cal(B)^2$, on pose $p ≡ q$ s'il existe une suite finie $p=q_0,q_1,…,q_k=q$, avec $k ∈ NN$, telle que
           $ ∀ 0 ≤ j < k, #sep φ(q_j)=φ(q_(j+1)) " ou " ψ(q_j)=ψ(q_(j+1)). $
         ],
-        question(
-          [Montrer que $≡$ est une relation d'équivalence sur $Q_cal(B)$.],
+        Q([Montrer que $≡$ est une relation d'équivalence sur $Q_cal(B)$.],
           solution: [
           - Réflexivité : la suite réduite à $p$ convient ($k=0$).
           - Symétrie : on renverse une suite reliant $p$ à $q$.
@@ -412,8 +386,7 @@
           bareme: 1,
           notation: [Un tiers pour la réflexivité, un tiers pour la symétrie, un tiers pour la concaténation des suites établissant la transitivité.]
         ),
-        question(
-          [Montrer que $p ≡ q$ entraîne $δ_cal(B)(p,σ) ≡ δ_cal(B)(q,σ)$ pour toute lettre $σ ∈ {a,b}$.],
+        Q([Montrer que $p ≡ q$ entraîne $δ_cal(B)(p,σ) ≡ δ_cal(B)(q,σ)$ pour toute lettre $σ ∈ {a,b}$.],
           solution: [
           Soit $p=q_0,…,q_k=q$ une suite témoin. Si $φ(q_j)=φ(q_(j+1))$, la condition (3) donne
           $ φ(δ_cal(B)(q_j,σ))=δ_cal(A)(φ(q_j),σ)=δ_cal(A)(φ(q_(j+1)),σ)=φ(δ_cal(B)(q_(j+1),σ)). $
@@ -423,8 +396,7 @@
           bareme: 1.5,
           notation: [Un tiers pour la conservation de l'égalité des images par $φ$, un tiers pour le cas de $ψ$, un tiers pour la suite témoin obtenue. Accepter un argument de symétrie explicite pour le second cas.]
         ),
-        question(
-          [Montrer que, si $p ≡ q$, alors $p$ est final dans $cal(B)$ si et seulement si $q$ l'est.],
+        Q([Montrer que, si $p ≡ q$, alors $p$ est final dans $cal(B)$ si et seulement si $q$ l'est.],
           solution: [
           Lorsque $φ(q_j)=φ(q_(j+1))$, la condition (4) donne
           $ q_j ∈ F_cal(B) ⇔ φ(q_j) ∈ F_cal(A) ⇔ φ(q_(j+1)) ∈ F_cal(A) ⇔ q_(j+1) ∈ F_cal(B). $
@@ -438,8 +410,7 @@
           On note $ℓ$ le nombre de classes et $S_0,…,S_(ℓ-1)$ ces classes, avec $i_cal(B) ∈ S_0$.
           On définit $η: Q_cal(B) → {S_0,…,S_(ℓ-1)}$ par $η(q)=[q]$.
           En OCaml, la classe $S_j$ est représentée par l'indice $j$.],
-        question(
-          [Construire un automate accessible $cal(C)$ d'ensemble d'états ${S_0,…,S_(ℓ-1)}$
+        Q([Construire un automate accessible $cal(C)$ d'ensemble d'états ${S_0,…,S_(ℓ-1)}$
           tel que $η: cal(B) → cal(C)$ soit un morphisme. Justifier.],
           solution: [
           On pose
@@ -455,8 +426,7 @@
           bareme: 2.5,
           notation: [25 % pour la définition de l'automate quotient, 25 % pour l'indépendance du représentant, 25 % pour les propriétés du morphisme, 25 % pour l'accessibilité.]
         ),
-        question(
-          [Construire deux morphismes $φ': cal(A) → cal(C)$ et $ψ': cal(A)' → cal(C)$,
+        Q([Construire deux morphismes $φ': cal(A) → cal(C)$ et $ψ': cal(A)' → cal(C)$,
           où $cal(C)$ est l'automate de la question 25.],
           solution: [
           Pour $q ∈ Q_cal(A)$, choisir $p$ tel que $φ(p)=q$ et poser $φ'(q)=[p]$.
@@ -472,8 +442,7 @@
           bareme: 3,
           notation: [Un sixième pour la définition par un antécédent et les égalités de composition, un sixième pour l'indépendance du choix, puis un sixième pour chacune des quatre propriétés : surjectivité, état initial, compatibilité avec les transitions, équivalence sur les finaux. Vérifier ces critères pour les deux morphismes, en acceptant un argument de symétrie explicite.]
         ),
-        question(
-          [Écrire ```ocaml renomme : int array -> int array``` qui renomme un tableau d'entiers positifs ou nuls
+        Q([Écrire ```ocaml renomme : int array -> int array``` qui renomme un tableau d'entiers positifs ou nuls
           prenant $ℓ$ valeurs distinctes à l'aide des entiers de $0$ à $ℓ-1$.
           Le premier élément du résultat doit valoir $0$.
           Par exemple, ```ocaml renomme [|4;4;5;0;4;5|]``` peut renvoyer ```ocaml [|0;0;1;2;0;1|]```.
@@ -488,8 +457,7 @@
           bareme: 1.5,
           notation: [25 % pour la mémorisation des numéros déjà attribués, 25 % pour un nouveau numéro à chaque valeur nouvelle, 25 % pour le tableau résultat et le premier numéro $0$, 25 % pour la complexité correcte. Avec une table indexée par les valeurs, compter $O(n+M+1)$, où $M$ est leur maximum.]
         ),
-        question(
-          [Écrire ```ocaml relation : morphisme -> morphisme -> morphisme``` qui, à partir de $[φ(q)]$ et $[ψ(q)]$,
+        Q([Écrire ```ocaml relation : morphisme -> morphisme -> morphisme``` qui, à partir de $[φ(q)]$ et $[ψ(q)]$,
           renvoie $[η(q)]$, c'est-à-dire un tableau ```ocaml t``` à valeurs entre $0$ et $ℓ-1$ tel que
           ```ocaml t.(p) = t.(q)``` équivaut à $p ≡ q$, et ```ocaml t.(0) = 0```.],
           solution: [
@@ -508,8 +476,7 @@
       commentaire: [« Chacune de ces questions doit être citée dans une argumentation, au moment de leur utilisation. »],
       contenu: (
       partie("V.A", "Existence et unicité", contenu: (
-        question(
-          [Montrer que, si deux automates accessibles $cal(A)$ et $cal(A)'$ acceptent le même langage,
+        Q([Montrer que, si deux automates accessibles $cal(A)$ et $cal(A)'$ acceptent le même langage,
           on peut construire un automate $cal(C)$ et deux morphismes $φ': cal(A) → cal(C)$ et $ψ': cal(A)' → cal(C)$.],
           solution: [
           Prendre pour $cal(B)$ la partie accessible de $cal(A) × cal(A)'$.
@@ -519,8 +486,7 @@
           bareme: 0.5,
           notation: [50 % pour la partie accessible du produit et ses projections, 50 % pour l'application de la construction du diagramme avec les résultats correspondants.]
         ),
-        question(
-          [Déterminer l'automate $cal(C)$ de la question 29 pour $cal(A)_3$ et $cal(A)_4$,
+        Q([Déterminer l'automate $cal(C)$ de la question 29 pour $cal(A)_3$ et $cal(A)_4$,
           et préciser $φ'$ et $ψ'$.],
           solution: [
           Les classes dans la partie accessible du produit sont
@@ -535,8 +501,7 @@
           notation: [25 % pour les classes, 25 % pour l'automate quotient, 25 % pour chacun des deux morphismes.]
         ),
         [Soit $L$ un langage régulier et $cal(K)_L$ l'ensemble des automates déterministes complets accessibles qui acceptent $L$. On note $m_L$ leur plus petit nombre d'états.],
-        question(
-          [Montrer que deux automates de $cal(K)_L$ ayant $m_L$ états sont nécessairement isomorphes.],
+        Q([Montrer que deux automates de $cal(K)_L$ ayant $m_L$ états sont nécessairement isomorphes.],
           solution: [
           La question 29 donne des morphismes $φ': cal(A) → cal(C)$ et $ψ': cal(A)' → cal(C)$, où $cal(C)$ est accessible. Par la question 13, $cal(C)$ reconnaît $L$, donc $abs(Q_cal(C)) ≥ m_L$.
           La surjectivité de $φ'$ donne l'inégalité inverse. Les trois automates ont donc $m_L$ états.
@@ -545,8 +510,7 @@
           bareme: 2,
           notation: [25 % pour l'automate commun et les morphismes, 25 % pour la conservation du langage, 25 % pour l'égalité des cardinaux par minimalité et surjectivité, 25 % pour l'isomorphisme obtenu.]
         ),
-        question(
-          [Montrer que, pour tout $cal(A) ∈ cal(K)_L$, il existe un morphisme $φ: cal(A) → cal(M)_L$,
+        Q([Montrer que, pour tout $cal(A) ∈ cal(K)_L$, il existe un morphisme $φ: cal(A) → cal(M)_L$,
           où $cal(M)_L$ est un automate de $cal(K)_L$ à $m_L$ états.],
           solution: [
           $cal(M)_L$ est bien défini car l'ensemble $\{abs(Q_cal(A)) : cal(A) ∈ cal(K)_L\} ⊂ ℕ$ est non vide (par l'algorithme de déterminisation) donc admet un minimum $m_L$. \
@@ -559,10 +523,8 @@
           notation: [25 % pour l'existence d'un automate minimal, 25 % pour l'automate commun, 25 % pour l'isomorphisme du morphisme issu de l'automate minimal, 25 % pour la composition donnant le morphisme demandé.]
         ),
       )),
-      partie("V.B", "Construction d'un automate réduit par fusion d'états", contenu: (
-        [On dit que deux états $p,q$ de $cal(A)$ ont été fusionnés dans $cal(A)'$ s'il existe un morphisme $φ: cal(A) → cal(A)'$ tel que $φ(p)=φ(q)$ et $abs(Q_(cal(A)')) < abs(Q_cal(A))$.],
-        question(
-          [Dessiner un automate $cal(A)_6^(O,P)$ dans lequel les états $O$ et $P$ de $cal(A)_6$
+      partie("V.B", "Construction d'un automate réduit par fusion d'états", contenu: ([On dit que deux états $p,q$ de $cal(A)$ ont été fusionnés dans $cal(A)'$ s'il existe un morphisme $φ: cal(A) → cal(A)'$ tel que $φ(p)=φ(q)$ et $abs(Q_(cal(A)')) < abs(Q_cal(A))$.],
+        Q([Dessiner un automate $cal(A)_6^(O,P)$ dans lequel les états $O$ et $P$ de $cal(A)_6$
           ont été fusionnés. Donner un morphisme $cal(A)_6 → cal(A)_6^(O,P)$.],
           solution: [
           Fusionner $O$ et $P$ impose de fusionner leurs successeurs par $b$, soit $T$ et $Q$.
@@ -575,8 +537,7 @@
           bareme: 1.5,
           notation: [Un tiers pour la fusion supplémentaire imposée, un tiers pour l'automate obtenu, un tiers pour le morphisme. Accepter toute fusion valide répondant à l'énoncé.]
         ),
-        question(
-          [Expliquer brièvement pourquoi on ne peut construire $cal(A)_6^(Q,R)$ muni d'un morphisme
+        Q([Expliquer brièvement pourquoi on ne peut construire $cal(A)_6^(Q,R)$ muni d'un morphisme
           $ψ: cal(A)_6 → cal(A)_6^(Q,R)$ tel que $ψ(Q)=ψ(R)$.],
           solution: [
           $Q$ et $R$ ne sont pas finaux, mais $δ_(cal(A)_6)(Q,b)=O$ est final, tandis que $δ_(cal(A)_6)(R,b)=S$ ne l'est pas.
@@ -585,8 +546,7 @@
           bareme: 0.5,
           notation: [50 % pour la fusion des successeurs imposée par les transitions, 50 % pour la contradiction entre leurs caractères finaux.]
         ),
-        question(
-          [Quels états faut-il encore fusionner dans $cal(A)_6^(O,P)$ pour obtenir un automate à trois états $cal(M)_(L_6)$ reconnaissant le même langage que $cal(A)_6$ ?],
+        Q([Quels états faut-il encore fusionner dans $cal(A)_6^(O,P)$ pour obtenir un automate à trois états $cal(M)_(L_6)$ reconnaissant le même langage que $cal(A)_6$ ?],
           solution: [
           On fusionne encore $R$ et $S$.
           #minimal
@@ -599,8 +559,7 @@
           bareme: 2,
           notation: [25 % pour la fusion de $R$ et $S$, 50 % pour l'automate à trois états, 25 % pour la conservation du langage. La preuve de minimalité n'est pas exigée.]
         ),
-        question(
-          [Soit $cal(A)=⟨ Q,i,δ,F ⟩$ un automate accessible.
+        Q([Soit $cal(A)=⟨ Q,i,δ,F ⟩$ un automate accessible.
           On appelle $P=(S,A)$ le graphe orienté de sommets $S=Q × Q$,
           avec, pour chaque $σ ∈ {a,b}$, un arc de $(p,q)$ vers $(δ(p,σ),δ(q,σ))$.
           Écrire ```ocaml table_de_predecesseurs : automate -> bool array array```
@@ -619,8 +578,7 @@
           bareme: 3.5,
           notation: [25 % pour le graphe des prédécesseurs, 25 % pour les paires initiales de caractères finaux différents, 25 % pour le parcours à rebours et son marquage, 25 % pour la matrice résultat. Si le résultat est correct, retirer 25 % pour un coût supérieur à $O(n^2)$ sans recherche d'une amélioration. Accepter une autre méthode correcte avec un crédit adapté à son efficacité.]
         ),
-        question(
-          [Décrire le principe, le justifier, puis écrire ```ocaml reduit : automate -> automate```
+        Q([Décrire le principe, le justifier, puis écrire ```ocaml reduit : automate -> automate```
           qui renvoie l'automate $cal(M)_L$ associé au langage $L$ de l'automate donné.],
           solution: [
           On commence par prendre la partie accessible, ce qui conserve le langage.

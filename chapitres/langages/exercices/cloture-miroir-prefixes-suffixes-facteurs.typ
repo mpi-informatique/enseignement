@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep, widetilde
 
 #let ex = exercice(
@@ -13,7 +13,7 @@
 
     [Si $m=m_1 … m_n$ est un mot, son miroir est $widetilde(m)=m_n … m_1$.
       Le miroir d'un langage $L$ est $widetilde(L)={widetilde(m) | m∈L}$.],
-    question([Montrer que le miroir d'un langage reconnaissable est reconnaissable.], solution: [
+    Q([Montrer que le miroir d'un langage reconnaissable est reconnaissable.], solution: [
       Si $A=(Σ,Q,I,F,E)$ reconnaît $L$, l'automate $widetilde(A)=(Σ,Q,F,I,widetilde(E))$, où $widetilde(E)={(p,a,q) | (q,a,p)∈E}$, reconnaît $widetilde(L)$.
       En effet, inverser un chemin acceptant étiqueté $m$ donne un chemin acceptant étiqueté $widetilde(m)$ dans $widetilde(A)$, et réciproquement.
     ]),
@@ -21,10 +21,10 @@
       - $"Pref"(L)={u∈Σ^* | ∃v∈Σ^*, u v∈L}$, l'ensemble des préfixes ;
       - $"Suff"(L)={u∈Σ^* | ∃v∈Σ^*, v u∈L}$, l'ensemble des suffixes ;
       - $"Fact"(L)={u∈Σ^* | ∃v,w∈Σ^*, v u w∈L}$, l'ensemble des facteurs.],
-    question([Donner des expressions régulières pour $"Pref"(a^* b)$ et $"Pref"((a b)^*)$.], solution: [
+    Q([Donner des expressions régulières pour $"Pref"(a^* b)$ et $"Pref"((a b)^*)$.], solution: [
       $"Pref"(a^* b)$ est dénoté par $a^*(ε|b)$ et $"Pref"((a b)^*)$ par $(a b)^*(ε|a)$.
     ]),
-    question([Montrer que si $L$ est reconnaissable, alors $"Pref"(L)$, $"Suff"(L)$ et $"Fact"(L)$ le sont aussi.], solution: [
+    Q([Montrer que si $L$ est reconnaissable, alors $"Pref"(L)$, $"Suff"(L)$ et $"Fact"(L)$ le sont aussi.], solution: [
       Soit $A=(Σ,Q,I,F,E)$ reconnaissant $L$. Notons $Q'$ les états coaccessibles et $Q''$ les états accessibles.
       Un mot est préfixe d'un mot de $L$ exactement lorsqu'il étiquette un chemin de $I$ vers $Q'$.
       Donc $(Σ,Q,I,Q',E)$ reconnaît $"Pref"(L)$.
@@ -37,7 +37,7 @@
       Enfin $"Fact"(L)="Suff"("Pref"(L))="Pref"("Suff"(L))$ :
       $ m∈"Suff"("Pref"(L)) ⇔ ∃u, u m∈"Pref"(L) ⇔ ∃u,v, u m v∈L ⇔ m∈"Fact"(L). $
     ]),
-    question([
+    Q([
       Montrer que si $L$ est régulier, alors $"Pref"(L)$, $"Suff"(L)$ et $"Fact"(L)$ le sont aussi.
       Puisqu'on montrera que régulier et reconnaissable sont équivalents, il s'agit d'une preuve alternative.
     ], solution: [

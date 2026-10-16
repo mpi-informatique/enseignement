@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -39,7 +39,7 @@
 
     [Pour chacun des langages suivants, dire s'il est reconnaissable ou non. Justifier.
       Pour un mot $m$, $abs(m)_a$ désigne le nombre d'occurrences de $a$.],
-    question([$L_1$ est l'ensemble des mots sur ${a,b}$ sans lettres consécutives égales.], solution: [
+    Q([$L_1$ est l'ensemble des mots sur ${a,b}$ sans lettres consécutives égales.], solution: [
       Il est reconnaissable par l'automate ci-dessous. L'état $1$ (respectivement $2$) signifie que la dernière lettre lue est $a$ (respectivement $b$).
       L'état $0$ accepte le mot vide ; une répétition de lettre bloque la lecture.
       #align(center, cetz.canvas(length: unite-automates, {
@@ -54,25 +54,25 @@
         transition("2", "1", label: (text: $a$, dist: -0.33), curve: 0)
       }))
     ]),
-    question([$L_2$ est l'ensemble des mots sur ${a,b}$ ayant un nombre pair de $a$ et un nombre de $b$ multiple de $3$.], solution: [
+    Q([$L_2$ est l'ensemble des mots sur ${a,b}$ ayant un nombre pair de $a$ et un nombre de $b$ multiple de $3$.], solution: [
       Un automate à deux états suit la parité du nombre de $a$ et un automate à trois états le reste modulo $3$ du nombre de $b$.
       Leur produit reconnaît $L_2$. Son état $(i,j)$ signifie que le nombre de $a$ est congru à $i$ modulo $2$ et celui de $b$ à $j$ modulo $3$. Il commence et accepte en $(0,0)$.
       #produit-modulo(((0,0),))
       Sur $a$, il passe de $(i,j)$ à $(1-i,j)$ ; sur $b$, à $(i,(j+1) mod 3)$.
       Cet invariant prouve que l'automate reconnaît exactement $L_2$.
     ]),
-    question([$L_3={u∈{a,b}^* | abs(u)_a mod 2=abs(u)_b mod 3}$.], solution: [
+    Q([$L_3={u∈{a,b}^* | abs(u)_a mod 2=abs(u)_b mod 3}$.], solution: [
       Le même automate, avec $(0,0)$ et $(1,1)$ comme états finaux, reconnaît $L_3$ :
       #produit-modulo(((0,0),(1,1)))
     ]),
-    question([$L_4={m∈{a,b}^* | abs(m)_a=abs(m)_b}$.], solution: [
+    Q([$L_4={m∈{a,b}^* | abs(m)_a=abs(m)_b}$.], solution: [
       Supposons $L_4$ reconnaissable et soit $n≥1$ une longueur de pompage.
       Le mot $u=a^n b^n$ appartient à $L_4$ et a une longueur au moins $n$.
       Le lemme de l'étoile donne $u=x y z$ avec $abs(x y)≤n$, $y≠ε$ et $x y^k z∈L_4$ pour tout $k∈NN$.
       Le mot $y$ ne contient que des $a$ ; pour $k=0$, $x z$ contient strictement moins de $a$ que de $b$.
       Contradiction : $L_4$ n'est pas reconnaissable.
     ]),
-    question([$L_5$ est l'ensemble des écritures usuelles en base $2$ des multiples de $5$.
+    Q([$L_5$ est l'ensemble des écritures usuelles en base $2$ des multiples de $5$.
       Le mot $0$ représente zéro ; toute autre écriture commence par $1$, et le mot vide est exclu.], solution: [
       Il est reconnaissable. Pour suivre la valeur modulo $5$, utiliser les états $q_0,…,q_4$ et $δ(q_r,c)=q_((2r+c) mod 5)$ : ajouter le chiffre $c$ à droite remplace la valeur $v$ par $2v+c$.
       L'état $q_0$ est le seul état final parmi ces cinq états.
@@ -102,7 +102,7 @@
         transition("4", "4", label: $1$, anchor: right)
       }))
     ]),
-    question([$L_6={a^p | p " est un nombre premier"}$.], solution: [
+    Q([$L_6={a^p | p " est un nombre premier"}$.], solution: [
       Supposons $L_6$ reconnaissable et soit $n$ une longueur de pompage.
       Choisissons un nombre premier $p≥n+2$. Le lemme de l'étoile appliqué à $a^p$ donne $a^p=a^(i_1)(a^(i_2))a^(i_3)$ avec $i_1+i_2≤n$, $i_2>0$ et $a^(i_1+k i_2+i_3)∈L_6$ pour tout $k∈NN$.
       Prenons $k=i_1+i_3$. La longueur obtenue est $q=(i_1+i_3)(1+i_2)$.

@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -9,7 +9,7 @@
   ),
   contenu: (
 
-    question([
+    Q([
       Soient $u$ et $v$ deux mots *non vides*.
       Montrer que les trois conditions suivantes sont équivalentes :
       + $u v = v u$

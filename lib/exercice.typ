@@ -23,6 +23,9 @@
   (type: "question", enonce: enonce, commentaire: commentaire, solution: solution, bareme: bareme, notation: notation)
 }
 
+/// Alias court de `question` pour la rédaction des exercices.
+#let Q = question
+
 #let texte-concours(concours) = (
   concours.at("nom", default: none),
   concours.at("annee", default: none),

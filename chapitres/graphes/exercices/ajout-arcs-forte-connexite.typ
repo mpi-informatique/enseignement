@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -11,14 +11,13 @@
     niveaux: ("MPI",),
     duree: (1, 0),
   ),
-  contenu: (
-    [Soit $G = (S, A)$ un graphe orienté fini non vide, représenté par des listes d'adjacence.
+  contenu: ([Soit $G = (S, A)$ un graphe orienté fini non vide, représenté par des listes d'adjacence.
       On note $n = abs(S)$ et $m = abs(A)$.
       On peut ajouter des arcs entre des sommets existants, sans supprimer d'arc ni ajouter de sommet.
       On cherche le nombre minimal $a(G)$ d'arcs à ajouter pour rendre $G$ fortement connexe.
       Les chemins de longueur nulle sont autorisés : un graphe réduit à un sommet est donc fortement connexe.],
 
-    question([
+    Q([
       On appelle graphe condensé de $G$ le graphe $D$ dont les sommets sont les composantes fortement connexes de $G$, avec un arc $C -> C'$ lorsque $C != C'$ et qu'un arc de $G$ va de $C$ vers $C'$.
       Montrer que $D$ est acyclique et que $a(G) = a(D)$.
       Traiter le cas où $D$ a un seul sommet.
@@ -40,7 +39,7 @@
       On note $s$ le nombre de sources et $t$ le nombre de puits.
       Un sommet isolé est à la fois une source et un puits.],
 
-    question([
+    Q([
       Montrer que chaque sommet de $D$ est accessible depuis une source et peut atteindre un puits.
       En déduire que $s >= 1$, $t >= 1$, puis établir $a(G) >= max(s, t)$.
     ], solution: [
@@ -53,7 +52,7 @@
       Il faut donc au moins $s$ arcs et au moins $t$ arcs, d'où la borne $max(s, t)$.
     ]),
 
-    question([
+    Q([
       Montrer que cette borne est atteinte.
       On pourra choisir une famille de couples $(S_1, T_1), dots, (S_r, T_r)$, où les $S_i$ sont des sources distinctes, les $T_i$ des puits distincts et $S_i$ peut atteindre $T_i$, telle qu'on ne puisse plus ajouter un couple de source et de puits encore inutilisés.
       Relier d'abord ces couples en cycle, puis intégrer les sources et les puits restants.
@@ -82,7 +81,7 @@
       On a donc bien $a(G) = max(s, t)$.
     ]),
 
-    question([
+    Q([
       Rappeler les deux parcours de l'algorithme de Kosaraju.
       En déduire un algorithme calculant $a(G)$ en temps $O(n+m)$, sans construire explicitement les arcs à ajouter.
     ], solution: [
@@ -106,7 +105,7 @@
       La construction de la question précédente justifie la formule ; il n'est pas nécessaire de l'exécuter pour calculer le minimum.
     ]),
 
-    question([
+    Q([
       On dispose d'une fonction OCaml `kosaraju : int list array -> int * int array` renvoyant le nombre $k$ de composantes et le tableau de leurs numéros, compris entre $0$ et $k-1$.
       Écrire `nombre_arcs : int list array -> int`.
       Donner le résultat pour un graphe fortement connexe, pour $n >= 2$ sommets sans arcs, pour une chaîne orientée à au moins deux sommets, puis pour les arcs $0 -> 1$, $0 -> 2$ avec un quatrième sommet isolé.

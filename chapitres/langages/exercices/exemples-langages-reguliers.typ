@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -9,18 +9,18 @@
   ),
   contenu: (
 
-    question([
+    Q([
       Donner une expression régulière dont le langage est l'ensemble des mots sur ${a,b,c}$ contenant exactement un $a$ et un $b$ (et un nombre quelconque de $c$).
     ], solution: [
       En distinguant l'ordre d'apparition de $a$ et $b$, on obtient
       $ c^* a c^* b c^* | c^* b c^* a c^*. $
     ]),
-    question([
+    Q([
       Donner une expression régulière dont le langage est l'ensemble des mots sur ${a,b,c}$ ne contenant pas de $a$ consécutifs ($a a$ ne doit pas apparaître).
     ], solution: [
       L'expression $(a(b|c)|b|c)^*(a|epsilon)$ convient : un $a$ qui n'est pas en dernière position doit être suivi d'un $b$ ou d'un $c$.
     ]),
-    question([
+    Q([
       Donner une expression régulière dont le langage est l'ensemble des mots sur ${a,b,c}$ contenant exactement deux $a$ et tels que tout $c$ est immédiatement précédé d'un $b$.
     ], solution: [
       Posons $e=(b|b c)^*$, qui décrit les mots sur ${b,c}$ dont chaque $c$ est immédiatement précédé d'un $b$.
@@ -30,14 +30,14 @@
       On utilise le développement décimal qui ne se termine pas par une infinité de $9$.
       Par exemple,
       $ L(pi)={epsilon,1,14,141,1415,dots}. $],
-    question([
+    Q([
       En sachant que $1/6=0.1666 dots$ et $1/7=0.142857142857 dots$, montrer que $L(1/6)$ et $L(1/7)$ sont réguliers.
     ], solution: [
       Une expression pour $L(1/6)$ est $epsilon | 1 6^*$.
       Une expression pour $L(1/7)$ est
       $ (142857)^*(epsilon | 1 | 14 | 142 | 1428 | 14285 | 142857). $
     ]),
-    question([
+    Q([
       Montrer plus généralement que $L(x)$ est régulier si $x in QQ$
       (on montrera plus tard que c'est en fait une équivalence).
     ], solution: [
@@ -48,7 +48,7 @@
       Un préfixe s'arrête soit dans $t$, soit après $t$, un certain nombre de copies de $p$ et un préfixe de $p$.
       Ce langage est régulier par stabilité par union, concaténation et étoile.
     ]),
-    question([
+    Q([
       Donner une expression régulière dont le langage est ${a^n b^p | n,p in NN, n equiv p (mod 2)}$.
     ], solution: [
       Les deux exposants sont pairs ou tous deux impairs.

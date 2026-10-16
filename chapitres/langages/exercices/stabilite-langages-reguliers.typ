@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,42 +7,41 @@
     difficulte: 2,
     niveaux: ("MPI",),
   ),
-  contenu: (
-    [Pour chacune des propositions suivantes, expliquer pourquoi elle est vraie ou donner un contre-exemple :],
-    question([Si $L$ est régulier et $L ⊂ L'$ alors $L'$ est régulier.], solution: [
+  contenu: ([Pour chacune des propositions suivantes, expliquer pourquoi elle est vraie ou donner un contre-exemple :],
+    Q([Si $L$ est régulier et $L ⊂ L'$ alors $L'$ est régulier.], solution: [
       Faux avec $L = ∅$ et $L' = {a^n b^n | n ∈ NN}$ sur $Σ = {a,b}$.
     ]),
-    question([Si $L'$ est régulier et $L ⊂ L'$ alors $L$ est régulier.], solution: [
+    Q([Si $L'$ est régulier et $L ⊂ L'$ alors $L$ est régulier.], solution: [
       Faux avec $L = {a^n b^n | n ∈ NN}$ et $L' = Σ^*$ sur $Σ = {a,b}$.
     ]),
-    question([Si $L$ est régulier alors $L^*$ est régulier.], solution: [
+    Q([Si $L$ est régulier alors $L^*$ est régulier.], solution: [
       Vrai par définition des langages réguliers.
     ]),
-    question([Si $L^*$ est régulier alors $L$ est régulier.], solution: [
+    Q([Si $L^*$ est régulier alors $L$ est régulier.], solution: [
       Faux avec $L = {a^n b^n | n ∈ NN} ∪ {ε,a,b}$ sur $Σ = {a,b}$.
       $L^*$ est alors $Σ^*$, qui est régulier, mais $L$ ne l'est pas.
     ]),
-    question([
+    Q([
       Si $L$ est régulier sur un alphabet $Σ$ alors $Σ^* ∖ L$
       (complémentaire de $L$) est régulier.
     ], solution: [Vrai comme démontré dans le cours sur les automates.]),
-    question([
+    Q([
       Une union finie de langages réguliers est régulière
       ($L_1, …, L_n$ réguliers $==> ⋃_(k=1)^n L_k$ régulier).
     ], solution: [
       Vrai par récurrence sur $n$ et la stabilité des langages réguliers par union de deux langages réguliers.
     ]),
-    question([
+    Q([
       Une union dénombrable de langages réguliers est régulière
       ($L_1, …, L_n, …$ réguliers $==> ⋃_(k=1)^∞ L_k$ régulier).
     ], solution: [Faux avec $L_n = {a^n b^n}$ pour $n ≥ 1$.]),
-    question([
+    Q([
       Une intersection finie de langages réguliers est régulière
       ($L_1, …, L_n$ réguliers $==> ⋂_(k=1)^n L_k$ régulier).
     ], solution: [
       Vrai par récurrence sur $n$, en utilisant la stabilité des langages réguliers par intersection de deux langages réguliers, vue dans le cours sur les automates.
     ]),
-    question([
+    Q([
       Une intersection dénombrable de langages réguliers est régulière
       ($L_1, …, L_n, …$ réguliers $==> ⋂_(k=1)^∞ L_k$ régulier).
     ], solution: [

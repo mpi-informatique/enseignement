@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -12,11 +12,10 @@
     niveaux: ("MPI",),
     concours: (nom: "EPITA", annee: 2023),
   ),
-  contenu: (
-    [On appelle mot de Dyck un mot $m$ sur l'alphabet ${a,b}$ tel que $m$ contient autant de $a$ que de $b$ et tout préfixe de $m$ contient au moins autant de $a$ que de $b$.
+  contenu: ([On appelle mot de Dyck un mot $m$ sur l'alphabet ${a,b}$ tel que $m$ contient autant de $a$ que de $b$ et tout préfixe de $m$ contient au moins autant de $a$ que de $b$.
 
       Par exemple, $m=a a b a b b$ est un mot de Dyck, car il possède trois $a$ et trois $b$, et ses préfixes sont $ε$ (le mot vide), $a$, $a a$, $a a b$, $a a b a$, $a a b a b$ et $m$, et aucun ne contient strictement plus de $b$ que de $a$.],
-    question([
+    Q([
       Parmi les mots suivants, indiquer ceux qui sont de Dyck.
       On ne demande pas de preuve.
       $ ε quad a a b b b a a b quad a a a b quad a b a b quad a a a b b b $
@@ -32,7 +31,7 @@
       ```
       Le mot $m=a a b a b b$ sera donc représenté par la liste ```ocaml [A; A; B; A; B; B]```.
     ],
-    question([
+    Q([
       Écrire une fonction ```ocaml verifie_dyck``` de type ```ocaml mot -> bool``` renvoyant un booléen indiquant si le mot passé en entrée est de Dyck.
     ], solution: [
       On utilise un argument pour mémoriser le nombre de 'A' déjà vus moins le nombre de 'B'.
@@ -47,7 +46,7 @@
     ]),
     [On admet la propriété suivante : tout mot $m$ de Dyck non vide se décompose de manière unique sous la forme $m=a u b v$, où $u$ et $v$ sont des mots de Dyck.
       On pourra utiliser sans démonstration la caractérisation suivante : $a u b$ est le plus petit préfixe non vide de $m$ contenant autant de $a$ que de $b$.],
-    question([
+    Q([
       Donner sans démonstration la décomposition de chacun des mots de Dyck suivants :
       $ a b quad a a b a b b quad a b a b a b quad a a b b a b $
     ], solution: [
@@ -56,7 +55,7 @@
       - $a b a b a b=a u b v$ avec $u=ε$ et $v=a b a b$.
       - $a a b b a b=a u b v$ avec $u=a b$ et $v=a b$.
     ]),
-    question([
+    Q([
       Écrire une fonction ```ocaml decompo_dyck``` de type ```ocaml mot -> mot * mot```, prenant en entrée un mot $m$ supposé non vide et de Dyck (il est inutile de le vérifier), et renvoyant le couple $(u,v)$ tel que $m=a u b v$.
     ], solution: [
       On fait le même comptage qu'en question 2 et l'on s'arrête au premier préfixe contenant autant de ```ocaml A``` que de ```ocaml B```.
@@ -80,7 +79,7 @@
     [Il existe une bijection naturelle entre les arbres binaires stricts (tout nœud possède $0$ ou $2$ fils) et les mots de Dyck, basée sur cette décomposition :
       - au mot vide est associé l'arbre réduit à une feuille ;
       - à un mot non vide $a u b v$, où $u$ et $v$ sont de Dyck, on associe l'arbre dont les sous-arbres gauche et droit sont associés respectivement à $u$ et $v$.],
-    question([
+    Q([
       Dessiner l'arbre associé au mot de Dyck $m=a a b a b b$.
       Les nœuds ne portent pas d'étiquettes.
     ], solution: [
@@ -101,7 +100,7 @@
       ```ocaml
       type arbre = F | N of arbre * arbre
       ```],
-    question([
+    Q([
       Écrire une fonction ```ocaml mot_a_arbre``` de type ```ocaml mot -> arbre``` renvoyant l'arbre binaire strict associé à un mot de Dyck (on ne vérifiera pas que le mot passé en entrée est bien de Dyck).
     ], solution: [
       ```ocaml
@@ -112,21 +111,21 @@
           N(mot_a_arbre u, mot_a_arbre v)
       ```
     ]),
-    question([Écrire une fonction ```ocaml arbre_a_mot``` de type ```ocaml arbre -> mot``` faisant l'inverse.], solution: [
+    Q([Écrire une fonction ```ocaml arbre_a_mot``` de type ```ocaml arbre -> mot``` faisant l'inverse.], solution: [
       ```ocaml
       let rec arbre_a_mot a = match a with
         | F -> []
         | N(u, v) -> A::(arbre_a_mot u)@(B::(arbre_a_mot v))
       ```
     ]),
-    question([Montrer que le langage $L$ des mots de Dyck n'est pas régulier.], solution: [
+    Q([Montrer que le langage $L$ des mots de Dyck n'est pas régulier.], solution: [
       Supposons $L$ régulier et soit $n ≥ 1$ donné par le lemme de l'étoile.
       Le mot $m=a^n b^n$ appartient à $L$ et vérifie $abs(m) ≥ n$.
       Il existe donc $x,y,z$ tels que $abs(x y) ≤ n$, $y ≠ ε$, $m=x y z$ et $x y^* z ⊂ L$.
       Comme $abs(x y) ≤ n$, $y$ ne contient que des $a$, et au moins un puisque $y ≠ ε$.
       Alors $x y^2 z$ contient strictement plus de $a$ que de $b$, ce qui contredit son appartenance à $L$.
     ]),
-    question([
+    Q([
       Soit $C(n)$ le nombre de mots de Dyck de longueur $2n$.
       Trouver une équation de récurrence sur $C(n)$, puis montrer que $C(n)=1/(n+1) binom(2n,n)$.
     ], solution: [

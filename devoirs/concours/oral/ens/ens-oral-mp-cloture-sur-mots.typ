@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -15,7 +15,7 @@
       Étant donnés deux mots $w,w' in Sigma^*$, on dit que $w'$ est un *sur-mot* de $w$, noté $w ≼ w'$, s'il existe une fonction strictement croissante $phi$ de ${1,dots,abs(w)}$ dans ${1,dots,abs(w')}$ telle que $w_i=w'_(phi(i))$ pour tout $1<=i<=abs(w)$.
       Étant donné un langage $L$, on note $overline(L)$ le langage des sur-mots de mots de $L$ :
       $ overline(L)={w' in Sigma^* | exists w in L, w ≼ w'}. $],
-    question([
+    Q([
       On pose $L_0=L(a b^* a)$ et $L_1=L((a b)^*)$, sur un alphabet contenant $a$ et $b$.
       Donner une expression régulière pour $overline(L_0)$ et $overline(L_1)$.
     ], solution: [
@@ -23,7 +23,7 @@
       En effet, tout sur-mot d'un mot de $L_0$ contient deux $a$ et, réciproquement, un mot contenant deux $a$ est un sur-mot de $a a in L_0$.
       On a $overline(L_1)=Sigma^*$ puisque $epsilon in L_1$.
     ]),
-    question([
+    Q([
       Montrer que, pour tout langage $L$, on a $overline(overline(L))=overline(L)$.
     ], solution: [
       La relation $≼$ est réflexive et transitive : pour la transitivité, on compose les fonctions strictement croissantes témoignant de $w ≼ w'$ et $w' ≼ w''$.
@@ -33,7 +33,7 @@
       Réciproquement, si $u'' in overline(overline(L))$, il existe $u' in overline(L)$ tel que $u' ≼ u''$, puis $u in L$ tel que $u ≼ u'$.
       Par transitivité, $u ≼ u''$, donc $u'' in overline(L)$.
     ]),
-    question([
+    Q([
       Existe-t-il des langages $L'$ pour lesquels il n'existe aucun langage $L$ tel que $overline(L)=L'$ ?
     ], solution: [
       Oui : tout langage fini non vide convient.
@@ -42,7 +42,7 @@
 
       On peut aussi prendre $L'=L_0$ : si $overline(L)=L_0$, l'idempotence donnerait $L_0=overline(L_0)$, ce qui est faux d'après la question 1.
     ]),
-    question([
+    Q([
       Montrer que, pour tout langage régulier $L$, le langage $overline(L)$ est régulier.
     ], solution: [
       Soit $A$ un automate fini non déterministe reconnaissant $L$.
@@ -61,7 +61,7 @@
       $ overline(L^*)=Sigma^*. $
       La dernière identité vient de $epsilon in L^*$ ; en revanche, $overline(L^*)=overline(L)^*$ est faux en général (prendre $Sigma={a,b}$ et $L={a}$).
     ]),
-    question([
+    Q([
       On admet pour cette question le résultat suivant : pour toute suite $(w_n)_(n in NN)$ de mots de $Sigma^*$, il existe $i<j$ tels que $w_i ≼ w_j$.
 
       Montrer que, pour tout langage $L$, non nécessairement régulier, il existe un langage fini $F subset.eq L$ tel que $overline(F)=overline(L)$.
@@ -79,7 +79,7 @@
       Sinon, il existe $j<i$ tel que $w_j ≼ w_i$ ; l'hypothèse de récurrence et la transitivité donnent encore $w_i in overline(F)$.
       Ainsi $L subset.eq overline(F)$ et, par monotonie et par la question 2, $overline(L) subset.eq overline(overline(F))=overline(F)$.
     ]),
-    question([
+    Q([
       Un langage $L$ est *clos par sur-mots* si, pour tout $u in L$ et tout $v in Sigma^*$ tel que $u ≼ v$, on a $v in L$.
       Déduire de la question précédente que tout langage clos par sur-mots est régulier.
     ], solution: [
@@ -87,7 +87,7 @@
       La question 5 fournit un langage fini $F subset.eq L$ tel que $overline(F)=overline(L)=L$.
       Le langage $F$ est régulier car fini ; sa clôture est régulière par la question 4.
     ]),
-    question([
+    Q([
       On admet que les langages réguliers sont stables par complémentaire.
       Un langage $L$ est *clos par sous-mots* si, pour tout $u in L$ et tout $v in Sigma^*$ tel que $v ≼ u$, on a $v in L$.
       Montrer que tout langage clos par sous-mots est régulier.
@@ -97,7 +97,7 @@
       Par la question 6, $L'$ est régulier.
       Son complémentaire $L$ est donc régulier.
     ]),
-    question([
+    Q([
       Démontrer le résultat admis à la question 5.
     ], solution: [
       C'est le lemme de Higman pour un alphabet fini.

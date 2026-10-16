@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep, widetilde
 
 #let ex = exercice(
@@ -12,7 +12,7 @@
 
     [Les *mots de Fibonacci* sur l'alphabet $Sigma={a,b}$ sont définis par
       $ f_0=a, #sep f_1=b, #sep f_(n+2)=f_(n+1) f_n " pour " n>=0. $],
-    question([
+    Q([
       Montrer que pour $n>=2$, le suffixe de longueur $2$ de $f_n$ est $b a$ si $n$ est pair, $a b$ si $n$ est impair.
     ], solution: [
       On procède par récurrence double.
@@ -20,7 +20,7 @@
       Pour $n>=4$, le mot $f_(n-2)$ est un suffixe de $f_n$ et a au moins deux lettres.
       Puisque $n$ et $n-2$ ont la même parité, l'hypothèse de récurrence donne le suffixe annoncé.
     ]),
-    question([
+    Q([
       Pour $n>=2$, on note $g_n$ le préfixe de $f_n$ obtenu en supprimant ses deux dernières lettres.
       Montrer que $g_n$ est un palindrome, c'est-à-dire que $g_n=widetilde(g_n)$, où $widetilde(g_n)$ est le mot obtenu en inversant ses lettres.
     ], solution: [

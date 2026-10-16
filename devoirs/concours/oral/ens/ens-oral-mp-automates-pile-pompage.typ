@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: dessiner-automate as dessiner
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep
 #let anbn = dessiner(
   (("q_0",(0,0),true,false), ("q_1",(3,0),false,false), ("q_2",(6,0),false,false), ("q_3",(9,0),false,true)),
@@ -31,8 +31,7 @@
     - Question 6, corrigé : sélectionner les hauteurs par minima successifs à rebours ; une montée peut sauter des hauteurs.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       Soient $Σ$ un alphabet fini et $Γ$ un alphabet fini de pile.
       Un automate à pile est un quintuplet $A=(Q,q_0,γ_0,δ,F)$, où $Q$ est fini, $q_0∈Q$, $γ_0∈Γ$, $F⊂Q$, et $δ(q,a,γ)$ est une partie finie de $Q×Γ^*$ pour chaque $(q,a,γ)∈Q×Σ×Γ$.
       Une configuration est un couple $(q,z)$ avec $z∈Γ^*$ non vide. La configuration initiale est $(q_0,γ_0)$ ; une configuration est acceptante si $q∈F$.
@@ -40,14 +39,14 @@
       Un mot est accepté s'il existe un calcul qui lit toutes ses lettres et termine dans une configuration acceptante.
       Ces notions sont introduites par le sujet ; aucune théorie préalable des automates à pile n'est supposée.
     ],
-    question([
+    Q([
       Étant donné un automate fini sans pile sur $Σ$, construire un automate à pile reconnaissant le même langage.
     ], commentaire: [« Un automate fini n'est pas nécessairement déterministe ! »], solution: [
       On peut d'abord déterminiser l'automate pour disposer d'un unique état initial.
       Prendre $Γ={γ_0}$, garder états et finaux, et remplacer chaque transition $q arrow(a)q'$ par $(q',γ_0)∈δ'(q,a,γ_0)$.
       La pile reste toujours $γ_0$ ; les calculs et les acceptations sont exactement ceux de l'automate fini.
     ]),
-    question([
+    Q([
       Sur $Σ={a,b}$, proposer un automate à pile reconnaissant ${a^n b^n | n≥2}$. Qu'en déduire ?
     ], solution: [
       Prendre $Γ={γ_0,α}$ et l'automate ci-dessous. Une étiquette $a:γ→g$ signifie que lire $a$ remplace le sommet $γ$ par $g$ ; sur la boucle de $q_1$, $γ$ parcourt $Γ$.
@@ -59,7 +58,7 @@
       Ce langage n'est pas régulier : pomper un facteur non vide du premier bloc de $a^p b^p$, pour une longueur de pompage $p≥2$, détruit l'égalité des comptes.
       Les automates à pile reconnaissent donc strictement plus de langages que les automates finis.
     ]),
-    question([
+    Q([
       Toujours sur $Σ={a,b}$, reconnaître ${w | abs(w)_a=abs(w)_b}$ par un automate à pile.
     ], solution: [
       Utiliser $Γ={γ_0,α}$ et les transitions suivantes, où $γ$ parcourt $Γ$ sur les boucles d'empilement.
@@ -74,7 +73,7 @@
       Un calcul $η$-tronqué suit les mêmes règles, mais remplace toute nouvelle pile de longueur supérieure à $η$ par son suffixe de longueur $η$ ; une pile vide reste interdite.
       On note $L_(≤η)(A)$ le langage des calculs $η$-tronqués acceptants.
     ],
-    question([
+    Q([
       Quelle est la relation entre $L_(≤η)(A)$ et $L(A)$ ? Montrer que le premier langage est régulier et construire un automate fini qui le reconnaît.
     ], solution: [
       On a $L_(≤η)(A)⊂L(A)$ : reproduire un calcul tronqué avec la pile entière.
@@ -90,7 +89,7 @@
       Une montagne est une $η$-montagne pour un $η≥1$.
       Soit $G$ la longueur maximale d'un mot de pile figurant dans une transition, avec $G=0$ s'il n'y a aucune transition.
     ],
-    question([
+    Q([
       Montrer que, si $η>G$ et $w∈L(A)∖L_(≤η)(A)$, tout calcul acceptant de $w$ possède une $(η-G)$-montagne.
     ], solution: [
       Fixons un calcul acceptant. Sa simulation tronquée doit se bloquer en tentant de dépiler son dernier symbole ; sinon elle accepterait aussi $w$.
@@ -104,7 +103,7 @@
     [
       L'état de base d'une montagne est le triplet $β(l,r)=(q_l,q_r,γ)$, où $γ$ est le sommet de $z_l$.
     ],
-    question([
+    Q([
       Montrer qu'il existe $η_0≥1$, ne dépendant que de $A$, tel que toute $η_0$-montagne $(l,m,r)$ contienne deux montagnes $(l',m,r')$ et $(l'',m,r'')$ vérifiant
       $ l<l'<l''<m<r''<r'<r, #sep β(l',r')=β(l'',r''). $
     ], solution: [
@@ -120,7 +119,7 @@
       Les sorties sont strictement décroissantes et situées avant $r$. On obtient $K+1$ montagnes imbriquées.
       Deux ont le même quadruplet, par le principe des tiroirs ; elles ont notamment le même $β$, comme demandé.
     ]),
-    question([
+    Q([
       Déduire des trois questions précédentes le lemme de pompage affaibli : pour tout langage $L$ reconnu par un automate à pile, il existe $p∈NN$ tel que tout $w∈L$ avec $abs(w)>p$ s'écrive $w=u v x y z$, avec $abs(v y)≥1$ et
       $ ∀n∈NN, #sep u v^n x y^n z∈L. $
     ], solution: [

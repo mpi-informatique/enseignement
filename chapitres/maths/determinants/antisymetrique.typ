@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,15 +7,13 @@
     difficulte: 2, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Pour $n >= 1$, on pose
+  contenu: ([Pour $n >= 1$, on pose
     $ D_(n) = lr(mat(delim: "|",
       0, 1, dots.h, 1;
       -1, 0, dots.h, 1;
       dots.v, dots.v, dots.down, dots.v;
       -1, -1, dots.h, 0) brace.r) n $.],
-    question(
-      [Calculer $D_(n)$ en établissant une relation de récurrence.],
+    Q([Calculer $D_(n)$ en établissant une relation de récurrence.],
       solution: [Pour $n >= 3$, effectuer $C_(1) arrow.l C_(1) + C_(n)$, puis $L_(1) arrow.l L_(1) + L_(n)$.
       Ces opérations conservent le déterminant et donnent
       $ D_(n) = mat(delim: "|",

@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -9,9 +9,8 @@
     difficulte: 3,
     niveaux: ("MPI",),
   ),
-  contenu: (
-    [Déterminer les langages engendrés par les grammaires suivantes, d'axiome $S$, en prouvant les deux inclusions. On note $abs(w)_a$ le nombre d'occurrences de $a$ dans $w$.],
-    question([
+  contenu: ([Déterminer les langages engendrés par les grammaires suivantes, d'axiome $S$, en prouvant les deux inclusions. On note $abs(w)_a$ le nombre d'occurrences de $a$ dans $w$.],
+    Q([
       $ S → X ∣ Y \
         X → a X ∣ a Z \
         Y → Y b ∣ Z b \
@@ -24,7 +23,7 @@
       on obtient exactement ${a^n b^p | n < p}$.
       Ainsi $L(G_1) = {a^n b^p | n,p ∈ ℕ, n ≠ p}$.
     ]),
-    question([
+    Q([
       $ S → 0 A 1 ∣ ε \
         A → 1 S 0 ∣ ε $
     ], solution: [
@@ -34,7 +33,7 @@
       $ S ⇒ 0 A 1 ⇒ 01 S 01 ⇒^* 01 (01)^(n-2) 01 = (01)^n, $
       par récurrence sur $n$. Ainsi $L(G_2) = (01)^*$.
     ]),
-    question([
+    Q([
       $ S → X ∣ X a S \
         X → a X b X ∣ b X a X ∣ ε $
     ], solution: [
@@ -56,7 +55,7 @@
       $ L(G_3) = {w ∈ {a,b}^* | abs(w)_a ≥ abs(w)_b}. $
       En particulier, $S → X$ permet les mots équilibrés et $ε$.
     ]),
-    question([
+    Q([
       $ S → X ∣ Y \
         X → Z 0 X ∣ Z 0 Z \
         Y → Z 1 Y ∣ Z 1 Z \

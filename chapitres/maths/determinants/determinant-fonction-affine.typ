@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -8,10 +8,8 @@
     niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Soit $A = (a_(i, j)) in cal(M)_(n)(RR)$. Pour $x in RR$, on note $A(x)$ la matrice dont le coefficient d'indices $(i, j)$ est $a_(i, j) + x$.],
-    question(
-      [Montrer que la fonction $x ↦ det(A(x))$ est polynomiale de degré inférieur ou égal à $1$.],
+  contenu: ([Soit $A = (a_(i, j)) in cal(M)_(n)(RR)$. Pour $x in RR$, on note $A(x)$ la matrice dont le coefficient d'indices $(i, j)$ est $a_(i, j) + x$.],
+    Q([Montrer que la fonction $x ↦ det(A(x))$ est polynomiale de degré inférieur ou égal à $1$.],
       solution: [Retrancher la première colonne à chacune des autres colonnes.
       La première colonne de la matrice obtenue est formée des coefficients $a_(i, 1) + x$, tandis que les autres colonnes sont indépendantes de $x$.
       En développant suivant la première colonne, obtenir
@@ -19,8 +17,7 @@
       où les matrices $A_(i)$ sont indépendantes de $x$.
       Cette expression est polynomiale de degré inférieur ou égal à $1$.],
     ),
-    question(
-      [Soient $a$ et $b$ deux réels distincts et $alpha_(1), dots, alpha_(n) in RR$. En déduire la valeur du déterminant
+    Q([Soient $a$ et $b$ deux réels distincts et $alpha_(1), dots, alpha_(n) in RR$. En déduire la valeur du déterminant
       $ lr(mat(delim: "|",
         alpha_(1), a, dots.h, a;
         b, alpha_(2), dots.down, dots.v;

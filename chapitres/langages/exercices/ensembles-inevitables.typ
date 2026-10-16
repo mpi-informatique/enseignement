@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 
 #let ex = exercice(
@@ -12,8 +12,7 @@
     duree: none,
     concours: (nom: "ENS", annee: 2019, filiere: "MP"),
   ),
-  contenu: (
-    [
+  contenu: ([
     On fixe l'alphabet $Sigma = {a, b}$.
     Pour $w in Sigma^*$, on note $w = w_1 dots w_n$, où $n = abs(w)$ est sa longueur.
     Le mot vide est noté $epsilon$.
@@ -24,7 +23,7 @@
     Un mot $w$ *évite* un mot $s$ si $s$ n'est pas un facteur de $w$.
     Il évite un ensemble $S subset.eq Sigma^*$ s'il évite chacun de ses éléments.
     ],
-    question([
+    Q([
       Donner un mot de longueur au moins $12$ qui évite
       $ S_0 = {a a a a, a a a b, a b a, b a a a, b a b, b b b b}. $
     ], solution: [
@@ -32,7 +31,7 @@
       Ses facteurs de longueur $3$ sont $a a b$, $a b b$, $b b a$ et $b a a$ ; ceux de longueur $4$ sont $a a b b$, $a b b a$, $b b a a$ et $b a a b$.
       Aucun ne figure dans $S_0$.
     ]),
-    question([
+    Q([
       Donner le pseudocode d'un algorithme simple qui détermine si un mot $w$ évite un ensemble fini $S$.
       Analyser son coût en temps et en espace lorsque les $m$ mots de $S$ ont tous la même longueur $ell$.
     ], solution: [
@@ -66,7 +65,7 @@
     L'ensemble $S$ est *inévitable* si $"Av"(S)$ est fini, et *évitable* sinon.
     Sur un alphabet fini, être évitable équivaut à admettre des mots évitants de longueurs arbitrairement grandes.
     ],
-    question([
+    Q([
       L'ensemble $S_0$ de la question 1 est-il inévitable ?
       Même question pour $S_1 = {a a a, a b b, b a a, a b a b}$.
     ], solution: [
@@ -74,7 +73,7 @@
       Pour tout $t in NN$, $(a a b b)^t$ évite $S_0$, comme le montre la liste de facteurs de la question 1.
       De même, $b^t$ évite $S_1$, dont chaque élément contient au moins un $a$.
     ]),
-    question([
+    Q([
       Montrer que $S_2 = {a a a, b a b, b a a b, b b b}$ est inévitable.
       On pourra donner une borne sur la longueur des mots qui l'évitent.
     ], solution: [
@@ -89,7 +88,7 @@
       Tout mot de longueur au moins $7$ contient donc un facteur dans $S_2$.
       La borne est optimale : $a a b b a a$, de longueur $6$, évite $S_2$.
     ]),
-    question([
+    Q([
       Soient maintenant un alphabet fini non vide $Sigma$, de cardinal $r$, et un entier $k >= 1$.
       Montrer que tout mot de longueur au moins $r^k + k$ possède deux occurrences distinctes d'un même facteur de longueur $k$.
       Autrement dit, il existe $1 <= p < q <= abs(w) - k + 1$ tels que $w_(p+j) = w_(q+j)$ pour tout $0 <= j < k$.
@@ -98,7 +97,7 @@
       Si $n >= r^k+k$, le principe des tiroirs donne deux positions distinctes portant le même facteur.
       Les deux occurrences peuvent se chevaucher.
     ]),
-    question([
+    Q([
       En déduire un algorithme qui détermine si un ensemble fini $S$ est inévitable.
       Justifier sa terminaison et sa correction, puis donner sa complexité en temps et en espace.
       On ne demande pas un algorithme efficace.
@@ -133,14 +132,14 @@
       Il possède au plus $r^k$ sommets et $r^(k+1)$ arêtes ; une fois le graphe construit, ce parcours coûte $O(r^k + r^(k+1))$.
       Il faut aussi compter la construction, notamment les tests d'évitement des sommets, qui coûtent $O(r^k k L)$ avec la méthode naïve.
     ]),
-    question([
+    Q([
       Une expression régulière $e$ est dite *inévitable* si son langage $L(e)$ est un ensemble inévitable.
       Donner un exemple dont le langage ne contient pas le mot vide.
     ], solution: [
       L'expression $e = a a a | b a b | b a a b | b b b$ convient, d'après la question 4.
       Il n'est pas nécessaire d'ajouter une étoile : celle-ci ferait appartenir $epsilon$ au langage et rendrait l'inévitabilité immédiate.
     ]),
-    question([
+    Q([
       Une expression régulière $e$ est *bornée* s'il existe $n in NN$ tel que tout mot de $L(e)$ soit de longueur au plus $n$.
       Si $e$ est bornée, comment déterminer si elle est inévitable ?
     ], solution: [
@@ -152,7 +151,7 @@
       On énumère ses chemins acceptants et les mots qu'ils portent.
       Si aucun état final n'est accessible, le langage est vide.
     ]),
-    question([
+    Q([
       Expliquer comment déterminer si une expression régulière quelconque $e$ est inévitable.
     ], solution: [
       Les mots qui contiennent un facteur de $L(e)$ forment le langage régulier
@@ -168,7 +167,7 @@
       L'expression $e$ est donc inévitable si et seulement si le graphe utile est acyclique.
       Les recherches d'accessibilité et de cycle sont linéaires dans la taille de l'automate obtenu ; la déterminisation peut produire un nombre d'états exponentiel dans la taille de l'automate initial.
     ]),
-    question([
+    Q([
       On dit que $S$ est *inévitable relativement à* $e$ si seuls un nombre fini de mots de $L(e)$ évitent $S$, c'est-à-dire si
       $ L(e) ∩ "Av"(S) $
       est fini.
@@ -183,7 +182,7 @@
       La propriété opposée signifie qu'une infinité de mots de $L(e)$ évitent $S$.
       Si $L(e)$ est fini, tout ensemble $S$ est inévitable relativement à $e$ selon la définition retenue ici.
     ]),
-    question([
+    Q([
       Montrer que tout ensemble inévitable $S subset.eq Sigma^*$, même infini, contient un sous-ensemble fini inévitable.
     ], solution: [
       Si $epsilon in S$, on prend $S' = {epsilon}$.
@@ -196,7 +195,7 @@
       Cet ensemble est fini, inclus dans $S$ et inévitable : tout mot de longueur au moins $n+1$ possède un préfixe de longueur $n+1$, qui contient l'un des facteurs choisis.
       Il ne reste qu'un nombre fini de mots plus courts.
     ]),
-    question([
+    Q([
       Étant donnée une expression régulière inévitable $e$, expliquer comment calculer un sous-ensemble fini inévitable de $L(e)$.
     ], solution: [
       On commence par tester si $epsilon in L(e)$ ; dans ce cas, ${epsilon}$ est une réponse.

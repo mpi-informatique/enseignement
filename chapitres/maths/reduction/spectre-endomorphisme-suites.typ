@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, sep
+#import "/load.typ": exercice, Q, sep
 
 #let ex = exercice(
   meta: (
@@ -7,11 +7,9 @@
     difficulte: 2, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Sur $E = CC^NN$, on considère l'endomorphisme $φ$ qui à $u = (u_n)_(n ∈ NN)$ associe la suite $v$ définie par
+  contenu: ([Sur $E = CC^NN$, on considère l'endomorphisme $φ$ qui à $u = (u_n)_(n ∈ NN)$ associe la suite $v$ définie par
     $ v_0 = u_0, #sep ∀n ≥ 1, #sep v_n = (u_n + u_(n - 1))/2. $],
-    question(
-      [Déterminer les valeurs propres de $φ$ et les sous-espaces propres associés.],
+    Q([Déterminer les valeurs propres de $φ$ et les sous-espaces propres associés.],
       solution: [L'équation $φ(u) = λ u$ équivaut à
       $ (1 - λ)u_0 = 0, #sep ∀n ≥ 1, #sep (2λ - 1)u_n = u_(n - 1). $
       - Si $λ = 1$, les solutions sont les suites constantes.

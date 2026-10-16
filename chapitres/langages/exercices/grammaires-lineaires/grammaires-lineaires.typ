@@ -1,6 +1,6 @@
 #import "/load.typ": code
 #import code: code-extrait
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "/load.typ": sep
 
 #let code = code-extrait.with(read("corrige.ml"))
@@ -16,8 +16,7 @@
     niveaux: ("MPI",),
     duree: (1, 15),
   ),
-  contenu: (
-    [
+  contenu: ([
       Une grammaire non-contextuelle $G = (Σ, V, R, S)$ est dite linéaire si le membre droit de chaque règle contient au plus une occurrence de variable.
       Ses règles sont donc de la forme $X → u Y v$ ou $X → w$, avec $X, Y ∈ V$ et $u, v, w ∈ Σ^*$.
       Le mot vide est noté $ε$ et $L(G) = {w ∈ Σ^* | S ⇒^* w}$.
@@ -25,7 +24,7 @@
       On cherche à comprendre ce que cette restriction apporte à la reconnaissance des mots.
       Toutes les réponses doivent être justifiées.
     ],
-    question([
+    Q([
       Montrer que les langages engendrés par les grammaires dont les règles sont uniquement de la forme $X → a Y$ ou $X → ε$, avec $a ∈ Σ$, sont exactement les langages réguliers.
     ], solution: [
       À une telle grammaire, on associe l'automate non déterministe d'états $V$, d'état initial $S$ et d'états finaux les $X$ tels que $X → ε ∈ R$.
@@ -37,7 +36,7 @@
       On prend une variable par état, l'état initial pour axiome, une règle $p → a q$ pour chaque transition de $p$ vers $q$ étiquetée $a$, et $f → ε$ pour chaque état final $f$.
       La même correspondance prouve que cette grammaire engendre le langage voulu.
     ]),
-    question([
+    Q([
       Sur $Σ = {a, b}$, on considère la grammaire d'axiome $S$ donnée par
       $ S → a T ∣ ε, #sep T → S b $
       Déterminer son langage et montrer qu'il n'est pas régulier.
@@ -55,7 +54,7 @@
 
       Autoriser les deux orientations dans une même grammaire permet donc d'engendrer des langages non réguliers, même si chaque règle n'ajoute qu'une lettre.
     ]),
-    question([
+    Q([
       Montrer que toute forme obtenue par dérivation depuis l'axiome d'une grammaire linéaire contient au plus une variable.
       Un élève en déduit qu'une grammaire linéaire est nécessairement non ambiguë.
       A-t-il raison ?
@@ -80,7 +79,7 @@
       On définit le booléen $D(X,i,j)$ par
       $ D(X,i,j) = "vrai" quad ⇔ quad X ⇒^* w[i:j]. $
     ],
-    question([
+    Q([
       Exprimer $D(X,i,i)$, puis donner une relation de récurrence pour $D(X,i,j)$ lorsque $i < j$.
       En déduire un ordre de calcul permettant de décider si $w ∈ L(G)$.
       Justifier la correction de cette méthode.
@@ -114,7 +113,7 @@
       pour $0 ≤ i < k$.
       Des appels distincts à ```ocaml Array.make``` créent des tableaux indépendants.
     ],
-    question([
+    Q([
       Écrire une fonction ```ocaml reconnait : grammaire -> int -> string -> bool```
       qui reçoit la grammaire, l'indice de son axiome et un mot, et applique la méthode précédente.
       Utiliser une table booléenne à trois indices, sans créer de sous-chaînes.
@@ -126,7 +125,7 @@
       La fonction locale parcourt les règles jusqu'à en trouver une convenable, ou renvoie faux.
       Le remplissage suit exactement l'ordre démontré à la question précédente, y compris pour $n = 0$.
     ]),
-    question([
+    Q([
       Justifier les complexités temporelle et spatiale en fonction de $m$, $r$ et $n$.
       Si l'on veut seulement une réponse booléenne, expliquer comment ramener l'espace de stockage de la table à $O(m(n+1))$, sans changer l'ordre de grandeur du temps.
     ], solution: [
@@ -146,7 +145,7 @@
       On conserve le même nombre de calculs et on utilise $O(m(n+1))$ cases.
       Après la longueur $n$, la réponse se lit à l'axiome, à l'indice $0$.
     ]),
-    question([
+    Q([
       Pour conclure, montrer que toute grammaire linéaire peut être transformée en une grammaire engendrant le même langage et n'utilisant que les trois formes précédentes.
       On pourra commencer par supprimer les règles $X → Y$, appelées règles unitaires, en tenant compte des chaînes et des cycles de telles règles.
       En déduire une borne de reconnaissance pour toute grammaire linéaire fixée.

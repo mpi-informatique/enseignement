@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 
 #let ex = exercice(
   meta: (
@@ -7,10 +7,8 @@
     difficulte: 1, niveaux: ("MP",),
     matiere: "mathématiques",
   ),
-  contenu: (
-    [Soit $n >= 1$ et, pour $1 <= k <= n$, $S_(k) = sum_(i = 1)^k i$.],
-    question(
-      [Calculer
+  contenu: ([Soit $n >= 1$ et, pour $1 <= k <= n$, $S_(k) = sum_(i = 1)^k i$.],
+    Q([Calculer
       $ D_(n) = mat(delim: "|",
         S_(1), S_(1), dots.h, S_(1);
         S_(1), S_(2), dots.h, S_(2);

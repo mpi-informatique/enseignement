@@ -1,6 +1,6 @@
 #import "/load.typ": automate
 #import automate: unite-automates, rayon-etat, rayon-grand-etat, style-automates
-#import "/load.typ": exercice, question
+#import "/load.typ": exercice, Q
 #import "@preview/finite:0.5.1" as finite
 #import "@preview/cetz:0.4.2" as cetz
 
@@ -11,26 +11,25 @@
     difficulte: 3,
     niveaux: ("MPI",),
   ),
-  contenu: (
-    [
+  contenu: ([
       Si $u ∈ Σ^*$ et $L$ est un langage sur $Σ$, on appelle résiduel de $L$ par rapport à $u$ le langage $u^(-1)L$ tel que :
       $ u^(-1)L = {m ∈ Σ^* | u m ∈ L}. $
       Intuitivement, le résiduel de $L$ par rapport à $u$ est l'ensemble des mots
       avec lesquels on peut compléter $u$ pour obtenir un mot de $L$.
       L'ensemble des résiduels de $L$ est noté $cal(R)_L = {u^(-1)L | u ∈ Σ^*}$.
     ],
-    question([
+    Q([
       Si $L$ est un langage, quel est le résiduel de $L$ par rapport à $ε$ ?
     ], solution: [
       $ε^(-1)L = L$. En effet, si $m ∈ Σ^*$, $m ∈ ε^(-1)L ⇔ ε m = m ∈ L$.
     ]),
-    question([
+    Q([
       Montrer que pour tout langage $L$ sur $Σ$ et tous mots $u,v ∈ Σ^*$, $u^(-1)(v^(-1)L) = (v u)^(-1)L$.
     ], solution: [
       Soient $L$ un langage et $u,v ∈ Σ^*$. Si $m ∈ Σ^*$, alors :
       $ m ∈ u^(-1)(v^(-1)L) ⇔ u m ∈ v^(-1)L ⇔ v u m ∈ L ⇔ m ∈ (v u)^(-1)L. $
     ]),
-    question([
+    Q([
       #enum(numbering: "a)",
         [Soit $L_1 = (a|b)^* a b (a|b)^*$. Déterminer $(b a b)^(-1)L_1$ et $(a a a b a)^(-1)L_1$. Que constate-t-on ?],
         [Expliciter $cal(R)_(L_1)$.],
@@ -50,7 +49,7 @@
       )
     ]),
     [On veut montrer qu'un langage $L$ est reconnaissable si et seulement s'il admet un nombre fini de résiduels.],
-    question([
+    Q([
       Soit $L$ un langage reconnaissable par un automate $A = (Σ,Q,q_0,F,δ)$ qu'on peut supposer déterministe, complet et dont tous les états sont accessibles sans perte de généralité.
       #enum(numbering: "a)",
         [Montrer que la fonction
@@ -82,7 +81,7 @@
           L'automate $A$ étant fini, le langage $L$ a un nombre fini de résiduels.],
       )
     ]),
-    question([
+    Q([
       Soit à présent $L$ un langage ayant un nombre fini de résiduels.
       On définit alors un automate $M(L) = (Σ,Q,I,F,δ)$, appelé automate des résiduels associé à $L$, où :
       - $Q = cal(R)_L$
@@ -119,7 +118,7 @@
           Comme $u ∈ L$, $ε ∈ u^(-1)L$ ; on a donc aussi $ε ∈ m^(-1)L$, ce qui garantit que $m ∈ L$.],
       )
     ]),
-    question([
+    Q([
       À l'aide des questions précédentes, déterminer l'automate des résiduels associé au langage $L_1$.
     ], solution: [
       Les états sont étiquetés par les représentants $ε$, $a$, $a b$ de leurs résiduels, respectivement $L_1$, $L_1 ∪ b(a|b)^*$ et $(a|b)^*$.
@@ -141,7 +140,7 @@
       déterministe, complet et possède le plus petit nombre d'états possible
       parmi les automates déterministes et complets reconnaissant $L$.
     ],
-    question([Montrer que l'automate des résiduels est un automate minimal.], solution: [
+    Q([Montrer que l'automate des résiduels est un automate minimal.], solution: [
       D'après la question 5, $M(L)$ est déterministe, complet et reconnaît $L$.
       Il possède exactement $abs(cal(R)_L)$ états.
 

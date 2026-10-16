@@ -1,4 +1,4 @@
-#import "/load.typ": exercice, question, partie
+#import "/load.typ": exercice, Q, partie
 #import "/load.typ": sep
 #let ex = exercice(
   meta: (
@@ -15,8 +15,7 @@
     - Questions 9 et 10, corrigé : corriger les indices des distances, expliciter leur prétraitement et la reconstruction.
   ],
   remarques: [- Expliquer les pistes envisagées et les difficultés rencontrées afin de permettre le dialogue avec le jury.],
-  contenu: (
-    [
+  contenu: ([
       On fixe un langage régulier $L$ sur $Σ$.
       Une réparation par insertion de $w$ est une décomposition $w=u v$ et un mot $z$ tels que $u z v∈L$.
       Pour les algorithmes, $L$ est représenté par un automate fini non déterministe sans transitions $ε$, $A=(Q,I,F,δ)$.
@@ -24,7 +23,7 @@
       On peut conserver des listes inverses, de taille $O(N+m)$, et représenter les ensembles d'états par des tableaux booléens.
       Le mot est stocké dans un tableau ; $w[i,j]$ désigne son facteur d'indices $i$ inclus à $j$ exclu.
     ],
-    question([
+    Q([
       Soit $L_0$ décrit par $(a b)^*$. Proposer une réparation par insertion de $w_0=a a b$, puis de $w'_0=a b a b$.
       Le mot $w''_0=a a$ en admet-il une ?
     ], solution: [
@@ -32,7 +31,7 @@
       Pour $a b a b$, prendre $z=ε$.
       Pour $a a$, toute insertion ailleurs qu'à la fin laisse un $a$ final ; une insertion à la fin laisse le préfixe $a a$. Aucun de ces mots n'appartient à $(a b)^*$.
     ]),
-    question([
+    Q([
       Une réparation par insertion finale de $w$ est un mot $z$ tel que $w z∈L$. Proposer un algorithme décidant son existence et donner ses complexités en temps et en espace.
     ], solution: [
       Notons $P_i$ les états atteints après le préfixe de longueur $i$.
@@ -47,7 +46,7 @@ renvoyer (P ∩ C est non vide)
       Chaque lecture parcourt au plus $m$ transitions et initialise $N$ cases ; le parcours inverse coûte $O(N+m)$.
       Temps $O((n+1)(N+m))$, espace auxiliaire $O(N+m)$, dont $O(N)$ pour les marques et la file.
     ]),
-    question([
+    Q([
       Modifier l'algorithme de la question 2 pour produire une insertion finale de longueur minimale ; préciser les complexités.
     ], solution: [
       Faire un parcours en largeur depuis tous les finaux dans le graphe inversé.
@@ -56,7 +55,7 @@ renvoyer (P ∩ C est non vide)
       Un plus court chemin n'a pas de répétition, donc $abs(z)≤N-1$.
       Les complexités de la question 2 restent valables, production du témoin comprise.
     ]),
-    question([
+    Q([
       Décider l'existence d'une réparation par insertion quelconque ; donner les complexités en temps et en espace.
     ], solution: [
       Calculer $P_i$ comme précédemment et, à rebours, $T_i$, l'ensemble des états depuis lesquels $w[i,n]$ mène à un final :
@@ -65,7 +64,7 @@ renvoyer (P ∩ C est non vide)
       Tester ce fait par un parcours depuis $P_i$, pour chaque $i$.
       Les $n+1$ parcours et les calculs des ensembles prennent $O((n+1)(N+m))$ en temps ; stocker les ensembles de suffixes prend $O((n+1)N)$, et les listes inverses $O(N+m)$.
     ]),
-    question([
+    Q([
       Modifier l'algorithme de la question 4 pour produire une décomposition et une insertion $z$ de longueur minimale.
     ], solution: [
       À chaque coupure, utiliser un parcours en largeur multi-source depuis $P_i$ et prendre la plus petite distance atteinte dans $T_i$.
@@ -73,7 +72,7 @@ renvoyer (P ∩ C est non vide)
       La distance mesure exactement le nombre de lettres insérées.
       Temps $O((n+1)(N+m))$ et espace $O((n+1)N+m)$, comme précédemment.
     ]),
-    question([
+    Q([
       Une réparation par suppression de $w$ est une décomposition $w=u z v$ telle que $u v∈L$.
       Proposer un algorithme naïf décidant son existence et produisant une suppression de longueur minimale. Préciser ses complexités.
     ], solution: [
@@ -81,7 +80,7 @@ renvoyer (P ∩ C est non vide)
       Il y a $O((n+1)^2)$ paires et chaque simulation coûte $O((n+1)(N+m))$.
       D'où $O((n+1)^3(N+m))$ en temps et $O(N)$ en espace auxiliaire hors automate ; on lit les deux facteurs sans les copier et on renvoie leurs indices.
     ]),
-    question([
+    Q([
       Décider l'existence d'une réparation par suppression avec une complexité linéaire en $w$.
     ], solution: [
       Pour chaque préfixe $u$, maintenir trois ensembles : $P_u$ après lecture sans suppression, $D_u$ pendant une suppression suffixe, et $R_u$ après une suppression éventuellement vide.
@@ -92,7 +91,7 @@ renvoyer (P ∩ C est non vide)
       Tester finalement $R_w∩F≠∅$.
       Un nombre constant de tableaux et de parcours de transitions par lettre donne $O((n+1)(N+m))$ en temps et $O(N)$ en espace auxiliaire hors automate.
     ]),
-    question([
+    Q([
       Modifier l'algorithme de la question 7 pour produire une suppression minimale, toujours en temps linéaire en $w$.
     ],
       commentaire: [Préciser les valeurs calculées, leur ordre de calcul et leur occupation mémoire.], solution: [
@@ -106,7 +105,7 @@ renvoyer (P ∩ C est non vide)
       On retrouve les indices de début et de fin du bloc supprimé.
       Le temps reste $O((n+1)(N+m))$ ; la reconstruction utilise $O((n+1)N+m)$ en espace, contre $O(N)$ auxiliaire pour le seul coût.
     ]),
-    question([
+    Q([
       Une réparation par insertions de $w$ est un mot $w'∈L$ dont $w$ est un sous-mot : il existe une application strictement croissante $φ:{1,…,abs(w)}→{1,…,abs(w')}$ telle que $w_i=w'_(φ(i))$.
       Décider s'il en existe une et produire un $w'$ de longueur minimale ; préciser les complexités.
     ], solution: [
@@ -121,7 +120,7 @@ renvoyer (P ∩ C est non vide)
       Temps total $O((n+1)N(N+m))$, espace $O(N^2+(n+1)N+m)$ avec reconstruction.
       Les chemins insérés ont longueur au plus $N-1$, donc la sortie a longueur $O((n+1)N)$.
     ]),
-    question([
+    Q([
       On autorise la suppression de $k_1$ caractères, puis l'insertion de $k_2$ caractères pour obtenir un mot de $L$, au coût $k_1+k_2$.
       Calculer le coût minimal et une réparation qui l'atteint.
     ], solution: [
