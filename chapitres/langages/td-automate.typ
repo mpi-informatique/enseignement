@@ -5,7 +5,7 @@
 #import "@preview/cetz:0.4.2" as cetz
 #import "/chapitres/langages/exercices/cloture-miroir-prefixes-suffixes-facteurs.typ": ex as cloture
 #import "/chapitres/langages/exercices/reconnaissable-ou-non.typ": ex as reconnaissable
-#import "/chapitres/langages/exercices/algorithmes-vacuite-finitude-equivalence.typ": ex as algorithmes
+#import "/chapitres/langages/exercices/algorithmes-automates.typ": ex as algorithmes
 #import "/chapitres/langages/exercices/longueur-discriminante-automates.typ": ex as longueur
 #import "/chapitres/langages/exercices/ensembles-distinguants-automates.typ": ex as distinguant
 #import "/devoirs/concours/oral/ens/ens-oral-mp-automates-palindromes.typ": ex as palindromes
