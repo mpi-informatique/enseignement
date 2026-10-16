@@ -14,7 +14,7 @@
   corrections: [
     - Numérotation : commencer à 1 et décaler les renvois d'une unité.
     - Question 2, corrigé : utiliser $b a a∈L_1$ comme témoin.
-    - Question 4, corrigé : pour un langage $a$-borné, fixer le nombre de $a$ et projeter sur les $b$.
+    - Question 4, corrigé : fixer le nombre de $a$ et utiliser le langage des mots de même longueur.
     - Question 5, corrigé : distinguer composantes fortement connexes et composantes connexes.
     - Question 7, corrigé : expliciter la croissance dans chacune des deux coordonnées avant de stabiliser la diagonale.
   ],
@@ -65,12 +65,19 @@
         Étendre ce résultat aux langages réguliers $a b$-bornés : il existe $k$ tel que chaque $w∈L$ vérifie $abs(w)_a≤k$ ou $abs(w)_b≤k$.
       ],
       solution: [
-        Pour $0≤i≤k$, le langage $L_i=L∩{w | abs(w)_a=i}$ est régulier, par produit avec un compteur borné.
-        Effacer les $a$ dans une expression régulière de $L_i$ (les remplacer par $ε$) donne un langage régulier unaire $P_i$ de mots en $b$.
-        Alors $"CCl"(L_i)={w | abs(w)_a=i " et " b^(abs(w)_b)∈P_i}$.
-        Pour le reconnaître, prendre $i+1$ copies d'un automate sur $b$ reconnaissant $P_i$, numérotées de 0 à $i$.
-        Garder les transitions sur $b$ dans chaque copie et ajouter sur $a$ des transitions vers le même état de la copie suivante. Les initiaux sont dans la copie 0, les finaux dans la copie $i$.
-        L'union des $"CCl"(L_i)$ est donc régulière.
+        Pour tout langage régulier $K$, posons
+        $ "Len"(K)={w∈Σ^* | ∃v∈K, abs(w)=abs(v)}. $
+        Ce langage est régulier : dans un automate sans transitions $ε$ reconnaissant $K$, remplacer chaque transition par deux transitions de mêmes extrémités, étiquetées respectivement $a$ et $b$.
+        L'automate obtenu reconnaît exactement $"Len"(K)$.
+
+        Supposons $L$ régulier et $a$-borné, de borne $k$.
+        Pour $0≤i≤k$, le langage $L_i=L∩{w | abs(w)_a=i}$ est régulier, car avoir exactement $i$ occurrences de $a$ est une condition régulière.
+        Or
+        $ "CCl"(L_i)="Len"(L_i)∩{w∈Σ^* | abs(w)_a=i}. $
+        En effet, à nombre de $a$ fixé, deux mots ont la même longueur si et seulement s'ils ont le même nombre de $b$.
+        Ainsi $"CCl"(L_i)$ est régulier par intersection, puis
+        $ "CCl"(L)=bigcup_(i=0)^k "CCl"(L_i) $
+        est régulier par union finie.
 
         Si $L$ est $a b$-borné, le décomposer en l'union de $L∩{w | abs(w)_a≤k}$ et $L∩{w | abs(w)_b≤k}$.
         Appliquer la preuve précédente et sa version symétrique, puis la stabilité par union.
