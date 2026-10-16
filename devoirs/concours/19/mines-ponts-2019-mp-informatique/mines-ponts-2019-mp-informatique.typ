@@ -95,7 +95,6 @@
 }))
 
 #let ex = exercice(
-  // Barème pédagogique, non officiel : difficulté et longueur des preuves/code.
   meta: (
     titre: "Morphismes d'automates",
     chapitres: ("automates-finis", "langages-reguliers", "graphes"),
@@ -104,46 +103,30 @@
     langages: ("OCaml",), difficulte: 4, niveaux: ("MPI", "MP"), duree: (3, 0),
     concours: (nom: "Mines-Ponts", annee: 2019, filiere: "MP"),
   ),
-  notation: [
-    Coquilles sans ambiguïté : sans pénalité. Q1 à Q4 : noter chaque réponse indépendamment, même si l'erreur reprend une question précédente.
-  ],
   corrections: [
-    - Question 27 : préciser que les entiers peuvent être nuls et que la condition sur le premier élément ne concerne que les tableaux non vides.
     - Question 36 : inverser le sens du chemin recherché, de $(p,q)$ vers une paire de caractères finaux différents, pour calculer les paires distinguables.
   ],
   remarques: [
     Le jury demande des preuves argumentées, en citant les propriétés et résultats antérieurs utilisés.
   ],
   contenu: (
-    [L'épreuve comporte 37 questions réparties en cinq parties après les préliminaires.
-      On pourra réutiliser tout résultat d'une question antérieure, même non démontré.
-      Le but est d'étudier les relations entre automates reconnaissant un même langage grâce à la notion de morphisme d'automates.
-
-      == Préliminaires
-      === Concernant la programmation
-      Les fonctions seront écrites en OCaml. On pourra utiliser les fonctions définies aux questions précédentes et définir des fonctions auxiliaires.
-      Il n'est pas nécessaire de justifier le code, sauf demande explicite, ni de vérifier dans le code les hypothèses imposées aux paramètres.
-      Un même identifiant en italique et à chasse fixe désigne la même entité, respectivement du point de vue mathématique et informatique.
-
-      === Définition mathématique d'un automate
+    [
+      == Définition mathématique d'un automate
       Dans tout le sujet, un automate est un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.
-      On note $ε$ le mot vide et $δ^*: Q × {a,b}^* → Q$ l'extension définie par
+      On note $ε$ le mot vide et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
       $ δ^*(q,ε)=q, #sep δ^*(q,σ w)=δ^*(δ(q,σ),w). $
-      L'automate est représenté par un graphe orienté $G=(S,A)$ avec $S=Q$ :
-      un arc $p → q$ porte la lettre $σ$ si $δ(p,σ)=q$.
-      Une flèche entrante indique l'état initial. Un double cercle indique un état final.
-
-      === Représentation en OCaml
+      On note $L(cal(A))$ le langage reconnu par $cal(A)$.
+      == Représentation en OCaml
       Les états sont numérotés de $0$ à $abs(Q)-1$, l'état initial porte toujours le numéro $0$.
       Un automate est un triplet ```ocaml (n, delta, f)``` :
       - ```ocaml n : int``` est le nombre d'états.
       - ```ocaml delta : (int * int) array``` contient les couples $(δ(q,a),δ(q,b))$.
       - ```ocaml f : bool array``` indique les états finaux.
       Les deux tableaux sont de longueur $n$.
-      #code(("automate", "morphisme"))
+      #code("automate")
       Ainsi, ```ocaml let (n, delta, f) = aut in ...``` extrait les composantes,
       ```ocaml let (succ_a, succ_b) = delta.(q) in ...``` les successeurs de $q$,
-      et ```ocaml if f.(q) then ...``` teste si $q$ est final.
+      et ```ocaml if f.(q) then ...``` teste si $q$ est final.\ 
       On rappelle que ```ocaml List.length``` donne la longueur d'une liste,
       ```ocaml Array.make n x``` crée un tableau initialisé à ```ocaml x```,
       ```ocaml Array.copy``` copie un tableau et ```ocaml Array.length``` donne sa longueur.
@@ -152,25 +135,25 @@
     ],
     partie("I", "Premiers exemples", contenu: (
       question(
-        [Donner, sans preuve, une description courte en langue française du langage reconnu par $cal(A)_1$ (figure 1).],
+        [Donner, sans preuve, une description courte en langue française de $L(cal(A)_1)$.],
         solution: [Les mots de longueur impaire sur ${a,b}$.],
         bareme: 0.5,
         notation: [100 % pour les longueurs impaires ; 0 % sinon.]
       ),
       question(
-        [Donner, sans preuve, une description courte en langue française du langage reconnu par $cal(A)_2$ (figure 2).],
+        [Donner, sans preuve, une description courte en langue française de $L(cal(A)_2)$.],
         solution: [Les mots contenant un nombre impair de $b$.],
         bareme: 0.5,
         notation: [100 % pour un nombre impair de $b$, sans restriction sur les $a$ ; 0 % sinon.]
       ),
       question(
-        [Donner, sans preuve, une expression régulière du langage reconnu par $cal(A)_1$.],
+        [Donner, sans preuve, une expression régulière de $L(cal(A)_1)$.],
         solution: [$ (a|b)((a|b)(a|b))^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec longueur impaire, ou pour exactement les longueurs paires ; 0 % si deux erreurs cumulées ou parité non maîtrisée.]
       ),
       question(
-        [Donner, sans preuve, une expression régulière du langage reconnu par $cal(A)_2$.],
+        [Donner, sans preuve, une expression régulière de $L(cal(A)_2)$.],
         solution: [$ a^* b a^* (b a^* b a^*)^*. $],
         bareme: 0.5,
         notation: [100 % si correcte ; 50 % pour une seule petite erreur avec un nombre impair de $b$ ($a^*$ manquant, $b b$ consécutifs imposés…), ou pour exactement les nombres pairs de $b$ ; 0 % si deux erreurs cumulées ou parité non maîtrisée.]
@@ -199,9 +182,8 @@
         notation: [Un tiers pour le tableau de taille $n$ initialisé à $-1$, un tiers pour le parcours de la liste avec suivi des indices, un tiers pour leur écriture aux bonnes cases. Ne pas pénaliser une recherche quadratique correcte ni le choix d'une occurrence autre que la première.]
       ),
       [Un état $q$ de $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ est accessible s'il existe $w ∈ {a,b}^*$ tel que $δ_cal(A)^*(i_cal(A),w)=q$.
-        L'état initial est donc toujours accessible.
-        Si $Q'$ est l'ensemble des états accessibles, la partie accessible est $cal(A)'=⟨ Q',i_cal(A),δ',F_cal(A) ∩ Q' ⟩$, où $δ'$ est la restriction de $δ_cal(A)$ à $Q' × {a,b}$.
-        Un automate est accessible si tous ses états le sont.],
+      Si $Q'$ est l'ensemble des états accessibles, la partie accessible de $cal(A)$ est $cal(A)'=⟨ Q',i_cal(A),δ',F_cal(A) ∩ Q' ⟩$, où $δ'$ est la restriction de $δ_cal(A)$ à $Q' × {a,b}$.
+      Un automate est accessible si tous ses états le sont.],
       question(
         [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles
         dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
@@ -230,17 +212,18 @@
     )),
     partie("III", "Morphismes d'automates", contenu: (
       [Soient $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ et $cal(B)=⟨ Q_cal(B),i_cal(B),δ_cal(B),F_cal(B) ⟩$ deux automates.
-        Un morphisme $φ: cal(A) → cal(B)$ est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
-        $ φ " est surjective," quad "(1)" $
-        $ φ(i_cal(A))=i_cal(B), #sep "(2)" $
-        $ ∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q,σ))=δ_cal(B)(φ(q),σ), #sep "(3)" $
-        $ ∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B). quad "(4)" $
-        En OCaml, $φ$ est représenté par le tableau $[φ(q)]_(q ∈ Q_cal(A))$,
-        de type ```ocaml morphisme```, de longueur $abs(Q_cal(A))$ et à valeurs entre $0$ et $abs(Q_cal(B))-1$.
+      Un morphisme $φ: cal(A) → cal(B)$ est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
+      $ φ " est surjective," quad "(1)" $
+      $ φ(i_cal(A))=i_cal(B), #sep "(2)" $
+      $ ∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q,σ))=δ_cal(B)(φ(q),σ), #sep "(3)" $
+      $ ∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B). quad "(4)" $
+      En OCaml, $φ$ est représenté par le tableau $[φ(q)]_(q ∈ Q_cal(A))$,
+      de type ```ocaml morphisme```, de longueur $abs(Q_cal(A))$ et à valeurs entre $0$ et $abs(Q_cal(B))-1$.
+      #code("morphisme")
       ],
       partie("III.A", "Exemples de morphismes d'automates", contenu: (
         question(
-          [Recopier et compléter, sans justification, le tableau par des états de $cal(A)_2$
+          [Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
           de sorte qu'il représente un morphisme $φ: cal(A)_3 → cal(A)_2$.
           #align(center, table(columns: 2, [$q$], [$φ(q)$], [$E$], [], [$F$], [], [$G$], []))],
           solution: [$φ(E)=φ(F)=C$ et $φ(G)=D$.],
@@ -274,7 +257,7 @@
       )),
       partie("III.B", "Propriétés des morphismes d'automates", contenu: (
         question(
-          [Montrer que deux automates acceptent le même langage dès qu'il existe un morphisme de l'un vers l'autre.],
+          [Montrer que s'il existe un morphisme de $cal(A)$ vers $cal(B)$ alors $L(cal(A)) = L(cal(B))$.],
           commentaire: [« On doit citer les propriétés d'un morphisme utilisées, à chaque étape du raisonnement. »],
           solution: [
           Pour un morphisme $φ: cal(A) → cal(B)$, montrons par récurrence sur $abs(w)$ que
@@ -286,7 +269,7 @@
             &= δ_cal(B)^*(δ_cal(B)(φ(q),σ),w') \
             &= δ_cal(B)^*(φ(q),σ w'). $
           Par (2) et (4), $δ_cal(A)^*(i_cal(A),w) ∈ F_cal(A) ⇔ δ_cal(B)^*(i_cal(B),w) ∈ F_cal(B)$.
-          Les langages sont donc égaux.
+          Donc $L(cal(A)) = L(cal(B))$.
         ],
           bareme: 2,
           notation: [50 % pour la compatibilité avec la lecture d'un mot, dont 25 % pour une récurrence détaillée, 25 % pour la première inclusion, 25 % pour la réciproque. Accepter une preuve directe par équivalence. Repères : 50 % pour la seule première inclusion avec récurrence non détaillée, 75 % pour le chemin image établi sans réciproque justifiée.]
@@ -492,7 +475,7 @@
         question(
           [Écrire ```ocaml renomme : int array -> int array``` qui renomme un tableau d'entiers positifs ou nuls
           prenant $ℓ$ valeurs distinctes à l'aide des entiers de $0$ à $ℓ-1$.
-          Si le tableau est non vide, le premier élément du résultat doit valoir $0$.
+          Le premier élément du résultat doit valoir $0$.
           Par exemple, ```ocaml renomme [|4;4;5;0;4;5|]``` peut renvoyer ```ocaml [|0;0;1;2;0;1|]```.
           Préciser la complexité.],
           solution: [
@@ -542,8 +525,8 @@
           solution: [
           Les classes dans la partie accessible du produit sont
           $ S_0={(E,H),(F,H),(F,I)}, #sep S_1={(G,J),(G,K)}. $
-          En effet, $(E,H) ≡ (F,H) ≡ (F,I)$ et $(G,J) ≡ (G,K)$ par égalité d'une coordonnée.
-          Les deux groupes ne peuvent être équivalents à cause de leur caractère final.
+          En effet, $(E,H) ≡ (F,H) ≡ (F,I)$ (état initial) et $(G,J) ≡ (G,K)$ (états finaux).
+          
           L'automate est isomorphe à $cal(A)_2$ :
           #quotient
           On a $φ'(E)=φ'(F)=S_0$, $φ'(G)=S_1$, $ψ'(H)=ψ'(I)=S_0$ et $ψ'(J)=ψ'(K)=S_1$.
@@ -566,8 +549,8 @@
           [Montrer que, pour tout $cal(A) ∈ cal(K)_L$, il existe un morphisme $φ: cal(A) → cal(M)_L$,
           où $cal(M)_L$ est un automate de $cal(K)_L$ à $m_L$ états.],
           solution: [
-          Comme $L$ est régulier, il possède un automate déterministe complet. Sa partie accessible appartient à $cal(K)_L$.
-          L'ensemble non vide des nombres d'états possède un minimum $m_L$, atteint par un automate $cal(M)_L$.
+          $cal(M)_L$ est bien défini car l'ensemble $\{abs(Q_cal(A)) : cal(A) ∈ cal(K)_L\} ⊂ ℕ$ est non vide (par l'algorithme de déterminisation) donc admet un minimum $m_L$. \
+          Comme $L$ est régulier, il est reconnu par un automate déterministe complet. Sa partie accessible appartient à $cal(K)_L$.
           Par la question 29, on obtient $φ': cal(A) → cal(C)$ et $ψ': cal(M)_L → cal(C)$.
           Comme précédemment, $cal(C) ∈ cal(K)_L$ et $m_L ≤ abs(Q_cal(C)) ≤ m_L$.
           Donc $ψ'$ est un isomorphisme et $(ψ')^(-1) ∘ φ'$ est le morphisme demandé.
@@ -577,7 +560,7 @@
         ),
       )),
       partie("V.B", "Construction d'un automate réduit par fusion d'états", contenu: (
-        [Deux états $p,q$ de $cal(A)$ ont été fusionnés dans $cal(A)'$ s'il existe un morphisme $φ: cal(A) → cal(A)'$ tel que $φ(p)=φ(q)$ et $abs(Q_(cal(A)')) < abs(Q_cal(A))$.],
+        [On dit que deux états $p,q$ de $cal(A)$ ont été fusionnés dans $cal(A)'$ s'il existe un morphisme $φ: cal(A) → cal(A)'$ tel que $φ(p)=φ(q)$ et $abs(Q_(cal(A)')) < abs(Q_cal(A))$.],
         question(
           [Dessiner un automate $cal(A)_6^(O,P)$ dans lequel les états $O$ et $P$ de $cal(A)_6$
           ont été fusionnés. Donner un morphisme $cal(A)_6 → cal(A)_6^(O,P)$.],
@@ -603,8 +586,7 @@
           notation: [50 % pour la fusion des successeurs imposée par les transitions, 50 % pour la contradiction entre leurs caractères finaux.]
         ),
         question(
-          [Quels états faut-il encore fusionner dans $cal(A)_6^(O,P)$ pour obtenir un automate
-          à trois états $cal(M)_(L_6)$ reconnaissant le même langage que $cal(A)_6$ ?],
+          [Quels états faut-il encore fusionner dans $cal(A)_6^(O,P)$ pour obtenir un automate à trois états $cal(M)_(L_6)$ reconnaissant le même langage que $cal(A)_6$ ?],
           solution: [
           On fusionne encore $R$ et $S$.
           #minimal
@@ -633,8 +615,6 @@
           Les étiquettes du chemin forment un mot qui distingue les états. Le mot vide correspond aux paires initialement marquées.
           On construit $2n^2$ arcs, puis chaque sommet et chaque arc sont visités au plus une fois.
           Temps et espace sont donc $O(n^2)$.
-
-          Pour voir l'erreur originale, prendre deux états, $0$ initial, $1$ seul final, toutes les transitions allant en $1$. Le parcours dans le sens original atteint $(1,1)$ depuis $(0,1)$ et marque donc un état comme distinguable de lui-même.
         ],
           bareme: 3.5,
           notation: [25 % pour le graphe des prédécesseurs, 25 % pour les paires initiales de caractères finaux différents, 25 % pour le parcours à rebours et son marquage, 25 % pour la matrice résultat. Si le résultat est correct, retirer 25 % pour un coût supérieur à $O(n^2)$ sans recherche d'une amélioration. Accepter une autre méthode correcte avec un crédit adapté à son efficacité.]
@@ -669,7 +649,6 @@
 )
 
 #import "/load.typ": feuille
-// Composition réutilisée par les copies corrigées, sans recopier les questions.
 #let sujet = (titre: ex.meta.titre, exercices: (ex,), bareme: none)
 #show: feuille.with(
   type: "concours",
