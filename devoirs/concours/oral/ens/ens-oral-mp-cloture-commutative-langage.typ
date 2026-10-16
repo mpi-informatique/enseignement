@@ -76,7 +76,7 @@
         $ "CCl"(L_i)="Len"(L_i)∩{w∈Σ^* | abs(w)_a=i}. $
         En effet, à nombre de $a$ fixé, deux mots ont la même longueur si et seulement s'ils ont le même nombre de $b$.
         Ainsi $"CCl"(L_i)$ est régulier par intersection, puis
-        $ "CCl"(L)=bigcup_(i=0)^k "CCl"(L_i) $
+        $ "CCl"(L) = union.big_(i = 0)^k "CCl"(L_i) $
         est régulier par union finie.
 
         Si $L$ est $a b$-borné, le décomposer en l'union de $L∩{w | abs(w)_a≤k}$ et $L∩{w | abs(w)_b≤k}$.
