@@ -1,6 +1,6 @@
 # Consignes pour les assistants
 
-Lire et appliquer le [guide utilisateur](docs/utilisation.md) : il fait autorité pour la structure, les métadonnées, la rédaction, les concours et les vérifications. Ne pas recopier ces règles ici.
+Lire et appliquer les [consignes de création d'exercices et de devoirs](docs/creation-exercices.md) pour concevoir ou reformuler un sujet. Consulter le [guide utilisateur](docs/utilisation.md) pour les outils. Ne pas recopier leurs règles ici.
 
 Les consignes doivent porter uniquement sur les choix et procédures que le code ne contraint pas déjà. Ne pas recopier les validations, valeurs par défaut, styles ou comportements automatiques : renvoyer aux sources, aux commentaires de l'API ou aux modèles. Appliquer ce principe à toute mise à jour des instructions.
 
@@ -8,10 +8,7 @@ Les consignes doivent porter uniquement sur les choix et procédures que le code
 
 - Poser les questions nécessaires ; ne pas choisir silencieusement en cas d'ambiguïté.
 - Expliquer brièvement les choix importants, rester concis et refactoriser les abstractions inutiles.
-- Lire l'API actuelle dans `lib/exercice.typ` avant toute modification ; utiliser les modèles et comparer les exercices existants pour éviter les doublons.
 - Avertir l'utilisateur des changements de présentation ou de contenu.
-- Ne pas ajouter de références de provenance aux exercices ou à leur documentation.
-- Pour concevoir ou reformuler un devoir, appliquer les [consignes pédagogiques du guide](docs/utilisation.md#création-de-devoirs-et-dexercices), notamment sur la recherche des méthodes et des résultats par les élèves.
 
 ## Commandes utiles
 

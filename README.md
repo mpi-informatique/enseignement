@@ -22,7 +22,7 @@ nix/                     Versions et empreintes des dépendances Typst
 build/                   PDF et catalogue générés, exclus de Git
 ```
 
-Conserver le code et les tests à côté du document qui les présente. Les consignes de rédaction sont centralisées dans le [guide utilisateur](docs/utilisation.md) ; les contraintes et comportements automatiques restent documentés dans le code et les modèles.
+Les consignes de création et de rédaction sont centralisées dans [Créer des exercices et des devoirs](docs/creation-exercices.md) ; les contraintes et comportements automatiques restent documentés dans le code et les modèles.
 
 ## Utilisation
 
@@ -70,9 +70,7 @@ Pour les exports et les paramètres, consulter [l'API](load.typ) et ses commenta
 
 ## Contribuer
 
-Partir des modèles de `templates/`, puis suivre le [guide utilisateur](docs/utilisation.md). Le modèle de [colle](templates/colle.typ) regroupe les exercices par sujet et place les corrigés après tous les énoncés ; `--input corrige=false` produit uniquement les énoncés. Vérifier qu'un exercice n'existe pas déjà, conserver ses ressources et tests dans le même dossier, puis lancer `nix develop . -c just check` avant de proposer une pull request.
-
-Un sujet de concours utilise la même base qu'un devoir : `feuille.with(type: "devoir", concours: ex.meta.concours, exercices: (ex,), titre: ex.meta.titre)`. Voir les modèles [devoir](templates/devoir.typ) et [sujet de concours](templates/sujet-concours.typ).
+Pour créer ou reformuler un sujet, suivre les [consignes de création d'exercices et de devoirs](docs/creation-exercices.md).
 
 Les données nominatives, copies et évaluations appartiennent au dépôt privé `mpi-informatique/exercices-prive` et ne doivent jamais être ajoutées ici.
 

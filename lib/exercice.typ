@@ -1,5 +1,5 @@
 /// API commune des exercices, feuilles et sujets de concours.
-/// Guide de rédaction : docs/utilisation.md. Documentation générée : just docs.
+/// Guide de rédaction : docs/creation-exercices.md. Documentation générée : just docs.
 
 #import "blocs.typ": bloc-solution
 #import "meta.typ": (
