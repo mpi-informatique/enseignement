@@ -47,7 +47,7 @@ $widetilde(a b), #sep widetilde(L)$
         subprocess.run(['typst', 'compile', '--root', str(racine), '--ignore-system-fonts',
                         '--package-path', str(racine / 'packages'), '--input', 'corrige=' + variante,
                         str(source), str(racine / (variante + '.pdf'))], check=True)
-    source.write_text('''#import "@mpi-informatique/exercices:0.1.0": cours-et-presentation, pause, article-only, slides-only, theoremes
+    source.write_text('''#import "@mpi-informatique/exercices:0.1.0": cours-et-presentation, colonnes-cours, pause, article-only, slides-only, theoremes
 #show: cours-et-presentation.with(titre: "Cours externe", niveau: "MPI")
 = Section
 == Notion
@@ -77,6 +77,23 @@ $widetilde(a b), #sep widetilde(L)$
     assert(definitions.map(it => (it.value.counter.at)(it.location())) == ((1,), (1,), (2,)))
   }
 ]
+== Colonnes du cours
+#colonnes-cours(
+  columns: (1.15fr, 1fr),
+  [#metadata("gauche") <colonne-test> Contenu de gauche.],
+  [#metadata("droite") <colonne-test> Contenu de droite.],
+)
+#context {
+  let cellules = query(<colonne-test>)
+  assert(cellules.map(it => it.value) == ("gauche", "droite"))
+  let gauche = cellules.first().location().position()
+  let droite = cellules.last().location().position()
+  if sys.inputs.at("format") == "cours" {
+    assert(gauche.page == droite.page and gauche.y == droite.y and gauche.x < droite.x)
+  } else {
+    assert(gauche.page == droite.page and gauche.x == droite.x and gauche.y < droite.y)
+  }
+}
 ''', encoding='utf-8')
     for variante in ('cours', 'presentation'):
         output = racine / (variante + '.pdf')

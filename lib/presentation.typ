@@ -72,3 +72,14 @@
   assert(format in ("cours", "presentation"), message: "format doit valoir cours ou presentation")
   presentation(..args, article: format == "cours", body)
 }
+
+/// Dispose les contenus en colonnes dans le cours et à la suite dans la présentation.
+/// - columns (int, array): Colonnes de la grille du cours, deux par défaut.
+/// - column-gutter (relative): Espacement entre les colonnes du cours.
+/// - align (alignment, array, auto): Alignement des cellules dans le cours.
+/// - ..contenus (arguments): Contenus dans l'ordre de lecture ; options supplémentaires de `grid`.
+/// -> content
+#let colonnes-cours(columns: (1fr, 1fr), column-gutter: 1.5em, align: top, ..contenus) = {
+  article-only(grid(columns: columns, column-gutter: column-gutter, align: align, ..contenus))
+  slides-only(contenus.pos().join(parbreak()))
+}

@@ -67,6 +67,17 @@ Contenu commun aux deux formats.
 
 Utiliser `article-only[...]` pour les détails destinés au polycopié, et `slides-only[...]` pour les compléments projetés.
 Ces commandes peuvent aussi entourer une section entière.
+
+Pour disposer des contenus en colonnes dans le cours et les afficher à la suite dans la présentation, utiliser `colonnes-cours`, exporté par `/load.typ`. Les contenus ne sont écrits qu'une fois :
+
+```typst
+#colonnes-cours(
+  columns: (1.15fr, 1fr),
+  [Contenu de gauche.],
+  [Contenu de droite.],
+)
+```
+
 Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
 
 ```sh

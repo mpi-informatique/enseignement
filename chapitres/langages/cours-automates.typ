@@ -1,4 +1,4 @@
-#import "/load.typ": article-only, automate, cours-et-presentation, pause, sep, slides-only, theoremes
+#import "/load.typ": article-only, automate, colonnes-cours, cours-et-presentation, pause, sep, slides-only, theoremes
 #import theoremes: algorithm, definition, exercise, lemma, theorem
 #import automate: cetz, dessiner-automate, finite, style-automates, unite-automates
 #import "@preview/touying:0.8.0": touying-reducer
@@ -40,24 +40,10 @@
   $E = {(0, a, 0), (0, b, 1), (1, a, 0), (1, a, 2), (2, b, 2)}$
 ])
 
-#article-only[
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 1.5em,
-    align: top,
-    definition-automate,
-    [
-      #set text(size: 8pt)
-      #exemple-automate
-    ],
-  )
-]
-#slides-only[
-  == États et transitions
-  #definition-automate
-  == Exemple d'automate
-  #exemple-automate
-]
+#colonnes-cours(
+  columns: (1.15fr, 1fr),
+  definition-automate, exemple-automate,
+)
 
 == Fonction de transition
 #let definition-transition = [
@@ -80,19 +66,10 @@
   caption: [Fonction de transition de l'automate précédent.],
 ))
 
-#article-only[
-  #grid(
-    columns: (1.6fr, 1fr),
-    column-gutter: 1.5em,
-    align: top,
-    definition-transition, exercice-transition,
-  )
-]
-#slides-only[
-  #definition-transition
-  #pause
-  #exercice-transition
-]
+#colonnes-cours(
+  columns: (1.15fr, 1fr),
+  definition-transition, exercice-transition,
+)
 
 == Implémentation
 On peut représenter $δ$ par une matrice, une fonction ```ocaml int -> char -> int list``` ou un dictionnaire de clés $(q, a)$.
