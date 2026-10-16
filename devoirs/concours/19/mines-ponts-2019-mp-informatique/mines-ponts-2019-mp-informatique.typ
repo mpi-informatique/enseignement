@@ -181,25 +181,25 @@
   contenu: (
     [
       == Définition mathématique d'un automate
-      Dans tout le sujet, le terme _automate_ désigne un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.
-      On note $ε$ le mot vide et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
+      Dans tout le sujet, le terme _automate_ désigne un automate fini déterministe complet sur ${a,b}$, c'est-à-dire un quadruplet $cal(A)=⟨ Q,i,δ,F ⟩$ avec $i ∈ Q$, $δ: Q × {a,b} → Q$ et $F ⊂ Q$.\
+      On note $L(cal(A))$ le langage reconnu par $cal(A)$ et $δ^*: Q × {a,b}^* → Q$ l'extension de $δ$ définie par
       $ δ^*(q,ε)=q, #sep δ^*(q,σ w)=δ^*(δ(q,σ),w). $
-      On note $L(cal(A))$ le langage reconnu par $cal(A)$.
+
       == Représentation en OCaml
-      Les états sont numérotés de $0$ à $abs(Q)-1$, l'état initial porte toujours le numéro $0$.
+      Les états sont numérotés de $0$ à $abs(Q)-1$, l'état initial ayant le numéro $0$.
       Un automate est un triplet ```ocaml (n, delta, f)``` :
       - ```ocaml n : int``` est le nombre d'états.
       - ```ocaml delta : (int * int) array``` contient les couples $(δ(q,a),δ(q,b))$.
       - ```ocaml f : bool array``` indique les états finaux.
       Les deux tableaux sont de longueur $n$.
       #code("automate")
-      Ainsi, ```ocaml let (n, delta, f) = aut in ...``` extrait les composantes,
+      Ainsi, ```ocaml let (n, delta, f) = aut in ...``` extrait les composantes de l'automate ```ocaml aut```,
       ```ocaml let (succ_a, succ_b) = delta.(q) in ...``` les successeurs de $q$,
       et ```ocaml if f.(q) then ...``` teste si $q$ est final.\
       On rappelle que ```ocaml List.length``` donne la longueur d'une liste,
-      ```ocaml Array.make n x``` crée un tableau initialisé à ```ocaml x```,
+      ```ocaml Array.make n x``` crée un tableau de taille $n$ initialisé à ```ocaml x```,
       ```ocaml Array.copy``` copie un tableau et ```ocaml Array.length``` donne sa longueur.
-      ```ocaml Array.make_matrix n m x``` crée une matrice $n × m$ dont les lignes sont indépendantes.
+      ```ocaml Array.make_matrix n m x``` crée une matrice $n × m$ initialisée à ```ocaml x```.
       On utilisera aussi ```ocaml List.iter f l```, qui applique ```ocaml f``` à chaque élément de ```ocaml l```, dans l'ordre.
     ],
     partie("I", "Premiers exemples", contenu: (
@@ -253,7 +253,7 @@
         Si $Q'$ est l'ensemble des états accessibles, la partie accessible de $cal(A)$ est $cal(A)'=⟨ Q',i_cal(A),δ',F_cal(A) ∩ Q' ⟩$, où $δ'$ est la restriction de $δ_cal(A)$ à $Q' × {a,b}$.
         Un automate est accessible si tous ses états le sont.],
       question(
-        [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublons. Donner sa complexité.],
+        [Écrire ```ocaml etats_accessibles : automate -> int list``` renvoyant les états accessibles dans l'ordre de leur première rencontre lors d'un parcours en profondeur depuis l'état initial, sans doublon. Donner sa complexité.],
         jury: [« Une attention toute particulière devait être consacrée à l'ordre exigé du résultat. » Le jury relève aussi des confusions avec le parcours en largeur et des oublis de marquage.],
         solution: [
           On marque chaque état avant d'explorer ses successeurs, d'abord par $a$.
@@ -266,7 +266,7 @@
       ),
       question(
         [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
-          de l'automate donné. On pourra réemployer les questions 6 et 7.],
+          de l'automate donné. On pourra réutiliser les questions 6 et 7.],
         jury: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
         solution: [
           On renumérote dans l'ordre obtenu précédemment : la liste commence par $0$, qui reste l'état initial.
