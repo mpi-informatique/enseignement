@@ -77,9 +77,10 @@
 /// - columns (int, array): Colonnes de la grille du cours, deux par défaut.
 /// - column-gutter (relative): Espacement entre les colonnes du cours.
 /// - align (alignment, array, auto): Alignement des cellules dans le cours.
+/// - encadrer (function): Fonction appliquée à l'ensemble dans chaque format, par exemple `theoremes.exercise`.
 /// - ..contenus (arguments): Contenus dans l'ordre de lecture ; options supplémentaires de `grid`.
 /// -> content
-#let colonnes-cours(columns: (1fr, 1fr), column-gutter: 1.5em, align: top, ..contenus) = {
-  article-only(grid(columns: columns, column-gutter: column-gutter, align: align, ..contenus))
-  slides-only(contenus.pos().join(parbreak()))
+#let colonnes-cours(columns: (1fr, 1fr), column-gutter: 1.5em, align: top, encadrer: body => body, ..contenus) = {
+  article-only(encadrer(grid(columns: columns, column-gutter: column-gutter, align: align, ..contenus)))
+  slides-only(encadrer(contenus.pos().join(parbreak())))
 }

@@ -124,8 +124,13 @@ type automate = {
 Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F ≠ ∅$.
 
 #slides-only[== Lecture d'un automate]
-#exercise[Déterminer le langage reconnu par l'automate suivant.]
-#impair
+#colonnes-cours(
+  columns: (1.15fr, 1fr),
+  encadrer: exercise,
+  [Déterminer le langage reconnu par l'automate suivant.],
+  impair,
+)
+
 #slides-only[#pause Il reconnaît les mots contenant un nombre impair de $a$, par exemple $b b a b$.]
 
 #slides-only[== Construction d'automates]

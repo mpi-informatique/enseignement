@@ -80,6 +80,7 @@ $widetilde(a b), #sep widetilde(L)$
 == Colonnes du cours
 #colonnes-cours(
   columns: (1.15fr, 1fr),
+  encadrer: theoremes.exercise-box.with(full-title: ""),
   [#metadata("gauche") <colonne-test> Contenu de gauche.],
   [#metadata("droite") <colonne-test> Contenu de droite.],
 )

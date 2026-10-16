@@ -78,6 +78,8 @@ Pour disposer des contenus en colonnes dans le cours et les afficher à la suite
 )
 ```
 
+Pour placer les deux contenus dans un même cadre, ajouter `encadrer: theoremes.exercise` à `colonnes-cours(...)`, plutôt que placer cet appel à l'intérieur du cadre : Touying doit résoudre les variantes avant le rendu du cadre.
+
 Placer les pauses et commandes d'animation à l'extérieur des cadres de `lib/theoremes.typ`, dont le rendu utilise `context` : Touying doit pouvoir les lire avant la mise en page.
 
 ```sh
