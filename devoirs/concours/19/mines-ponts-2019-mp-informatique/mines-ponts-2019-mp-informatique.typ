@@ -287,13 +287,13 @@
     partie("III", "Morphismes d'automates", contenu: (
       [Soient $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ et $cal(B)=⟨ Q_cal(B),i_cal(B),δ_cal(B),F_cal(B) ⟩$ deux automates.
 
-        Un morphisme $φ: cal(A) → cal(B)$ est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
+        Un morphisme $φ$ de $cal(A)$ vers $cal(B)$, noté $φ: cal(A) → cal(B)$, est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
         #enum(
           numbering: "(1)",
           [$φ$ est surjective],
           [$φ(i_cal(A)) = i_cal(B)$],
           [$∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q, σ))= δ_cal(B)(φ(q),σ)$],
-          [$∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B)$],
+          [$∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) <==> φ(q) ∈ F_cal(B)$],
         )
 
         En OCaml, $φ$ est représenté par le tableau $[φ(q)]_(q ∈ Q_cal(A))$,
@@ -358,8 +358,9 @@
           notation: [50 % pour la compatibilité avec la lecture d'un mot, dont 25 % pour une récurrence détaillée, 25 % pour la première inclusion, 25 % pour la réciproque. Accepter une preuve directe par équivalence. Repères : 50 % pour la seule première inclusion avec récurrence non détaillée, 75 % pour le chemin image établi sans réciproque justifiée.],
         ),
         question(
-          [Montrer qu'un morphisme $φ$ entre deux automates de même nombre d'états est bijectif
-            et que $φ^(-1)$ est encore un morphisme. On dit alors que $φ$ est un isomorphisme.],
+          [Montrer qu'un morphisme $φ : cal(A) → cal(B)$ avec $|Q_cal(A)| = |Q_cal(B)|$ est bijectif
+            et que $φ^(-1)$ est encore un morphisme.\
+            On dit alors que $φ$ est un isomorphisme.],
           jury: [Le jury relève des preuves confuses du caractère bijectif.],
           solution: [
             Une surjection entre ensembles finis de même cardinal est bijective.
@@ -394,7 +395,7 @@
       )),
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
         question(
-          [Montrer que (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
+          [Montrer la propriété de morphisme (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
           jury: [Pour établir la surjectivité, le jury attend un antécédent explicite pour chaque état.],
           solution: [
             La preuve de (∗) n'utilise que (3). Pour tout $q' ∈ Q_cal(B)$, l'accessibilité donne un mot $w$ avec $q'=δ_cal(B)^*(i_cal(B),w)=φ(δ_cal(A)^*(i_cal(A),w))$, par (2) et (∗).
@@ -451,8 +452,9 @@
           bareme: 1.5,
           notation: [Un tiers pour le codage bijectif des couples et les tableaux de tailles adaptées, un tiers pour les transitions vers les couples correctement codés, un tiers pour la conjonction des caractères finaux.],
         ),
+        [On suppose dans les deux questions suivantes que $cal(L)(cal(A)) = cal(L)(cal(A)')$ et on note $cal(B)$ la partie accessible de $cal(A) × cal(A)'$.],
         question(
-          [Supposons $cal(L)(cal(A)) = cal(L)(cal(A)')$ et soit $(q,q')$ un état accessible de $cal(A) × cal(A)'$.
+          [Soit $(q,q') in cal(B)$.
             Montrer que $q in F_cal(A)$ si et seulement si $q' in F_(cal(A)')$.],
           jury: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
@@ -465,11 +467,10 @@
           notation: [50 % pour un même mot menant aux deux composantes, 50 % pour l'équivalence de leurs caractères finaux par égalité des langages. L'accessibilité du couple doit être utilisée.],
         ),
         question(
-          [Montrer qu'il existe toujours un morphisme de la partie accessible du produit
-            de deux automates accessibles acceptant le même langage vers chacun de ces automates.],
+          [Montrer qu'il existe un morphisme de $cal(B)$ vers $cal(A)$ et un morphisme de $cal(B)$ vers $cal(A)'$.],
           jury: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
-            Soit $cal(B)$ cette partie accessible et $φ(q,q')=q$ la première projection.
+            Soit $φ(q,q')=q$ la première projection.
             - Pour chaque $q$, l'accessibilité de $cal(A)$ fournit $w$ menant à $q$.
               Avec $q'=δ_(cal(A)')^*(i_(cal(A)'),w)$, le couple $(q,q')$ est accessible et d'image $q$ : $φ$ est surjective.
             - $φ(i_cal(B))=φ(i_cal(A),i_(cal(A)'))=i_cal(A)$
