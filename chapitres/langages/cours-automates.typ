@@ -19,6 +19,15 @@
   (("0", (0, 0), true, false), ("1", (3, 0), false, true)),
   (("0", "0", "b", (:)), ("1", "1", "b", (:)), ("0", "1", "a", (curve: 0.5)), ("1", "0", "a", (curve: 0.5))),
 )
+#let deux-initiaux = dessiner-automate(
+  (("0", (0, 0.9), true, false), ("1", (0, -0.9), true, false), ("2", (3, 0), false, true)),
+  (
+    ("0", "0", "a", (:)),
+    ("1", "1", "b", (anchor: bottom)),
+    ("0", "2", "b", (curve: 0)),
+    ("1", "2", "a", (curve: 0)),
+  ),
+)
 #let facteur = dessiner-automate(
   (("0", (0, 0), true, false), ("1", (3, 0), false, false), ("2", (6, 0), false, false), ("3", (9, 0), false, true)),
   (("0", "0", "a, b", (:)), ("0", "1", "a", (:)), ("1", "2", "b", (:)), ("2", "3", "b", (:)), ("3", "3", "a, b", (:))),
@@ -98,14 +107,22 @@
 Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F ≠ ∅$.
 
 #slides-only[== Lecture d'un automate]
-#colonnes-cours(
-  columns: (1.2fr, 1fr),
+#exercise[Déterminer le langage reconnu par chacun des deux automates suivants.]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1.5em,
   align: horizon,
-  exercise[Déterminer le langage reconnu par l'automate ci-contre.],
   impair,
+  deux-initiaux,
 )
 
-#slides-only[#pause Il reconnaît les mots contenant un nombre impair de $a$, par exemple $b b a b$.]
+#slides-only[
+  == Lecture d'un automate : réponses
+  À gauche : les mots contenant un nombre impair de $a$, par exemple $b b a b$.
+
+  À droite : $a^* b | b^* a$.
+  Chaque état initial correspond à l'une des deux branches de l'union.
+]
 
 #slides-only[== Construction d'automates]
 
