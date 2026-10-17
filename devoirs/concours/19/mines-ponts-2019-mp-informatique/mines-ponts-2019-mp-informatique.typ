@@ -296,15 +296,18 @@
         #code("morphisme")],
       partie("III.A", "Exemples de morphismes d'automates", contenu: (
         question(
-          [Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
-            de sorte qu'il représente un morphisme $φ: cal(A)_3 → cal(A)_2$.
-            #align(center, table(
-              columns: 2,
-              [$q$], [$φ(q)$],
-              [$E$], [],
-              [$F$], [],
-              [$G$], [],
-            ))],
+          [#grid(
+            columns: (1fr, auto),
+            column-gutter: 1.5em,
+            align: horizon,
+            [Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
+              de sorte qu'il représente un morphisme $φ: cal(A)_3 → cal(A)_2$.],
+            table(
+              columns: 4,
+              [$q$], [$E$], [$F$], [$G$],
+              [$φ(q)$], [], [], [],
+            ),
+          )],
           solution: [$φ(E)=φ(F)=C$ et $φ(G)=D$.],
           bareme: 0.5,
           notation: [Un tiers pour chacune des trois images correctes.],
