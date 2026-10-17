@@ -1,7 +1,7 @@
 #import "/load.typ": code
 #import code: code-extrait
 #import "/load.typ": automate
-#import automate: dessiner-automate, rayon-etat, rayon-grand-etat
+#import automate: dessiner-automate, rayon-etat, rayon-grand-etat, dist-lettre
 #import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
@@ -70,16 +70,16 @@
   ),
   (
     ("P", "P", "a", (anchor: top)),
-    ("P", "Q", "b", (curve: 0)),
+    ("P", "Q", "b", (curve: 0, label: (dist: -dist-lettre))),
     ("O", "P", "a", (curve: 0)),
     ("O", "T", "b", (curve: 0)),
     ("Q", "R", "a", (curve: 0.25)),
     ("R", "Q", "a", (curve: 0.25)),
     ("Q", "O", "b", (curve: 0)),
-    ("R", "S", "b", (curve: 0)),
+    ("R", "S", "b", (curve: 0, label: (dist: -dist-lettre))),
     ("S", "S", "b", (anchor: right)),
-    ("S", "T", "a", (curve: 0)),
-    ("T", "P", "b", (curve: 0)),
+    ("S", "T", "a", (curve: 0, label: (dist: -dist-lettre))),
+    ("T", "P", "b", (curve: 0, label: (dist: -dist-lettre))),
     ("T", "R", "a", (curve: -1)),
   ),
 )

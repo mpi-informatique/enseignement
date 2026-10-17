@@ -27,7 +27,8 @@
       initial: if initial { (label: none) } else { false }, final: final)
   }
   for (p, q, etiquette, style) in arcs {
+    let style-etiquette = style.remove("label", default: (:))
     transition(p, q, label: (text: math.equation(eval(etiquette, mode: "math")),
-      dist: if style.at("curve", default: 1) < 0 { -distance } else { distance }), ..style)
+      dist: if style.at("curve", default: 1) < 0 { -distance } else { distance }) + style-etiquette, ..style)
   }
 }))
