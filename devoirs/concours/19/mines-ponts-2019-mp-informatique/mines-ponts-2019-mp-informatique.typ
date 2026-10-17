@@ -197,10 +197,9 @@
       ```ocaml let (succ_a, succ_b) = delta.(q) in ...``` les successeurs de $q$,
       et ```ocaml if f.(q) then ...``` teste si $q$ est final.\
       On rappelle que ```ocaml List.length``` donne la longueur d'une liste,
-      ```ocaml Array.make n x``` crée un tableau de taille $n$ initialisé à ```ocaml x```,
-      ```ocaml Array.copy``` copie un tableau et ```ocaml Array.length``` donne sa longueur.
+      ```ocaml Array.make n x``` crée un tableau de taille $n$ initialisé à ```ocaml x``` et ```ocaml Array.length``` donne sa longueur.
       ```ocaml Array.make_matrix n m x``` crée une matrice $n × m$ initialisée à ```ocaml x```.
-      On utilisera aussi ```ocaml List.iter f l```, qui applique ```ocaml f``` à chaque élément de ```ocaml l```, dans l'ordre.
+      On pourra aussi utiliser ```ocaml List.iter f l``` qui applique ```ocaml f``` à chaque élément de ```ocaml l```, dans l'ordre.
     ],
     partie("I", "Premiers exemples", contenu: (
       question(
