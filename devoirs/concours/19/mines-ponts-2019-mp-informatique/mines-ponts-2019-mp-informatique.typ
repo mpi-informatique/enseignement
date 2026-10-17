@@ -236,10 +236,12 @@
         #grid(
           columns: (1fr, 1fr),
           column-gutter: 1.5em,
-          row-gutter: 1em,
-          align: top,
-          [#a1 #align(center)[Automate $cal(A)_1$]], [#a2 #align(center)[Automate $cal(A)_2$]],
-          [#a3 #align(center)[Automate $cal(A)_3$]], [#a4 #align(center)[Automate $cal(A)_4$]],
+          row-gutter: (0.5em, 1em, 0.5em),
+          align: center + horizon,
+          a1, a2,
+          [Automate $cal(A)_1$], [Automate $cal(A)_2$],
+          a3, a4,
+          [Automate $cal(A)_3$], [Automate $cal(A)_4$],
         )
       ],
     )),
