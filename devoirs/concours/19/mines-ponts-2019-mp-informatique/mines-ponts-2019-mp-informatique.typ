@@ -288,10 +288,13 @@
       [Soient $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ et $cal(B)=⟨ Q_cal(B),i_cal(B),δ_cal(B),F_cal(B) ⟩$ deux automates.
 
         Un morphisme $φ: cal(A) → cal(B)$ est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
-        1. $φ$ est surjective
-        2. $φ(i_cal(A)) = i_cal(B)$
-        3. $∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q, σ))= δ_cal(B)(φ(q),σ)$
-        4. $∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B)$
+        #enum(
+          numbering: "(1)",
+          [$φ$ est surjective],
+          [$φ(i_cal(A)) = i_cal(B)$],
+          [$∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q, σ))= δ_cal(B)(φ(q),σ)$],
+          [$∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B)$],
+        )
 
         En OCaml, $φ$ est représenté par le tableau $[φ(q)]_(q ∈ Q_cal(A))$,
         de type ```ocaml morphisme```, de longueur $abs(Q_cal(A))$ et à valeurs entre $0$ et $abs(Q_cal(B))-1$.
