@@ -19,6 +19,5 @@
 )
 
 #for (i, exercices) in sujets.enumerate(start: 1) {
-  if i > 1 and not corrige { pagebreak() }
   sujet-colle(i, exercices, corrige: corrige)
 }

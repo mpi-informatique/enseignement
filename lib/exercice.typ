@@ -332,16 +332,16 @@
   if questions.len() > 0 { afficher-questions(questions) }
 }
 
-/// Compose un sujet de colle et identifie ses pages pour l'en-tête répété de `feuille`.
+/// Commence un sujet de colle sur une nouvelle page, enchaîne ses exercices et identifie ses pages pour l'en-tête répété de `feuille`.
 /// - numero (int): Numéro du sujet.
 /// - exercices (array): Exercices du sujet, renumérotés à partir de I.
 /// - corrige (bool): Afficher les solutions.
 /// -> content
 #let sujet-colle(numero, exercices, corrige: false) = {
+  pagebreak(weak: true)
   counter(heading).update(0)
   [#metadata((numero: numero, corrige: corrige)) <colle-sujet>]
   for (i, ex) in exercices.enumerate(start: 1) {
-    if i > 1 and not corrige { pagebreak() }
     afficher-exercice(ex, numero: i, corrige: corrige)
   }
 }
@@ -357,7 +357,7 @@
 /// - exercices (array): Objets `ex` importés, dans l'ordre ; `()` crée une feuille vide.
 /// - corrige (bool): Afficher les corrigés ; brancher sur `sys.inputs.at("corrige", default: "false") == "true"`.
 /// - bareme (array, none): Points dans l'ordre de toutes les questions de la feuille ; remplace les barèmes des exercices. `none` conserve ceux des exercices ; une entrée `none` masque les points de cette question.
-/// - nouvelle-page (bool): Commencer chaque exercice après le premier sur une nouvelle page, hors colles. En colle, les exercices commencent chacun sur une nouvelle page dans l'énoncé et s'enchaînent dans le corrigé.
+/// - nouvelle-page (bool): Commencer chaque exercice après le premier sur une nouvelle page, hors colles. En colle, les exercices s'enchaînent ; `sujet-colle` gère le saut entre les sujets.
 /// - espacement (relative, auto): Espacement vertical des textes et questions, automatique par défaut.
 /// - afficher-exercices (bool): Composer automatiquement le tableau d'exercices ; false permet une composition personnalisée dans body.
 /// - body (content): Contenu placé avant les exercices, fourni par la règle show.
@@ -408,7 +408,7 @@
   let afficher-contexte = type not in ("devoir", "concours") or concours == none or concours.at("oral", default: false)
   let debut-bareme = 0
   for (i, ex) in if afficher-exercices { exercices.enumerate(start: 1) } else { () } {
-    if i > 1 and (if type == "colle" { not corrige } else { nouvelle-page }) { pagebreak() }
+    if i > 1 and type != "colle" and nouvelle-page { pagebreak() }
     let fin-bareme = debut-bareme + nombre-questions(ex.contenu)
     afficher-exercice(
       ex,

@@ -8,7 +8,10 @@
 ))
 
 #if mode == "sujet" {
-  feuille(type: "colle", corrige: corrige, afficher-exercices: false, sujet-colle(1, exercices, corrige: corrige))
+  feuille(type: "colle", corrige: corrige, afficher-exercices: false, [
+    #sujet-colle(1, exercices, corrige: corrige)
+    #sujet-colle(2, exercices, corrige: corrige)
+  ])
 } else {
   // La règle des colles prime sur l'option générique, dans les deux variantes.
   feuille(type: "colle", exercices: exercices, corrige: corrige, nouvelle-page: corrige, [])
@@ -16,10 +19,9 @@
 
 #context {
   let pages = query(<pagination-exercice>).map(it => it.location().page())
-  assert(pages.len() == 3)
-  if corrige {
-    assert(pages == (1, 1, 1), message: "Le corrigé d'une colle doit enchaîner les exercices.")
+  if mode == "sujet" {
+    assert(pages == (1, 1, 1, 2, 2, 2), message: "Chaque sujet commence sur une nouvelle page et enchaîne ses exercices, dans les deux variantes.")
   } else {
-    assert(pages == (1, 2, 3), message: "Chaque exercice de colle doit commencer sur une nouvelle page.")
+    assert(pages == (1, 1, 1), message: "Une colle doit enchaîner les exercices, dans les deux variantes.")
   }
 }
