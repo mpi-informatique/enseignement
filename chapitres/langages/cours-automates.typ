@@ -73,7 +73,7 @@
     [$δ(q, b)$], [], [], [],
   ),
   numbering: none,
-  caption: [Fonction de transition de l'automate ci-dessus.],
+  caption: none,
 ))
 
 #colonnes-cours(
@@ -204,15 +204,30 @@ Un automate complet n'a pas de blocage.
 
 = Automate déterministe
 
-== Définition
-#definition(coeur: true)[
-  Un automate est déterministe s'il possède un unique état initial $q_i$ et si :
-  $ (q, a, q_1) ∈ E ∧ (q, a, q_2) ∈ E ==> q_1 = q_2. $
-]
-S'il est aussi complet, sa fonction de transition est $δ : Q × Σ → Q$.
-#exercise[Quel est le nombre de transitions d'un automate déterministe complet ?]
-#slides-only[#pause Réponse : $abs(Q) abs(Σ)$.]
+#grid(
+  columns: (1.6fr, 1fr),
+  column-gutter: 1.5em,
+  align: horizon,
+  definition(coeur: true, marge-haute: false)[
+    Un automate $A$ est déterministe si :
+    + Il possède un unique état initial
+    + $(q, a, q_1) ∈ E ∧ (q, a, q_2) ∈ E ==> q_1 = q_2$
+  ],
+  dessiner-automate(
+    (("q", (0, 0), true, false), ("q_1", (2.5, 1), false, true), ("q_2", (2.5, -1), false, false)),
+    (("q", "q_1", "a", (curve: 0)), ("q", "q_2", "b", (curve: 0))),
+  ),
+)
 
+Un ADC (automate déterministe complet) a $|Q| × |Σ|$ transitions et une fonction de transition de la forme $δ : Q × Σ → Q$.
+
+#slides-only[== Chemins dans un automate déterministe complet]
+#exercise[
+  Soient $A = (Q, Σ, q_0, F, E)$ un ADC, $q ∈ Q$, $m ∈ Σ^*$. Quelles sont les propositions vraies ?
+  + Il existe un unique chemin d'étiquette $m$ partant de $q$.
+  + Il existe un unique chemin de $q_0$ à $q$.
+  + $(q_1, a, q) ∈ E ∧ (q_2, a, q) ∈ E ==> q_1 = q_2.$
+]
 == Fonction de transition étendue
 #definition[
   Pour un automate déterministe complet, la fonction $δ^* : Q × Σ^* → Q$ est définie par :
