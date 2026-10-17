@@ -233,10 +233,18 @@
         bareme: 0.5,
         notation: [25 % pour le nombre d'états, 50 % pour les deux transitions de chaque état, 25 % pour les états finaux. Au plus 50 % pour un enregistrement ou des listes à la place du triplet et des tableaux demandés.],
       ),
-      [#a1 #align(center)[Figure 1 — Automate $cal(A)_1$]
-        #a2 #align(center)[Figure 2 — Automate $cal(A)_2$]
-        #a3 #align(center)[Figure 3 — Automate $cal(A)_3$]
-        #a4 #align(center)[Figure 4 — Automate $cal(A)_4$]],
+      [
+        #grid(
+          columns: (1fr, 1fr),
+          column-gutter: 1.5em,
+          row-gutter: 1em,
+          align: top,
+          [#a1 #align(center)[Figure 1 — Automate $cal(A)_1$]],
+          [#a2 #align(center)[Figure 2 — Automate $cal(A)_2$]],
+          [#a3 #align(center)[Figure 3 — Automate $cal(A)_3$]],
+          [#a4 #align(center)[Figure 4 — Automate $cal(A)_4$]],
+        )
+      ],
     )),
     partie("II", "États accessibles d'un automate", contenu: (
       question(
