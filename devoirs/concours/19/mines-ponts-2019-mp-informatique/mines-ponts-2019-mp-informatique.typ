@@ -386,8 +386,13 @@
           bareme: 1,
           notation: [25 % pour la surjectivité, 25 % pour l'état initial, 25 % pour les transitions, 25 % pour l'équivalence sur les finaux. Attribuer 90 % si seule la réciproque sur les finaux manque.],
         ),
-        [#a5 #align(center)[Figure 5 — Automate $cal(A)_5$]
-          #a6 #align(center)[Figure 6 — Automate $cal(A)_6$]],
+        [#grid(
+          columns: (1fr, 1fr),
+          column-gutter: 1.5em,
+          align: horizon,
+          [#a5 #align(center)[Figure 5 — Automate $cal(A)_5$]],
+          [#a6 #align(center)[Figure 6 — Automate $cal(A)_6$]],
+        )],
       )),
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
         question(
