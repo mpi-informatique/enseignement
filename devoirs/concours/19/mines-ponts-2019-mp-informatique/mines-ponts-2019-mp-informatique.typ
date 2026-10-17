@@ -395,7 +395,7 @@
       )),
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
         question(
-          [Montrer la propriété de morphisme (1) découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
+          [Montrer que la propriété (1) de la définition d'un morphisme découle de (2), (3) et (4) lorsque les deux automates sont accessibles.],
           jury: [Pour établir la surjectivité, le jury attend un antécédent explicite pour chaque état.],
           solution: [
             La preuve de (∗) n'utilise que (3). Pour tout $q' ∈ Q_cal(B)$, l'accessibilité donne un mot $w$ avec $q'=δ_cal(B)^*(i_cal(B),w)=φ(δ_cal(A)^*(i_cal(A),w))$, par (2) et (∗).
@@ -452,9 +452,9 @@
           bareme: 1.5,
           notation: [Un tiers pour le codage bijectif des couples et les tableaux de tailles adaptées, un tiers pour les transitions vers les couples correctement codés, un tiers pour la conjonction des caractères finaux.],
         ),
-        [On suppose dans les deux questions suivantes que $cal(L)(cal(A)) = cal(L)(cal(A)')$ et on note $cal(B)$ la partie accessible de $cal(A) × cal(A)'$.],
+        [On suppose dans les deux questions suivantes que $cal(A)$ et $cal(A)'$ sont accessibles et que $cal(L)(cal(A)) = cal(L)(cal(A)')$. On note $cal(B)$ la partie accessible de $cal(A) × cal(A)'$.],
         question(
-          [Soit $(q,q') in cal(B)$.
+          [Soit $(q, q') ∈ Q_cal(B)$.
             Montrer que $q in F_cal(A)$ si et seulement si $q' in F_(cal(A)')$.],
           jury: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
@@ -643,8 +643,8 @@
             [Montrer que, pour tout $cal(A) ∈ cal(K)_L$, il existe un morphisme $φ: cal(A) → cal(M)_L$,
               où $cal(M)_L$ est un automate de $cal(K)_L$ à $m_L$ états.],
             solution: [
-              $cal(M)_L$ est bien défini car l'ensemble $\{abs(Q_cal(A)) : cal(A) ∈ cal(K)_L\} ⊂ ℕ$ est non vide (par l'algorithme de déterminisation) donc admet un minimum $m_L$. \
               Comme $L$ est régulier, il est reconnu par un automate déterministe complet. Sa partie accessible appartient à $cal(K)_L$.
+              L'ensemble non vide ${abs(Q_cal(A)) | cal(A) ∈ cal(K)_L} ⊂ NN$ admet donc un minimum $m_L$, atteint par un automate $cal(M)_L$.
               Par la question 29, on obtient $φ': cal(A) → cal(C)$ et $ψ': cal(M)_L → cal(C)$.
               Comme précédemment, $cal(C) ∈ cal(K)_L$ et $m_L ≤ abs(Q_cal(C)) ≤ m_L$.
               Donc $ψ'$ est un isomorphisme et $(ψ')^(-1) ∘ φ'$ est le morphisme demandé.
