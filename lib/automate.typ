@@ -14,6 +14,7 @@
 /// Dessine un automate centré à partir de ses états et arcs explicites.
 /// - etats (array): Entrées `(nom, position, initial, final)` ; `nom` est une chaîne mathématique Typst.
 /// - arcs (array): Entrées `(départ, arrivée, étiquette, style)` ; étiquette mathématique et style finite.
+///   Les étiquettes des transitions droites sont placées au-dessus par défaut, celles des arcs courbes à l'extérieur. `label: (dist: ...)` permet de changer de côté.
 /// - echelle (array): Facteurs horizontal et vertical des positions, défaut `(1, 1)`.
 /// - rayon (function): Rayon d'un état selon son nom, dans l'unité commune.
 /// -> content
@@ -21,14 +22,19 @@
   import finite.draw: state, transition
   cetz.draw.set-style(..style-automates)
   let distance = style-automates.transition.label.dist
+  let positions = (:)
   for (nom, position, initial, final) in etats {
+    positions.insert(nom, (position.at(0) * echelle.at(0), position.at(1) * echelle.at(1)))
     state((position.at(0) * echelle.at(0), position.at(1) * echelle.at(1)), nom,
       radius: rayon(nom), label: math.equation(eval(nom, mode: "math")),
       initial: if initial { (label: none) } else { false }, final: final)
   }
   for (p, q, etiquette, style) in arcs {
     let style-etiquette = style.remove("label", default: (:))
+    let courbure = style.at("curve", default: 1)
+    // Pour une transition droite, finite calcule la normale à l'opposé du sens de lecture.
+    let inverser = courbure < 0 or (courbure == 0 and positions.at(q).at(0) > positions.at(p).at(0))
     transition(p, q, label: (text: math.equation(eval(etiquette, mode: "math")),
-      dist: if style.at("curve", default: 1) < 0 { -distance } else { distance }) + style-etiquette, ..style)
+      dist: if inverser { -distance } else { distance }) + style-etiquette, ..style)
   }
 }))
