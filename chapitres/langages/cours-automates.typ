@@ -112,8 +112,8 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
   columns: (1fr, 1fr),
   column-gutter: 1.5em,
   align: horizon,
-  impair,
-  deux-initiaux,
+  figure(impair, numbering: none, gap: 0.4em, caption: [$A_1$]),
+  figure(deux-initiaux, numbering: none, gap: 0.4em, caption: [$A_2$]),
 )
 
 #slides-only[
