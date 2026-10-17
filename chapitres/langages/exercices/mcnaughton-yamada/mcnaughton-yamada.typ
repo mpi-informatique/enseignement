@@ -7,7 +7,7 @@
 
 #let ex = exercice(
   meta: (
-    titre: "Algorithme de McNaughton et Yamada",
+    titre: "Algorithme de McNaughton-Yamada",
     chapitres: ("langages-reguliers", "automates-finis", "algorithmique"),
     algorithmes: ("programmation-dynamique",),
     langages: ("OCaml",),

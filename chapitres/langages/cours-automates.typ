@@ -41,79 +41,53 @@
 ])
 
 #colonnes-cours(
-  columns: (1.15fr, 1fr),
-  definition-automate, exemple-automate,
+  columns: (1.2fr, 1fr),
+  definition-automate,
+  exemple-automate,
 )
 
 == Fonction de transition
 #let definition-transition = [
   #definition(marge-haute: false)[
-    On peut remplacer $E$ par la fonction $δ : Q × Σ → cal(P)(Q)$ définie par :
+    On peut remplacer $E$ par  $δ : Q × Σ → cal(P)(Q)$ tel que :
     $ δ(q, a) = {q' ∈ Q ∣ (q, a, q') ∈ E}. $
   ]
-  Il y a un blocage lorsque $δ(q, a) = ∅$.
+  On dit qu'il y a un blocage lorsque $δ(q, a) = ∅$.
 ]
 #let exercice-transition = align(center, figure(
   table(
     columns: (auto, 2.5em, 2.5em, 2.5em),
-    rows: 2.2em,
+    rows: 2em,
     align: center + horizon,
     table.header([$q$], [$0$], [$1$], [$2$]),
     [$δ(q, a)$], [], [], [],
     [$δ(q, b)$], [], [], [],
   ),
   numbering: none,
-  caption: [Fonction de transition de l'automate précédent.],
+  caption: [Fonction de transition de l'automate ci-dessus.],
 ))
 
 #colonnes-cours(
-  columns: (1.15fr, 1fr),
-  definition-transition, exercice-transition,
+  columns: (1.2fr, 1fr),
+  definition-transition,
+  exercice-transition,
 )
 
 == Implémentation
-On peut représenter $δ$ par une matrice, une fonction ```ocaml int -> char -> int list``` ou un dictionnaire de clés $(q, a)$.
 
-```ocaml
-type automate = {
-  initiaux : int list;
-  finaux : int list;
-  delta : (int * char, int list) Hashtbl.t
-}
-```
-
-#slides-only[== Dictionnaires]
-- Un arbre binaire de recherche stocke des couples (clé, valeur). Les clés doivent être ordonnées. Le module ```ocaml Map``` fournit une structure persistante.
-- Une table de hachage utilise une fonction $h$ pour associer une clé à un indice de tableau. Le module ```ocaml Hashtbl``` fournit une structure mutable.
-
-#slides-only[
-  == Collisions dans une table de hachage
-  Plusieurs clés peuvent avoir la même image par $h$.
-  - Chaînage : stocker une liste de couples dans chaque case.
-  - Adressage ouvert : chercher une autre case libre suivant une règle de sondage.
-  Les clés ne doivent pas être modifiées tant qu'elles sont dans la table.
+#exercise[
+  1. Proposer et comparer plusieurs structures de données pour représenter un automate.
+  2. En implémenter une.
 ]
-
-#slides-only[== Module Hashtbl (non exigible)]
-#table(
-  columns: (auto, 1fr),
-  inset: 0.4em,
-  table.header([*Fonction*], [*Utilisation*]),
-  [```ocaml create n```], [Créer une table.],
-  [```ocaml add t k v```], [Ajouter une liaison.],
-  [```ocaml find t k```], [Lire une valeur, ou lever ```ocaml Not_found```.],
-  [```ocaml find_opt t k```], [Lire une valeur sous forme d'option.],
-  [```ocaml mem t k```], [Tester la présence d'une clé.],
-)
 
 = Langage reconnaissable
 
 #slides-only[== Chemin acceptant]
 #definition[
-  Un chemin est une suite de transitions consécutives :
-  $ q_0 limits(arrow.r.long)^(a_1) q_1 limits(arrow.r.long)^(a_2) … limits(arrow.r.long)^(a_n) q_n. $
-  Son étiquette est le mot $a_1 … a_n$.
-  Il est acceptant si $q_0 ∈ I$ et $q_n ∈ F$.
+  Un chemin $C$ dans un automate $A$ est une suite de transitions consécutives :
+  $q_0 limits(arrow.long)^(a_1) q_1 limits(arrow.long)^(a_2) … limits(arrow.long)^(a_n) q_n.$\
+  L'étiquette de $C$ est le mot $a_1 … a_n$.
+  On dit que $C$ est acceptant si $q_0 ∈ I$ et $q_n ∈ F$.
 ]
 #slides-only[== Langage reconnu]
 #definition[
@@ -125,16 +99,16 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
 
 #slides-only[== Lecture d'un automate]
 #colonnes-cours(
-  columns: (1.15fr, 1fr),
+  columns: (1.2fr, 1fr),
   align: horizon,
-  encadrer: exercise,
-  [Déterminer le langage reconnu par l'automate suivant.],
-  text(size: 0.75em, impair),
+  exercise[Déterminer le langage reconnu par l'automate ci-contre.],
+  impair,
 )
 
 #slides-only[#pause Il reconnaît les mots contenant un nombre impair de $a$, par exemple $b b a b$.]
 
 #slides-only[== Construction d'automates]
+
 #colonnes-cours(
   encadrer: contenu => exercise[
     Montrer que les langages suivants sont reconnaissables :
@@ -142,12 +116,12 @@ Le chemin de longueur nulle permet d'accepter $ε$ exactement lorsque $I ∩ F �
   ],
   [
     + $a b | a b c | c$
-    + Les mots de taille paire sur $Σ = {a, b}$.
+    + Mots de taille paire sur $Σ = {a, b}$.
   ],
   [
     #set enum(start: 3)
     + $(b | a b | a b a)^*$
-    + Les mots sur $Σ = {a, b}$ dont l'avant-dernière lettre est $a$.
+    + Mots sur $Σ = {a, b}$ dont l'avant-dernière lettre est $a$.
   ],
 )
 

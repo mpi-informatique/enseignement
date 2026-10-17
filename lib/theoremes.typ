@@ -28,15 +28,15 @@
     v(espacement, weak: true)
   } else if style-cadres.get() == none and marge-haute {
     // Garder une marge même au début d'un bloc de contenu de Touying en mode article.
-    v(0.6em)
+    v(0.5em)
   }
   if coeur and style-cadres.get() == none {
     grid(
-      columns: (0pt, 1fr), column-gutter: 0pt,
+      columns: (0pt, 1fr),
+      column-gutter: 0pt,
       align: (left + horizon, left + top),
       // Compenser le titre qui dépasse au-dessus de la bordure du cadre.
-      box(width: 0pt, move(dx: -1.5em, dy: 0.4em, box[♡])),
-      cadre,
+      box(width: 0pt, move(dx: -1.5em, dy: 0.4em, box[♡])), cadre,
     )
   } else {
     cadre
@@ -106,16 +106,39 @@
   let palette = style-cadres.get()
   if palette == none {
     let rendre = if nom in ("exercise", "problem") { rendre-exercice } else { fancy-box }
-    rendre(get-symbol: loc => none, get-border-color: loc => black, get-body-color: loc => white, prefix: prefix, title: title, full-title: full-title, ..args, body)
+    rendre(
+      get-symbol: loc => none,
+      get-border-color: loc => black,
+      get-body-color: loc => white,
+      prefix: prefix,
+      title: title,
+      full-title: full-title,
+      ..args,
+      body,
+    )
   } else {
     let couleur = palette.at(nom, default: palette.at("theorem", default: rgb("#233e6a")))
     block(width: 100%, breakable: false, {
       if full-title != "" {
-        block(width: 100%, fill: couleur, radius: (top: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.3em),
-          text(size: 1em, weight: "bold", fill: white, [#full-title#if coeur { h(0.4em); [♡] }]),
-        )
+        block(width: 100%, fill: couleur, radius: (top: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.3em), text(
+          size: 1em,
+          weight: "bold",
+          fill: white,
+          [#full-title#if coeur {
+              h(0.4em)
+              [♡]
+            }],
+        ))
       }
-      block(width: 100%, fill: couleur.lighten(88%), radius: (bottom: 4pt), above: 0pt, below: 0pt, inset: (x: 0.7em, y: 0.5em), body)
+      block(
+        width: 100%,
+        fill: couleur.lighten(88%),
+        radius: (bottom: 4pt),
+        above: 0pt,
+        below: 0pt,
+        inset: (x: 0.7em, y: 0.5em),
+        body,
+      )
     })
   }
 }

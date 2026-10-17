@@ -1,7 +1,7 @@
 #import "/load.typ": code
 #import code: code-extrait
 #import "/load.typ": automate
-#import automate: dessiner-automate, rayon-etat, rayon-grand-etat, dist-lettre
+#import automate: dessiner-automate, dist-lettre, rayon-etat, rayon-grand-etat
 #import "/load.typ": exercice, partie, question
 #import "/load.typ": sep
 #import "@preview/cetz:0.4.2" as cetz
@@ -238,10 +238,8 @@
           column-gutter: 1.5em,
           row-gutter: 1em,
           align: top,
-          [#a1 #align(center)[Figure 1 — Automate $cal(A)_1$]],
-          [#a2 #align(center)[Figure 2 — Automate $cal(A)_2$]],
-          [#a3 #align(center)[Figure 3 — Automate $cal(A)_3$]],
-          [#a4 #align(center)[Figure 4 — Automate $cal(A)_4$]],
+          [#a1 #align(center)[Automate $cal(A)_1$]], [#a2 #align(center)[Automate $cal(A)_2$]],
+          [#a3 #align(center)[Automate $cal(A)_3$]], [#a4 #align(center)[Automate $cal(A)_4$]],
         )
       ],
     )),
@@ -273,7 +271,7 @@
       ),
       question(
         [Écrire ```ocaml partie_accessible : automate -> automate``` construisant la partie accessible
-          de l'automate donné. On pourra réutiliser les questions 6 et 7.],
+          de l'automate donné. ],
         jury: [« Beaucoup de candidats ont mal renuméroté les sommets du graphe ou les transitions. »],
         solution: [
           On renumérote dans l'ordre obtenu précédemment : la liste commence par $0$, qui reste l'état initial.
@@ -286,28 +284,24 @@
     )),
     partie("III", "Morphismes d'automates", contenu: (
       [Soient $cal(A)=⟨ Q_cal(A),i_cal(A),δ_cal(A),F_cal(A) ⟩$ et $cal(B)=⟨ Q_cal(B),i_cal(B),δ_cal(B),F_cal(B) ⟩$ deux automates.
+
         Un morphisme $φ: cal(A) → cal(B)$ est une application $φ: Q_cal(A) → Q_cal(B)$ satisfaisant :
-        $ φ " est surjective," quad "(1)" $
-        $ φ(i_cal(A))=i_cal(B), #sep "(2)" $
-        $ ∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q,σ))=δ_cal(B)(φ(q),σ), #sep "(3)" $
-        $ ∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B). quad "(4)" $
+        1. $φ$ est surjective
+        2. $φ(i_cal(A)) = i_cal(B)$
+        3. $∀ q ∈ Q_cal(A), ∀ σ ∈ {a,b}, #sep φ(δ_cal(A)(q, σ))= δ_cal(B)(φ(q),σ)$
+        4. $∀ q ∈ Q_cal(A), #sep q ∈ F_cal(A) ⇔ φ(q) ∈ F_cal(B)$
+
         En OCaml, $φ$ est représenté par le tableau $[φ(q)]_(q ∈ Q_cal(A))$,
         de type ```ocaml morphisme```, de longueur $abs(Q_cal(A))$ et à valeurs entre $0$ et $abs(Q_cal(B))-1$.
         #code("morphisme")],
       partie("III.A", "Exemples de morphismes d'automates", contenu: (
         question(
-          [#grid(
-            columns: (1fr, auto),
-            column-gutter: 1.5em,
-            align: horizon,
-            [Recopier et compléter, sans justification, le tableau suivant par des états de $cal(A)_2$
-              de sorte qu'il représente un morphisme $φ: cal(A)_3 → cal(A)_2$.],
-            table(
+          [Compléter, sans justification, le tableau suivant par des états de $cal(A)_2$ pour qu'il représente un morphisme $φ: cal(A)_3 → cal(A)_2$.
+            #align(center, table(
               columns: 4,
               [$q$], [$E$], [$F$], [$G$],
               [$φ(q)$], [], [], [],
-            ),
-          )],
+            ))],
           solution: [$φ(E)=φ(F)=C$ et $φ(G)=D$.],
           bareme: 0.5,
           notation: [Un tiers pour chacune des trois images correctes.],
@@ -328,7 +322,7 @@
           notation: [50 % pour les images imposées par l'état initial et les finaux, 50 % pour une contradiction explicite avec une transition. Accepter tout autre argument correct.],
         ),
         question(
-          [Montrer qu'il n'existe pas de morphisme de $cal(A)_5$ (figure 5) vers $cal(A)_2$.],
+          [Montrer qu'il n'existe pas de morphisme de $cal(A)_5$ vers $cal(A)_2$.],
           solution: [
             La condition (4) impose $φ(L)=φ(N)=C$ et $φ(M)=D$.
             Or $φ(δ_(cal(A)_5)(N,a))=D ≠ C=δ_(cal(A)_2)(φ(N),a)$, ce qui contredit (3).
@@ -390,8 +384,7 @@
           columns: (1fr, 1fr),
           column-gutter: 1.5em,
           align: horizon,
-          [#a5 #align(center)[Figure 5 — Automate $cal(A)_5$]],
-          [#a6 #align(center)[Figure 6 — Automate $cal(A)_6$]],
+          [#a5 #align(center)[Automate $cal(A)_5$]], [#a6 #align(center)[Automate $cal(A)_6$]],
         )],
       )),
       partie("III.C", "Existence de morphismes entre automates accessibles", contenu: (
@@ -436,7 +429,7 @@
           $ δ_(cal(A) × cal(A)')((q,q'),σ)=(δ_cal(A)(q,σ),δ_(cal(A)')(q',σ)). $
         ],
         question(
-          [Dessiner, sans justification, la partie accessible du produit $cal(A)_3 × cal(A)_4$.],
+          [Dessiner, sans justification, la partie accessible de $cal(A)_3 × cal(A)_4$.],
           jury: [Le jury relève des incompréhensions de la définition du produit d'automates.],
           solution: [#produit-accessible],
           bareme: 1.5,
@@ -454,8 +447,8 @@
           notation: [Un tiers pour le codage bijectif des couples et les tableaux de tailles adaptées, un tiers pour les transitions vers les couples correctement codés, un tiers pour la conjonction des caractères finaux.],
         ),
         question(
-          [Soit $(q,q')$ un état accessible du produit de deux automates acceptant le même langage.
-            Montrer que $q$ est final dans le premier si et seulement si $q'$ est final dans le second.],
+          [Supposons $cal(L)(cal(A)) = cal(L)(cal(A)')$ et soit $(q,q')$ un état accessible de $cal(A) × cal(A)'$.
+            Montrer que $q in F_cal(A)$ si et seulement si $q' in F_(cal(A)')$.],
           jury: [Le jury a trouvé peu de preuves convaincantes pour cette question.],
           solution: [
             Par récurrence sur $abs(w)$,

@@ -1,6 +1,6 @@
 /// Présentations Touying et cours issus d'une même source.
 #import "@preview/touying:0.8.0" as touying
-#import touying: pause, uncover, only, slide, article-only, slides-only
+#import touying: article-only, only, pause, slide, slides-only, uncover
 #import "cours.typ": cours, espace-reponse
 #import "document.typ": auteur-par-defaut
 #import "theoremes.typ": configurer-theoremes
@@ -9,13 +9,22 @@
 
 /// Couleurs sémantiques des blocs projetés, surchargeables dans `presentation`.
 #let couleurs-blocs = (
-  theorem: rgb("#233e6a"), lemma: rgb("#233e6a"), corollary: rgb("#233e6a"),
-  proposition: rgb("#233e6a"), property: rgb("#233e6a"),
-  definition: rgb("#16716b"), assumption: rgb("#16716b"),
-  axiom: rgb("#16716b"), postulate: rgb("#16716b"),
-  exercise: rgb("#8b1e2d"), problem: rgb("#a13f4b"),
-  algorithm: rgb("#16716b"), conjecture: rgb("#65509a"),
-  example: rgb("#47733d"), remark: rgb("#586475"), note: rgb("#586475"),
+  theorem: rgb("#233e6a"),
+  lemma: rgb("#233e6a"),
+  corollary: rgb("#233e6a"),
+  proposition: rgb("#233e6a"),
+  property: rgb("#233e6a"),
+  definition: rgb("#16716b"),
+  assumption: rgb("#16716b"),
+  axiom: rgb("#16716b"),
+  postulate: rgb("#16716b"),
+  exercise: rgb("#8b1e2d"),
+  problem: rgb("#a13f4b"),
+  algorithm: rgb("#16716b"),
+  conjecture: rgb("#65509a"),
+  example: rgb("#47733d"),
+  remark: rgb("#586475"),
+  note: rgb("#586475"),
 )
 
 /// Compose une présentation Touying Madrid, ou sa version article avec le thème du dépôt.
@@ -32,14 +41,32 @@
 /// - article (bool): Utiliser le thème A4, défaut false.
 /// - body (content): Titres de section `=`, titres de diapositive `==` et contenu partagé.
 /// -> content
-#let presentation(titre: "Présentation", niveau: none, auteur: "Quentin Fortier", aspect-ratio: "16-9", taille: 22pt, couleur: rgb("#233e6a"), palette: (:), police: ("New Computer Modern Sans", "New Computer Modern"), animations: true, article: false, body) = {
+#let presentation(
+  titre: "Présentation",
+  niveau: none,
+  auteur: "Q. Fortier",
+  aspect-ratio: "16-9",
+  taille: 22pt,
+  couleur: rgb("#233e6a"),
+  palette: (:),
+  police: ("New Computer Modern Sans", "New Computer Modern"),
+  animations: true,
+  article: false,
+  body,
+) = {
   show: configurer-theoremes
   set text(font: "New Computer Modern", lang: "fr")
   show: theme-madrid.with(
     aspect-ratio: aspect-ratio,
-    couleur: couleur, taille: taille, police: police,
+    couleur: couleur,
+    taille: taille,
+    police: police,
     style: body => {
-      show: configurer-theoremes.with(palette: couleurs-blocs + (theorem: couleur, lemma: couleur, corollary: couleur, proposition: couleur, property: couleur) + palette)
+      show: configurer-theoremes.with(
+        palette: couleurs-blocs
+          + (theorem: couleur, lemma: couleur, corollary: couleur, proposition: couleur, property: couleur)
+          + palette,
+      )
       show: configurer-code
       body
     },
@@ -56,10 +83,15 @@
     ),
     touying.config-article(wrap: false, linearize: false),
   )
-  touying.slides-only(titre-madrid([
-    #metadata((type: "presentation", titre: titre, niveau: niveau)) <document-meta>
-    #titre
-  ], niveau: niveau, auteur: auteur, couleur: couleur))
+  touying.slides-only(titre-madrid(
+    [
+      #metadata((type: "presentation", titre: titre, niveau: niveau)) <document-meta>
+      #titre
+    ],
+    niveau: niveau,
+    auteur: auteur,
+    couleur: couleur,
+  ))
   body
 }
 

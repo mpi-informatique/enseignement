@@ -17,9 +17,9 @@
 
 #let texte-duree(duree) = {
   let (heures, minutes) = duree
-  if heures == 0 { str(minutes) + " min" }
-  else if minutes == 0 { str(heures) + " h" }
-  else { str(heures) + " h " + str(minutes) + " min" }
+  if heures == 0 { str(minutes) + " min" } else if minutes == 0 { str(heures) + " h" } else {
+    str(heures) + " h " + str(minutes) + " min"
+  }
 }
 
 /// Compose la base A4 des documents pédagogiques.
@@ -34,7 +34,18 @@
 /// - taille (length): Taille du texte, défaut 10pt.
 /// - body (content): Contenu du document.
 /// -> content
-#let document-pedagogique(titre: "Document", niveau: none, auteur: auteur-par-defaut, duree: none, attribution: none, titre-entete: none, contenu-entete: none, repeter-entete: false, taille: 10pt, body) = {
+#let document-pedagogique(
+  titre: "Document",
+  niveau: none,
+  auteur: auteur-par-defaut,
+  duree: none,
+  attribution: none,
+  titre-entete: none,
+  contenu-entete: none,
+  repeter-entete: false,
+  taille: 10pt,
+  body,
+) = {
   set document(title: titre)
   set document(author: auteur) if auteur != none
   show: configurer-theoremes
@@ -46,20 +57,27 @@
   show heading.where(level: 2): set text(size: 1.05 * taille)
   show heading.where(level: 3): set text(size: taille)
   set page(paper: "a4", margin: 10mm, header: none, footer: none, numbering: none)
-  let entete = if contenu-entete != none { contenu-entete } else { context block(above: 0pt, below: 1em, sticky: true, {
-    set block(above: 0pt, below: 0pt)
-    stack(dir: ttb, spacing: 0.6em,
-      grid(columns: (24mm, 1fr, if attribution == none { 24mm } else { auto }), column-gutter: 1em, align: (left, center, right),
-        if niveau != none { niveau },
-        text(size: 1.2em, weight: "bold")[
-          #if titre-entete == none { titre } else { titre-entete }#if duree != none [ (#texte-duree(duree))]
-        ],
-        if attribution != none { attribution }
-        else if auteur != none { link("https://mpi-informatique.github.io", auteur) },
-      ),
-      line(length: 100%, stroke: epaisseur-trait),
-    )
-  })
+  let entete = if contenu-entete != none { contenu-entete } else {
+    context block(above: 0pt, below: 1em, sticky: true, {
+      set block(above: 0pt, below: 0pt)
+      stack(
+        dir: ttb,
+        spacing: 0.6em,
+        grid(
+          columns: (24mm, 1fr, if attribution == none { 24mm } else { auto }),
+          column-gutter: 1em,
+          align: (left, center, right),
+          if niveau != none { niveau },
+          text(size: 1.2em, weight: "bold")[
+            #if titre-entete == none { titre } else { titre-entete }#if duree != none [ (#texte-duree(duree))]
+          ],
+          if attribution != none { attribution } else if auteur != none {
+            link("https://mpi-informatique.github.io", auteur)
+          },
+        ),
+        line(length: 100%, stroke: epaisseur-trait),
+      )
+    })
   }
   if repeter-entete {
     set page(margin: (top: 23mm, rest: 12mm), header: entete)
